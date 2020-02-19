@@ -1,13 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Switch, Route} from "react-router-dom";
 import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import Navigator from './Navigator';
-import Content from './Content';
+import SearchContent from './search/Content';
+import OrderContent from './order/Content';
+import PaymentContent from './payment/Content';
+import StatisticContent from './statistic/Content';
 import Header from './Header';
+import PageNotFound from "../PageNotFound";
 
 function Copyright() {
   return (
@@ -162,7 +167,7 @@ const styles = {
 };
 
 function App(props) {
-  const { classes } = props;
+  const { classes, match } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -189,7 +194,24 @@ function App(props) {
           <div className={classes.app}>
             <Header onDrawerToggle={handleDrawerToggle} />
             <main className={classes.main}>
-              <Content />
+              <Switch>
+                <Route path={`${match.path}/order`}>
+                  <OrderContent />
+                </Route>
+                <Route path={`${match.path}/statistic`}>
+                  <StatisticContent />
+                </Route>
+                <Route path={`${match.path}/payment`}>
+                  <PaymentContent />
+                </Route>
+                <Route exact path={`${match.path}/search`}>
+                  <SearchContent />
+                </Route>
+                <Route exact path={`${match.path}/`}>
+                  <SearchContent />
+                </Route>
+                <Route component={PageNotFound} />
+              </Switch>
             </main>
             <footer className={classes.footer}>
               <Copyright />
