@@ -133,19 +133,6 @@ function Header(props) {
                     </Grid>
                 </Toolbar>
             </AppBar>
-            <AppBar
-                component="div"
-                className={classes.secondaryBar}
-                color="primary"
-                position="static"
-                elevation={0}
-            >
-                <Tabs value={0} textColor="inherit">
-                    <Tab textColor="inherit" label="Наличие" />
-                    <Tab textColor="inherit" label="Запрошеный артикул" />
-                    <Tab textColor="inherit" label="Аналоги" />
-                </Tabs>
-            </AppBar>
         </React.Fragment>
     );
 }
