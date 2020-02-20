@@ -5,6 +5,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import HelpIcon from '@material-ui/icons/Help';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
@@ -16,6 +17,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import SearchIcon from "@material-ui/icons/Search";
+import TextField from "@material-ui/core/TextField";
+import RefreshIcon from "@material-ui/icons/Refresh";
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -63,22 +67,17 @@ function Header(props) {
                         </Hidden>
                         <Grid item xs />
                         <Grid item>
-                            <Link className={classes.link} href="#" variant="body2">
-                                Go to docs
-                            </Link>
+                            z0777
                         </Grid>
                         <Grid item>
-                            <Tooltip title="Alerts • No alerts">
+                            <Tooltip title="Выйти">
                                 <IconButton color="inherit">
-                                    <NotificationsIcon />
+                                    <ExitToAppIcon/>
                                 </IconButton>
                             </Tooltip>
                         </Grid>
-                        <Grid item>
-                            <IconButton color="inherit" className={classes.iconButtonAvatar}>
-                                <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
-                            </IconButton>
-                        </Grid>
+
+
                     </Grid>
                 </Toolbar>
             </AppBar>
@@ -90,21 +89,44 @@ function Header(props) {
                 elevation={0}
             >
                 <Toolbar>
-                    <Grid container alignItems="center" spacing={1}>
+                    <Grid container spacing={2} alignItems="center">
+                        <Grid item>
+                            <SearchIcon className={classes.block} color="inherit" />
+                        </Grid>
                         <Grid item xs>
-                            <Typography color="inherit" variant="h5" component="h1">
-                                Authentication
-                            </Typography>
+                            <TextField
+                                fullWidth
+                                placeholder="Введите номер артикула"
+                                color="inherit"
+                                InputProps={{
+                                    className: classes.searchInput,
+                                }}
+                            />
                         </Grid>
                         <Grid item>
-                            <Button className={classes.button} variant="outlined" color="inherit" size="small">
-                                Web setup
-                            </Button>
+                            <Tooltip title="Начать поиск">
+                                <IconButton>
+                                    <RefreshIcon className={classes.block} color="inherit" />
+                                </IconButton>
+                            </Tooltip>
                         </Grid>
                         <Grid item>
-                            <Tooltip title="Help">
-                                <IconButton color="inherit">
-                                    <HelpIcon />
+                            <SearchIcon className={classes.block} color="inherit" />
+                        </Grid>
+                        <Grid item xs>
+                            <TextField
+                                fullWidth
+                                placeholder="Введите код клиента"
+                                color="inherit"
+                                InputProps={{
+                                    className: classes.searchInput,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <Tooltip title="Начать поиск">
+                                <IconButton>
+                                    <RefreshIcon className={classes.block} color="inherit" />
                                 </IconButton>
                             </Tooltip>
                         </Grid>
@@ -119,10 +141,9 @@ function Header(props) {
                 elevation={0}
             >
                 <Tabs value={0} textColor="inherit">
-                    <Tab textColor="inherit" label="Users" />
-                    <Tab textColor="inherit" label="Sign-in method" />
-                    <Tab textColor="inherit" label="Templates" />
-                    <Tab textColor="inherit" label="Usage" />
+                    <Tab textColor="inherit" label="Наличие" />
+                    <Tab textColor="inherit" label="Запрошеный артикул" />
+                    <Tab textColor="inherit" label="Аналоги" />
                 </Tabs>
             </AppBar>
         </React.Fragment>

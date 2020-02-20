@@ -21,22 +21,17 @@ import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
 
 const categories = [
     {
-        id: 'Develop',
+        id: 'Работа',
         children: [
-            { id: 'Authentication', icon: <PeopleIcon />, active: true },
-            { id: 'Database', icon: <DnsRoundedIcon /> },
-            { id: 'Storage', icon: <PermMediaOutlinedIcon /> },
-            { id: 'Hosting', icon: <PublicIcon /> },
-            { id: 'Functions', icon: <SettingsEthernetIcon /> },
-            { id: 'ML Kit', icon: <SettingsInputComponentIcon /> },
+            { id: 'Поиск', icon: <SettingsEthernetIcon />, active: true },
+            { id: 'Заказы', icon: <DnsRoundedIcon /> },
+            { id: 'Оплата', icon: <PermMediaOutlinedIcon /> },
         ],
     },
     {
-        id: 'Quality',
+        id: 'Аналитика',
         children: [
-            { id: 'Analytics', icon: <SettingsIcon /> },
-            { id: 'Performance', icon: <TimerIcon /> },
-            { id: 'Test Lab', icon: <PhonelinkSetupIcon /> },
+            { id: 'Статистика', icon: <PublicIcon /> },
         ],
     },
 ];
@@ -89,18 +84,18 @@ function Navigator(props) {
         <Drawer variant="permanent" {...other}>
             <List disablePadding>
                 <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
-                    Paperbase
+                    AutoParts
                 </ListItem>
                 <ListItem className={clsx(classes.item, classes.itemCategory)}>
                     <ListItemIcon className={classes.itemIcon}>
-                        <HomeIcon />
+                        <PeopleIcon />
                     </ListItemIcon>
                     <ListItemText
                         classes={{
                             primary: classes.itemPrimary,
                         }}
                     >
-                        Project Overview
+                        1000 - Токарь Игорь
                     </ListItemText>
                 </ListItem>
                 {categories.map(({ id, children }) => (
