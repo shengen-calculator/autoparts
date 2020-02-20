@@ -81,14 +81,6 @@ function Header(props) {
 
                     </Grid>
                 </Toolbar>
-            </AppBar>
-            <AppBar
-                component="div"
-                className={classes.secondaryBar}
-                color="primary"
-                position="static"
-                elevation={0}
-            >
                 <Toolbar>
                     <Grid container spacing={2} alignItems="center">
                         <Grid item>

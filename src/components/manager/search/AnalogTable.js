@@ -77,8 +77,7 @@ const headCells = [
     { id: 'cost', numeric: true, disablePadding: false, label: 'Цена' },
     { id: 'order', numeric: true, disablePadding: false, label: 'Заказ' },
     { id: 'term', numeric: false, disablePadding: false, label: 'Срок' },
-    { id: 'date', numeric: false, disablePadding: false, label: 'Дата обновл.' },
-    { id: 'info', numeric: false, disablePadding: false, label: 'Инфо' }
+    { id: 'date', numeric: false, disablePadding: false, label: 'Дата обновл.' }
 ];
 
 function EnhancedTableHead(props) {
@@ -111,6 +110,12 @@ function EnhancedTableHead(props) {
                         </TableSortLabel>
                     </TableCell>
                 ))}
+                <TableCell
+                    padding="default"
+                    key='info'
+                    align='center'
+                >Инфо
+                </TableCell>
             </TableRow>
         </TableHead>
     );
