@@ -8,14 +8,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import HomeIcon from '@material-ui/icons/Home';
+import BuildIcon from '@material-ui/icons/Build';
 import PeopleIcon from '@material-ui/icons/People';
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
-import PermMediaOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActual';
-import PublicIcon from '@material-ui/icons/Public';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import SendIcon from '@material-ui/icons/Send';
 import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
 import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent';
-import TimerIcon from '@material-ui/icons/Timer';
+import PaymentIcon from '@material-ui/icons/Payment';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
 
@@ -23,15 +23,15 @@ const categories = [
     {
         id: 'Работа',
         children: [
-            { id: 'Поиск', icon: <SettingsEthernetIcon />, active: true },
+            { id: 'Поиск', icon: <BuildIcon />, active: true },
             { id: 'Заказы', icon: <DnsRoundedIcon /> },
-            { id: 'Оплата', icon: <PermMediaOutlinedIcon /> },
+            { id: 'Оплата', icon: <PaymentIcon /> },
         ],
     },
     {
         id: 'Аналитика',
         children: [
-            { id: 'Статистика', icon: <PublicIcon /> },
+            { id: 'Статистика', icon: <EqualizerIcon /> },
         ],
     },
 ];

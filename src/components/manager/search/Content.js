@@ -12,10 +12,12 @@ import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import GeneralTable from "./GeneralTable";
+import VendorTable from "./VendorTable";
+import AnalogTable from "./AnalogTable";
 
 const styles = theme => ({
     paper: {
-        maxWidth: 936,
         margin: 'auto',
         overflow: 'hidden',
     },
@@ -45,9 +47,12 @@ function Content(props) {
 
             </AppBar>
             <div className={classes.contentWrapper}>
-                <Typography color="textSecondary" align="center">
+                {/*<Typography color="textSecondary" align="center">
                     По Вашему запросу ничего не найдено
-                </Typography>
+                </Typography>*/}
+                <GeneralTable/>
+                <VendorTable/>
+                <AnalogTable/>
             </div>
         </Paper>
     );

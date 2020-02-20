@@ -8,6 +8,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
+import SendIcon from '@material-ui/icons/Send';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -97,7 +98,6 @@ function Header(props) {
                             <TextField
                                 fullWidth
                                 placeholder="Введите номер артикула"
-                                color="inherit"
                                 InputProps={{
                                     className: classes.searchInput,
                                 }}
@@ -106,7 +106,7 @@ function Header(props) {
                         <Grid item>
                             <Tooltip title="Начать поиск">
                                 <IconButton>
-                                    <RefreshIcon className={classes.block} color="inherit" />
+                                    <SendIcon className={classes.block} color="inherit" />
                                 </IconButton>
                             </Tooltip>
                         </Grid>
@@ -117,7 +117,6 @@ function Header(props) {
                             <TextField
                                 fullWidth
                                 placeholder="Введите код клиента"
-                                color="inherit"
                                 InputProps={{
                                     className: classes.searchInput,
                                 }}
@@ -126,7 +125,7 @@ function Header(props) {
                         <Grid item>
                             <Tooltip title="Начать поиск">
                                 <IconButton>
-                                    <RefreshIcon className={classes.block} color="inherit" />
+                                    <SendIcon className={classes.block} color="inherit" />
                                 </IconButton>
                             </Tooltip>
                         </Grid>
