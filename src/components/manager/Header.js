@@ -71,7 +71,7 @@ function Header(props) {
                             z0777
                         </Grid>
                         <Grid item>
-                            <Tooltip title="Выйти">
+                            <Tooltip title="Вийти">
                                 <IconButton color="inherit">
                                     <ExitToAppIcon/>
                                 </IconButton>
@@ -89,14 +89,14 @@ function Header(props) {
                         <Grid item xs>
                             <TextField
                                 fullWidth
-                                placeholder="Введите номер артикула"
+                                placeholder="Введіть номер артикула"
                                 InputProps={{
                                     className: classes.searchInput,
                                 }}
                             />
                         </Grid>
                         <Grid item>
-                            <Tooltip title="Начать поиск">
+                            <Tooltip title="Розпочати пошук">
                                 <IconButton>
                                     <SendIcon className={classes.block} color="inherit" />
                                 </IconButton>
@@ -108,14 +108,14 @@ function Header(props) {
                         <Grid item xs>
                             <TextField
                                 fullWidth
-                                placeholder="Введите код клиента"
+                                placeholder="Введіть код клієнта"
                                 InputProps={{
                                     className: classes.searchInput,
                                 }}
                             />
                         </Grid>
                         <Grid item>
-                            <Tooltip title="Начать поиск">
+                            <Tooltip title="Розпочати пошук">
                                 <IconButton>
                                     <SendIcon className={classes.block} color="inherit" />
                                 </IconButton>

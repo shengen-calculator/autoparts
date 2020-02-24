@@ -21,15 +21,15 @@ import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
 
 const categories = [
     {
-        id: 'Работа',
+        id: 'Робота',
         children: [
-            { id: 'Поиск', icon: <BuildIcon />, active: true },
-            { id: 'Заказы', icon: <DnsRoundedIcon /> },
+            { id: 'Пошук', icon: <BuildIcon />, active: true },
+            { id: 'Замовлення', icon: <DnsRoundedIcon /> },
             { id: 'Оплата', icon: <PaymentIcon /> },
         ],
     },
     {
-        id: 'Аналитика',
+        id: 'Аналітика',
         children: [
             { id: 'Статистика', icon: <EqualizerIcon /> },
         ],

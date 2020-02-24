@@ -21,6 +21,8 @@ import Switch from '@material-ui/core/Switch';
 import InfoIcon from '@material-ui/icons/Info';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import lime from '@material-ui/core/colors/lime';
+import blueGrey from "@material-ui/core/colors/blueGrey";
 
 
 function createData(id, brand, number, description, retail, cost, available, reserve, order, term, date) {
@@ -70,14 +72,14 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    { id: 'brand', numeric: false, disablePadding: true, label: 'Брэнд' },
+    { id: 'brand', numeric: false, disablePadding: true, label: 'Бренд' },
     { id: 'number', numeric: false, disablePadding: false, label: 'Номер' },
-    { id: 'description', numeric: false, disablePadding: false, label: 'Описание' },
-    { id: 'retail', numeric: true, disablePadding: false, label: 'Розница' },
-    { id: 'cost', numeric: true, disablePadding: false, label: 'Цена' },
-    { id: 'order', numeric: true, disablePadding: false, label: 'Заказ' },
-    { id: 'term', numeric: false, disablePadding: false, label: 'Срок' },
-    { id: 'date', numeric: false, disablePadding: false, label: 'Дата обновл.' }
+    { id: 'description', numeric: false, disablePadding: false, label: 'Опис' },
+    { id: 'retail', numeric: true, disablePadding: false, label: 'Роздрібна' },
+    { id: 'cost', numeric: true, disablePadding: false, label: 'Ціна' },
+    { id: 'order', numeric: true, disablePadding: false, label: 'Замовлення' },
+    { id: 'term', numeric: false, disablePadding: false, label: 'Строк' },
+    { id: 'date', numeric: false, disablePadding: false, label: 'Дата оновл.' }
 ];
 
 function EnhancedTableHead(props) {
@@ -114,7 +116,7 @@ function EnhancedTableHead(props) {
                     padding="default"
                     key='info'
                     align='center'
-                >Инфо
+                >Інфо
                 </TableCell>
             </TableRow>
         </TableHead>
@@ -167,7 +169,7 @@ const EnhancedTableToolbar = props => {
                 </Typography>
             ) : (
                 <Typography className={classes.title} variant="h6" id="tableTitle">
-                    Аналоги для запрошеного артикула
+                    Аналоги артикула
                 </Typography>
             )}
 
@@ -201,7 +203,7 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(2),
     },
     table: {
-        minWidth: 750,
+        minWidth: 750
     },
     visuallyHidden: {
         border: 0,
@@ -222,7 +224,7 @@ export default function EnhancedTable() {
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
+    const [dense, setDense] = React.useState(true);
     const [rowsPerPage, setRowsPerPage] = React.useState(20);
 
     const handleRequestSort = (event, property) => {
@@ -351,7 +353,7 @@ export default function EnhancedTable() {
             </Paper>
             <FormControlLabel
                 control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Сжать"
+                label="Стиснути"
             />
         </div>
     );
