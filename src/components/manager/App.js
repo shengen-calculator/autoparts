@@ -14,18 +14,7 @@ import Header from './Header';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../PageNotFound";
 
-function Copyright() {
-  return (
-      <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
-          AutoParts
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-  );
-}
+
 
 let theme = createMuiTheme({
   palette: {
@@ -149,21 +138,7 @@ const styles = {
       width: drawerWidth,
       flexShrink: 0,
     },
-  },
-  app: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  main: {
-    flex: 1,
-    padding: theme.spacing(6, 4),
-    background: '#eaeff1',
-  },
-  footer: {
-    padding: theme.spacing(2),
-    background: '#eaeff1',
-  },
+  }
 };
 
 function App(props) {
@@ -191,32 +166,24 @@ function App(props) {
               <Navigator PaperProps={{ style: { width: drawerWidth } }} />
             </Hidden>
           </nav>
-          <div className={classes.app}>
-            <Header onDrawerToggle={handleDrawerToggle} />
-            <main className={classes.main}>
               <Switch>
                 <Route path={`${match.path}/order`}>
-                  <OrderContent />
+                  <OrderContent handleDrawerToggle={handleDrawerToggle}/>
                 </Route>
                 <Route path={`${match.path}/statistic`}>
-                  <StatisticContent />
+                  <StatisticContent handleDrawerToggle={handleDrawerToggle}/>
                 </Route>
                 <Route path={`${match.path}/payment`}>
-                  <PaymentContent />
+                  <PaymentContent handleDrawerToggle={handleDrawerToggle}/>
                 </Route>
                 <Route exact path={`${match.path}/search`}>
-                  <SearchContent />
+                  <SearchContent handleDrawerToggle={handleDrawerToggle}/>
                 </Route>
                 <Route exact path={`${match.path}/`}>
-                  <SearchContent />
+                  <SearchContent handleDrawerToggle={handleDrawerToggle}/>
                 </Route>
                 <Route component={PageNotFound} />
               </Switch>
-            </main>
-            <footer className={classes.footer}>
-              <Copyright />
-            </footer>
-          </div>
         </div>
       </ThemeProvider>
   );

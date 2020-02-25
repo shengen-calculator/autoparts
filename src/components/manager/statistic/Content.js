@@ -10,73 +10,136 @@ import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
+import ukLocale from "date-fns/locale/uk";
 import SearchIcon from '@material-ui/icons/Search';
-import RefreshIcon from '@material-ui/icons/Refresh';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Header from '../Header';
+import Copyright from '../Copyright';
 
 const styles = theme => ({
+    root: {
+        display: 'flex',
+        minHeight: '100vh'
+    },
+
+    app: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    main: {
+        flex: 1,
+        padding: theme.spacing(6, 4),
+        background: '#eaeff1'
+    },
+    footer: {
+        padding: theme.spacing(2),
+        background: '#eaeff1'
+    },
     paper: {
         margin: 'auto',
-        overflow: 'hidden',
+        overflow: 'hidden'
     },
     searchBar: {
-        borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
     },
     searchInput: {
-        fontSize: theme.typography.fontSize,
+        fontSize: theme.typography.fontSize
     },
     block: {
-        display: 'block',
+        display: 'block'
     },
     addUser: {
-        marginRight: theme.spacing(1),
+        marginRight: theme.spacing(1)
     },
     contentWrapper: {
-        margin: '40px 16px',
-    },
+        margin: '40px 16px'
+    }
 });
 
 function Content(props) {
-    const { classes } = props;
+    const {classes, handleDrawerToggle} = props;
 
     return (
-        <Paper className={classes.paper}>
-            <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
-                <Toolbar>
-                    <Grid container spacing={2} alignItems="center">
-                        <Grid item>
-                            <SearchIcon className={classes.block} color="inherit" />
-                        </Grid>
-                        <Grid item xs>
-                            <TextField
-                                fullWidth
-                                placeholder="Search by email address, phone number, or user UID"
-                                InputProps={{
-                                    disableUnderline: true,
-                                    className: classes.searchInput,
-                                }}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <Button variant="contained" color="primary" className={classes.addUser}>
-                                Add user
-                            </Button>
-                            <Tooltip title="Reload">
-                                <IconButton>
-                                    <RefreshIcon className={classes.block} color="inherit" />
-                                </IconButton>
-                            </Tooltip>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-            <div className={classes.contentWrapper}>
-                <Typography color="textSecondary" align="center">
-                    No users for this project yet
-                </Typography>
-            </div>
-        </Paper>
+        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ukLocale}>
+        <div className={classes.app}>
+        <Header onDrawerToggle={handleDrawerToggle}/>
+          <AppBar
+              component="div"
+              className={classes.secondaryBar}
+              color="primary"
+              position="static"
+              elevation={0}
+          >
+          <Toolbar>
+          <Grid container spacing={2} alignItems="center">
+              <Grid item>
+                  <EqualizerIcon className={classes.block} color="inherit" />
+              </Grid>
+              <Grid item xs={5} sm={4} md={3} lg={2}>
+                <KeyboardDatePicker
+                  margin="normal"
+                  id="date-picker-start"
+                  label="Дата початку"
+                  format="MM/dd/yyyy"
+                  // value={selectedDate}
+                  // onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
+                />
+              </Grid>
+
+              <Grid item>
+                  <EqualizerIcon className={classes.block} color="inherit" />
+              </Grid>
+              <Grid item xs={5} sm={5} md={3} lg={2}>
+                <KeyboardDatePicker
+                  margin="normal"
+                  id="date-picker-end"
+                  label="Дата закінчення"
+                  format="MM/dd/yyyy"
+                  // value={selectedDate}
+                  // onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
+                />
+              </Grid>
+
+          </Grid>
+        </Toolbar>
+              <Tabs value={1} textColor="inherit">
+                  <Tab textColor="inherit" label="Постачальники" />
+                  <Tab textColor="inherit" label="Запити клієнтів" />
+              </Tabs>
+          </AppBar>
+        <main className={classes.main}>
+            <Paper className={classes.paper}>
+                <AppBar className={classes.searchBar} position="static" color="default" elevation={0}></AppBar>
+                <div className={classes.contentWrapper}>
+                    {/*<Typography color="textSecondary" align="center">
+                      По Вашему запросу ничего не найдено
+                  </Typography>*/
+                    }
+                </div>
+            </Paper>
+        </main>
+        <footer className={classes.footer}>
+            <Copyright/>
+        </footer>
+    </div>
+        </MuiPickersUtilsProvider>
     );
 }
+
 
 Content.propTypes = {
     classes: PropTypes.object.isRequired,
