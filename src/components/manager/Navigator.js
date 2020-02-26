@@ -23,15 +23,15 @@ const categories = [
     {
         id: 'Робота',
         children: [
-            { id: 'Пошук', icon: <BuildIcon />, active: true },
+            { id: 'Пошук', icon: <BuildIcon /> },
             { id: 'Замовлення', icon: <DnsRoundedIcon /> },
-            { id: 'Оплата', icon: <PaymentIcon /> },
+            { id: 'Оплата', icon: <PaymentIcon />},
         ],
     },
     {
         id: 'Аналітика',
         children: [
-            { id: 'Статистика', icon: <EqualizerIcon /> },
+            { id: 'Статистика', icon: <EqualizerIcon />, active: true },
         ],
     },
 ];

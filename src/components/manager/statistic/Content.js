@@ -11,7 +11,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 import ukLocale from "date-fns/locale/uk";
-import SearchIcon from '@material-ui/icons/Search';
+import MainTable from './query/MainTable';
+import DetailsTable from './query/DetailsTable';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -22,6 +23,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Header from '../Header';
 import Copyright from '../Copyright';
+import SendIcon from "@material-ui/icons/Send";
 
 const styles = theme => ({
     root: {
@@ -75,7 +77,7 @@ function Content(props) {
               component="div"
               className={classes.secondaryBar}
               color="primary"
-              position="static"
+              position="sticky"
               elevation={0}
           >
           <Toolbar>
@@ -83,12 +85,12 @@ function Content(props) {
               <Grid item>
                   <EqualizerIcon className={classes.block} color="inherit" />
               </Grid>
-              <Grid item xs={5} sm={4} md={3} lg={2}>
+              <Grid item xs={4} sm={4} md={3} lg={2} xl={1}>
                 <KeyboardDatePicker
                   margin="normal"
                   id="date-picker-start"
-                  label="Дата початку"
-                  format="MM/dd/yyyy"
+                  label="Починаючи з"
+                  format="dd/MM/yyyy"
                   // value={selectedDate}
                   // onChange={handleDateChange}
                   KeyboardButtonProps={{
@@ -100,12 +102,12 @@ function Content(props) {
               <Grid item>
                   <EqualizerIcon className={classes.block} color="inherit" />
               </Grid>
-              <Grid item xs={5} sm={5} md={3} lg={2}>
+              <Grid item xs={5} sm={4} md={3} lg={2} xl={1}>
                 <KeyboardDatePicker
                   margin="normal"
                   id="date-picker-end"
-                  label="Дата закінчення"
-                  format="MM/dd/yyyy"
+                  label="до"
+                  format="dd/MM/yyyy"
                   // value={selectedDate}
                   // onChange={handleDateChange}
                   KeyboardButtonProps={{
@@ -113,7 +115,13 @@ function Content(props) {
                   }}
                 />
               </Grid>
-
+              <Grid item xs={1} >
+                  <Tooltip title="Розпочати пошук">
+                      <IconButton>
+                          <SendIcon className={classes.block} color="inherit" />
+                      </IconButton>
+                  </Tooltip>
+              </Grid>
           </Grid>
         </Toolbar>
               <Tabs value={1} textColor="inherit">
@@ -125,10 +133,28 @@ function Content(props) {
             <Paper className={classes.paper}>
                 <AppBar className={classes.searchBar} position="static" color="default" elevation={0}></AppBar>
                 <div className={classes.contentWrapper}>
-                    {/*<Typography color="textSecondary" align="center">
-                      По Вашему запросу ничего не найдено
-                  </Typography>*/
-                    }
+                    <Typography color="textSecondary" align="center">
+                        Замовлень 245 (99)
+                    </Typography>
+                    <Typography color="textSecondary" align="center">
+                        Зарезервовано 286 (63)
+                    </Typography>
+                    <Typography color="textSecondary" align="center">
+                        Реєстрацій 130
+                    </Typography>
+                    <Typography color="textSecondary" align="center">
+                        Всього запитів 3526
+                    </Typography>
+                </div>
+                <div className={classes.contentWrapper}>
+                <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={5}>
+                        <MainTable/>
+                    </Grid>
+                    <Grid item xs={7}>
+                        <DetailsTable/>
+                    </Grid>
+                </Grid>
                 </div>
             </Paper>
         </main>
