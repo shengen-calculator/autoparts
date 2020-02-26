@@ -150,9 +150,11 @@ const EnhancedTableToolbar = props => {
     const { numSelected } = props;
 
     return (
-        <Typography className={classes.title} variant="h6" id="tableTitle">
-            Запити клієнтів
-        </Typography>
+        <Toolbar>
+            <Typography className={classes.title} variant="h6" id="tableTitle">
+                Запити
+            </Typography>
+        </Toolbar>
     );
 };
 

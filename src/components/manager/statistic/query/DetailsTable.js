@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import {lighten, makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -26,23 +26,23 @@ import blueGrey from "@material-ui/core/colors/blueGrey";
 
 
 function createData(id, request, brand, number, available, date) {
-    return { id, request, brand, number, available, date };
+    return {id, request, brand, number, available, date};
 }
 
 const rows = [
-    createData(1,'G8G008PC','BERU',  'G8G008PC', true, '20.02.2020'),
-    createData(2,'2112-GEMT', 'BERU', '2112GEMT', true,'20.02.2020' ),
-    createData(3,'1662', 'BOSCH', '1662', false,'20.02.2020'),
-    createData(4,'22140', 'BERU', '22140', true,'20.02.2020'),
-    createData(5,'716 010 0016', 'BERU', '7160100016', false,'20.02.2020'),
-    createData(6,'301850', 'BOSCH', '301850', false,'20.02.2020'),
-    createData(7,'D4099', 'BERU', 'D4099', true,'20.02.2020'),
-    createData(8,'J42048AYMT', 'NGK', 'J42048AYMT', false,'20.02.2020'),
-    createData(9,'CVT-26', 'BOSCH', 'CVT26', false,'20.02.2020'),
-    createData(10,'GOM-293', 'NGK', 'GOM293', true,'20.02.2020'),
-    createData(11,'160101', 'BOSCH', '160101', false,'20.02.2020'),
-    createData(12,'FDB4871', 'NGK', 'FDB4871', true,'20.02.2020'),
-    createData(13,'512966', 'NGK', '512966', false,'20.02.2020'),
+    createData(1, 'G8G008PC', 'BERU', 'G8G008PC', true, '20.02.2020'),
+    createData(2, '2112-GEMT', 'BERU', '2112GEMT', true, '20.02.2020'),
+    createData(3, '1662', 'BOSCH', '1662', false, '20.02.2020'),
+    createData(4, '22140', 'BERU', '22140', true, '20.02.2020'),
+    createData(5, '716 010 0016', 'BERU', '7160100016', false, '20.02.2020'),
+    createData(6, '301850', 'BOSCH', '301850', false, '20.02.2020'),
+    createData(7, 'D4099', 'BERU', 'D4099', true, '20.02.2020'),
+    createData(8, 'J42048AYMT', 'NGK', 'J42048AYMT', false, '20.02.2020'),
+    createData(9, 'CVT-26', 'BOSCH', 'CVT26', false, '20.02.2020'),
+    createData(10, 'GOM-293', 'NGK', 'GOM293', true, '20.02.2020'),
+    createData(11, '160101', 'BOSCH', '160101', false, '20.02.2020'),
+    createData(12, 'FDB4871', 'NGK', 'FDB4871', true, '20.02.2020'),
+    createData(13, '512966', 'NGK', '512966', false, '20.02.2020'),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -72,15 +72,15 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    { id: 'request', numeric: false, disablePadding: true, label: 'Запит' },
-    { id: 'brand', numeric: false, disablePadding: true, label: 'Бренд' },
-    { id: 'number', numeric: false, disablePadding: false, label: 'Номер' },
-    { id: 'available', numeric: false, disablePadding: false, label: 'Доступно' },
-    { id: 'date', numeric: false, disablePadding: false, label: 'Дата' }
+    {id: 'request', numeric: false, disablePadding: true, label: 'Запит'},
+    {id: 'brand', numeric: false, disablePadding: true, label: 'Бренд'},
+    {id: 'number', numeric: false, disablePadding: false, label: 'Номер'},
+    {id: 'available', numeric: false, disablePadding: false, label: 'Доступно'},
+    {id: 'date', numeric: false, disablePadding: false, label: 'Дата'}
 ];
 
 function EnhancedTableHead(props) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+    const {classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} = props;
     const createSortHandler = property => event => {
         onRequestSort(event, property);
     };
@@ -146,23 +146,13 @@ const useToolbarStyles = makeStyles(theme => ({
 
 const EnhancedTableToolbar = props => {
     const classes = useToolbarStyles();
-    const { numSelected } = props;
+    const {numSelected} = props;
 
     return (
-        <Toolbar
-            className={clsx(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}
-        >
-            {numSelected > 0 ? (
-                <Typography className={classes.title} color="inherit" variant="subtitle1">
-                    {numSelected} selected
-                </Typography>
-            ) : (
-                <Typography className={classes.title} variant="h6" id="tableTitle">
-                    Деталізація по клієнту
-                </Typography>
-            )}
+        <Toolbar>
+            <Typography className={classes.title} variant="h6" id="tableTitle">
+                Деталізація за клієнтом
+            </Typography>
         </Toolbar>
     );
 };
@@ -259,7 +249,7 @@ export default function EnhancedTable() {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar numSelected={selected.length}/>
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -305,8 +295,8 @@ export default function EnhancedTable() {
                                     );
                                 })}
                             {emptyRows > 0 && (
-                                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                                    <TableCell colSpan={9} />
+                                <TableRow style={{height: (dense ? 33 : 53) * emptyRows}}>
+                                    <TableCell colSpan={9}/>
                                 </TableRow>
                             )}
                         </TableBody>
@@ -323,7 +313,7 @@ export default function EnhancedTable() {
                 />
             </Paper>
             <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeDense} />}
+                control={<Switch checked={dense} onChange={handleChangeDense}/>}
                 label="Стиснути"
             />
         </div>

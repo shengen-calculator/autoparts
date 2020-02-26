@@ -9,10 +9,8 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import ukLocale from "date-fns/locale/uk";
-import MainTable from './query/MainTable';
-import DetailsTable from './query/DetailsTable';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -24,6 +22,12 @@ import Tabs from '@material-ui/core/Tabs';
 import Header from '../Header';
 import Copyright from '../Copyright';
 import SendIcon from "@material-ui/icons/Send";
+import QueryContent from './query/Content';
+import VendorContent from './vendor/Сontent';
+import {Route, Switch} from "react-router-dom";
+import PageNotFound from "../../PageNotFound";
+
+
 
 const styles = theme => ({
     root: {
@@ -67,101 +71,85 @@ const styles = theme => ({
 });
 
 function Content(props) {
-    const {classes, handleDrawerToggle} = props;
-
+    const {classes, match, handleDrawerToggle} = props;
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ukLocale}>
-        <div className={classes.app}>
-        <Header onDrawerToggle={handleDrawerToggle}/>
-          <AppBar
-              component="div"
-              className={classes.secondaryBar}
-              color="primary"
-              position="sticky"
-              elevation={0}
-          >
-          <Toolbar>
-          <Grid container spacing={2} alignItems="center">
-              <Grid item>
-                  <EqualizerIcon className={classes.block} color="inherit" />
-              </Grid>
-              <Grid item xs={4} sm={4} md={3} lg={2} xl={1}>
-                <KeyboardDatePicker
-                  margin="normal"
-                  id="date-picker-start"
-                  label="Починаючи з"
-                  format="dd/MM/yyyy"
-                  // value={selectedDate}
-                  // onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-              </Grid>
+            <div className={classes.app}>
+                <Header onDrawerToggle={handleDrawerToggle}/>
+                <AppBar
+                    component="div"
+                    className={classes.secondaryBar}
+                    color="primary"
+                    position="sticky"
+                    elevation={0}
+                >
+                    <Toolbar>
+                        <Grid container spacing={2} alignItems="center">
+                            <Grid item>
+                                <EqualizerIcon className={classes.block} color="inherit"/>
+                            </Grid>
+                            <Grid item xs={2} sm={3} md={3} lg={2} xl={1}>
+                                <KeyboardDatePicker
+                                    margin="normal"
+                                    id="date-picker-start"
+                                    label="Починаючи з"
+                                    format="dd/MM/yyyy"
+                                    // value={selectedDate}
+                                    // onChange={handleDateChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </Grid>
 
-              <Grid item>
-                  <EqualizerIcon className={classes.block} color="inherit" />
-              </Grid>
-              <Grid item xs={5} sm={4} md={3} lg={2} xl={1}>
-                <KeyboardDatePicker
-                  margin="normal"
-                  id="date-picker-end"
-                  label="до"
-                  format="dd/MM/yyyy"
-                  // value={selectedDate}
-                  // onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-              </Grid>
-              <Grid item xs={1} >
-                  <Tooltip title="Розпочати пошук">
-                      <IconButton>
-                          <SendIcon className={classes.block} color="inherit" />
-                      </IconButton>
-                  </Tooltip>
-              </Grid>
-          </Grid>
-        </Toolbar>
-              <Tabs value={1} textColor="inherit">
-                  <Tab textColor="inherit" label="Постачальники" />
-                  <Tab textColor="inherit" label="Запити клієнтів" />
-              </Tabs>
-          </AppBar>
-        <main className={classes.main}>
-            <Paper className={classes.paper}>
-                <AppBar className={classes.searchBar} position="static" color="default" elevation={0}></AppBar>
-                <div className={classes.contentWrapper}>
-                    <Typography color="textSecondary" align="center">
-                        Замовлень 245 (99)
-                    </Typography>
-                    <Typography color="textSecondary" align="center">
-                        Зарезервовано 286 (63)
-                    </Typography>
-                    <Typography color="textSecondary" align="center">
-                        Реєстрацій 130
-                    </Typography>
-                    <Typography color="textSecondary" align="center">
-                        Всього запитів 3526
-                    </Typography>
-                </div>
-                <div className={classes.contentWrapper}>
-                <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={5}>
-                        <MainTable/>
-                    </Grid>
-                    <Grid item xs={7}>
-                        <DetailsTable/>
-                    </Grid>
-                </Grid>
-                </div>
-            </Paper>
-        </main>
-        <footer className={classes.footer}>
-            <Copyright/>
-        </footer>
-    </div>
+                            <Grid item>
+                                <EqualizerIcon className={classes.block} color="inherit"/>
+                            </Grid>
+                            <Grid item xs={3} sm={3} md={3} lg={2} xl={1}>
+                                <KeyboardDatePicker
+                                    margin="normal"
+                                    id="date-picker-end"
+                                    label="до"
+                                    format="dd/MM/yyyy"
+                                    // value={selectedDate}
+                                    // onChange={handleDateChange}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={1}>
+                                <Tooltip title="Розпочати пошук">
+                                    <IconButton>
+                                        <SendIcon className={classes.block} color="inherit"/>
+                                    </IconButton>
+                                </Tooltip>
+                            </Grid>
+                        </Grid>
+                    </Toolbar>
+                    <Tabs value={0} textColor="inherit">
+                        <Tab textColor="inherit" label="Постачальники"/>
+                        <Tab textColor="inherit" label="Запити клієнтів"/>
+                    </Tabs>
+                </AppBar>
+                <main className={classes.main}>
+                    <Switch>
+                        <Route exact path={`${match.path}/statistic/`}>
+                            <VendorContent/>
+                        </Route>
+                        <Route path={`${match.path}/statistic/query`}>
+                            <QueryContent/>
+                        </Route>
+                        <Route path={`${match.path}/statistic/vendor`}>
+                            <VendorContent/>
+                        </Route>
+                        <Route component={PageNotFound}/>
+                    </Switch>
+                </main>
+                <footer className={classes.footer}>
+                    <Copyright/>
+                </footer>
+            </div>
         </MuiPickersUtilsProvider>
     );
 }
