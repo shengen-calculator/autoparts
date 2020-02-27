@@ -13,7 +13,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
+import { StyledTableCell } from '../../common/StyledTableCell';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -92,7 +92,7 @@ function EnhancedTableHead(props) {
         <TableHead>
             <TableRow>
                 {headCells.map(headCell => (
-                    <TableCell
+                    <StyledTableCell
                         padding="default"
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
@@ -110,14 +110,14 @@ function EnhancedTableHead(props) {
                 </span>
                             ) : null}
                         </TableSortLabel>
-                    </TableCell>
+                    </StyledTableCell>
                 ))}
-                <TableCell
+                <StyledTableCell
                     padding="default"
                     key='info'
                     align='center'
                 >Інфо
-                </TableCell>
+                </StyledTableCell>
             </TableRow>
         </TableHead>
     );
@@ -150,6 +150,8 @@ const useToolbarStyles = makeStyles(theme => ({
             },
     title: {
         flex: '1 1 100%',
+        fontWeight: 600,
+        color: theme.palette.secondary.main
     },
 }));
 

@@ -18,12 +18,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import { StyledTableCell } from '../../common/StyledTableCell';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import ClearIcon from '@material-ui/icons/Clear';
 import SnoozeIcon from '@material-ui/icons/Snooze';
+
 
 
 function createData(id, vendor, brand, number, description, ordered, approved, orderNumber, euro, uah, orderDate, shipmentDate, status) {
@@ -87,8 +89,8 @@ const headCells = [
     { id: 'orderNumber', numeric: false, disablePadding: false, label: '№' },
     { id: 'euro', numeric: true, disablePadding: false, label: 'Євро' },
     { id: 'uah', numeric: true, disablePadding: false, label: 'Грн' },
-    { id: 'orderDate', numeric: false, disablePadding: false, label: 'Дата замовл.' },
-    { id: 'shipmentDate', numeric: false, disablePadding: false, label: 'Дата дост.' },
+    { id: 'orderDate', numeric: false, disablePadding: false, label: 'Замовл.' },
+    { id: 'shipmentDate', numeric: false, disablePadding: false, label: 'Доставка' },
     { id: 'status', numeric: false, disablePadding: false, label: 'Статус' },
 ];
 
@@ -101,16 +103,16 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell padding="checkbox">
+                <StyledTableCell padding="checkbox">
                     <Checkbox
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
                         inputProps={{ 'aria-label': 'select all desserts' }}
                     />
-                </TableCell>
+                </StyledTableCell>
                 {headCells.map(headCell => (
-                    <TableCell
+                    <StyledTableCell
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'default'}
@@ -128,7 +130,7 @@ function EnhancedTableHead(props) {
                 </span>
                             ) : null}
                         </TableSortLabel>
-                    </TableCell>
+                    </StyledTableCell>
                 ))}
             </TableRow>
         </TableHead>
@@ -162,6 +164,8 @@ const useToolbarStyles = makeStyles(theme => ({
             },
     title: {
         flex: '1 1 100%',
+        fontWeight: 600,
+        color: theme.palette.secondary.main
     },
 }));
 

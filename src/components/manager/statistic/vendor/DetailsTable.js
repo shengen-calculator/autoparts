@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import {lighten, makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,11 +12,9 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import { StyledTableCell } from '../../../common/StyledTableCell';
 
 
 function createData(id, vip, brand, number, quantity, available, price, date) {
@@ -84,7 +81,7 @@ function EnhancedTableHead(props) {
         <TableHead>
             <TableRow>
                 {headCells.map(headCell => (
-                    <TableCell
+                    <StyledTableCell
                         padding="default"
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
@@ -102,7 +99,7 @@ function EnhancedTableHead(props) {
                 </span>
                             ) : null}
                         </TableSortLabel>
-                    </TableCell>
+                    </StyledTableCell>
                 ))}
             </TableRow>
         </TableHead>
@@ -136,6 +133,8 @@ const useToolbarStyles = makeStyles(theme => ({
             },
     title: {
         flex: '1 1 100%',
+        fontWeight: 600,
+        color: theme.palette.secondary.main
     },
 }));
 

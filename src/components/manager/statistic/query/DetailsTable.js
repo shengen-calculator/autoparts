@@ -13,16 +13,9 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
+import { StyledTableCell } from '../../../common/StyledTableCell';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import InfoIcon from '@material-ui/icons/Info';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import lime from '@material-ui/core/colors/lime';
-import blueGrey from "@material-ui/core/colors/blueGrey";
 
 
 function createData(id, request, brand, number, available, date) {
@@ -89,7 +82,7 @@ function EnhancedTableHead(props) {
         <TableHead>
             <TableRow>
                 {headCells.map(headCell => (
-                    <TableCell
+                    <StyledTableCell
                         padding="default"
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
@@ -107,7 +100,7 @@ function EnhancedTableHead(props) {
                 </span>
                             ) : null}
                         </TableSortLabel>
-                    </TableCell>
+                    </StyledTableCell>
                 ))}
             </TableRow>
         </TableHead>
@@ -141,6 +134,8 @@ const useToolbarStyles = makeStyles(theme => ({
             },
     title: {
         flex: '1 1 100%',
+        fontWeight: 600,
+        color: theme.palette.secondary.main
     },
 }));
 
