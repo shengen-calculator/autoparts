@@ -13,7 +13,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import { StyledTableCell } from '../../../common/StyledTableCell';
+import { TableHeaderCell } from '../../../common/TableHeaderCell';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
@@ -82,7 +82,7 @@ function EnhancedTableHead(props) {
         <TableHead>
             <TableRow>
                 {headCells.map(headCell => (
-                    <StyledTableCell
+                    <TableHeaderCell
                         padding="default"
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
@@ -100,7 +100,7 @@ function EnhancedTableHead(props) {
                 </span>
                             ) : null}
                         </TableSortLabel>
-                    </StyledTableCell>
+                    </TableHeaderCell>
                 ))}
             </TableRow>
         </TableHead>

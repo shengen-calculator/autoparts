@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import { StyledTableCell } from '../../../common/StyledTableCell';
+import { TableHeaderCell } from '../../../common/TableHeaderCell';
 
 
 function createData(id, vip, brand, number, quantity, available, price, date) {
@@ -81,7 +81,7 @@ function EnhancedTableHead(props) {
         <TableHead>
             <TableRow>
                 {headCells.map(headCell => (
-                    <StyledTableCell
+                    <TableHeaderCell
                         padding="default"
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
@@ -99,7 +99,7 @@ function EnhancedTableHead(props) {
                 </span>
                             ) : null}
                         </TableSortLabel>
-                    </StyledTableCell>
+                    </TableHeaderCell>
                 ))}
             </TableRow>
         </TableHead>
