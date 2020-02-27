@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function EnhancedTable(props) {
 
-    const { tableRow, rows, headCells, title, isFilterShown, rowsPerPageOptions, isSelectorFieldShown } = props;
+    const { tableRow, rows, headCells, title, isFilterShown, rowsPerPageOptions, isRowSelectorShown } = props;
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -105,7 +105,12 @@ export default function EnhancedTable(props) {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} title={title} isFilterShown={isFilterShown} />
+                <EnhancedTableToolbar
+                    numSelected={selected.length}
+                    title={title}
+                    isFilterShown={isFilterShown}
+                    isRowSelectorShown={isRowSelectorShown}
+                />
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -122,7 +127,7 @@ export default function EnhancedTable(props) {
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                             headCells={headCells}
-                            isSelectorFieldShown={isSelectorFieldShown}
+                            isRowSelectorShown={isRowSelectorShown}
                         />
                         <TableBody>
                             {StableSort(rows, GetComparator(order, orderBy))

@@ -104,7 +104,7 @@ export default function OrderTable() {
             title="Замовлення"
             isFilterShown={false}
             rowsPerPageOptions={[5, 10, 25]}
-            isSelectorFieldShown={true}
+            isRowSelectorShown={true}
         />
     );
 }

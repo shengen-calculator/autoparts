@@ -86,7 +86,7 @@ export default function ReserveTable() {
           title="Виконано"
           isFilterShown={false}
           rowsPerPageOptions={[5, 10, 25]}
-          isSelectorFieldShown={true}
+          isRowSelectorShown={true}
       />
     );
 }

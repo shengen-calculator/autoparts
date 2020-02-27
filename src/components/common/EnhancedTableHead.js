@@ -17,7 +17,7 @@ const TableHeaderCell = withStyles(() => ({
 
 export default function EnhancedTableHead(props) {
     const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount,
-        onRequestSort, headCells, isSelectorFieldShown } = props;
+        onRequestSort, headCells, isRowSelectorShown } = props;
     const createSortHandler = property => event => {
         onRequestSort(event, property);
     };
@@ -25,7 +25,7 @@ export default function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                {isSelectorFieldShown && <TableHeaderCell padding="checkbox">
+                {isRowSelectorShown && <TableHeaderCell padding="checkbox">
                     <Checkbox
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}

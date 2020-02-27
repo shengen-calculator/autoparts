@@ -68,7 +68,7 @@ export default function MainTable() {
             title="Запити"
             isFilterShown={false}
             rowsPerPageOptions={[15, 25, 50]}
-            isSelectorFieldShown={false}
+            isRowSelectorShown={false}
         />
     );
 }

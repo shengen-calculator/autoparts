@@ -69,7 +69,7 @@ export default function DetailTable() {
             title="Деталізація за клієнтом"
             isFilterShown={false}
             rowsPerPageOptions={[15, 25, 50]}
-            isSelectorFieldShown={false}
+            isRowSelectorShown={false}
         />
     );
 }
