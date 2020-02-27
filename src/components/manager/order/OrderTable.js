@@ -97,6 +97,14 @@ function tableRow(row, index, isSelected, handleClick) {
 
 export default function OrderTable() {
     return(
-        <EnhancedTable rows={rows} headCells={headCells} tableRow={tableRow} title="Замовлення" isFilterShown={false}/>
+        <EnhancedTable
+            rows={rows}
+            headCells={headCells}
+            tableRow={tableRow}
+            title="Замовлення"
+            isFilterShown={false}
+            rowsPerPageOptions={[5, 10, 25]}
+            isSelectorFieldShown={true}
+        />
     );
 }

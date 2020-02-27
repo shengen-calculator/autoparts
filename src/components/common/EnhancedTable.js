@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function EnhancedTable(props) {
 
-    const { tableRow, rows, headCells, title, isFilterShown } = props;
+    const { tableRow, rows, headCells, title, isFilterShown, rowsPerPageOptions, isSelectorFieldShown } = props;
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -49,7 +49,7 @@ export default function EnhancedTable(props) {
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(true);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageOptions[0]);
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -122,6 +122,7 @@ export default function EnhancedTable(props) {
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
                             headCells={headCells}
+                            isSelectorFieldShown={isSelectorFieldShown}
                         />
                         <TableBody>
                             {StableSort(rows, GetComparator(order, orderBy))
@@ -138,7 +139,7 @@ export default function EnhancedTable(props) {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
+                    rowsPerPageOptions={rowsPerPageOptions}
                     component="div"
                     count={rows.length}
                     rowsPerPage={rowsPerPage}

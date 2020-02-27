@@ -1,13 +1,13 @@
+import React from "react";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import React from "react";
 import PropTypes from "prop-types";
 import Checkbox from "@material-ui/core/Checkbox";
 import {withStyles} from "@material-ui/core/styles";
 import TableCell from "@material-ui/core/TableCell";
 
-const TableHeaderCell = withStyles(theme => ({
+const TableHeaderCell = withStyles(() => ({
     head: {
         fontSize: 16,
         fontWeight: 600
@@ -16,7 +16,8 @@ const TableHeaderCell = withStyles(theme => ({
 
 
 export default function EnhancedTableHead(props) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } = props;
+    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount,
+        onRequestSort, headCells, isSelectorFieldShown } = props;
     const createSortHandler = property => event => {
         onRequestSort(event, property);
     };
@@ -24,14 +25,14 @@ export default function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableHeaderCell padding="checkbox">
+                {isSelectorFieldShown && <TableHeaderCell padding="checkbox">
                     <Checkbox
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
                         inputProps={{ 'aria-label': 'select all desserts' }}
                     />
-                </TableHeaderCell>
+                </TableHeaderCell>}
                 {headCells.map(headCell => (
                     <TableHeaderCell
                         key={headCell.id}

@@ -79,6 +79,14 @@ function tableRow(row, index, isSelected, handleClick) {
 
 export default function ReserveTable() {
     return(
-      <EnhancedTable rows={rows} headCells={headCells} tableRow={tableRow} title="Виконано" isFilterShown={false}/>
+      <EnhancedTable
+          rows={rows}
+          headCells={headCells}
+          tableRow={tableRow}
+          title="Виконано"
+          isFilterShown={false}
+          rowsPerPageOptions={[5, 10, 25]}
+          isSelectorFieldShown={true}
+      />
     );
 }
