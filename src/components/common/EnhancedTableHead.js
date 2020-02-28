@@ -16,8 +16,10 @@ const TableHeaderCell = withStyles(() => ({
 
 
 export default function EnhancedTableHead(props) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount,
-        onRequestSort, headCells, isRowSelectorShown } = props;
+    const {
+        classes, onSelectAllClick, order, orderBy, numSelected, rowCount,
+        onRequestSort, headCells, isRowSelectorShown
+    } = props;
     const createSortHandler = property => event => {
         onRequestSort(event, property);
     };
@@ -30,30 +32,38 @@ export default function EnhancedTableHead(props) {
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}
                         onChange={onSelectAllClick}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
+                        inputProps={{'aria-label': 'select all desserts'}}
                     />
                 </TableHeaderCell>}
-                {headCells.map(headCell => (
-                    <TableHeaderCell
-                        key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'default'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <span className={classes.visuallyHidden}>
+                {headCells.map(headCell => {
+                        let align = headCell.numeric ? 'right' : 'left';
+                        if (headCell.align) {
+                            align = headCell.align;
+                        }
+                        return (
+                            <TableHeaderCell
+                                key={headCell.id}
+                                align={align}
+                                padding={headCell.disablePadding ? 'none' : 'default'}
+                                sortDirection={orderBy === headCell.id ? order : false}
+                            >
+                                {align === 'center' ? headCell.label :
+                                    <TableSortLabel
+                                        active={orderBy === headCell.id}
+                                        direction={orderBy === headCell.id ? order : 'asc'}
+                                        onClick={createSortHandler(headCell.id)}
+                                    >
+                                        {headCell.label}
+                                        {orderBy === headCell.id ? (
+                                            <span className={classes.visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </span>
-                            ) : null}
-                        </TableSortLabel>
-                    </TableHeaderCell>
-                ))}
+                                        ) : null}
+                                    </TableSortLabel>}
+                            </TableHeaderCell>
+                        )
+                    }
+                )}
             </TableRow>
         </TableHead>
     );
