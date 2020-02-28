@@ -4,5 +4,6 @@ export const TitleIconEnum = Object.freeze({
     "infinity": 2,
     "payment": 3,
     "mall": 4,
-    "railway": 5
+    "railway": 5,
+    "flight": 6
 });

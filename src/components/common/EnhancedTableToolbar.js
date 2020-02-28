@@ -15,6 +15,7 @@ import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import DirectionsRailwayIcon from '@material-ui/icons/DirectionsRailway';
+import FlightTakeoffIcon from '@material-ui/icons/FlightTakeoff';
 
 const useToolbarStyles = makeStyles(theme => ({
     root: {
@@ -64,6 +65,7 @@ export const EnhancedTableToolbar = props => {
                     {titleIcon === TitleIconEnum.payment && <CreditCardIcon className={classes.icon}/>}
                     {titleIcon === TitleIconEnum.mall && <LocalMallIcon className={classes.icon}/>}
                     {titleIcon === TitleIconEnum.railway && <DirectionsRailwayIcon className={classes.icon}/>}
+                    {titleIcon === TitleIconEnum.flight && <FlightTakeoffIcon className={classes.icon}/>}
                 </Typography>
             )}
 
