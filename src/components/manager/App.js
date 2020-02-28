@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 import {createMuiTheme, ThemeProvider, withStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 import Navigator from './Navigator';
 import SearchContent from './search/Content';
 import OrderContent from './order/Content';
 import PaymentContent from './payment/Content';
 import StatisticContent from './statistic/Content';
-import Header from './Header';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../PageNotFound";
 
