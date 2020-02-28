@@ -1,6 +1,7 @@
 import React from 'react';
 import EnhancedTable from '../../common/EnhancedTable';
 import SearchTableRow from './SearchTableRow';
+import {TitleIconEnum} from "../../../util/Enums";
 
 
 function createData(id, brand, number, description, retail, cost, available, reserve, order, term, date) {
@@ -42,6 +43,7 @@ export default function AnalogTable() {
             headCells={headCells}
             tableRow={SearchTableRow}
             title="Аналоги артикула"
+            titleIcon={TitleIconEnum.infinity}
             isFilterShown={false}
             rowsPerPageOptions={[15, 25, 50]}
             isRowSelectorShown={false}

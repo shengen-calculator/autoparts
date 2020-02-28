@@ -1,6 +1,7 @@
 import React from 'react';
 import EnhancedTable from "../../common/EnhancedTable";
 import SearchTableRow from './SearchTableRow';
+import {TitleIconEnum} from "../../../util/Enums";
 
 
 function createData(id, brand, number, description, retail, cost, available, reserve, order, term, date) {
@@ -42,6 +43,7 @@ export default function VendorTable() {
             headCells={headCells}
             tableRow={SearchTableRow}
             title="Знайдено за артикулом"
+            titleIcon={TitleIconEnum.track}
             isFilterShown={false}
             rowsPerPageOptions={[5, 10, 25]}
             isRowSelectorShown={false}

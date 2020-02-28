@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function EnhancedTable(props) {
 
-    const { tableRow, rows, headCells, title, isFilterShown, rowsPerPageOptions, isRowSelectorShown } = props;
+    const { tableRow, rows, headCells, title, titleIcon, isFilterShown, rowsPerPageOptions, isRowSelectorShown } = props;
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -108,6 +108,7 @@ export default function EnhancedTable(props) {
                 <EnhancedTableToolbar
                     numSelected={selected.length}
                     title={title}
+                    titleIcon={titleIcon}
                     isFilterShown={isFilterShown}
                     isRowSelectorShown={isRowSelectorShown}
                 />

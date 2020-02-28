@@ -8,6 +8,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import PropTypes from "prop-types";
 import React from "react";
+import {TitleIconEnum} from '../../util/Enums';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 const useToolbarStyles = makeStyles(theme => ({
     root: {
@@ -29,12 +33,15 @@ const useToolbarStyles = makeStyles(theme => ({
         fontWeight: 600,
         color: theme.palette.secondary.main
     },
+    icon: {
+        marginLeft: theme.spacing(2)
+    }
 }));
 
 
 export const EnhancedTableToolbar = props => {
     const classes = useToolbarStyles();
-    const { numSelected, title, isFilterShown, isRowSelectorShown } = props;
+    const { numSelected, title, titleIcon, isFilterShown, isRowSelectorShown } = props;
     return (
         <Toolbar
             className={clsx(classes.root, {
@@ -48,6 +55,9 @@ export const EnhancedTableToolbar = props => {
             ) : (
                 <Typography className={classes.title} variant="h6" id="tableTitle">
                     {title}
+                    {titleIcon === TitleIconEnum.check && <DoneOutlineIcon className={classes.icon}/>}
+                    {titleIcon === TitleIconEnum.track && <LocalShippingIcon className={classes.icon}/>}
+                    {titleIcon === TitleIconEnum.infinity && <AllInclusiveIcon className={classes.icon}/>}
                 </Typography>
             )}
 

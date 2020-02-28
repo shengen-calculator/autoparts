@@ -1,7 +1,8 @@
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import EnhancedTable from "../../common/EnhancedTable";
+import EnhancedTable from '../../common/EnhancedTable';
+import {TitleIconEnum} from '../../../util/Enums';
 
 function createData(id, brand, number, description, retail, cost, available, reserve, order, term, date) {
     return { id, brand, number, description, retail, cost, available, reserve, order, term, date };
@@ -68,6 +69,7 @@ export default function DetailsTable() {
             headCells={headCells}
             tableRow={tableRow}
             title="В наявності на складі"
+            titleIcon={TitleIconEnum.check}
             isFilterShown={false}
             rowsPerPageOptions={[5, 10, 25]}
             isRowSelectorShown={false}

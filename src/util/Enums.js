@@ -1,0 +1,1 @@
+export const TitleIconEnum = Object.freeze({"check":0, "track":1, "infinity":2});
