@@ -40,7 +40,7 @@ function Content(props) {
             <Header onDrawerToggle={handleDrawerToggle}/>
             <main className={classes.main}>
                 <Paper className={classes.paper}>
-                    <AppBar className={classes.searchBar} position="static" color="default" elevation={0}></AppBar>
+                    <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                     <div className={classes.contentWrapper}>
                         {/*<Typography color="textSecondary" align="center">
                       По Вашему запросу ничего не найдено

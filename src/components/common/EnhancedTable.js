@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(2),
     },
     table: {
-        minWidth: 750,
+        minWidth: 350,
     },
     visuallyHidden: {
         border: 0,
