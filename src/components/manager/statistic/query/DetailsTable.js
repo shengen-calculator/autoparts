@@ -60,7 +60,7 @@ function tableRow(row, index, isSelected, handleClick) {
 
 }
 
-export default function DetailTable() {
+export default function DetailsTable() {
     return(
         <EnhancedTable
             rows={rows}

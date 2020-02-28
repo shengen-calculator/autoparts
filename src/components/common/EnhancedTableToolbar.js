@@ -12,6 +12,7 @@ import {TitleIconEnum} from '../../util/Enums';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import CreditCardIcon from '@material-ui/icons/CreditCard';
 
 const useToolbarStyles = makeStyles(theme => ({
     root: {
@@ -58,6 +59,7 @@ export const EnhancedTableToolbar = props => {
                     {titleIcon === TitleIconEnum.check && <DoneOutlineIcon className={classes.icon}/>}
                     {titleIcon === TitleIconEnum.track && <LocalShippingIcon className={classes.icon}/>}
                     {titleIcon === TitleIconEnum.infinity && <AllInclusiveIcon className={classes.icon}/>}
+                    {titleIcon === TitleIconEnum.payment && <CreditCardIcon className={classes.icon}/>}
                 </Typography>
             )}
 
