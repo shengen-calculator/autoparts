@@ -67,6 +67,7 @@ export default function DetailsTable() {
             headCells={headCells}
             tableRow={tableRow}
             title="Деталізація за клієнтом"
+            columns={5}
             isFilterShown={false}
             rowsPerPageOptions={[15, 25, 50]}
             isRowSelectorShown={false}

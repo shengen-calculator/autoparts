@@ -90,6 +90,7 @@ export default function ReserveTable() {
           tableRow={tableRow}
           title="Виконано"
           titleIcon={TitleIconEnum.mall}
+          columns={12}
           total={2349.44}
           isFilterShown={false}
           rowsPerPageOptions={[5, 10, 25]}

@@ -53,6 +53,7 @@ export default function PaymentTable() {
             tableRow={tableRow}
             title="План платежів"
             titleIcon={TitleIconEnum.payment}
+            columns={2}
             isFilterShown={false}
             rowsPerPageOptions={[10, 15, 25]}
             isRowSelectorShown={false}

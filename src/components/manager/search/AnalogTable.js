@@ -44,6 +44,7 @@ export default function AnalogTable() {
             tableRow={SearchTableRow}
             title="Аналоги артикула"
             titleIcon={TitleIconEnum.infinity}
+            columns={9}
             isFilterShown={false}
             rowsPerPageOptions={[15, 25, 50]}
             isRowSelectorShown={false}

@@ -44,6 +44,7 @@ export default function VendorTable() {
             tableRow={SearchTableRow}
             title="Знайдено за артикулом"
             titleIcon={TitleIconEnum.track}
+            columns={9}
             isFilterShown={false}
             rowsPerPageOptions={[5, 10, 25]}
             isRowSelectorShown={false}

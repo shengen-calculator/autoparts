@@ -70,6 +70,7 @@ export default function GeneralTable() {
             tableRow={tableRow}
             title="В наявності на складі"
             titleIcon={TitleIconEnum.check}
+            columns={7}
             isFilterShown={false}
             rowsPerPageOptions={[5, 10, 25]}
             isRowSelectorShown={false}

@@ -60,6 +60,7 @@ export default function MainTable() {
             headCells={headCells}
             tableRow={tableRow}
             title="Замовлення"
+            columns={2}
             isFilterShown={false}
             rowsPerPageOptions={[15, 25, 50]}
             isRowSelectorShown={false}

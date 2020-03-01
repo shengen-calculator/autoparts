@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function EnhancedTable(props) {
 
-    const { tableRow, rows, headCells, title, titleIcon, total, isFilterShown, rowsPerPageOptions, isRowSelectorShown } = props;
+    const { tableRow, rows, headCells, title, titleIcon, total, columns, isFilterShown, rowsPerPageOptions, isRowSelectorShown } = props;
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -139,7 +139,7 @@ export default function EnhancedTable(props) {
                                 })}
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                                    <TableCell colSpan={6} />
+                                    <TableCell colSpan={columns} />
                                 </TableRow>
                             )}
                         </TableBody>
