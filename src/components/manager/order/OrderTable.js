@@ -104,6 +104,7 @@ export default function OrderTable() {
             tableRow={tableRow}
             title="Замовлення"
             titleIcon={TitleIconEnum.flight}
+            total={319.26}
             isFilterShown={false}
             rowsPerPageOptions={[5, 10, 25]}
             isRowSelectorShown={true}

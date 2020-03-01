@@ -16,6 +16,7 @@ import CreditCardIcon from '@material-ui/icons/CreditCard';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import DirectionsRailwayIcon from '@material-ui/icons/DirectionsRailway';
 import FlightTakeoffIcon from '@material-ui/icons/FlightTakeoff';
+import Grid from "@material-ui/core/Grid";
 
 const useToolbarStyles = makeStyles(theme => ({
     root: {
@@ -37,6 +38,13 @@ const useToolbarStyles = makeStyles(theme => ({
         fontWeight: 600,
         color: theme.palette.secondary.main
     },
+    total: {
+        flex: '1 1 100%',
+        fontWeight: 600,
+        textAlign: 'right',
+        paddingRight: theme.spacing(3),
+        color: theme.palette.secondary.main
+    },
     icon: {
         marginLeft: theme.spacing(2)
     }
@@ -45,7 +53,7 @@ const useToolbarStyles = makeStyles(theme => ({
 
 export const EnhancedTableToolbar = props => {
     const classes = useToolbarStyles();
-    const { numSelected, title, titleIcon, isFilterShown, isRowSelectorShown } = props;
+    const { numSelected, title, titleIcon, total, isFilterShown, isRowSelectorShown } = props;
     return (
         <Toolbar
             className={clsx(classes.root, {
@@ -57,16 +65,26 @@ export const EnhancedTableToolbar = props => {
                     {numSelected} selected
                 </Typography>
             ) : (
-                <Typography className={classes.title} variant="h6" id="tableTitle">
-                    {title}
-                    {titleIcon === TitleIconEnum.check && <DoneOutlineIcon className={classes.icon}/>}
-                    {titleIcon === TitleIconEnum.track && <LocalShippingIcon className={classes.icon}/>}
-                    {titleIcon === TitleIconEnum.infinity && <AllInclusiveIcon className={classes.icon}/>}
-                    {titleIcon === TitleIconEnum.payment && <CreditCardIcon className={classes.icon}/>}
-                    {titleIcon === TitleIconEnum.mall && <LocalMallIcon className={classes.icon}/>}
-                    {titleIcon === TitleIconEnum.railway && <DirectionsRailwayIcon className={classes.icon}/>}
-                    {titleIcon === TitleIconEnum.flight && <FlightTakeoffIcon className={classes.icon}/>}
-                </Typography>
+                <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                        <Typography className={classes.title} variant="h6">
+                            {title}
+                            {titleIcon === TitleIconEnum.check && <DoneOutlineIcon className={classes.icon}/>}
+                            {titleIcon === TitleIconEnum.track && <LocalShippingIcon className={classes.icon}/>}
+                            {titleIcon === TitleIconEnum.infinity && <AllInclusiveIcon className={classes.icon}/>}
+                            {titleIcon === TitleIconEnum.payment && <CreditCardIcon className={classes.icon}/>}
+                            {titleIcon === TitleIconEnum.mall && <LocalMallIcon className={classes.icon}/>}
+                            {titleIcon === TitleIconEnum.railway && <DirectionsRailwayIcon className={classes.icon}/>}
+                            {titleIcon === TitleIconEnum.flight && <FlightTakeoffIcon className={classes.icon}/>}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        {total !== undefined && <Typography className={classes.total} variant="h6">
+                        {total}
+                        </Typography>}
+                    </Grid>
+                </Grid>
+
             )}
 
             {

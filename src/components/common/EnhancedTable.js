@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function EnhancedTable(props) {
 
-    const { tableRow, rows, headCells, title, titleIcon, isFilterShown, rowsPerPageOptions, isRowSelectorShown } = props;
+    const { tableRow, rows, headCells, title, titleIcon, total, isFilterShown, rowsPerPageOptions, isRowSelectorShown } = props;
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -100,7 +100,7 @@ export default function EnhancedTable(props) {
 
     const isSelected = name => selected.indexOf(name) !== -1;
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(Number(rowsPerPage), rows.length - page * rowsPerPage);
 
     return (
         <div className={classes.root}>
@@ -109,6 +109,7 @@ export default function EnhancedTable(props) {
                     numSelected={selected.length}
                     title={title}
                     titleIcon={titleIcon}
+                    total={total}
                     isFilterShown={isFilterShown}
                     isRowSelectorShown={isRowSelectorShown}
                 />
