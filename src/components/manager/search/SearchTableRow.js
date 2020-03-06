@@ -32,7 +32,7 @@ export default function SearchTableRow(row, index, isSelected, handleClick) {
                             {row.number}
                         </Grid>
                         <Grid item>
-                            <Tooltip title="Відмінна якість">
+                            <Tooltip title="Гарантія відповідності виробнику">
                                 <ThumbUpIcon style={{fontSize: 10, marginBottom: 5, marginLeft: 3}}/>
                             </Tooltip>
                         </Grid>
