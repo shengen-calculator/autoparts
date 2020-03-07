@@ -3,8 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import ClientPage from "./client/App";
 import ManagerPage from "./manager/App";
 import PageNotFound from "./PageNotFound";
-import LoginPage from "./auth/LoginPage";
-import RegistrationPage from "./auth/RegistrationPage";
+import Auth from "./auth/Auth";
 
 function App() {
     return (
@@ -13,8 +12,7 @@ function App() {
                 <Route exact path="/" component={ClientPage} />
                 <Route path="/client" component={ClientPage} />
                 <Route path="/manager" component={ManagerPage} />
-                <Route path="/login" component={LoginPage} />
-                <Route path="/registration" component={RegistrationPage} />
+                <Route path="/auth" component={Auth} />
                 <Route component={PageNotFound} />
             </Switch>
         </div>

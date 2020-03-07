@@ -16,7 +16,7 @@ import {
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Header from '../Header';
-import Copyright from '../Copyright';
+import Copyright from '../../common/Copyright';
 import SendIcon from "@material-ui/icons/Send";
 import QueryContent from './query/Content';
 import VendorContent from './vendor/Сontent';

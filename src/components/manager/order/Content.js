@@ -6,7 +6,7 @@ import {withStyles} from '@material-ui/core/styles';
 import OrderTable from "./OrderTable";
 import ReserveTable from "./ReserveTable";
 import Header from "../Header";
-import Copyright from "../Copyright";
+import Copyright from "../../common/Copyright";
 
 const styles = theme => ({
     paper: {

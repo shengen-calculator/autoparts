@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Paper from '@material-ui/core/Paper';
 import {withStyles} from '@material-ui/core/styles';
 import Header from "../Header";
-import Copyright from "../Copyright";
+import Copyright from "../../common/Copyright";
 import PaymentTable from "./PaymentTable";
 
 const styles = theme => ({

@@ -7,7 +7,7 @@ import GeneralTable from "./GeneralTable";
 import VendorTable from "./VendorTable";
 import AnalogTable from "./AnalogTable";
 import Header from '../Header';
-import Copyright from '../Copyright';
+import Copyright from '../../common/Copyright';
 
 const drawerWidth = 256;
 const styles = theme => ({
