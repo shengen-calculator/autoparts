@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,8 +22,12 @@ import QueryContent from './query/Content';
 import VendorContent from './vendor/Сontent';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../../PageNotFound";
+import { Link as RouterLink } from 'react-router-dom';
 
-
+const tabs = [
+    {id: 'vendor', name: 'Постачальники', page: <VendorContent/>},
+    {id: 'query', name: 'Запити клієнтів', page: <QueryContent/>}
+];
 
 const styles = theme => ({
     root: {
@@ -68,6 +72,8 @@ const styles = theme => ({
 
 function Content(props) {
     const {classes, match, handleDrawerToggle} = props;
+    const index = tabs.findIndex(tab => window.location.href.includes(tab.id));
+
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ukLocale}>
             <div className={classes.app}>
@@ -123,22 +129,26 @@ function Content(props) {
                             </Grid>
                         </Grid>
                     </Toolbar>
-                    <Tabs value={0} textColor="inherit">
-                        <Tab textColor="inherit" label="Постачальники"/>
-                        <Tab textColor="inherit" label="Запити клієнтів"/>
-                    </Tabs>
+                    <Tabs value={index > 0 ? index : 0} textColor="inherit">
+                        {tabs.map(({id, name }) => (
+                            <Tab key={id}
+                                 textColor="inherit"
+                                 label={name}
+                                 component={RouterLink}
+                                 to={`${match.path}/statistic/${id}`} />
+                        ))}
+                   </Tabs>
                 </AppBar>
                 <main className={classes.main}>
                     <Switch>
                         <Route exact path={`${match.path}/statistic/`}>
-                            <VendorContent/>
+                            {tabs[0].page}
                         </Route>
-                        <Route path={`${match.path}/statistic/query`}>
-                            <QueryContent/>
-                        </Route>
-                        <Route path={`${match.path}/statistic/vendor`}>
-                            <VendorContent/>
-                        </Route>
+                        {tabs.map(({id, page }) => (
+                            <Route key={id} path={`${match.path}/statistic/${id}`}>
+                                {page}
+                            </Route>
+                        ))}
                         <Route component={PageNotFound}/>
                     </Switch>
                 </main>

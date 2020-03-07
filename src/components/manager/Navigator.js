@@ -13,20 +13,21 @@ import PeopleIcon from '@material-ui/icons/People';
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import PaymentIcon from '@material-ui/icons/Payment';
+import {NavLink} from "react-router-dom";
 
 const categories = [
     {
         id: 'Робота',
         children: [
-            { id: 'Пошук', icon: <BuildIcon /> },
-            { id: 'Замовлення', icon: <DnsRoundedIcon />, active: true },
-            { id: 'Оплата', icon: <PaymentIcon />},
+            { id: 'Пошук', icon: <BuildIcon />, path: 'search' },
+            { id: 'Замовлення', icon: <DnsRoundedIcon />, path: 'order' },
+            { id: 'Оплата', icon: <PaymentIcon />, path: 'payment'},
         ],
     },
     {
         id: 'Аналітика',
         children: [
-            { id: 'Статистика', icon: <EqualizerIcon /> },
+            { id: 'Статистика', icon: <EqualizerIcon />, path: 'statistic' },
         ],
     },
 ];
@@ -73,7 +74,7 @@ const styles = theme => ({
 });
 
 function Navigator(props) {
-    const { classes, ...other } = props;
+    const {classes, ...other} = props;
 
     return (
         <Drawer variant="permanent" {...other}>
@@ -83,7 +84,7 @@ function Navigator(props) {
                 </ListItem>
                 <ListItem className={clsx(classes.item, classes.itemCategory)}>
                     <ListItemIcon className={classes.itemIcon}>
-                        <PeopleIcon />
+                        <PeopleIcon/>
                     </ListItemIcon>
                     <ListItemText
                         classes={{
@@ -93,7 +94,7 @@ function Navigator(props) {
                         1000 - Токарь Игорь
                     </ListItemText>
                 </ListItem>
-                {categories.map(({ id, children }) => (
+                {categories.map(({id, children}) => (
                     <React.Fragment key={id}>
                         <ListItem className={classes.categoryHeader}>
                             <ListItemText
@@ -104,11 +105,20 @@ function Navigator(props) {
                                 {id}
                             </ListItemText>
                         </ListItem>
-                        {children.map(({ id: childId, icon, active }) => (
+                        {children.map(({id: childId, icon, path}) => (
                             <ListItem
                                 key={childId}
                                 button
-                                className={clsx(classes.item, active && classes.itemActiveItem)}
+                                component={NavLink} to={`/manager/${path}`}
+                                activeClassName={classes.itemActiveItem}
+                                isActive={(match, location) => {
+                                    if (match) {
+                                        return location.pathname.includes(match.url);
+                                    } else {
+                                        return path === 'search' && location.pathname === '/manager';
+                                    }
+                                }}
+                                className={classes.item}
                             >
                                 <ListItemIcon className={classes.itemIcon}>{icon}</ListItemIcon>
                                 <ListItemText
@@ -121,7 +131,7 @@ function Navigator(props) {
                             </ListItem>
                         ))}
 
-                        <Divider className={classes.divider} />
+                        <Divider className={classes.divider}/>
                     </React.Fragment>
                 ))}
             </List>
