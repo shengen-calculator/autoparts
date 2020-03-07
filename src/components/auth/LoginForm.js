@@ -8,6 +8,7 @@ import Box from "@material-ui/core/Box";
 import Copyright from "../common/Copyright";
 import React from "react";
 import Link from "@material-ui/core/Link";
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function LoginPage(props) {
     const {classes} = props;
@@ -57,7 +58,7 @@ export default function LoginPage(props) {
 
                     </Grid>
                     <Grid item>
-                        <Link href="#" variant="body2">
+                        <Link component={RouterLink} to="/auth/registration" variant="body2">
                             {"Немає акаунту? Зареєструватись"}
                         </Link>
                     </Grid>
