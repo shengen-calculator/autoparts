@@ -115,7 +115,8 @@ function Navigator(props) {
                                     if (match) {
                                         return location.pathname.includes(match.url);
                                     } else {
-                                        return path === 'search' && location.pathname === '/manager';
+                                        return path === 'search' &&
+                                            (location.pathname === '/manager' || location.pathname === '/manager/');
                                     }
                                 }}
                                 className={classes.item}
