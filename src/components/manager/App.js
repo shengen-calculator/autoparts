@@ -10,6 +10,7 @@ import PaymentContent from './payment/Content';
 import StatisticContent from './statistic/Content';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../PageNotFound";
+import { ukUA } from '@material-ui/core/locale';
 
 
 let theme = createMuiTheme({
@@ -40,7 +41,7 @@ let theme = createMuiTheme({
             minHeight: 48,
         },
     },
-});
+}, ukUA);
 
 theme = {
     ...theme,
