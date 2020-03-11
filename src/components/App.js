@@ -6,6 +6,7 @@ import PageNotFound from "./PageNotFound";
 import Auth from "./auth/Auth";
 import {createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { ukUA } from '@material-ui/core/locale';
+import PrivateRoute from "./common/PrivateRoute";
 
 
 let theme = createMuiTheme({
@@ -123,11 +124,11 @@ function App() {
         <ThemeProvider theme={theme}>
             <div>
                 <Switch>
-                    <Route exact path="/" component={ClientPage}/>
-                    <Route path="/client" component={ClientPage}/>
-                    <Route path="/manager" component={ManagerPage}/>
+                    <PrivateRoute exact path="/" component={ClientPage}/>
+                    <PrivateRoute path="/client" component={ClientPage}/>
+                    <PrivateRoute path="/manager" component={ManagerPage}/>
                     <Route path="/auth" component={Auth}/>
-                    <Route component={PageNotFound}/>
+                    <PrivateRoute component={PageNotFound}/>
                 </Switch>
             </div>
         </ThemeProvider>
