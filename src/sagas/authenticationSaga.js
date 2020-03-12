@@ -24,3 +24,15 @@ export function* logOut() {
         //toastr.error(e.message);
     }
 }
+
+
+export function* register(action) {
+    try {
+        yield call(AuthenticationApi.register, action.credentials);
+        yield put({type: types.REGISTRATION_SUCCESS});
+        //toastr.success("Good buy");
+    } catch (e) {
+        yield put({type: types.REGISTRATION_FAILURE, error: e.message});
+        //toastr.error(e.message);
+    }
+}

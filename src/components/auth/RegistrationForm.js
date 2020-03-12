@@ -1,3 +1,4 @@
+import { connect } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -5,10 +6,17 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Copyright from "../common/Copyright";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import TextInput from "../common/TextInput";
+import { registrationRequest } from "../../redux/actions/authenticationActions";
+import { useSnackbar } from 'notistack';
+import { useHistory } from "react-router-dom";
 
-export default function RegistrationPage(props) {
+export function RegistrationPage({
+                                     auth,
+                                     registrationRequest,
+                                     ...props
+                                 }) {
 
     const {classes} = props;
 
@@ -18,7 +26,18 @@ export default function RegistrationPage(props) {
         confirmation: ''
     });
     const [errors, setErrors] = useState({});
-    const [registering, setRegistering] = useState(false);
+    const { enqueueSnackbar } = useSnackbar();
+    let history = useHistory();
+
+    useEffect(() => {
+        if(auth.registrating === false && auth.registrationError) {
+            enqueueSnackbar(auth.registrationError, {
+                variant: 'error', anchorOrigin : {vertical: 'top', horizontal: 'right'}
+            });
+            history.push('/auth/login');
+        }
+
+    }, [auth.registrating, auth.registrationError, enqueueSnackbar, history]);
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -72,7 +91,8 @@ export default function RegistrationPage(props) {
     function handleRegistration(event) {
         event.preventDefault();
         if (!formIsValid()) return;
-        setRegistering(true);
+        const { email, password } = registration;
+        registrationRequest({email: email, password: password});
     }
 
 
@@ -116,9 +136,9 @@ export default function RegistrationPage(props) {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    disabled={registering}
+                    disabled={auth.registrating}
                 >
-                    {registering ? "РЕЄСТРАЦІЯ..." : "ЗАРЕЄСТРУВАТИСЬ"}
+                    {auth.registrating ? "РЕЄСТРАЦІЯ..." : "ЗАРЕЄСТРУВАТИСЬ"}
                 </Button>
                 <Grid container>
                     <Grid item xs>
@@ -135,3 +155,18 @@ export default function RegistrationPage(props) {
         </div>
     );
 }
+
+function mapStateToProps(state, ownProps) {
+    return {
+        auth: state.authentication
+    }
+}
+
+const mapDispatchToProps = {
+    registrationRequest
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RegistrationPage);

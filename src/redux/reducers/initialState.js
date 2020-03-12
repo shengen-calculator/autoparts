@@ -4,6 +4,8 @@ export default {
         email: '',
         errors: '',
         logging: false,
-        outing: false
+        outing: false,
+        registrating: false,
+        registrationError: ''
     }
 };

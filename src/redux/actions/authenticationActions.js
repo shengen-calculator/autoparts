@@ -7,3 +7,7 @@ export function authenticationRequest(credentials) {
 export function logoutRequest() {
     return { type: types.LOG_OUT_REQUEST};
 }
+
+export function registrationRequest(credentials) {
+    return { type: types.REGISTRATION_REQUEST,  credentials};
+}

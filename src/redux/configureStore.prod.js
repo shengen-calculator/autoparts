@@ -1,5 +1,5 @@
 import {createStore, applyMiddleware} from 'redux';
-import rootReducer from '../reducers';
+import rootReducer from './reducers';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
@@ -9,7 +9,7 @@ export default function configureStore(initialState) {
     const persistConfig = {
         key: 'root',
         storage,
-        blacklist: []
+        blacklist: ['authentication']
     };
     const persistedReducer = persistReducer(persistConfig, rootReducer);
     const sagaMiddleware = createSagaMiddleware();

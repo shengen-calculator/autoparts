@@ -27,6 +27,27 @@ export default function authenticationReducer(state = initialState.authenticatio
                 error: action.error
             };
 
+        case types.REGISTRATION_REQUEST:
+            return {
+                ...state,
+                registrationError: '',
+                registrating: true
+            };
+
+        case types.REGISTRATION_SUCCESS:
+            return {
+                ...state,
+                registrationError: '',
+                registrating: false
+            };
+
+        case types.REGISTRATION_FAILURE:
+            return {
+                ...state,
+                registrating: false,
+                registrationError: action.error
+            };
+
         case types.LOG_OUT_REQUEST:
             return {
                 ...state,
