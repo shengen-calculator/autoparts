@@ -33,7 +33,7 @@ export default function RegistrationPage(props) {
         const errors = {};
 
         const regEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        const regPassword =/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        const regPassword =/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-])[A-Za-z\d@$!%*#?&-]{8,}$/;
         if (!email) {
             errors.email = "Це поле обов'язкове для заповнення";
         } else if (!regEmail.test(String(email).toLowerCase())) {
@@ -50,7 +50,7 @@ export default function RegistrationPage(props) {
                 confirmation: ''
             }));
         } else if (!regPassword.test(String(password).toLowerCase())) {
-            errors.password = "Пароль повинен містити мінімум одну цифру та одну букву";
+            errors.password = "Пароль повинен містити мінімум одну цифру та одну букву та один спеціальний символ";
         }
 
         if (!confirmation) {
@@ -59,6 +59,7 @@ export default function RegistrationPage(props) {
             errors.confirmation = "Пароль не відповідає підтвердженню";
             setRegistration(prev => ({
                 ...prev,
+                password: '',
                 confirmation: ''
             }));
         }
