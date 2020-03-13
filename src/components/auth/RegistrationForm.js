@@ -8,13 +8,15 @@ import Box from "@material-ui/core/Box";
 import Copyright from "../common/Copyright";
 import React, {useEffect, useState} from "react";
 import TextInput from "../common/TextInput";
-import { registrationRequest } from "../../redux/actions/authenticationActions";
+import { registrationRequest, registrationErrorReset } from "../../redux/actions/authenticationActions";
+import { regEmail, regPassword } from "../../util/Regs";
 import { useSnackbar } from 'notistack';
 import { useHistory } from "react-router-dom";
 
 export function RegistrationPage({
                                      auth,
                                      registrationRequest,
+                                     registrationErrorReset,
                                      ...props
                                  }) {
 
@@ -35,9 +37,10 @@ export function RegistrationPage({
                 variant: 'error', anchorOrigin : {vertical: 'top', horizontal: 'right'}
             });
             history.push('/auth/login');
+            registrationErrorReset();
         }
 
-    }, [auth.registrating, auth.registrationError, enqueueSnackbar, history]);
+    }, [auth.registrating, auth.registrationError, enqueueSnackbar, history, registrationErrorReset]);
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -51,8 +54,6 @@ export function RegistrationPage({
         const { email, password, confirmation } = registration;
         const errors = {};
 
-        const regEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        const regPassword =/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-])[A-Za-z\d@$!%*#?&-]{8,}$/;
         if (!email) {
             errors.email = "Це поле обов'язкове для заповнення";
         } else if (!regEmail.test(String(email).toLowerCase())) {
@@ -156,14 +157,16 @@ export function RegistrationPage({
     );
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
     return {
         auth: state.authentication
     }
 }
 
+// noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    registrationRequest
+    registrationRequest,
+    registrationErrorReset
 };
 
 export default connect(

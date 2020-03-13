@@ -1,7 +1,6 @@
 import {call, put} from 'redux-saga/effects';
 import * as types from '../redux/actions/actionTypes';
 import AuthenticationApi from '../api/authentication';
-//import toastr from 'toastr';
 
 export function* logIn(action) {
     try {

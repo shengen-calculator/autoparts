@@ -11,3 +11,7 @@ export function logoutRequest() {
 export function registrationRequest(credentials) {
     return { type: types.REGISTRATION_REQUEST,  credentials};
 }
+
+export function registrationErrorReset() {
+    return { type: types.REGISTRATION_FAILURE_RESET};
+}
