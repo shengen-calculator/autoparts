@@ -1,11 +1,17 @@
 import {createStore, applyMiddleware} from 'redux';
-import rootReducer, {rootPersistConfig} from './reducers';
+import rootReducer from './reducers';
 import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import mySaga from '../sagas';
 
 export default function configureStore(initialState) {
-    const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
+    const persistConfig = {
+        key: 'root',
+        storage,
+        blacklist: ['message']
+    };
+    const persistedReducer = persistReducer(persistConfig, rootReducer);
     const sagaMiddleware = createSagaMiddleware();
     const store = createStore(
         persistedReducer,
@@ -13,8 +19,7 @@ export default function configureStore(initialState) {
         applyMiddleware(
             sagaMiddleware)
     );
-    // noinspection JSUnresolvedFunction
     sagaMiddleware.run(mySaga);
-    let persistent = persistStore(store);
-    return {store, persistent};
+    let persistor = persistStore(store);
+    return {store, persistor};
 }
