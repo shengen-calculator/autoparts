@@ -9,7 +9,7 @@ export default function configureStore(initialState) {
     const persistConfig = {
         key: 'root',
         storage,
-        blacklist: ['authentication']
+        blacklist: ['message']
     };
     const persistedReducer = persistReducer(persistConfig, rootReducer);
     const sagaMiddleware = createSagaMiddleware();

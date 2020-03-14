@@ -7,6 +7,7 @@ import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react'
 import configureStore from "./redux/configureStore";
 import { SnackbarProvider } from 'notistack';
+import ToastrMessage from "./components/common/ToastrMessage";
 
 
 const {store, persistor} = configureStore();
@@ -16,6 +17,7 @@ ReactDOM.render(
             <Router>
                 <SnackbarProvider maxSnack={3}>
                     <App/>
+                    <ToastrMessage/>
                 </SnackbarProvider>
             </Router>
         </PersistGate>

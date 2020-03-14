@@ -8,15 +8,13 @@ import Box from "@material-ui/core/Box";
 import Copyright from "../common/Copyright";
 import React, {useEffect, useState} from "react";
 import TextInput from "../common/TextInput";
-import { registrationRequest, registrationErrorReset } from "../../redux/actions/authenticationActions";
+import { registrationRequest } from "../../redux/actions/authenticationActions";
 import { regEmail, regPassword } from "../../util/Regs";
-import { useSnackbar } from 'notistack';
 import { useHistory } from "react-router-dom";
 
-export function RegistrationPage({
+function RegistrationPage({
                                      auth,
                                      registrationRequest,
-                                     registrationErrorReset,
                                      ...props
                                  }) {
 
@@ -25,22 +23,29 @@ export function RegistrationPage({
     const [registration, setRegistration] = useState({
         email: '',
         password: '',
-        confirmation: ''
+        confirmation: '',
+        requestInProcess: false
     });
     const [errors, setErrors] = useState({});
-    const { enqueueSnackbar } = useSnackbar();
     let history = useHistory();
 
     useEffect(() => {
-        if(auth.registrating === false && auth.registrationError) {
-            enqueueSnackbar(auth.registrationError, {
-                variant: 'error', anchorOrigin : {vertical: 'top', horizontal: 'right'}
-            });
-            history.push('/auth/login');
-            registrationErrorReset();
+        if(auth.registrating === true && registration.requestInProcess === false) {
+            setRegistration(prev => ({
+                ...prev,
+                requestInProcess: true
+            }));
         }
 
-    }, [auth.registrating, auth.registrationError, enqueueSnackbar, history, registrationErrorReset]);
+        if(auth.registrating === false && registration.requestInProcess === true) {
+            setRegistration(prev => ({
+                ...prev,
+                requestInProcess: false
+            }));
+            history.push('/auth/login');
+        }
+
+    }, [auth.registrating, history, registration]);
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -137,9 +142,9 @@ export function RegistrationPage({
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    disabled={auth.registrating}
+                    disabled={registration.requestInProcess}
                 >
-                    {auth.registrating ? "РЕЄСТРАЦІЯ..." : "ЗАРЕЄСТРУВАТИСЬ"}
+                    {registration.requestInProcess ? "РЕЄСТРАЦІЯ..." : "ЗАРЕЄСТРУВАТИСЬ"}
                 </Button>
                 <Grid container>
                     <Grid item xs>
@@ -165,8 +170,7 @@ function mapStateToProps(state) {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    registrationRequest,
-    registrationErrorReset
+    registrationRequest
 };
 
 export default connect(

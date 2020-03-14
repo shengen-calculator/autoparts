@@ -10,7 +10,7 @@ export default function configureStore(initialState) {
     const persistConfig = {
         key: 'root',
         storage,
-        blacklist: ['authentication']
+        blacklist: ['message']
     };
     const persistedReducer = persistReducer(persistConfig, rootReducer);
     const sagaMiddleware = createSagaMiddleware();
@@ -21,6 +21,7 @@ export default function configureStore(initialState) {
             reduxImmutableStateInvariant(),
             sagaMiddleware)
     );
+    // noinspection JSUnresolvedFunction
     sagaMiddleware.run(mySaga);
     let persistor = persistStore(store);
     return {store, persistor};
