@@ -1,5 +1,5 @@
 import {createStore, applyMiddleware} from 'redux';
-import rootReducer, {persistConfig}  from './reducers';
+import rootReducer, {persistConfig} from './reducers';
 import { persistStore, persistReducer } from 'redux-persist';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import createSagaMiddleware from 'redux-saga';
