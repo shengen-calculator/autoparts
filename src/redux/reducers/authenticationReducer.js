@@ -42,25 +42,10 @@ export default function authenticationReducer(state = initialState.authenticatio
                 registrating: false
             };
 
-
-        case types.LOG_OUT_REQUEST:
-            return {
-                ...state,
-                outing: true
-            };
-
-
         case types.LOG_OUT_SUCCESS:
             return {
                 ...state,
-                loggedIn: false,
-                outing: false,
-            };
-
-        case types.LOG_OUT_FAILURE:
-            return {
-                ...state,
-                outing: false
+                loggedIn: false
             };
 
         default:

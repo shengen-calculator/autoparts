@@ -28,7 +28,7 @@ export function* logOut() {
 export function* register(action) {
     try {
         yield call(AuthenticationApi.register, action.credentials);
-        yield put({type: types.REGISTRATION_SUCCESS, text: 'Вітаємо! Реєстрація пройшла успішно. Перевірте Ваш Емейл.'});
+        yield put({type: types.REGISTRATION_SUCCESS, text: 'Реєстрація успішна. Перевірте Ваш Емейл.'});
     } catch (e) {
         yield put({type: types.REGISTRATION_FAILURE, text: e.message});
     }

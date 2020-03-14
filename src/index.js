@@ -10,10 +10,10 @@ import { SnackbarProvider } from 'notistack';
 import ToastrMessage from "./components/common/ToastrMessage";
 
 
-const {store, persistor} = configureStore();
+const {store, persistent} = configureStore();
 ReactDOM.render(
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        <PersistGate loading={null} persistor={persistent}>
             <Router>
                 <SnackbarProvider maxSnack={3}>
                     <App/>
