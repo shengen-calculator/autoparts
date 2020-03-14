@@ -8,7 +8,7 @@ export default function messageReducer(state = initialState.message, action) {
             return {
                 ...state,
                 type: 'success',
-                text: action.text
+                text: 'Реєстрація успішна. Перевірте Ваш Емейл.'
             };
 
         case types.REGISTRATION_FAILURE:
