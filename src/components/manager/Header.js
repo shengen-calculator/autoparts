@@ -39,7 +39,7 @@ const styles = theme => ({
     },
 });
 
-function Header({logoutRequest, ...props}) {
+function Header({logoutRequest, auth, ...props}) {
     const {classes, onDrawerToggle} = props;
 
     return (
@@ -61,7 +61,7 @@ function Header({logoutRequest, ...props}) {
                         </Hidden>
                         <Grid item xs/>
                         <Grid item>
-                            z0777
+                            {auth.vip}
                         </Grid>
                         <Grid item>
                             <Tooltip title="Вийти">
