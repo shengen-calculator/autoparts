@@ -6,6 +6,9 @@ import PageNotFound from "./PageNotFound";
 import Auth from "./auth/Auth";
 import {createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { ukUA } from '@material-ui/core/locale';
+import PrivateRoute from "./common/PrivateRoute";
+import {connect} from "react-redux";
+import {RoleEnum} from "../util/Enums";
 
 
 let theme = createMuiTheme({
@@ -118,14 +121,14 @@ theme = {
     },
 };
 
-function App() {
+function App({auth}) {
     return (
         <ThemeProvider theme={theme}>
             <div>
                 <Switch>
-                    <Route exact path="/" component={ClientPage}/>
-                    <Route path="/client" component={ClientPage}/>
-                    <Route path="/manager" component={ManagerPage}/>
+                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager, RoleEnum.Client]} exact path="/" component={ClientPage}/>
+                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager, RoleEnum.Client]}  path="/client" component={ClientPage}/>
+                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager]}  path="/manager" component={ManagerPage}/>
                     <Route path="/auth" component={Auth}/>
                     <Route component={PageNotFound}/>
                 </Switch>
@@ -134,4 +137,12 @@ function App() {
     );
 }
 
-export default App;
+function mapStateToProps(state) {
+    return {
+        auth: state.authentication
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(App);
