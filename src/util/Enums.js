@@ -7,3 +7,8 @@ export const TitleIconEnum = Object.freeze({
     "railway": 5,
     "flight": 6
 });
+
+export const RoleEnum = Object.freeze({
+    "Client": 1,
+    "Manager": 2
+});

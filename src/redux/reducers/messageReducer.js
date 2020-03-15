@@ -8,7 +8,7 @@ export default function messageReducer(state = initialState.message, action) {
             return {
                 ...state,
                 type: 'success',
-                text: 'Реєстрація успішна. Перевірте Ваш Емейл.'
+                text: 'Вітаємо. Реєстрація успішна.'
             };
 
         case types.REGISTRATION_FAILURE:
@@ -16,6 +16,27 @@ export default function messageReducer(state = initialState.message, action) {
                 ...state,
                 type: 'error',
                 text: action.text
+            };
+
+        case types.AUTHENTICATION_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: action.text
+            };
+
+        case types.AUTHENTICATION_ROLE_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Ваш обліковий запис не активовано'
+            };
+
+        case types.AUTHENTICATION_SUCCESS:
+            return {
+                ...state,
+                type: 'success',
+                text: 'Вітаємо в системі'
             };
 
         default:

@@ -4,8 +4,22 @@ import AuthenticationApi from '../api/authentication';
 
 export function* logIn(action) {
     try {
-        const data = yield call(AuthenticationApi.logIn, action.credentials);
-        yield put({type: types.AUTHENTICATION_SUCCESS, data: data});
+        yield call(AuthenticationApi.logIn, action.credentials);
+        yield put({type: types.AUTHENTICATION_GET_TOKEN});
+    } catch (e) {
+        yield put({type: types.AUTHENTICATION_FAILURE, text: e.message});
+    }
+}
+
+
+export function* getTokenResult() {
+    try {
+        const data = yield call(AuthenticationApi.getTokenResult);
+        if(data.claims.role) {
+            yield put({type: types.AUTHENTICATION_SUCCESS, data: data});
+        } else {
+            yield put({type: types.AUTHENTICATION_ROLE_FAILURE, data: data});
+        }
     } catch (e) {
         yield put({type: types.AUTHENTICATION_FAILURE, error: e});
     }
