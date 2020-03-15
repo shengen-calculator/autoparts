@@ -13,7 +13,6 @@ export default function authenticationReducer(state = initialState.authenticatio
         case types.AUTHENTICATION_SUCCESS:
             return {
                 ...state,
-                loggedIn: true,
                 role: action.data.claims.role,
                 vip: action.data.claims.vip,
                 logging: false
@@ -22,7 +21,8 @@ export default function authenticationReducer(state = initialState.authenticatio
         case types.AUTHENTICATION_FAILURE:
             return {
                 ...state,
-                loggedIn: false,
+                role: '',
+                vip: '',
                 logging: false
             };
 
@@ -47,7 +47,6 @@ export default function authenticationReducer(state = initialState.authenticatio
         case types.LOG_OUT_SUCCESS:
             return {
                 ...state,
-                loggedIn: false,
                 role:'',
                 vip:''
             };
