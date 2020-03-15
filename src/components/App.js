@@ -7,6 +7,7 @@ import Auth from "./auth/Auth";
 import {createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { ukUA } from '@material-ui/core/locale';
 import PrivateRoute from "./common/PrivateRoute";
+import {connect} from "react-redux";
 
 
 let theme = createMuiTheme({
@@ -119,20 +120,28 @@ theme = {
     },
 };
 
-function App() {
+function App({auth}) {
     return (
         <ThemeProvider theme={theme}>
             <div>
                 <Switch>
-                    <PrivateRoute exact path="/" component={ClientPage}/>
-                    <PrivateRoute path="/client" component={ClientPage}/>
-                    <PrivateRoute path="/manager" component={ManagerPage}/>
+                    <PrivateRoute authed={auth.loggedIn} exact path="/" component={ClientPage}/>
+                    <PrivateRoute authed={auth.loggedIn} path="/client" component={ClientPage}/>
+                    <PrivateRoute authed={auth.loggedIn} path="/manager" component={ManagerPage}/>
                     <Route path="/auth" component={Auth}/>
-                    <PrivateRoute component={PageNotFound}/>
+                    <Route component={PageNotFound}/>
                 </Switch>
             </div>
         </ThemeProvider>
     );
 }
 
-export default App;
+function mapStateToProps(state) {
+    return {
+        auth: state.authentication
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(App);

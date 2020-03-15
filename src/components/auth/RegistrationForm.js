@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -8,15 +8,15 @@ import Box from "@material-ui/core/Box";
 import Copyright from "../common/Copyright";
 import React, {useEffect, useState} from "react";
 import TextInput from "../common/TextInput";
-import { registrationRequest } from "../../redux/actions/authenticationActions";
-import { regEmail, regPassword } from "../../util/Regs";
-import { useHistory } from "react-router-dom";
+import {registrationRequest} from "../../redux/actions/authenticationActions";
+import {regEmail, regPassword} from "../../util/Regs";
+import {useHistory} from "react-router-dom";
 
 function RegistrationPage({
-                                     auth,
-                                     registrationRequest,
-                                     ...props
-                                 }) {
+                              auth,
+                              registrationRequest,
+                              ...props
+                          }) {
 
     const {classes} = props;
 
@@ -30,14 +30,14 @@ function RegistrationPage({
     let history = useHistory();
 
     useEffect(() => {
-        if(auth.registrating === true && registration.requestInProcess === false) {
+        if (auth.registrating === true && registration.requestInProcess === false) {
             setRegistration(prev => ({
                 ...prev,
                 requestInProcess: true
             }));
         }
 
-        if(auth.registrating === false && registration.requestInProcess === true) {
+        if (auth.registrating === false && registration.requestInProcess === true) {
             setRegistration(prev => ({
                 ...prev,
                 requestInProcess: false
@@ -48,7 +48,7 @@ function RegistrationPage({
     }, [auth.registrating, history, registration]);
 
     function handleChange(event) {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setRegistration(prev => ({
             ...prev,
             [name]: value
@@ -56,7 +56,7 @@ function RegistrationPage({
     }
 
     function formIsValid() {
-        const { email, password, confirmation } = registration;
+        const {email, password, confirmation} = registration;
         const errors = {};
 
         if (!email) {
@@ -67,7 +67,7 @@ function RegistrationPage({
 
         if (!password) {
             errors.password = "Це поле обов'язкове для заповнення";
-        } else if(password.length < 8) {
+        } else if (password.length < 8) {
             errors.password = "Пароль повинен містити не менше 8 символів";
             setRegistration(prev => ({
                 ...prev,
@@ -80,7 +80,7 @@ function RegistrationPage({
 
         if (!confirmation) {
             errors.confirmation = "Це поле обов'язкове для заповнення";
-        } else if(password !== confirmation) {
+        } else if (password !== confirmation) {
             errors.confirmation = "Пароль не відповідає підтвердженню";
             setRegistration(prev => ({
                 ...prev,
@@ -97,15 +97,15 @@ function RegistrationPage({
     function handleRegistration(event) {
         event.preventDefault();
         if (!formIsValid()) return;
-        const { email, password } = registration;
+        const {email, password} = registration;
         registrationRequest({email: email, password: password});
     }
 
 
-    return(
+    return (
         <div className={classes.paper}>
             <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
+                <LockOutlinedIcon/>
             </Avatar>
             <Typography component="h1" variant="h5">
                 Реєстрація
@@ -155,7 +155,7 @@ function RegistrationPage({
                     </Grid>
                 </Grid>
                 <Box mt={5}>
-                    <Copyright />
+                    <Copyright/>
                 </Box>
             </form>
         </div>

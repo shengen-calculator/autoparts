@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from "react-redux";
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
@@ -9,9 +10,10 @@ import SendIcon from '@material-ui/icons/Send';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
+import {logoutRequest} from "../../redux/actions/authenticationActions";
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -37,8 +39,8 @@ const styles = theme => ({
     },
 });
 
-function Header(props) {
-    const { classes, onDrawerToggle } = props;
+function Header({logoutRequest, ...props}) {
+    const {classes, onDrawerToggle} = props;
 
     return (
         <React.Fragment>
@@ -53,17 +55,19 @@ function Header(props) {
                                     onClick={onDrawerToggle}
                                     className={classes.menuButton}
                                 >
-                                    <MenuIcon />
+                                    <MenuIcon/>
                                 </IconButton>
                             </Grid>
                         </Hidden>
-                        <Grid item xs />
+                        <Grid item xs/>
                         <Grid item>
                             z0777
                         </Grid>
                         <Grid item>
                             <Tooltip title="Вийти">
-                                <IconButton color="inherit">
+                                <IconButton color="inherit" onClick={() => {
+                                    logoutRequest();
+                                }}>
                                     <ExitToAppIcon/>
                                 </IconButton>
                             </Tooltip>
@@ -75,7 +79,7 @@ function Header(props) {
                 <Toolbar>
                     <Grid container spacing={2} alignItems="center">
                         <Grid item>
-                            <SearchIcon className={classes.block} color="inherit" />
+                            <SearchIcon className={classes.block} color="inherit"/>
                         </Grid>
                         <Grid item xs>
                             <TextField
@@ -89,12 +93,12 @@ function Header(props) {
                         <Grid item>
                             <Tooltip title="Розпочати пошук">
                                 <IconButton>
-                                    <SendIcon className={classes.block} color="inherit" />
+                                    <SendIcon className={classes.block} color="inherit"/>
                                 </IconButton>
                             </Tooltip>
                         </Grid>
                         <Grid item>
-                            <SearchIcon className={classes.block} color="inherit" />
+                            <SearchIcon className={classes.block} color="inherit"/>
                         </Grid>
                         <Grid item xs>
                             <TextField
@@ -108,7 +112,7 @@ function Header(props) {
                         <Grid item>
                             <Tooltip title="Розпочати пошук">
                                 <IconButton>
-                                    <SendIcon className={classes.block} color="inherit" />
+                                    <SendIcon className={classes.block} color="inherit"/>
                                 </IconButton>
                             </Tooltip>
                         </Grid>
@@ -124,4 +128,16 @@ Header.propTypes = {
     onDrawerToggle: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Header);
+
+function mapStateToProps(state) {
+    return {
+        auth: state.authentication
+    }
+}
+
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    logoutRequest
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Header));

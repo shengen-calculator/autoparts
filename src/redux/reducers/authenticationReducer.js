@@ -14,8 +14,8 @@ export default function authenticationReducer(state = initialState.authenticatio
             return {
                 ...state,
                 loggedIn: true,
-                role: action.data.role,
-                vip: action.data.vip,
+                role: action.data.claims.role,
+                vip: action.data.claims.vip,
                 logging: false
             };
 
