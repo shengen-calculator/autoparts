@@ -1,5 +1,4 @@
-import {RoleEnum} from "../src/util/Enums";
-
+const RoleEnum = require('./RoleEnum');
 const admin = require('firebase-admin');
 
 const managers = ['pete@mail.com'];
@@ -10,12 +9,14 @@ const processSignUp = (user) => {
     let emailVerified = false;
     let customClaims = {};
     if(managers.includes(user.email)) {
+        emailVerified = true;
         customClaims = {
             role: RoleEnum.Manager,
             vip: "z0777"
         };
     }
     if(clients.includes(user.email)) {
+        emailVerified = true;
         customClaims = {
             role: RoleEnum.Client,
             vip: "1000"
