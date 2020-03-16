@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
+import {useParams, useHistory} from 'react-router-dom';
+import {withStyles} from '@material-ui/core/styles';
 import GeneralTable from "./GeneralTable";
 import VendorTable from "./VendorTable";
 import AnalogTable from "./AnalogTable";
 import Header from '../Header';
 import Copyright from '../../common/Copyright';
+import {connect} from "react-redux";
 
 const drawerWidth = 256;
 const styles = theme => ({
@@ -56,8 +58,14 @@ const styles = theme => ({
     }
 });
 
-function Content(props) {
+function Content({auth, ...props}) {
     const {classes, handleDrawerToggle} = props;
+
+    let history = useHistory();
+    let {vip} = useParams();
+    if (!vip) {
+        history.push(`/manager/search/${auth.vip}`)
+    }
 
     return (<div className={classes.app}>
         <Header onDrawerToggle={handleDrawerToggle}/>
@@ -85,4 +93,11 @@ Content.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Content);
+
+function mapStateToProps(state) {
+    return {
+        auth: state.authentication
+    }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Content));

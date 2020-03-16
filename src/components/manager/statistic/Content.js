@@ -15,7 +15,6 @@ import {
 } from '@material-ui/pickers';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-import Header from '../Header';
 import Copyright from '../../common/Copyright';
 import SendIcon from "@material-ui/icons/Send";
 import QueryContent from './query/Content';
@@ -23,6 +22,9 @@ import VendorContent from './vendor/Сontent';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../../PageNotFound";
 import { Link as RouterLink } from 'react-router-dom';
+import LinearProgress from "@material-ui/core/LinearProgress";
+import LoginToolbar from "../LoginToolbar";
+import SearchToolbar from "../SearchToolbar";
 
 const tabs = [
     {id: 'vendor', name: 'Постачальники', page: <VendorContent/>},
@@ -77,7 +79,10 @@ function Content(props) {
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ukLocale}>
             <div className={classes.app}>
-                <Header onDrawerToggle={handleDrawerToggle}/>
+                <AppBar color="primary" position="sticky" elevation={0}>
+                    <LoginToolbar onDrawerToggle={handleDrawerToggle}/>
+                    <SearchToolbar/>
+                </AppBar>
                 <AppBar
                     component="div"
                     className={classes.secondaryBar}
@@ -138,6 +143,7 @@ function Content(props) {
                                  to={`${match.path}/statistic/${id}`} />
                         ))}
                    </Tabs>
+                   <LinearProgress />
                 </AppBar>
                 <main className={classes.main}>
                     <Switch>
