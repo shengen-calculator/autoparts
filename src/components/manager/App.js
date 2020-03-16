@@ -51,16 +51,22 @@ function App(props) {
                     </Hidden>
                 </nav>
                 <Switch>
-                    <Route path={`${match.path}/order`}>
+                    <Route path={`${match.path}/order/:vip`}>
                         <OrderContent handleDrawerToggle={handleDrawerToggle}/>
                     </Route>
                     <Route path={`${match.path}/statistic`}>
                         <StatisticContent match={match} handleDrawerToggle={handleDrawerToggle}/>
                     </Route>
-                    <Route path={`${match.path}/payment`}>
+                    <Route path={`${match.path}/payment/:vip`}>
                         <PaymentContent handleDrawerToggle={handleDrawerToggle}/>
                     </Route>
-                    <Route exact path={`${match.path}/search`}>
+                    <Route exact path={`${match.path}/search/:vip`}>
+                        <SearchContent handleDrawerToggle={handleDrawerToggle}/>
+                    </Route>
+                    <Route exact path={`${match.path}/search/:vip/:numb`}>
+                        <SearchContent handleDrawerToggle={handleDrawerToggle}/>
+                    </Route>
+                    <Route exact path={`${match.path}/search/:vip/:numb/:brand`}>
                         <SearchContent handleDrawerToggle={handleDrawerToggle}/>
                     </Route>
                     <Route exact path={`${match.path}/`}>
