@@ -17,7 +17,7 @@ export function* getPayments(action) {
     try {
         yield call(beginApiCall);
         const data = yield call(FunctionsApi.getPaymentsByVip, action.vip);
-        yield put({type: types.LOAD_PAYMENTS_SUCCESS, data: data});
+        yield put({type: types.LOAD_PAYMENTS_SUCCESS, payments: data.data});
     } catch (e) {
         yield put({type: types.LOAD_PAYMENTS_FAILURE, text: e.message});
     }

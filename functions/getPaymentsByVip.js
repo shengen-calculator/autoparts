@@ -35,7 +35,7 @@ const getPaymentsByVip = async (data, context) => {
         createData('3000',0, '04.03.2020'),
     ];
 
-    return rows.filter(vip => vip === data);
+    return rows.filter(v => v.vip === data);
 };
 
 module.exports = getPaymentsByVip;

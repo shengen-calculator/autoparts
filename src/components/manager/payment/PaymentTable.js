@@ -1,21 +1,10 @@
 import EnhancedTable from "../../common/EnhancedTable";
 import {TitleIconEnum} from "../../../util/Enums";
-import React from "react";
+import React, {useEffect} from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-
-function createData(id, amount, date) {
-    return { id, amount, date };
-}
-
-const rows = [
-    createData(1,15.76, '28.02.2020'),
-    createData(2,9.84, '29.02.2020' ),
-    createData(3, 3.45, '01.03.2020'),
-    createData(4, 0,'02.03.2020'),
-    createData(5, 0, '03.03.2020'),
-    createData(6,0, '04.03.2020'),
-];
+import {connect} from "react-redux";
+import {getPaymentsRequest} from "../../../redux/actions/clientActions";
 
 const headCells = [
     { id: 'date', numeric: false, disablePadding: false, label: 'Дата' },
@@ -45,10 +34,17 @@ function tableRow(row, index, isSelected, handleClick) {
     );
 }
 
-export default function PaymentTable() {
+function PaymentTable({client, getPaymentsRequest}) {
+
+    useEffect(() => {
+        if(!client.isPaymentsLoaded) {
+            getPaymentsRequest(client.vip);
+        }
+    }, [client.payments, client.isPaymentsLoaded, client.vip, getPaymentsRequest]);
+
     return(
         <EnhancedTable
-            rows={rows}
+            rows={client.payments}
             headCells={headCells}
             tableRow={tableRow}
             title="План платежів"
@@ -60,3 +56,19 @@ export default function PaymentTable() {
         />
     );
 }
+
+function mapStateToProps(state) {
+    return {
+        client: state.client
+    }
+}
+
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    getPaymentsRequest
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(PaymentTable);
