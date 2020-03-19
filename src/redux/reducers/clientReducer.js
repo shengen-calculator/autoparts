@@ -7,8 +7,8 @@ export default function clientReducer(state = initialState.client, action) {
         case types.LOAD_CLIENT_SUCCESS:
             return {
                 ...state,
-                vip: action.vip,
-                fullName: action.fullName,
+                vip: action.client.vip,
+                fullName: action.client.fullName,
                 orders: [],
                 isOrdersLoaded: false,
                 payments: [],
@@ -20,6 +20,13 @@ export default function clientReducer(state = initialState.client, action) {
                 ...state,
                 payments: action.payments,
                 isPaymentsLoaded: true
+            };
+
+        case types.LOG_OUT_SUCCESS:
+            return {
+                ...state,
+                vip:'',
+                fullName: ''
             };
 
         default:

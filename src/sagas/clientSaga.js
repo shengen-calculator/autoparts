@@ -7,7 +7,7 @@ export function* getClient(action) {
     try {
         yield call(beginApiCall);
         const data = yield call(FunctionsApi.getClientByVip, action.vip);
-        yield put({type: types.LOAD_CLIENT_SUCCESS, data: data});
+        yield put({type: types.LOAD_CLIENT_SUCCESS, client: data.data});
     } catch (e) {
         yield put({type: types.LOAD_CLIENT_FAILURE, text: e.message});
     }

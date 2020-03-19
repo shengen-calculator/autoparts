@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Paper from '@material-ui/core/Paper';
@@ -10,6 +10,7 @@ import AnalogTable from "./AnalogTable";
 import Header from '../Header';
 import Copyright from '../../common/Copyright';
 import {connect} from "react-redux";
+
 
 const drawerWidth = 256;
 const styles = theme => ({
@@ -58,14 +59,21 @@ const styles = theme => ({
     }
 });
 
-function Content({auth, ...props}) {
+function Content({auth, client, ...props}) {
     const {classes, handleDrawerToggle} = props;
-
     let history = useHistory();
     let {vip} = useParams();
-    if (!vip) {
-        history.push(`/manager/search/${auth.vip}`)
-    }
+
+
+    useEffect(() => {
+        if (!vip) {
+            if(!client.vip) {
+                history.push(`/manager/search/${auth.vip}`)
+            } else {
+                history.push(`/manager/search/${client.vip}`)
+            }
+        }
+    }, [vip, client.vip, auth.vip, history]);
 
     return (<div className={classes.app}>
         <Header onDrawerToggle={handleDrawerToggle}/>
@@ -96,7 +104,8 @@ Content.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        auth: state.authentication
+        auth: state.authentication,
+        client: state.client
     }
 }
 

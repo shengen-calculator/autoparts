@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import {withStyles} from '@material-ui/core/styles';
 import SearchToolbar from "./SearchToolbar";
 import LoginToolbar from "./LoginToolbar";
 import Progress from "../common/Progress";
+import {useParams} from "react-router-dom";
+import {getClientRequest} from "../../redux/actions/clientActions";
+import {connect} from "react-redux";
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -30,8 +33,18 @@ const styles = theme => ({
     },
 });
 
-function Header(props) {
+function Header({getClientRequest, client, ...props}) {
     const {onDrawerToggle} = props;
+    let {vip} = useParams();
+
+    useEffect(() => {
+        if(vip) {
+            if(client.vip !== vip) {
+                getClientRequest(vip);
+            }
+        }
+    }, [vip, client.vip, getClientRequest]);
+
     return (
         <React.Fragment>
             <AppBar color="primary" position="sticky" elevation={0}>
@@ -48,4 +61,15 @@ Header.propTypes = {
     onDrawerToggle: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Header);
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    getClientRequest
+};
+
+function mapStateToProps(state) {
+    return {
+        client: state.client
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Header));
