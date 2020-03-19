@@ -19,15 +19,15 @@ const categories = [
     {
         id: 'Робота',
         children: [
-            { id: 'Пошук', icon: <BuildIcon />, path: 'search' },
-            { id: 'Замовлення', icon: <DnsRoundedIcon />, path: 'order' },
-            { id: 'Оплата', icon: <PaymentIcon />, path: 'payment'},
+            { id: 'Пошук', icon: <BuildIcon />, path: 'search', isVipSpecified: true },
+            { id: 'Замовлення', icon: <DnsRoundedIcon />, path: 'order', isVipSpecified: true },
+            { id: 'Оплата', icon: <PaymentIcon />, path: 'payment', isVipSpecified: true},
         ],
     },
     {
         id: 'Аналітика',
         children: [
-            { id: 'Статистика', icon: <EqualizerIcon />, path: 'statistic' },
+            { id: 'Статистика', icon: <EqualizerIcon />, path: 'statistic', isVipSpecified: false },
         ],
     },
 ];
@@ -74,7 +74,7 @@ const styles = theme => ({
 });
 
 function Navigator(props) {
-    const {classes, ...other} = props;
+    const {classes, vip, fullName, ...other} = props;
 
     return (
         <Drawer variant="permanent" {...other}>
@@ -91,7 +91,7 @@ function Navigator(props) {
                             primary: classes.itemPrimary,
                         }}
                     >
-                        1000 - Токарь Игорь
+                        {vip} - {fullName}
                     </ListItemText>
                 </ListItem>
                 {categories.map(({id, children}) => (
@@ -105,11 +105,11 @@ function Navigator(props) {
                                 {id}
                             </ListItemText>
                         </ListItem>
-                        {children.map(({id: childId, icon, path}) => (
+                        {children.map(({id: childId, icon, path, isVipSpecified}) => (
                             <ListItem
                                 key={childId}
                                 button
-                                component={NavLink} to={`/manager/${path}`}
+                                component={NavLink} to={ isVipSpecified ? `/manager/${path}/${vip}` : `/manager/${path}` }
                                 activeClassName={classes.itemActiveItem}
                                 isActive={(match, location) => {
                                     if (match) {

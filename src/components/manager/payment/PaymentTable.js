@@ -1,10 +1,8 @@
 import EnhancedTable from "../../common/EnhancedTable";
 import {TitleIconEnum} from "../../../util/Enums";
-import React, {useEffect} from "react";
+import React from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import {connect} from "react-redux";
-import {getPaymentsRequest} from "../../../redux/actions/clientActions";
 
 const headCells = [
     { id: 'date', numeric: false, disablePadding: false, label: 'Дата' },
@@ -22,7 +20,7 @@ function tableRow(row, index, isSelected, handleClick) {
             role="checkbox"
             aria-checked={isItemSelected}
             tabIndex={-1}
-            key={row.id}
+            key={row.date}
             selected={isItemSelected}
         >
 
@@ -34,17 +32,12 @@ function tableRow(row, index, isSelected, handleClick) {
     );
 }
 
-function PaymentTable({client, getPaymentsRequest}) {
+function PaymentTable(props) {
 
-    useEffect(() => {
-        if(!client.isPaymentsLoaded) {
-            getPaymentsRequest(client.vip);
-        }
-    }, [client.payments, client.isPaymentsLoaded, client.vip, getPaymentsRequest]);
 
     return(
         <EnhancedTable
-            rows={client.payments}
+            rows={props.payments}
             headCells={headCells}
             tableRow={tableRow}
             title="План платежів"
@@ -57,18 +50,4 @@ function PaymentTable({client, getPaymentsRequest}) {
     );
 }
 
-function mapStateToProps(state) {
-    return {
-        client: state.client
-    }
-}
-
-// noinspection JSUnusedGlobalSymbols
-const mapDispatchToProps = {
-    getPaymentsRequest
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(PaymentTable);
+export default PaymentTable;
