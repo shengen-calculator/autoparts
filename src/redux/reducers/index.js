@@ -9,7 +9,7 @@ import storage from 'redux-persist/lib/storage';
 export const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['message', 'authentication']
+    blacklist: ['message', 'authentication', 'client', 'apiCallsInProgress']
 };
 
 const authPersistConfig = {
@@ -17,12 +17,17 @@ const authPersistConfig = {
     storage: storage,
     blacklist: ['logging', 'outing']
 };
+const clientPersistConfig = {
+    key: 'client',
+    storage: storage,
+    blacklist: ['orders', 'isOrdersLoaded', 'payments', 'isPaymentsLoaded']
+};
 
 const rootReducer = combineReducers({
     authentication: persistReducer(authPersistConfig, authentication),
-    message,
+    client: persistReducer(clientPersistConfig, client),
     apiCallsInProgress,
-    client
+    message
 });
 
 export default rootReducer;
