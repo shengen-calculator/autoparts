@@ -22,9 +22,9 @@ import VendorContent from './vendor/Сontent';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../../PageNotFound";
 import { Link as RouterLink } from 'react-router-dom';
-import LinearProgress from "@material-ui/core/LinearProgress";
 import LoginToolbar from "../LoginToolbar";
 import SearchToolbar from "../SearchToolbar";
+import Progress from "../../common/Progress";
 
 const tabs = [
     {id: 'vendor', name: 'Постачальники', page: <VendorContent/>},
@@ -143,7 +143,7 @@ function Content(props) {
                                  to={`${match.path}/statistic/${id}`} />
                         ))}
                    </Tabs>
-                   <LinearProgress />
+                   <Progress />
                 </AppBar>
                 <main className={classes.main}>
                     <Switch>

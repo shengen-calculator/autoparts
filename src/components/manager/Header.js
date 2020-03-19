@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import {withStyles} from '@material-ui/core/styles';
-import LinearProgress from "@material-ui/core/LinearProgress";
 import SearchToolbar from "./SearchToolbar";
 import LoginToolbar from "./LoginToolbar";
+import Progress from "../common/Progress";
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -37,7 +37,7 @@ function Header(props) {
             <AppBar color="primary" position="sticky" elevation={0}>
                 <LoginToolbar onDrawerToggle={onDrawerToggle}/>
                 <SearchToolbar/>
-                <LinearProgress />
+                <Progress />
             </AppBar>
         </React.Fragment>
     );
