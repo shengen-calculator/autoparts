@@ -15,7 +15,8 @@ export default {
         orders: [],
         isOrdersLoaded: false,
         payments: [],
-        isPaymentsLoaded: false
+        isPaymentsLoaded: false,
+        isClientNotExists: false
     },
     apiCallsInProgress: 0
     //statistic,

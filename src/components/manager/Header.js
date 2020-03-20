@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import {withStyles} from '@material-ui/core/styles';
 import SearchToolbar from "./SearchToolbar";
 import LoginToolbar from "./LoginToolbar";
 import Progress from "../common/Progress";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {getClientRequest} from "../../redux/actions/clientActions";
 import {connect} from "react-redux";
 
@@ -36,6 +36,8 @@ const styles = theme => ({
 function Header({getClientRequest, client, ...props}) {
     const {onDrawerToggle} = props;
     let {vip} = useParams();
+    let history = useHistory();
+    const didMountRef = useRef(false);
 
     useEffect(() => {
         if(vip) {
@@ -44,6 +46,13 @@ function Header({getClientRequest, client, ...props}) {
             }
         }
     }, [vip, client.vip, getClientRequest]);
+
+    useEffect(() => {
+        if (didMountRef.current && client.isClientNotExists)
+            history.push(`/manager/search/${client.vip}`);
+        else
+            didMountRef.current = true;
+    }, [client.isClientNotExists, client.vip, history]);
 
     return (
         <React.Fragment>

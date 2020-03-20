@@ -3,6 +3,11 @@ import initialState from './initialState';
 
 export default function clientReducer(state = initialState.client, action) {
     switch (action.type) {
+        case types.LOAD_CLIENT_REQUEST:
+            return {
+                ...state,
+                isClientNotExists: false
+            };
 
         case types.LOAD_CLIENT_SUCCESS:
             return {
@@ -12,7 +17,7 @@ export default function clientReducer(state = initialState.client, action) {
                 orders: [],
                 isOrdersLoaded: false,
                 payments: [],
-                isPaymentsLoaded: false
+                isPaymentsLoaded: false,
             };
 
         case types.LOAD_PAYMENTS_SUCCESS:
@@ -20,6 +25,18 @@ export default function clientReducer(state = initialState.client, action) {
                 ...state,
                 payments: action.payments,
                 isPaymentsLoaded: true
+            };
+
+        case types.CLIENT_DOESNT_EXIST:
+            return {
+                ...state,
+                isClientNotExists: true
+            };
+
+        case types.LOAD_CLIENT_FAILURE:
+            return {
+                ...state,
+                isClientNotExists: true
             };
 
         case types.LOG_OUT_SUCCESS:

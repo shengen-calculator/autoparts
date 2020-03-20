@@ -39,6 +39,14 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Клієнта з зазначеним ВІП-ом не знайдено'
             };
 
+
+        case types.LOAD_CLIENT_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Спробуйте завантажити клієнта ще раз'
+            };
+
         case types.AUTHENTICATION_SUCCESS:
             return {
                 ...state,
