@@ -6,7 +6,13 @@ export function* getClient(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
         const data = yield call(FunctionsApi.getClientByVip, action.vip);
-        yield put({type: types.LOAD_CLIENT_SUCCESS, client: data.data});
+        if(data.data) {
+            yield put({type: types.LOAD_CLIENT_SUCCESS, client: data.data});
+        } else {
+            yield put({type: types.API_CALL_ERROR});
+            yield put({type: types.CLIENT_DOESNT_EXIST});
+        }
+
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.LOAD_CLIENT_FAILURE, text: e.message});
