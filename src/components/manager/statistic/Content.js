@@ -25,6 +25,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import LoginToolbar from "../LoginToolbar";
 import SearchToolbar from "../SearchToolbar";
 import Progress from "../../common/Progress";
+import {Helmet} from "react-helmet";
 
 const tabs = [
     {id: 'vendor', name: 'Постачальники', page: <VendorContent/>},
@@ -78,6 +79,9 @@ function Content(props) {
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ukLocale}>
+            <Helmet>
+                <title>Autoparts - Статистика</title>
+            </Helmet>
             <div className={classes.app}>
                 <AppBar color="primary" position="sticky" elevation={0}>
                     <LoginToolbar onDrawerToggle={handleDrawerToggle}/>

@@ -49,7 +49,7 @@ function Header({getClientRequest, client, ...props}) {
 
     useEffect(() => {
         if (didMountRef.current && client.isClientNotExists)
-            history.push(`/manager/search/${client.vip}`);
+            history.replace(`/manager/search/${client.vip}`);
         else
             didMountRef.current = true;
     }, [client.isClientNotExists, client.vip, history]);

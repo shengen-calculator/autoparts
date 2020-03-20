@@ -10,6 +10,7 @@ import AnalogTable from "./AnalogTable";
 import Header from '../Header';
 import Copyright from '../../common/Copyright';
 import {connect} from "react-redux";
+import {Helmet} from "react-helmet";
 
 
 const drawerWidth = 256;
@@ -77,6 +78,9 @@ function Content({auth, client, ...props}) {
 
     return (<div className={classes.app}>
         <Header onDrawerToggle={handleDrawerToggle}/>
+        <Helmet>
+            <title>Autoparts - Пошук - {client.vip}</title>
+        </Helmet>
         <main className={classes.main}>
             <Paper className={classes.paper}>
                 <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>

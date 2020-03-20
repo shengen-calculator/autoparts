@@ -7,6 +7,7 @@ import OrderTable from "./OrderTable";
 import ReserveTable from "./ReserveTable";
 import Header from "../Header";
 import Copyright from "../../common/Copyright";
+import {Helmet} from "react-helmet";
 
 const styles = theme => ({
     paper: {
@@ -34,9 +35,11 @@ const styles = theme => ({
 
 function Content(props) {
     const {classes, handleDrawerToggle} = props;
-
     return (
         <div className={classes.app}>
+            <Helmet>
+                <title>Autoparts - Замовлення - </title>
+            </Helmet>
             <Header onDrawerToggle={handleDrawerToggle}/>
             <main className={classes.main}>
                 <Paper className={classes.paper}>

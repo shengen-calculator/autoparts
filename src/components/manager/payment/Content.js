@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import {useParams} from "react-router-dom";
 import {getPaymentsRequest} from "../../../redux/actions/clientActions";
+import {Helmet} from "react-helmet";
 
 const styles = theme => ({
     paper: {
@@ -51,6 +52,9 @@ function Content({client, getPaymentsRequest, ...props}) {
     return (
         <div className={classes.app}>
             <Header onDrawerToggle={handleDrawerToggle}/>
+            <Helmet>
+                <title>Autoparts - План платежів - {client.vip}</title>
+            </Helmet>
             <main className={classes.main}>
                 <Paper className={classes.paper}>
                     <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
