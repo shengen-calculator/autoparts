@@ -30,7 +30,9 @@ function SearchToolbar({client, ...props}) {
                 ...prev,
                 vip: ''
             }));
-            history.push(`/manager/search/${vip}`);
+            if(vip) {
+                history.push(`/manager/search/${vip}`);
+            }
         }
     }
 
@@ -41,7 +43,9 @@ function SearchToolbar({client, ...props}) {
                 ...prev,
                 number: ''
             }));
-            history.push(`/manager/search/${client.vip}/${number}`);
+            if(number) {
+                history.push(`/manager/search/${client.vip}/${number}`);
+            }
         }
     }
 
