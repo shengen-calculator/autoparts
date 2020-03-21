@@ -12,7 +12,7 @@ const processSignUp = (user) => {
         emailVerified = true;
         customClaims = {
             role: RoleEnum.Manager,
-            vip: "z0777"
+            vip: "3000"
         };
     }
     if(clients.includes(user.email)) {

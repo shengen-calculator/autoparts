@@ -10,6 +10,7 @@ import PaymentContent from './payment/Content';
 import StatisticContent from './statistic/Content';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../PageNotFound";
+import {connect} from "react-redux";
 
 const drawerWidth = 256;
 
@@ -26,7 +27,7 @@ const styles = theme => ({
     }
 });
 
-function App(props) {
+function App({client, ...props}) {
     const {classes, match} = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -42,25 +43,37 @@ function App(props) {
                         <Navigator
                             PaperProps={{style: {width: drawerWidth}}}
                             variant="temporary"
+                            vip={client.vip}
+                            fullName={client.fullName}
                             open={mobileOpen}
                             onClose={handleDrawerToggle}
                         />
                     </Hidden>
                     <Hidden xsDown implementation="css">
-                        <Navigator PaperProps={{style: {width: drawerWidth}}}/>
+                        <Navigator
+                            PaperProps={{style: {width: drawerWidth}}}
+                            vip={client.vip}
+                            fullName={client.fullName}
+                        />
                     </Hidden>
                 </nav>
                 <Switch>
-                    <Route path={`${match.path}/order`}>
+                    <Route path={`${match.path}/order/:vip`}>
                         <OrderContent handleDrawerToggle={handleDrawerToggle}/>
                     </Route>
                     <Route path={`${match.path}/statistic`}>
                         <StatisticContent match={match} handleDrawerToggle={handleDrawerToggle}/>
                     </Route>
-                    <Route path={`${match.path}/payment`}>
+                    <Route path={`${match.path}/payment/:vip`}>
                         <PaymentContent handleDrawerToggle={handleDrawerToggle}/>
                     </Route>
-                    <Route exact path={`${match.path}/search`}>
+                    <Route exact path={`${match.path}/search/:vip`}>
+                        <SearchContent handleDrawerToggle={handleDrawerToggle}/>
+                    </Route>
+                    <Route exact path={`${match.path}/search/:vip/:numb`}>
+                        <SearchContent handleDrawerToggle={handleDrawerToggle}/>
+                    </Route>
+                    <Route exact path={`${match.path}/search/:vip/:numb/:brand`}>
                         <SearchContent handleDrawerToggle={handleDrawerToggle}/>
                     </Route>
                     <Route exact path={`${match.path}/`}>
@@ -76,4 +89,10 @@ App.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(App);
+function mapStateToProps(state) {
+    return {
+        client: state.client
+    }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(App));

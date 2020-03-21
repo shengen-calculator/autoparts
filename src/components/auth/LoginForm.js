@@ -43,14 +43,14 @@ function LoginPage({
                 requestInProcess: false
             }));
             if(auth.role === RoleEnum.Manager) {
-                history.push('/manager');
+                history.push(`/manager/search/${auth.vip}`);
             } else {
                 history.push('/');
             }
 
         }
 
-    }, [auth.logging, auth.role, history, authentication]);
+    }, [auth.logging, auth.role, auth.vip, history, authentication]);
 
 
     function handleChange(event) {

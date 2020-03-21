@@ -1,19 +1,13 @@
-import React from 'react';
-import {connect} from "react-redux";
+import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
-import Grid from '@material-ui/core/Grid';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import SendIcon from '@material-ui/icons/Send';
-import MenuIcon from '@material-ui/icons/Menu';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
 import {withStyles} from '@material-ui/core/styles';
-import SearchIcon from "@material-ui/icons/Search";
-import TextField from "@material-ui/core/TextField";
-import {logoutRequest} from "../../redux/actions/authenticationActions";
+import SearchToolbar from "./SearchToolbar";
+import LoginToolbar from "./LoginToolbar";
+import Progress from "../common/Progress";
+import {useHistory, useParams} from "react-router-dom";
+import {getClientRequest} from "../../redux/actions/clientActions";
+import {connect} from "react-redux";
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -39,85 +33,33 @@ const styles = theme => ({
     },
 });
 
-function Header({logoutRequest, auth, ...props}) {
-    const {classes, onDrawerToggle} = props;
+function Header({getClientRequest, client, ...props}) {
+    const {onDrawerToggle} = props;
+    let {vip} = useParams();
+    let history = useHistory();
+    const didMountRef = useRef(false);
+
+    useEffect(() => {
+        if(vip) {
+            if(client.vip !== vip) {
+                getClientRequest(vip);
+            }
+        }
+    }, [vip, client.vip, getClientRequest]);
+
+    useEffect(() => {
+        if (didMountRef.current && client.isClientNotExists)
+            history.replace(`/manager/search/${client.vip}`);
+        else
+            didMountRef.current = true;
+    }, [client.isClientNotExists, client.vip, history]);
 
     return (
         <React.Fragment>
             <AppBar color="primary" position="sticky" elevation={0}>
-                <Toolbar>
-                    <Grid container spacing={1} alignItems="center">
-                        <Hidden smUp>
-                            <Grid item>
-                                <IconButton
-                                    color="inherit"
-                                    aria-label="open drawer"
-                                    onClick={onDrawerToggle}
-                                    className={classes.menuButton}
-                                >
-                                    <MenuIcon/>
-                                </IconButton>
-                            </Grid>
-                        </Hidden>
-                        <Grid item xs/>
-                        <Grid item>
-                            {auth.vip}
-                        </Grid>
-                        <Grid item>
-                            <Tooltip title="Вийти">
-                                <IconButton color="inherit" onClick={() => {
-                                    logoutRequest();
-                                }}>
-                                    <ExitToAppIcon/>
-                                </IconButton>
-                            </Tooltip>
-                        </Grid>
-
-
-                    </Grid>
-                </Toolbar>
-                <Toolbar>
-                    <Grid container spacing={2} alignItems="center">
-                        <Grid item>
-                            <SearchIcon className={classes.block} color="inherit"/>
-                        </Grid>
-                        <Grid item xs>
-                            <TextField
-                                fullWidth
-                                placeholder="Введіть номер артикула"
-                                InputProps={{
-                                    className: classes.searchInput,
-                                }}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <Tooltip title="Розпочати пошук">
-                                <IconButton>
-                                    <SendIcon className={classes.block} color="inherit"/>
-                                </IconButton>
-                            </Tooltip>
-                        </Grid>
-                        <Grid item>
-                            <SearchIcon className={classes.block} color="inherit"/>
-                        </Grid>
-                        <Grid item xs>
-                            <TextField
-                                fullWidth
-                                placeholder="Введіть код клієнта"
-                                InputProps={{
-                                    className: classes.searchInput,
-                                }}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <Tooltip title="Розпочати пошук">
-                                <IconButton>
-                                    <SendIcon className={classes.block} color="inherit"/>
-                                </IconButton>
-                            </Tooltip>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
+                <LoginToolbar onDrawerToggle={onDrawerToggle}/>
+                <SearchToolbar/>
+                <Progress />
             </AppBar>
         </React.Fragment>
     );
@@ -128,16 +70,15 @@ Header.propTypes = {
     onDrawerToggle: PropTypes.func.isRequired,
 };
 
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    getClientRequest
+};
 
 function mapStateToProps(state) {
     return {
-        auth: state.authentication
+        client: state.client
     }
 }
-
-// noinspection JSUnusedGlobalSymbols
-const mapDispatchToProps = {
-    logoutRequest
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Header));

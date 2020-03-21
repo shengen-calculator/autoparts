@@ -32,6 +32,21 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Ваш обліковий запис не активовано'
             };
 
+        case types.CLIENT_DOESNT_EXIST:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Клієнта з зазначеним ВІП-ом не знайдено'
+            };
+
+
+        case types.LOAD_CLIENT_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Спробуйте завантажити клієнта ще раз'
+            };
+
         case types.AUTHENTICATION_SUCCESS:
             return {
                 ...state,

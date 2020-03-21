@@ -1,13 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
+import {useParams, useHistory} from 'react-router-dom';
+import {withStyles} from '@material-ui/core/styles';
 import GeneralTable from "./GeneralTable";
 import VendorTable from "./VendorTable";
 import AnalogTable from "./AnalogTable";
 import Header from '../Header';
 import Copyright from '../../common/Copyright';
+import {connect} from "react-redux";
+import {Helmet} from "react-helmet";
+
 
 const drawerWidth = 256;
 const styles = theme => ({
@@ -56,11 +60,27 @@ const styles = theme => ({
     }
 });
 
-function Content(props) {
+function Content({auth, client, ...props}) {
     const {classes, handleDrawerToggle} = props;
+    let history = useHistory();
+    let {vip} = useParams();
+
+
+    useEffect(() => {
+        if (!vip) {
+            if(!client.vip) {
+                history.push(`/manager/search/${auth.vip}`)
+            } else {
+                history.push(`/manager/search/${client.vip}`)
+            }
+        }
+    }, [vip, client.vip, auth.vip, history]);
 
     return (<div className={classes.app}>
         <Header onDrawerToggle={handleDrawerToggle}/>
+        <Helmet>
+            <title>Autoparts - Пошук - {client.vip}</title>
+        </Helmet>
         <main className={classes.main}>
             <Paper className={classes.paper}>
                 <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
@@ -85,4 +105,12 @@ Content.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Content);
+
+function mapStateToProps(state) {
+    return {
+        auth: state.authentication,
+        client: state.client
+    }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Content));

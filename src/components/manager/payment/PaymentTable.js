@@ -4,19 +4,6 @@ import React from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 
-function createData(id, amount, date) {
-    return { id, amount, date };
-}
-
-const rows = [
-    createData(1,15.76, '28.02.2020'),
-    createData(2,9.84, '29.02.2020' ),
-    createData(3, 3.45, '01.03.2020'),
-    createData(4, 0,'02.03.2020'),
-    createData(5, 0, '03.03.2020'),
-    createData(6,0, '04.03.2020'),
-];
-
 const headCells = [
     { id: 'date', numeric: false, disablePadding: false, label: 'Дата' },
     { id: 'amount', numeric: true, disablePadding: false, label: 'Сума' }
@@ -33,7 +20,7 @@ function tableRow(row, index, isSelected, handleClick) {
             role="checkbox"
             aria-checked={isItemSelected}
             tabIndex={-1}
-            key={row.id}
+            key={row.date}
             selected={isItemSelected}
         >
 
@@ -45,10 +32,12 @@ function tableRow(row, index, isSelected, handleClick) {
     );
 }
 
-export default function PaymentTable() {
+function PaymentTable(props) {
+
+
     return(
         <EnhancedTable
-            rows={rows}
+            rows={props.payments}
             headCells={headCells}
             tableRow={tableRow}
             title="План платежів"
@@ -60,3 +49,5 @@ export default function PaymentTable() {
         />
     );
 }
+
+export default PaymentTable;
