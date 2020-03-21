@@ -1,13 +1,9 @@
 const functions = require('firebase-functions');
+const util = require('./util');
 
 const getClientByVip = async (data, context) => {
 
-    if (!process.env.FUNCTIONS_EMULATOR) {
-        if (!context.auth) {
-            throw new functions.https.HttpsError('failed-precondition',
-                'The function must be called while authenticated.');
-        }
-    }
+    util.CheckForManagerRole(context);
 
     if (!data) {
         throw new functions.https.HttpsError('invalid-argument',
