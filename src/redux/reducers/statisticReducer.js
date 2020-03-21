@@ -19,25 +19,25 @@ export default function statisticReducer(state = initialState.statistic, action)
         case types.LOAD_CLIENT_STATISTIC_SUCCESS:
             return {
                 ...state,
-                clientStatistic: action.clientStatistic
+                clientStatistic: action.result
             };
 
         case types.LOAD_VENDOR_STATISTIC_SUCCESS:
             return {
                 ...state,
-                vendorStatistic: action.vendorStatistic
+                vendorStatistic: action.result
             };
 
         case types.LOAD_STATISTIC_BY_CLIENT_SUCCESS:
             return {
                 ...state,
-                statisticByClient: action.statisticByClient
+                statisticByClient: action.result
             };
 
         case types.LOAD_STATISTIC_BY_VENDOR_SUCCESS:
             return {
                 ...state,
-                statisticByVendor: action.statisticByVendor
+                statisticByVendor: action.result
             };
 
         default:

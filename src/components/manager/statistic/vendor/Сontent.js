@@ -6,23 +6,32 @@ import { withStyles } from '@material-ui/core/styles';
 import MainTable from './MainTable';
 import DetailsTable from './DetailsTable';
 import ContentStyle from "../ContentStyle";
+import {connect} from "react-redux";
+import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ContentStyle(theme);
 
-function Content(props) {
+function Content({statistic, ...props}) {
     const {classes} = props;
+    const isTableShown = statistic && statistic.vendorStatistic && statistic.vendorStatistic.length > 0;
 
     return (
         <Paper className={classes.paper}>
             <div className={classes.contentWrapper}>
-                <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={4}>
-                        <MainTable/>
+                {isTableShown ?
+                    <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={4}>
+                            <MainTable vendorStatistic={statistic.vendorStatistic}/>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <DetailsTable statisticByVendor={statistic.statisticByVendor}/>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={8}>
-                        <DetailsTable/>
-                    </Grid>
-                </Grid>
+                    :
+                    <Typography color="textSecondary" align="center">
+                        Інформація відсутня
+                    </Typography>
+                }
             </div>
         </Paper>
     );
@@ -33,4 +42,15 @@ Content.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Content);
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+
+};
+
+function mapStateToProps(state) {
+    return {
+        statistic: state.statistic
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Content));

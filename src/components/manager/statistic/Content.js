@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -26,6 +26,9 @@ import LoginToolbar from "../LoginToolbar";
 import SearchToolbar from "../SearchToolbar";
 import Progress from "../../common/Progress";
 import {Helmet} from "react-helmet";
+import {getVendorStatistic} from "../../../redux/actions/clientActions";
+import {connect} from "react-redux";
+import {useMountEffect} from "../../common/UseMountEffect";
 
 const tabs = [
     {id: 'vendor', name: 'Постачальники', page: <VendorContent/>},
@@ -73,9 +76,42 @@ const styles = theme => ({
     }
 });
 
-function Content(props) {
+function Content({getVendorStatistic, ...props}) {
     const {classes, match, handleDrawerToggle} = props;
     const index = tabs.findIndex(tab => window.location.href.includes(tab.id));
+    const [dateFilter, setDateFilter] = useState({
+        startDate: Date.now(),
+        endDate: Date.now()
+    });
+    useMountEffect(() => {
+        getVendorStatistic({
+            startDate: dateFilter.startDate,
+            endDate: dateFilter.endDate
+        });
+    });
+
+    function handleStartDateChange(value) {
+        setDateFilter(prev => ({
+            ...prev,
+            startDate: value
+        }));
+    }
+
+    function handleEndDateChange(value) {
+        setDateFilter(prev => ({
+            ...prev,
+            endDate: value
+        }));
+    }
+
+    function searchKeyPress(target) {
+        if(target.charCode === 13 || target.type === 'click') {
+            getVendorStatistic({
+                startDate: dateFilter.startDate,
+                endDate: dateFilter.endDate
+            });
+        }
+    }
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ukLocale}>
@@ -105,8 +141,9 @@ function Content(props) {
                                     id="date-picker-start"
                                     label="Починаючи з"
                                     format="dd/MM/yyyy"
-                                    // value={selectedDate}
-                                    // onChange={handleDateChange}
+                                    value={dateFilter.startDate}
+                                    onChange={handleStartDateChange}
+                                    onKeyPress={searchKeyPress}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
@@ -122,8 +159,9 @@ function Content(props) {
                                     id="date-picker-end"
                                     label="до"
                                     format="dd/MM/yyyy"
-                                    // value={selectedDate}
-                                    // onChange={handleDateChange}
+                                    value={dateFilter.endDate}
+                                    onChange={handleEndDateChange}
+                                    onKeyPress={searchKeyPress}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
@@ -131,7 +169,7 @@ function Content(props) {
                             </Grid>
                             <Grid item xs={1}>
                                 <Tooltip title="Розпочати пошук">
-                                    <IconButton>
+                                    <IconButton onClick={searchKeyPress}>
                                         <SendIcon className={classes.block} color="inherit"/>
                                     </IconButton>
                                 </Tooltip>
@@ -175,4 +213,9 @@ Content.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Content);
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    getVendorStatistic
+};
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(Content));
