@@ -18,7 +18,20 @@ export default {
         isPaymentsLoaded: false,
         isClientNotExists: false
     },
-    apiCallsInProgress: 0
-    //statistic,
+    apiCallsInProgress: 0,
+    statistic: {
+        queryStatistic: {
+            orderTotal: 0,
+            order: 0,
+            reserveTotal: 0,
+            reserve: 0,
+            registration: 0,
+            queryTotal: 0
+        },
+        clientStatistic: [],
+        vendorStatistic: [],
+        statisticByClient: [],
+        statisticByVendor: []
+    },
     //products
 };

@@ -4,12 +4,18 @@ import { persistReducer } from 'redux-persist';
 import authentication from './authenticationReducer';
 import message from './messageReducer';
 import client from './clientReducer';
+import statistic from './statisticReducer';
 import storage from 'redux-persist/lib/storage';
 
 export const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['message', 'authentication', 'client', 'apiCallsInProgress']
+    blacklist: ['message',
+        'authentication',
+        'client',
+        'apiCallsInProgress',
+        'statistic'
+    ]
 };
 
 const authPersistConfig = {
@@ -27,6 +33,7 @@ const rootReducer = combineReducers({
     authentication: persistReducer(authPersistConfig, authentication),
     client: persistReducer(clientPersistConfig, client),
     apiCallsInProgress,
+    statistic,
     message
 });
 
