@@ -8,12 +8,18 @@ import DetailsTable from './DetailsTable';
 import ContentStyle from "../ContentStyle";
 import {connect} from "react-redux";
 import Typography from "@material-ui/core/Typography";
+import {getStatisticByVendor} from "../../../../redux/actions/clientActions";
 
 const styles = theme => ContentStyle(theme);
 
-function Content({statistic, ...props}) {
-    const {classes} = props;
+function Content({statistic, getStatisticByVendor, ...props}) {
+    const {classes, startDate, endDate} = props;
     const isTableShown = statistic && statistic.vendorStatistic && statistic.vendorStatistic.length > 0;
+
+    function onVendorSelect(vendorId) {
+        getStatisticByVendor({startDate, endDate, vendorId});
+    }
+
 
     return (
         <Paper className={classes.paper}>
@@ -21,7 +27,7 @@ function Content({statistic, ...props}) {
                 {isTableShown ?
                     <Grid container spacing={2} alignItems="center">
                         <Grid item xs={4}>
-                            <MainTable vendorStatistic={statistic.vendorStatistic}/>
+                            <MainTable vendorStatistic={statistic.vendorStatistic} onSelect={onVendorSelect} />
                         </Grid>
                         <Grid item xs={8}>
                             <DetailsTable statisticByVendor={statistic.statisticByVendor}/>
@@ -44,7 +50,7 @@ Content.propTypes = {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-
+    getStatisticByVendor
 };
 
 function mapStateToProps(state) {

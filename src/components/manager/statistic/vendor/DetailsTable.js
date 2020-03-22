@@ -20,7 +20,6 @@ function tableRow(row, index, isSelected, handleClick) {
     return (
         <TableRow
             hover
-            onClick={event => handleClick(event, row.id)}
             role="checkbox"
             aria-checked={isItemSelected}
             tabIndex={-1}

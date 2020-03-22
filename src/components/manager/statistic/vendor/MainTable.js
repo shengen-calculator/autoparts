@@ -2,8 +2,7 @@ import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from "../../../common/EnhancedTable";
-import {handleTableClick, handleTableSelectAllClick} from "../../../common/EnhancedTableClickHandler";
-
+import {useMountEffect} from "../../../common/UseMountEffect";
 
 const headCells = [
     { id: 'vendor', numeric: false, disablePadding: false, label: 'Постачальник' },
@@ -13,10 +12,11 @@ const headCells = [
 function tableRow(row, index, isSelected, handleClick) {
     const isItemSelected = isSelected(row.vendorId);
     const labelId = `enhanced-table-checkbox-${index}`;
+    const pointer = {cursor: 'pointer'};
 
     return (
         <TableRow
-            hover
+            style={pointer}
             onClick={event => handleClick(event, row.vendorId)}
             role="checkbox"
             aria-checked={isItemSelected}
@@ -35,19 +35,27 @@ function tableRow(row, index, isSelected, handleClick) {
 
 function MainTable(props) {
     const [selected, setSelected] = React.useState([]);
+    const {vendorStatistic, onSelect} = props;
+
+    useMountEffect(() => {
+        if(selected.length === 0 && vendorStatistic.length > 0) {
+            setSelected([vendorStatistic[0].vendorId]);
+            onSelect(vendorStatistic[0].vendorId);
+        }
+    });
+
 
     const handleClick = (event, name) => {
-       handleTableClick(event, name, selected, setSelected);
+        let newSelected = [];
+        newSelected.push(name);
+        setSelected(newSelected);
+        onSelect(name);
     };
 
-    const handleSelectAllClick = (event) => {
-        handleTableSelectAllClick(event, props.vendorStatistic, setSelected);
-    };
 
     return(
         <EnhancedTable
             handleClick={handleClick}
-            handleSelectAllClick={handleSelectAllClick}
             selected={selected}
             rows={props.vendorStatistic}
             headCells={headCells}
@@ -60,4 +68,5 @@ function MainTable(props) {
         />
     );
 }
+
 export default MainTable;

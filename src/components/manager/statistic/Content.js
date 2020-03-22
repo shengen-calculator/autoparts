@@ -30,11 +30,6 @@ import {getVendorStatistic} from "../../../redux/actions/clientActions";
 import {connect} from "react-redux";
 import {useMountEffect} from "../../common/UseMountEffect";
 
-const tabs = [
-    {id: 'vendor', name: 'Постачальники', page: <VendorContent/>},
-    {id: 'query', name: 'Запити клієнтів', page: <QueryContent/>}
-];
-
 const styles = theme => ({
     root: {
         display: 'flex',
@@ -78,11 +73,31 @@ const styles = theme => ({
 
 function Content({getVendorStatistic, ...props}) {
     const {classes, match, handleDrawerToggle} = props;
-    const index = tabs.findIndex(tab => window.location.href.includes(tab.id));
     const [dateFilter, setDateFilter] = useState({
         startDate: Date.now(),
         endDate: Date.now()
     });
+
+    const tabs = [
+        {
+            id: 'vendor',
+            name: 'Постачальники',
+            page: <VendorContent
+                startDate={dateFilter.startDate}
+                endDate={dateFilter.endDate}
+            />
+        },
+        {
+            id: 'query',
+            name: 'Запити клієнтів',
+            page: <QueryContent
+                startDate={dateFilter.startDate}
+                endDate={dateFilter.endDate}
+            />
+        }
+    ];
+    const index = tabs.findIndex(tab => window.location.href.includes(tab.id));
+
     useMountEffect(() => {
         getVendorStatistic({
             startDate: dateFilter.startDate,

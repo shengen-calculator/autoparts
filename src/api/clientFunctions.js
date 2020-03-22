@@ -21,9 +21,9 @@ class FunctionsApi {
         const func = functions.httpsCallable('getStatisticByClient');
         return func({startDate, endDate});
     }
-    static getStatisticByVendor({startDate, endDate}){
+    static getStatisticByVendor({startDate, endDate, vendorId}){
         const func = functions.httpsCallable('getStatisticByVendor');
-        return func({startDate, endDate});
+        return func({startDate, endDate, vendorId});
     }
     static getVendorStatistic({startDate, endDate}){
         const func = functions.httpsCallable('getVendorStatistic');
