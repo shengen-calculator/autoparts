@@ -7,25 +7,38 @@ export default function statisticReducer(state = initialState.statistic, action)
             return {
                 ...state,
                 queryStatistic: {
-                    orderTotal: action.orderTotal,
-                    order: action.order,
-                    reserveTotal: action.reserveTotal,
-                    reserve: action.reserve,
-                    registration: action.registration,
-                    queryTotal: action.queryTotal
+                    orderTotal: action.result.orderTotal,
+                    order: action.result.order,
+                    reserveTotal: action.result.reserveTotal,
+                    reserve: action.result.reserve,
+                    registration: action.result.registration,
+                    queryTotal: action.result.queryTotal
                 }
             };
-
+        case types.LOAD_CLIENT_STATISTIC_REQUEST:
+            return {
+                ...state,
+                clientStatistic: []
+            };
         case types.LOAD_CLIENT_STATISTIC_SUCCESS:
             return {
                 ...state,
                 clientStatistic: action.result
             };
-
+        case types.LOAD_VENDOR_STATISTIC_REQUEST:
+            return {
+                ...state,
+                vendorStatistic: []
+            };
         case types.LOAD_VENDOR_STATISTIC_SUCCESS:
             return {
                 ...state,
                 vendorStatistic: action.result
+            };
+        case types.LOAD_STATISTIC_BY_CLIENT_REQUEST:
+            return {
+                ...state,
+                statisticByClient: []
             };
 
         case types.LOAD_STATISTIC_BY_CLIENT_SUCCESS:

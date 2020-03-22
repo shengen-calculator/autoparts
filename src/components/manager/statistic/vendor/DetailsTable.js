@@ -13,7 +13,7 @@ const headCells = [
     {id: 'date', numeric: false, disablePadding: false, label: 'Дата'}
 ];
 
-function tableRow(row, index, isSelected, handleClick) {
+function tableRow(row, index, isSelected) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
 

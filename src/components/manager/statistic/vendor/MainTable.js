@@ -17,6 +17,7 @@ function tableRow(row, index, isSelected, handleClick) {
     return (
         <TableRow
             style={pointer}
+            hover
             onClick={event => handleClick(event, row.vendorId)}
             role="checkbox"
             aria-checked={isItemSelected}
@@ -57,7 +58,7 @@ function MainTable(props) {
         <EnhancedTable
             handleClick={handleClick}
             selected={selected}
-            rows={props.vendorStatistic}
+            rows={vendorStatistic}
             headCells={headCells}
             tableRow={tableRow}
             title="Замовлення"

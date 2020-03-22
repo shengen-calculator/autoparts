@@ -20,7 +20,6 @@ function Content({statistic, getStatisticByVendor, ...props}) {
         getStatisticByVendor({startDate, endDate, vendorId});
     }
 
-
     return (
         <Paper className={classes.paper}>
             <div className={classes.contentWrapper}>
@@ -42,7 +41,6 @@ function Content({statistic, getStatisticByVendor, ...props}) {
         </Paper>
     );
 }
-
 
 Content.propTypes = {
     classes: PropTypes.object.isRequired,
