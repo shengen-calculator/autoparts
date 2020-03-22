@@ -2,6 +2,7 @@ import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from "../../../common/EnhancedTable";
+import {handleTableClick, handleTableSelectAllClick} from "../../../common/EnhancedTableClickHandler";
 
 
 function createData(id, vip, requests, succeeded, orders, reserves) {
@@ -59,9 +60,21 @@ function tableRow(row, index, isSelected, handleClick) {
     );
 }
 
-export default function MainTable() {
+export default function MainTable(props) {
+    const [selected, setSelected] = React.useState([]);
+
+    const handleClick = (event, name) => {
+        handleTableClick(event, name, selected, setSelected);
+    };
+
+    const handleSelectAllClick = (event) => {
+        handleTableSelectAllClick(event, rows, setSelected);
+    };
     return(
         <EnhancedTable
+            handleClick={handleClick}
+            handleSelectAllClick={handleSelectAllClick}
+            selected={selected}
             rows={rows}
             headCells={headCells}
             tableRow={tableRow}

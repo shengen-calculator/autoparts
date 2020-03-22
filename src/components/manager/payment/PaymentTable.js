@@ -9,19 +9,15 @@ const headCells = [
     { id: 'amount', numeric: true, disablePadding: false, label: 'Сума' }
 ];
 
-function tableRow(row, index, isSelected, handleClick) {
-    const isItemSelected = isSelected(row.name);
+function tableRow(row, index) {
     const labelId = `enhanced-table-checkbox-${index}`;
 
     return (
         <TableRow
             hover
-            onClick={event => handleClick(event, row.id)}
             role="checkbox"
-            aria-checked={isItemSelected}
             tabIndex={-1}
             key={row.date}
-            selected={isItemSelected}
         >
 
             <TableCell padding="default" component="th" id={labelId} scope="row">
@@ -33,8 +29,6 @@ function tableRow(row, index, isSelected, handleClick) {
 }
 
 function PaymentTable(props) {
-
-
     return(
         <EnhancedTable
             rows={props.payments}

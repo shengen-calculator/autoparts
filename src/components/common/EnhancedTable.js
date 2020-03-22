@@ -41,12 +41,23 @@ const useStyles = makeStyles(theme => ({
 
 export default function EnhancedTable(props) {
 
-    const { tableRow, rows, headCells, title, titleIcon, total, columns, isFilterShown, rowsPerPageOptions, isRowSelectorShown } = props;
+    const { tableRow,
+        rows,
+        headCells,
+        title,
+        titleIcon,
+        total,
+        columns,
+        isFilterShown,
+        rowsPerPageOptions,
+        handleClick,
+        handleSelectAllClick,
+        selected = [],
+        isRowSelectorShown } = props;
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('status');
-    const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(true);
     const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageOptions[0]);
@@ -54,35 +65,6 @@ export default function EnhancedTable(props) {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
-    };
-
-    const handleSelectAllClick = event => {
-        if (event.target.checked) {
-            const newSelecteds = rows.map(n => n.id);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
-
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        setSelected(newSelected);
     };
 
     const handleChangePage = (event, newPage) => {
