@@ -10,8 +10,8 @@ const getVendorStatistic = async (data, context) => {
             'The function must be called with two arguments "start date" and "end date"');
     }
 
-    function createData(id, vendor, quantity) {
-        return { id, vendor, quantity };
+    function createData(vendorId, vendor, quantity) {
+        return { vendorId, vendor, quantity };
     }
 
     const rows = [

@@ -5,9 +5,9 @@ const getStatisticByVendor = async (data, context) => {
 
     util.CheckForManagerRole(context);
 
-    if (!data || !data.startDate || !data.endDate) {
+    if (!data || !data.startDate || !data.endDate || !data.vendorId) {
         throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with two arguments "start date" and "end date"');
+            'The function must be called with three arguments "start date", "end date" and "vendorId"');
     }
 
     function createData(id, vip, brand, number, quantity, available, price, date) {
