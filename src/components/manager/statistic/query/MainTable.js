@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from "../../../common/EnhancedTable";
-import {useMountEffect} from "../../../common/UseMountEffect";
+import {useParams} from "react-router-dom";
 
 const headCells = [
     { id: 'vip', numeric: false, disablePadding: false, label: 'VIP' },
@@ -14,7 +14,7 @@ const headCells = [
 ];
 
 function tableRow(row, index, isSelected, handleClick) {
-    const isItemSelected = isSelected(row.id);
+    const isItemSelected = isSelected(row.vip);
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
 
@@ -43,22 +43,14 @@ function tableRow(row, index, isSelected, handleClick) {
 
 function MainTable(props) {
     const [selected, setSelected] = React.useState([]);
-    const {clientStatistic, onSelect} = props;
+    const {clientStatistic, handleClick} = props;
+    let {vip} = useParams();
 
-
-    useMountEffect(() => {
-        if(selected.length === 0 && clientStatistic.length > 0) {
-            setSelected([clientStatistic[0].vip]);
-            onSelect(clientStatistic[0].vip);
+    useEffect(() => {
+        if(clientStatistic.length && vip) {
+            setSelected(vip);
         }
-    });
-
-    const handleClick = (event, vip) => {
-        let newSelected = [];
-        newSelected.push(vip);
-        setSelected(newSelected);
-        onSelect(vip);
-    };
+    },[vip, clientStatistic.length]);
 
     return(
         <EnhancedTable

@@ -196,7 +196,7 @@ function Content({setStatisticPeriod, ...props}) {
                         <Route exact path={`${match.path}/statistic/query`}>
                             <QueryContent/>
                         </Route>
-                        <Route exact path={`${match.path}/statistic/query/:id`}>
+                        <Route exact path={`${match.path}/statistic/query/:vip`}>
                             <QueryContent/>
                         </Route>
                         <Route component={PageNotFound}/>
