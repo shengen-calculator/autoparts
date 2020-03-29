@@ -26,9 +26,8 @@ import LoginToolbar from "../LoginToolbar";
 import SearchToolbar from "../SearchToolbar";
 import Progress from "../../common/Progress";
 import {Helmet} from "react-helmet";
-import {getVendorStatistic} from "../../../redux/actions/clientActions";
+import {setStatisticPeriod} from "../../../redux/actions/statisticActions";
 import {connect} from "react-redux";
-import {useMountEffect} from "../../common/UseMountEffect";
 
 const styles = theme => ({
     root: {
@@ -71,7 +70,7 @@ const styles = theme => ({
     }
 });
 
-function Content({getVendorStatistic, ...props}) {
+function Content({setStatisticPeriod, ...props}) {
     const {classes, match, handleDrawerToggle} = props;
     const [dateFilter, setDateFilter] = useState({
         startDate: Date.now(),
@@ -98,13 +97,6 @@ function Content({getVendorStatistic, ...props}) {
     ];
     const index = tabs.findIndex(tab => window.location.href.includes(tab.id));
 
-    useMountEffect(() => {
-        getVendorStatistic({
-            startDate: dateFilter.startDate,
-            endDate: dateFilter.endDate
-        });
-    });
-
     function handleStartDateChange(value) {
         setDateFilter(prev => ({
             ...prev,
@@ -121,7 +113,7 @@ function Content({getVendorStatistic, ...props}) {
 
     function searchKeyPress(target) {
         if(target.charCode === 13 || target.type === 'click') {
-            getVendorStatistic({
+            setStatisticPeriod({
                 startDate: dateFilter.startDate,
                 endDate: dateFilter.endDate
             });
@@ -230,7 +222,7 @@ Content.propTypes = {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    getVendorStatistic
+    setStatisticPeriod
 };
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(Content));

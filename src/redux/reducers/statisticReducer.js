@@ -57,6 +57,13 @@ export default function statisticReducer(state = initialState.statistic, action)
                 ...state,
                 statisticByVendor: action.result
             };
+        case types.SET_STATISTIC_PERIOD:
+
+            return {
+                ...state,
+                startDate: action.params.startDate,
+                endDate: action.params.endDate
+            };
 
         default:
             return state;
