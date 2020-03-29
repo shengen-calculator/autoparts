@@ -31,7 +31,10 @@ export default {
         clientStatistic: [],
         vendorStatistic: [],
         statisticByClient: [],
-        statisticByVendor: []
+        statisticByVendor: [],
+        startDate:0,
+        endDate:0
+
     },
     //products
 };

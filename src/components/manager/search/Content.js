@@ -79,7 +79,7 @@ function Content({auth, client, ...props}) {
     return (<div className={classes.app}>
         <Header onDrawerToggle={handleDrawerToggle}/>
         <Helmet>
-            <title>Autoparts - Пошук - {client.vip}</title>
+            <title>Autoparts - Клієнт - {client.vip}</title>
         </Helmet>
         <main className={classes.main}>
             <Paper className={classes.paper}>
