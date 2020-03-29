@@ -25,7 +25,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import LoginToolbar from "../LoginToolbar";
 import SearchToolbar from "../SearchToolbar";
 import Progress from "../../common/Progress";
-import {Helmet} from "react-helmet";
 import {setStatisticPeriod} from "../../../redux/actions/statisticActions";
 import {connect} from "react-redux";
 
@@ -80,19 +79,11 @@ function Content({setStatisticPeriod, ...props}) {
     const tabs = [
         {
             id: 'vendor',
-            name: 'Постачальники',
-            page: <VendorContent
-                startDate={dateFilter.startDate}
-                endDate={dateFilter.endDate}
-            />
+            name: 'Постачальники'
         },
         {
             id: 'query',
-            name: 'Запити клієнтів',
-            page: <QueryContent
-                startDate={dateFilter.startDate}
-                endDate={dateFilter.endDate}
-            />
+            name: 'Запити клієнтів'
         }
     ];
     const index = tabs.findIndex(tab => window.location.href.includes(tab.id));
@@ -122,9 +113,6 @@ function Content({setStatisticPeriod, ...props}) {
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ukLocale}>
-            <Helmet>
-                <title>Autoparts - Статистика</title>
-            </Helmet>
             <div className={classes.app}>
                 <AppBar color="primary" position="sticky" elevation={0}>
                     <LoginToolbar onDrawerToggle={handleDrawerToggle}/>
@@ -197,13 +185,20 @@ function Content({setStatisticPeriod, ...props}) {
                 <main className={classes.main}>
                     <Switch>
                         <Route exact path={`${match.path}/statistic/`}>
-                            {tabs[0].page}
+                            <VendorContent/>
                         </Route>
-                        {tabs.map(({id, page }) => (
-                            <Route key={id} path={`${match.path}/statistic/${id}`}>
-                                {page}
-                            </Route>
-                        ))}
+                        <Route exact path={`${match.path}/statistic/vendor`}>
+                            <VendorContent/>
+                        </Route>
+                        <Route exact path={`${match.path}/statistic/vendor/:id`}>
+                            <VendorContent/>
+                        </Route>
+                        <Route exact path={`${match.path}/statistic/query`}>
+                            <QueryContent/>
+                        </Route>
+                        <Route exact path={`${match.path}/statistic/query/:id`}>
+                            <QueryContent/>
+                        </Route>
                         <Route component={PageNotFound}/>
                     </Switch>
                 </main>

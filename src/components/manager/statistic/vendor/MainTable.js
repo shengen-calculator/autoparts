@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from "../../../common/EnhancedTable";
-import {useMountEffect} from "../../../common/UseMountEffect";
+import {useParams} from "react-router-dom";
 
 const headCells = [
     { id: 'vendor', numeric: false, disablePadding: false, label: 'Постачальник' },
@@ -36,22 +36,14 @@ function tableRow(row, index, isSelected, handleClick) {
 
 function MainTable(props) {
     const [selected, setSelected] = React.useState([]);
-    const {vendorStatistic, onSelect} = props;
+    const {vendorStatistic, handleClick} = props;
+    let {id} = useParams();
 
-    useMountEffect(() => {
-        if(selected.length === 0 && vendorStatistic.length > 0) {
-            setSelected([vendorStatistic[0].vendorId]);
-            onSelect(vendorStatistic[0].vendorId);
+    useEffect(() => {
+        if(vendorStatistic.length && id) {
+            setSelected([parseInt(id)]);
         }
-    });
-
-
-    const handleClick = (event, name) => {
-        let newSelected = [];
-        newSelected.push(name);
-        setSelected(newSelected);
-        onSelect(name);
-    };
+    },[id, vendorStatistic.length]);
 
 
     return(

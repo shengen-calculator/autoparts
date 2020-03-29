@@ -40,7 +40,7 @@ function tableRow(row, index, isSelected) {
     );
 }
 
-export default function DetailsTable(props) {
+function DetailsTable(props) {
     return(
         <EnhancedTable
             rows={props.statisticByVendor}
@@ -54,3 +54,5 @@ export default function DetailsTable(props) {
         />
     );
 }
+
+export default DetailsTable;
