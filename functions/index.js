@@ -8,6 +8,7 @@ const getVendorStatistic = require('./statistic/getVendorStatistic');
 const getStatisticByVendor = require('./statistic/getStatisticByVendor');
 const getClientStatistic = require('./statistic/getClientStatistic');
 const getStatisticByClient = require('./statistic/getStatisticByClient');
+const getOrdersByVip = require('./getOrdersByVip');
 
 admin.initializeApp();
 
@@ -41,4 +42,9 @@ exports.getClientStatistic = functions.https.onCall(async (data, context) => {
 
 exports.getStatisticByClient = functions.https.onCall(async (data, context) => {
     return getStatisticByClient(data, context);
+});
+
+
+exports.getOrdersByVip = functions.https.onCall(async (data, context) => {
+    return getOrdersByVip(data, context);
 });
