@@ -1,29 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from "../../../common/EnhancedTable";
-
-
-function createData(id, vendor, quantity) {
-    return { id, vendor, quantity };
-}
-
-const rows = [
-    createData(1,'PLANETA',  6),
-    createData(2,'ADS',  4),
-    createData(3,'WEST',  4),
-    createData(4,'BAS',  3),
-    createData(5,'OMEGA',  3),
-    createData(6,'VA',  3),
-    createData(7,'ES',  3),
-    createData(8,'LIDER',  2),
-    createData(9,'1707',  2),
-    createData(10,'VLAD',  2),
-    createData(11,'PITSTOP',  1),
-    createData(12,'SZ',  1),
-    createData(13,'BUS',  1),
-];
-
+import {useParams} from "react-router-dom";
 
 const headCells = [
     { id: 'vendor', numeric: false, disablePadding: false, label: 'Постачальник' },
@@ -31,17 +10,19 @@ const headCells = [
 ];
 
 function tableRow(row, index, isSelected, handleClick) {
-    const isItemSelected = isSelected(row.id);
+    const isItemSelected = isSelected(row.vendorId);
     const labelId = `enhanced-table-checkbox-${index}`;
+    const pointer = {cursor: 'pointer'};
 
     return (
         <TableRow
+            style={pointer}
             hover
-            onClick={event => handleClick(event, row.id)}
+            onClick={event => handleClick(event, row.vendorId)}
             role="checkbox"
             aria-checked={isItemSelected}
             tabIndex={-1}
-            key={row.id}
+            key={row.vendorId}
             selected={isItemSelected}
         >
 
@@ -53,10 +34,23 @@ function tableRow(row, index, isSelected, handleClick) {
     );
 }
 
-export default function MainTable() {
+function MainTable(props) {
+    const [selected, setSelected] = React.useState([]);
+    const {vendorStatistic, handleClick} = props;
+    let {id} = useParams();
+
+    useEffect(() => {
+        if(vendorStatistic.length && id) {
+            setSelected([parseInt(id)]);
+        }
+    },[id, vendorStatistic.length]);
+
+
     return(
         <EnhancedTable
-            rows={rows}
+            handleClick={handleClick}
+            selected={selected}
+            rows={vendorStatistic}
             headCells={headCells}
             tableRow={tableRow}
             title="Замовлення"
@@ -67,3 +61,5 @@ export default function MainTable() {
         />
     );
 }
+
+export default MainTable;

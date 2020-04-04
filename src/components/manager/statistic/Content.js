@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -25,12 +25,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import LoginToolbar from "../LoginToolbar";
 import SearchToolbar from "../SearchToolbar";
 import Progress from "../../common/Progress";
-import {Helmet} from "react-helmet";
-
-const tabs = [
-    {id: 'vendor', name: 'Постачальники', page: <VendorContent/>},
-    {id: 'query', name: 'Запити клієнтів', page: <QueryContent/>}
-];
+import {setStatisticPeriod} from "../../../redux/actions/statisticActions";
+import {connect} from "react-redux";
 
 const styles = theme => ({
     root: {
@@ -73,15 +69,50 @@ const styles = theme => ({
     }
 });
 
-function Content(props) {
+function Content({setStatisticPeriod, ...props}) {
     const {classes, match, handleDrawerToggle} = props;
+    const [dateFilter, setDateFilter] = useState({
+        startDate: Date.now(),
+        endDate: Date.now()
+    });
+
+    const tabs = [
+        {
+            id: 'vendor',
+            name: 'Постачальники'
+        },
+        {
+            id: 'query',
+            name: 'Запити клієнтів'
+        }
+    ];
     const index = tabs.findIndex(tab => window.location.href.includes(tab.id));
+
+    function handleStartDateChange(value) {
+        setDateFilter(prev => ({
+            ...prev,
+            startDate: value
+        }));
+    }
+
+    function handleEndDateChange(value) {
+        setDateFilter(prev => ({
+            ...prev,
+            endDate: value
+        }));
+    }
+
+    function searchKeyPress(target) {
+        if(target.charCode === 13 || target.type === 'click') {
+            setStatisticPeriod({
+                startDate: dateFilter.startDate,
+                endDate: dateFilter.endDate
+            });
+        }
+    }
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ukLocale}>
-            <Helmet>
-                <title>Autoparts - Статистика</title>
-            </Helmet>
             <div className={classes.app}>
                 <AppBar color="primary" position="sticky" elevation={0}>
                     <LoginToolbar onDrawerToggle={handleDrawerToggle}/>
@@ -105,8 +136,9 @@ function Content(props) {
                                     id="date-picker-start"
                                     label="Починаючи з"
                                     format="dd/MM/yyyy"
-                                    // value={selectedDate}
-                                    // onChange={handleDateChange}
+                                    value={dateFilter.startDate}
+                                    onChange={handleStartDateChange}
+                                    onKeyPress={searchKeyPress}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
@@ -122,8 +154,9 @@ function Content(props) {
                                     id="date-picker-end"
                                     label="до"
                                     format="dd/MM/yyyy"
-                                    // value={selectedDate}
-                                    // onChange={handleDateChange}
+                                    value={dateFilter.endDate}
+                                    onChange={handleEndDateChange}
+                                    onKeyPress={searchKeyPress}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
@@ -131,7 +164,7 @@ function Content(props) {
                             </Grid>
                             <Grid item xs={1}>
                                 <Tooltip title="Розпочати пошук">
-                                    <IconButton>
+                                    <IconButton onClick={searchKeyPress}>
                                         <SendIcon className={classes.block} color="inherit"/>
                                     </IconButton>
                                 </Tooltip>
@@ -152,13 +185,20 @@ function Content(props) {
                 <main className={classes.main}>
                     <Switch>
                         <Route exact path={`${match.path}/statistic/`}>
-                            {tabs[0].page}
+                            <VendorContent/>
                         </Route>
-                        {tabs.map(({id, page }) => (
-                            <Route key={id} path={`${match.path}/statistic/${id}`}>
-                                {page}
-                            </Route>
-                        ))}
+                        <Route exact path={`${match.path}/statistic/vendor`}>
+                            <VendorContent/>
+                        </Route>
+                        <Route exact path={`${match.path}/statistic/vendor/:id`}>
+                            <VendorContent/>
+                        </Route>
+                        <Route exact path={`${match.path}/statistic/query`}>
+                            <QueryContent/>
+                        </Route>
+                        <Route exact path={`${match.path}/statistic/query/:vip`}>
+                            <QueryContent/>
+                        </Route>
                         <Route component={PageNotFound}/>
                     </Switch>
                 </main>
@@ -175,4 +215,9 @@ Content.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Content);
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    setStatisticPeriod
+};
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(Content));

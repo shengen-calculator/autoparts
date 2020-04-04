@@ -10,6 +10,7 @@ import SnoozeIcon from '@material-ui/icons/Snooze';
 
 import EnhancedTable from '../../common/EnhancedTable';
 import {TitleIconEnum} from "../../../util/Enums";
+import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
 
 //status list
 //подтвержден = 0
@@ -97,8 +98,20 @@ function tableRow(row, index, isSelected, handleClick) {
 }
 
 export default function OrderTable() {
+    const [selected, setSelected] = React.useState([]);
+
+    const handleClick = (event, name) => {
+        handleTableClick(event, name, selected, setSelected);
+    };
+
+    const handleSelectAllClick = (event) => {
+        handleTableSelectAllClick(event, rows, setSelected);
+    };
     return(
         <EnhancedTable
+            handleClick={handleClick}
+            handleSelectAllClick={handleSelectAllClick}
+            selected={selected}
             rows={rows}
             headCells={headCells}
             tableRow={tableRow}

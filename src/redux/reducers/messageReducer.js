@@ -39,6 +39,12 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Клієнта з зазначеним ВІП-ом не знайдено'
             };
 
+        case types.LOAD_CLIENT_SUCCESS:
+            return {
+                ...state,
+                type: 'success',
+                text: 'Клієнта успішно завантажено'
+            };
 
         case types.LOAD_CLIENT_FAILURE:
             return {
@@ -47,6 +53,41 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Спробуйте завантажити клієнта ще раз'
             };
 
+        case types.LOAD_CLIENT_STATISTIC_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Спробуйте завантажити загальну статистику для клієнтів ще раз'
+            };
+
+        case types.LOAD_VENDOR_STATISTIC_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Спробуйте завантажити загальну статистику для постачальників ще раз'
+            };
+
+        case types.LOAD_QUERY_STATISTIC_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Спробуйте завантажити загальну статистику за запитами ще раз'
+            };
+
+
+        case types.LOAD_STATISTIC_BY_CLIENT_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Спробуйте завантажити статистику клієнта ще раз'
+            };
+
+        case types.LOAD_STATISTIC_BY_VENDOR_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Спробуйте завантажити статистику постачальника ще раз'
+            };
         case types.AUTHENTICATION_SUCCESS:
             return {
                 ...state,
