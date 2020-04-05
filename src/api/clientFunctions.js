@@ -9,6 +9,18 @@ class FunctionsApi {
         const func = functions.httpsCallable('getOrdersByVip');
         return func(vip);
     }
+    static deleteOrdersByIds(ids){
+        const func = functions.httpsCallable('deleteOrdersByIds');
+        return func(ids);
+    }
+    static updateOrderPrices(prices){
+        const func = functions.httpsCallable('updateOrderPrices');
+        return func(prices);
+    }
+    static updateOrderQuantity({orderId, quantity}){
+        const func = functions.httpsCallable('updateOrderQuantity');
+        return func({orderId, quantity});
+    }
     static getPaymentsByVip(vip){
         const func = functions.httpsCallable('getPaymentsByVip');
         return func(vip);
