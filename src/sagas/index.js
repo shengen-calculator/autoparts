@@ -7,7 +7,8 @@ import {logIn,
 } from "./authenticationSaga";
 
 import {
-    getClient, getOrders,
+    getClient,
+    getOrders,
     getPayments
 } from "./clientSaga";
 import {getQueryStatistic,

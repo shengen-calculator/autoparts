@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const util = require('../util');
 
-const updateOrderPrices = async (data, context) => {
+const updateReservePrices = async (data, context) => {
 
     util.CheckForManagerRole(context);
 
@@ -12,4 +12,4 @@ const updateOrderPrices = async (data, context) => {
 
 };
 
-module.exports = updateOrderPrices;
+module.exports = updateReservePrices;
