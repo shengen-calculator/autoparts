@@ -89,6 +89,27 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Спробуйте завантажити замовлення клієнта ще раз'
             };
 
+        case types.DELETE_ORDERS_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Не вдалось видалити замовлення, спробуйте ще раз'
+            };
+
+        case types.UPDATE_ORDERS_PRICE_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Нажаль, не вдалось змінити ціну. Спробуйте ще раз'
+            };
+
+        case types.UPDATE_ORDER_QUANTITY_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Нажаль, не вдалось змінити кількість в замовленні. Спробуйте ще раз'
+            };
+
         case types.LOAD_PAYMENTS_FAILURE:
             return {
                 ...state,
