@@ -10,27 +10,26 @@ const getOrdersByVip = async (data, context) => {
             'The function must be called with one argument "vip"');
     }
 
-    function createData(vip, amount, date) {
-        return { vip, amount, date };
+    function createData(id, vendor, brand, number, description, note, ordered, approved, delivered, euro, uah, orderDate, shipmentDate, status, source) {
+        return {id, vendor, brand, number, description, note, ordered, approved, delivered, euro, uah, orderDate, shipmentDate, status, source };
     }
 
     const rows = [
-        createData('1000',15.76, '28.02.2020'),
-        createData('1000',9.84, '29.02.2020' ),
-        createData('1000', 3.45, '01.03.2020'),
-        createData('1000', 0,'02.03.2020'),
-        createData('1000', 0, '03.03.2020'),
-        createData('1000',0, '04.03.2020'),
-
-        createData('3000',25.99, '28.02.2020'),
-        createData('3000',15.26, '29.02.2020' ),
-        createData('3000', 12.31, '01.03.2020'),
-        createData('3000', 9.75,'02.03.2020'),
-        createData('3000', 0, '03.03.2020'),
-        createData('3000',0, '04.03.2020'),
+        createData(1, 'IC', 'CTR', 'CRN-73','Свеча зажигания 3330', '', 4, 3,  0,0.53, 16, '22.02.2020', '26.02.2020',2,1),
+        createData(2, 'ELIT', 'RENAULT', '401604793R','Свеча зажигания 3330', '', 1, 1,0,  5.66, 150, '23.02.2020', '27.02.2020',0, 1),
+        createData(3, 'V', 'HUTCHINSON', '590153','Свеча зажигания 3330', '', 2, 2, 2, 5.28, 140, '21.02.2020', '26.02.2020', 0,0),
+        createData(4, 'OMEGA', 'HUTCHINSON', '590153','Свеча зажигания 3330', '', 4, 0, 0,1.7, 45, '26.02.2020', '28.02.2020',1, 1),
+        createData(5, 'ES', 'AKITAKA', '590153','', '', 3, 3, 3,17.05, 448.42, '20.02.2020', '26.02.2020', 0,0),
+        createData(6, 'AP-3512', 'PARTS-MALL', 'PKW-015','', '', 2, 2, 2, 1.69, 43.43, '11.02.2020', '', 0, 0),
+        createData(7, 'AND', 'NIPPARTS', 'N4961039', '','', 1, 1, 0, 6.75, 173.48, '26.02.2020', '02.03.2020', 3, 1),
+        createData(8, '3512', 'NIPPARTS', 'N4961039', 'Свеча зажигания 3330','', 1, 0, 0, 44.94, 1154.96, '18.02.2020', '', 4, 1),
+        createData(9, 'VA', 'FEBI', '45414', 'Свеча зажигания FR7DCE 0.8','', 3, 0, 0, 58.75, 1509.88, '24.02.2020', '01.03.2020', 4,1),
+        createData(10, 'ELIT', 'HUTCHINSON', '532E02', 'Свеча зажигания FR7DCE 0.8','', 4, 4, 4, 6.61, 169.88, '22.02.2020', '', 0, 1),
+        createData(11, 'ORIG', 'DELPHI', 'TA2913', '(16:00, Сб. до 13:00) BERU 14FR-5DU Свеча зажигания ULTRA','', 2, 0, 0, 33.95, 872.52, '23.02.2020', '', 1, 1),
+        createData(12, 'VA', 'RTS', '017-00406', '(16:00, Сб. до 13:00) BERU 14FR-5DU Свеча зажигания ULTRA','', 2, 0, 0, 13.29, 358.83, '27.02.2020', '', 3, 1)
     ];
 
-    return rows.filter(v => v.vip === data);
+    return rows;
 };
 
 module.exports = getOrdersByVip;
