@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Paper from '@material-ui/core/Paper';
@@ -8,6 +8,10 @@ import ReserveTable from "./ReserveTable";
 import Header from "../Header";
 import Copyright from "../../common/Copyright";
 import {Helmet} from "react-helmet";
+import {getOrdersRequest} from "../../../redux/actions/clientActions";
+import {connect} from "react-redux";
+import {useParams} from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
     paper: {
@@ -33,24 +37,37 @@ const styles = theme => ({
     }
 });
 
-function Content(props) {
+function Content({client, getOrdersRequest, ...props}) {
     const {classes, handleDrawerToggle} = props;
+    let {vip} = useParams();
+
+    useEffect(() => {
+        if(!client.isOrdersLoaded && vip === client.vip) {
+            getOrdersRequest(vip);
+        }
+    }, [client.orders, client.isOrdersLoaded, client.vip, vip, getOrdersRequest]);
+
+    const isTablesShown = client && client.orders && client.orders.length > 0;
     return (
         <div className={classes.app}>
             <Helmet>
-                <title>Autoparts - Замовлення - </title>
+                <title>Autoparts - Замовлення - {client.vip}</title>
             </Helmet>
             <Header onDrawerToggle={handleDrawerToggle}/>
             <main className={classes.main}>
                 <Paper className={classes.paper}>
                     <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                     <div className={classes.contentWrapper}>
-                        {/*<Typography color="textSecondary" align="center">
-                      По Вашему запросу ничего не найдено
-                  </Typography>*/
+                        {isTablesShown ?
+                            <React.Fragment>
+                                <OrderTable orders={client.orders.filter(o => o.delivered === 0)}/>
+                                <ReserveTable orders={client.orders.filter(o => o.delivered > 0)}/>
+                            </React.Fragment>
+                            :
+                            <Typography color="textSecondary" align="center">
+                                Інформація відсутня
+                            </Typography>
                         }
-                        <OrderTable/>
-                        <ReserveTable/>
                     </div>
                 </Paper>
             </main>
@@ -66,4 +83,15 @@ Content.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Content);
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    getOrdersRequest
+};
+
+function mapStateToProps(state) {
+    return {
+        client: state.client
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Content));
