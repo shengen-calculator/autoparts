@@ -8,7 +8,10 @@ const getVendorStatistic = require('./statistic/getVendorStatistic');
 const getStatisticByVendor = require('./statistic/getStatisticByVendor');
 const getClientStatistic = require('./statistic/getClientStatistic');
 const getStatisticByClient = require('./statistic/getStatisticByClient');
-const getOrdersByVip = require('./getOrdersByVip');
+const getOrdersByVip = require('./order/getOrdersByVip');
+const deleteOrdersByIds = require('./order/deleteOrdersByIds');
+const updateOrderPrices = require('./order/updateOrderPrices');
+const updateOrderQuantity = require('./order/updateOrderQuantity');
 
 admin.initializeApp();
 
@@ -44,7 +47,18 @@ exports.getStatisticByClient = functions.https.onCall(async (data, context) => {
     return getStatisticByClient(data, context);
 });
 
-
 exports.getOrdersByVip = functions.https.onCall(async (data, context) => {
     return getOrdersByVip(data, context);
+});
+
+exports.deleteOrdersByIds = functions.https.onCall(async (data, context) => {
+    return deleteOrdersByIds(data, context);
+});
+
+exports.updateOrderPrices = functions.https.onCall(async (data, context) => {
+    return updateOrderPrices(data, context);
+});
+
+exports.updateOrderQuantity = functions.https.onCall(async (data, context) => {
+    return updateOrderQuantity(data, context);
 });
