@@ -5,6 +5,10 @@ class FunctionsApi {
         const func = functions.httpsCallable('getClientByVip');
         return func(vip);
     }
+    static getOrdersByVip(vip){
+        const func = functions.httpsCallable('getOrdersByVip');
+        return func(vip);
+    }
     static getPaymentsByVip(vip){
         const func = functions.httpsCallable('getPaymentsByVip');
         return func(vip);

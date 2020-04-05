@@ -8,6 +8,10 @@ export function getPaymentsRequest(vip) {
     return { type: types.LOAD_PAYMENTS_REQUEST, vip};
 }
 
+export function getOrdersRequest(vip) {
+    return { type: types.LOAD_ORDERS_REQUEST, vip};
+}
+
 export function getClientStatistic(params) {
     return { type: types.LOAD_CLIENT_STATISTIC_REQUEST, params};
 }

@@ -6,7 +6,8 @@ import {logIn,
     register
 } from "./authenticationSaga";
 
-import {getClient,
+import {
+    getClient, getOrders,
     getPayments
 } from "./clientSaga";
 import {getQueryStatistic,
@@ -23,6 +24,7 @@ function* mySaga() {
     yield takeLatest(types.REGISTRATION_REQUEST, register);
     yield takeLatest(types.LOAD_CLIENT_REQUEST, getClient);
     yield takeLatest(types.LOAD_PAYMENTS_REQUEST, getPayments);
+    yield takeLatest(types.LOAD_ORDERS_REQUEST, getOrders);
     yield takeLatest(types.LOAD_QUERY_STATISTIC_REQUEST, getQueryStatistic);
     yield takeLatest(types.LOAD_CLIENT_STATISTIC_REQUEST, getClientStatistic);
     yield takeLatest(types.LOAD_VENDOR_STATISTIC_REQUEST, getVendorStatistic);

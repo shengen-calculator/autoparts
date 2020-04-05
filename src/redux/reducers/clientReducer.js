@@ -27,6 +27,13 @@ export default function clientReducer(state = initialState.client, action) {
                 isPaymentsLoaded: true
             };
 
+        case types.LOAD_ORDERS_SUCCESS:
+            return {
+                ...state,
+                orders: action.orders,
+                isOrdersLoaded: true
+            };
+
         case types.CLIENT_DOESNT_EXIST:
             return {
                 ...state,
