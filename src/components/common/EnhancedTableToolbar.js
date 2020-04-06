@@ -53,7 +53,8 @@ const useToolbarStyles = makeStyles(theme => ({
 
 export const EnhancedTableToolbar = props => {
     const classes = useToolbarStyles();
-    const { numSelected, title, titleIcon, total, isFilterShown, isRowSelectorShown } = props;
+    const { numSelected, title, titleIcon, total, isFilterShown, isRowSelectorShown, onDelete } = props;
+
     return (
         <Toolbar
             className={clsx(classes.root, {
@@ -90,7 +91,7 @@ export const EnhancedTableToolbar = props => {
             {
                 numSelected > 0 && isRowSelectorShown &&
                 <Tooltip title="Видалити">
-                    <IconButton aria-label="delete">
+                    <IconButton aria-label="delete" onClick={onDelete}>
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>

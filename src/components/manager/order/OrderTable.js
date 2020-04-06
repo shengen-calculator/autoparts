@@ -11,6 +11,7 @@ import SnoozeIcon from '@material-ui/icons/Snooze';
 import EnhancedTable from '../../common/EnhancedTable';
 import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
+import DeleteOrders from "./Dialog/DeleteOrders";
 
 //status list
 //подтвержден = 0
@@ -80,29 +81,48 @@ function tableRow(row, index, isSelected, handleClick) {
 
 export default function OrderTable(props) {
     const [selected, setSelected] = React.useState([]);
+    const [isDeleteConfirmationOpened, setIsDeleteConfirmationOpened] = React.useState(false);
 
     const handleClick = (event, name) => {
         handleTableClick(event, name, selected, setSelected);
+    };
+
+    const handleDeleteClick = () => {
+        props.onDelete(selected);
+        setIsDeleteConfirmationOpened(false);
+    };
+    const handleCancelDeleteClick = () => {
+        setIsDeleteConfirmationOpened(false);
+    };
+
+    const openDeleteConfirmation = () => {
+        setIsDeleteConfirmationOpened(true);
     };
 
     const handleSelectAllClick = (event) => {
         handleTableSelectAllClick(event, props.orders, setSelected);
     };
     return(
-        <EnhancedTable
-            handleClick={handleClick}
-            handleSelectAllClick={handleSelectAllClick}
-            selected={selected}
-            rows={props.orders}
-            headCells={headCells}
-            tableRow={tableRow}
-            title="Замовлення"
-            titleIcon={TitleIconEnum.flight}
-            total={319.26}
-            columns={13}
-            isFilterShown={false}
-            rowsPerPageOptions={[5, 10, 25]}
-            isRowSelectorShown={true}
-        />
+        <React.Fragment>
+            <EnhancedTable
+                handleClick={handleClick}
+                handleSelectAllClick={handleSelectAllClick}
+                selected={selected}
+                rows={props.orders}
+                onDelete={openDeleteConfirmation}
+                headCells={headCells}
+                tableRow={tableRow}
+                title="Замовлення"
+                titleIcon={TitleIconEnum.flight}
+                total={319.26}
+                columns={13}
+                isFilterShown={false}
+                rowsPerPageOptions={[5, 10, 25]}
+                isRowSelectorShown={true}
+            />
+            <DeleteOrders isOpened={isDeleteConfirmationOpened}
+                          onDelete={handleDeleteClick}
+                          onClose={handleCancelDeleteClick} />
+        </React.Fragment>
     );
 }

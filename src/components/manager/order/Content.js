@@ -8,10 +8,11 @@ import ReserveTable from "./ReserveTable";
 import Header from "../Header";
 import Copyright from "../../common/Copyright";
 import {Helmet} from "react-helmet";
-import {getOrders, getReserves} from "../../../redux/actions/clientActions";
+import {getOrders, getReserves, deleteOrdersByIds} from "../../../redux/actions/clientActions";
 import {connect} from "react-redux";
 import {useParams} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
+
 
 const styles = theme => ({
     paper: {
@@ -37,9 +38,13 @@ const styles = theme => ({
     }
 });
 
-function Content({client, getOrders, getReserves, ...props}) {
+function Content({client, getOrders, getReserves, deleteOrdersByIds, ...props}) {
     const {classes, handleDrawerToggle} = props;
     let {vip} = useParams();
+
+    const handleOrderDeleteClick = (selected) => {
+        deleteOrdersByIds(selected);
+    };
 
     useEffect(() => {
         if(!client.isOrdersLoaded && vip === client.vip) {
@@ -67,8 +72,10 @@ function Content({client, getOrders, getReserves, ...props}) {
                     <div className={classes.contentWrapper}>
                         {isOrderTablesShown || isReserveTablesShown ?
                             <React.Fragment>
-                                {isOrderTablesShown && <OrderTable orders={client.orders}/>}
-                                {isReserveTablesShown && <ReserveTable reserves={client.reserves}/>}
+                                {isOrderTablesShown && <OrderTable
+                                    orders={client.orders} onDelete={handleOrderDeleteClick} />}
+                                {isReserveTablesShown && <ReserveTable
+                                    reserves={client.reserves} />}
                             </React.Fragment>
                             :
                             <Typography color="textSecondary" align="center">
@@ -93,7 +100,8 @@ Content.propTypes = {
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
     getOrders,
-    getReserves
+    getReserves,
+    deleteOrdersByIds
 };
 
 function mapStateToProps(state) {
