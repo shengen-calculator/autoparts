@@ -9,6 +9,7 @@ const deleteOrdersByIds = async (data, context) => {
         throw new functions.https.HttpsError('invalid-argument',
             'The function must be called with argument "array of order Ids"');
     }
+    return [];
 
 };
 
