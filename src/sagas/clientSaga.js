@@ -30,11 +30,21 @@ export function* getOrders(action) {
     }
 }
 
+export function* getReserves(action) {
+    try {
+        yield put({type: types.BEGIN_API_CALL});
+        const {data} = yield call(FunctionsApi.getReservesByVip, action.vip);
+        yield put({type: types.LOAD_RESERVES_SUCCESS, reserves: data});
+    } catch (e) {
+        yield put({type: types.API_CALL_ERROR});
+        yield put({type: types.LOAD_RESERVES_FAILURE, text: e.message});
+    }
+}
 
 export function* deleteOrders(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
-        yield call(FunctionsApi.deleteOrdersByIds, action.ids);
+        const {data} = yield call(FunctionsApi.deleteOrdersByIds, action.ids);
         yield put({type: types.DELETE_ORDERS_SUCCESS, orders: data});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
@@ -42,15 +52,25 @@ export function* deleteOrders(action) {
     }
 }
 
-
-export function* updateOrderPrices(action) {
+export function* deleteReserves(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(FunctionsApi.updateOrderPrices, action.vip);
-        yield put({type: types.UPDATE_ORDERS_PRICE_SUCCESS, orders: data});
+        const {data} = yield call(FunctionsApi.deleteReservesByIds, action.ids);
+        yield put({type: types.DELETE_RESERVES_SUCCESS, reserves: data});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
-        yield put({type: types.UPDATE_ORDERS_PRICE_FAILURE, text: e.message});
+        yield put({type: types.DELETE_RESERVES_FAILURE, text: e.message});
+    }
+}
+
+export function* updateReservePrices(action) {
+    try {
+        yield put({type: types.BEGIN_API_CALL});
+        const {data} = yield call(FunctionsApi.updateReservePrices, action.prices);
+        yield put({type: types.UPDATE_RESERVE_PRICES_SUCCESS, reserves: data});
+    } catch (e) {
+        yield put({type: types.API_CALL_ERROR});
+        yield put({type: types.UPDATE_RESERVE_PRICES_FAILURE, text: e.message});
     }
 }
 
@@ -58,10 +78,21 @@ export function* updateOrderQuantity(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
         const {data} = yield call(FunctionsApi.updateOrderQuantity, action.params);
-        yield put({type: types.UPDATE_ORDER_QUANTITY_SUCCESS});
+        yield put({type: types.UPDATE_ORDER_QUANTITY_SUCCESS, orders: data});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.UPDATE_ORDER_QUANTITY_FAILURE, text: e.message});
+    }
+}
+
+export function* updateReserveQuantity(action) {
+    try {
+        yield put({type: types.BEGIN_API_CALL});
+        const {data} = yield call(FunctionsApi.updateReserveQuantity, action.params);
+        yield put({type: types.UPDATE_RESERVE_QUANTITY_SUCCESS, reserves: data});
+    } catch (e) {
+        yield put({type: types.API_CALL_ERROR});
+        yield put({type: types.UPDATE_RESERVE_QUANTITY_FAILURE, text: e.message});
     }
 }
 

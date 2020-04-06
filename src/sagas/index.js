@@ -9,6 +9,12 @@ import {logIn,
 import {
     getClient,
     getOrders,
+    getReserves,
+    deleteOrders,
+    deleteReserves,
+    updateOrderQuantity,
+    updateReserveQuantity,
+    updateReservePrices,
     getPayments
 } from "./clientSaga";
 import {getQueryStatistic,
@@ -26,6 +32,12 @@ function* mySaga() {
     yield takeLatest(types.LOAD_CLIENT_REQUEST, getClient);
     yield takeLatest(types.LOAD_PAYMENTS_REQUEST, getPayments);
     yield takeLatest(types.LOAD_ORDERS_REQUEST, getOrders);
+    yield takeLatest(types.LOAD_RESERVES_REQUEST, getReserves);
+    yield takeLatest(types.DELETE_RESERVES_REQUEST, deleteReserves);
+    yield takeLatest(types.DELETE_ORDERS_REQUEST, deleteOrders);
+    yield takeLatest(types.UPDATE_ORDER_QUANTITY_REQUEST, updateOrderQuantity);
+    yield takeLatest(types.UPDATE_RESERVE_QUANTITY_REQUEST, updateReserveQuantity);
+    yield takeLatest(types.UPDATE_RESERVE_PRICES_REQUEST, updateReservePrices);
     yield takeLatest(types.LOAD_QUERY_STATISTIC_REQUEST, getQueryStatistic);
     yield takeLatest(types.LOAD_CLIENT_STATISTIC_REQUEST, getClientStatistic);
     yield takeLatest(types.LOAD_VENDOR_STATISTIC_REQUEST, getVendorStatistic);
