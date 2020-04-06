@@ -17,7 +17,7 @@ function DeleteOrders(props) {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Якщо Ви погодитесь, всі обрані записи будуть перенесені в архів.
-                        Їх відновлення буде не можливим. За необхідності створіть нові замовлення аналогічні видаленим.
+                        Їх відновлення буде не можливим. За необхідності Ви завжди можете створити нові замовлення аналогічні видаленим.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

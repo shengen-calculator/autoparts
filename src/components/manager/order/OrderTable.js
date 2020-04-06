@@ -21,18 +21,18 @@ import DeleteOrders from "./Dialog/DeleteOrders";
 //нет в наличии = 4
 
 const headCells = [
-    { id: 'vendor', numeric: false, disablePadding: true, label: 'Пост.' },
-    { id: 'brand', numeric: false, disablePadding: false, label: 'Бренд' },
-    { id: 'number', numeric: false, disablePadding: false, label: 'Номер' },
-    { id: 'description', numeric: false, disablePadding: false, label: 'Опис' },
-    { id: 'ordered', numeric: true, disablePadding: false, label: 'Замовлено' },
-    { id: 'approved', numeric: true, disablePadding: false, label: 'Підтв' },
-    { id: 'euro', numeric: true, disablePadding: false, label: 'Євро' },
-    { id: 'uah', numeric: true, disablePadding: false, label: 'Грн' },
-    { id: 'note', numeric: false, disablePadding: false, label: 'Примітка' },
-    { id: 'orderDate', numeric: false, disablePadding: false, label: 'Замовл.' },
-    { id: 'shipmentDate', numeric: false, disablePadding: false, label: 'Доставка' },
-    { id: 'status', numeric: false, disablePadding: false, label: 'Статус' },
+    {id: 'vendor', numeric: false, disablePadding: true, label: 'Пост.'},
+    {id: 'brand', numeric: false, disablePadding: false, label: 'Бренд'},
+    {id: 'number', numeric: false, disablePadding: false, label: 'Номер'},
+    {id: 'description', numeric: false, disablePadding: false, label: 'Опис'},
+    {id: 'ordered', numeric: true, disablePadding: false, label: 'Замовлено'},
+    {id: 'approved', numeric: true, disablePadding: false, label: 'Підтв'},
+    {id: 'euro', numeric: true, disablePadding: false, label: 'Євро'},
+    {id: 'uah', numeric: true, disablePadding: false, label: 'Грн'},
+    {id: 'note', numeric: false, disablePadding: false, label: 'Примітка'},
+    {id: 'orderDate', numeric: false, disablePadding: false, label: 'Замовл.'},
+    {id: 'shipmentDate', numeric: false, disablePadding: false, label: 'Доставка'},
+    {id: 'status', numeric: false, disablePadding: false, label: 'Статус'},
 ];
 
 function tableRow(row, index, isSelected, handleClick) {
@@ -52,7 +52,7 @@ function tableRow(row, index, isSelected, handleClick) {
             <TableCell padding="checkbox">
                 <Checkbox
                     checked={isItemSelected}
-                    inputProps={{ 'aria-labelledby': labelId }}
+                    inputProps={{'aria-labelledby': labelId}}
                 />
             </TableCell>
             <TableCell component="th" id={labelId} scope="row" padding="none">
@@ -102,7 +102,7 @@ export default function OrderTable(props) {
     const handleSelectAllClick = (event) => {
         handleTableSelectAllClick(event, props.orders, setSelected);
     };
-    return(
+    return (
         <React.Fragment>
             <EnhancedTable
                 handleClick={handleClick}
@@ -122,7 +122,7 @@ export default function OrderTable(props) {
             />
             <DeleteOrders isOpened={isDeleteConfirmationOpened}
                           onDelete={handleDeleteClick}
-                          onClose={handleCancelDeleteClick} />
+                          onClose={handleCancelDeleteClick}/>
         </React.Fragment>
     );
 }

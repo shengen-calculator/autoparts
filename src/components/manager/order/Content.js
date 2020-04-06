@@ -8,7 +8,7 @@ import ReserveTable from "./ReserveTable";
 import Header from "../Header";
 import Copyright from "../../common/Copyright";
 import {Helmet} from "react-helmet";
-import {getOrders, getReserves, deleteOrdersByIds} from "../../../redux/actions/clientActions";
+import {getOrders, getReserves, deleteOrdersByIds, deleteReservesByIds} from "../../../redux/actions/clientActions";
 import {connect} from "react-redux";
 import {useParams} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -38,12 +38,16 @@ const styles = theme => ({
     }
 });
 
-function Content({client, getOrders, getReserves, deleteOrdersByIds, ...props}) {
+function Content({client, getOrders, getReserves, deleteOrdersByIds, deleteReservesByIds, ...props}) {
     const {classes, handleDrawerToggle} = props;
     let {vip} = useParams();
 
     const handleOrderDeleteClick = (selected) => {
         deleteOrdersByIds(selected);
+    };
+
+    const handleReserveDeleteClick = (selected) => {
+        deleteReservesByIds(selected);
     };
 
     useEffect(() => {
@@ -75,7 +79,7 @@ function Content({client, getOrders, getReserves, deleteOrdersByIds, ...props}) 
                                 {isOrderTablesShown && <OrderTable
                                     orders={client.orders} onDelete={handleOrderDeleteClick} />}
                                 {isReserveTablesShown && <ReserveTable
-                                    reserves={client.reserves} />}
+                                    reserves={client.reserves} onDelete={handleReserveDeleteClick} />}
                             </React.Fragment>
                             :
                             <Typography color="textSecondary" align="center">
@@ -101,7 +105,8 @@ Content.propTypes = {
 const mapDispatchToProps = {
     getOrders,
     getReserves,
-    deleteOrdersByIds
+    deleteOrdersByIds,
+    deleteReservesByIds
 };
 
 function mapStateToProps(state) {
