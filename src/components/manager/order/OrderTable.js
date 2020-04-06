@@ -11,7 +11,7 @@ import SnoozeIcon from '@material-ui/icons/Snooze';
 import EnhancedTable from '../../common/EnhancedTable';
 import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
-import DeleteOrders from "./Dialog/DeleteOrders";
+import DeleteOrdersDialog from "./Dialog/DeleteOrdersDialog";
 
 //status list
 //подтвержден = 0
@@ -120,9 +120,9 @@ export default function OrderTable(props) {
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={true}
             />
-            <DeleteOrders isOpened={isDeleteConfirmationOpened}
-                          onDelete={handleDeleteClick}
-                          onClose={handleCancelDeleteClick}/>
+            <DeleteOrdersDialog isOpened={isDeleteConfirmationOpened}
+                                onDelete={handleDeleteClick}
+                                onClose={handleCancelDeleteClick}/>
         </React.Fragment>
     );
 }

@@ -7,7 +7,7 @@ import LanguageIcon from '@material-ui/icons/Language';
 import EnhancedTable from '../../common/EnhancedTable';
 import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
-import DeleteReserves from "./Dialog/DeleteReserves";
+import DeleteReservesDialog from "./Dialog/DeleteReservesDialog";
 
 //source
 // склад = 0
@@ -108,9 +108,9 @@ export default function ReserveTable(props) {
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={true}
             />
-            <DeleteReserves isOpened={isDeleteConfirmationOpened}
-                            onDelete={handleDeleteClick}
-                            onClose={handleCancelDeleteClick}/>
+            <DeleteReservesDialog isOpened={isDeleteConfirmationOpened}
+                                  onDelete={handleDeleteClick}
+                                  onClose={handleCancelDeleteClick}/>
         </React.Fragment>
     );
 }

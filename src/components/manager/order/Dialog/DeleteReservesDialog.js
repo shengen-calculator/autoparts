@@ -6,7 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 
-function DeleteReserves(props) {
+function DeleteReservesDialog(props) {
     const {isOpened, onDelete, onClose} = props;
     return (
         <Dialog
@@ -32,4 +32,4 @@ function DeleteReserves(props) {
     );
 }
 
-export default DeleteReserves;
+export default DeleteReservesDialog;
