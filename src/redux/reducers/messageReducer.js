@@ -89,6 +89,13 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Спробуйте завантажити замовлення клієнта ще раз'
             };
 
+        case types.LOAD_RESERVES_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Спробуйте завантажити резерви клієнта ще раз'
+            };
+
         case types.DELETE_ORDERS_FAILURE:
             return {
                 ...state,
@@ -96,11 +103,18 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Не вдалось видалити замовлення, спробуйте ще раз'
             };
 
-        case types.UPDATE_ORDERS_PRICE_FAILURE:
+        case types.DELETE_RESERVES_FAILURE:
             return {
                 ...state,
                 type: 'error',
-                text: 'Нажаль, не вдалось змінити ціну. Спробуйте ще раз'
+                text: 'Не вдалось скасувати резерви клієнта, спробуйте ще раз'
+            };
+
+        case types.UPDATE_RESERVE_PRICES_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Нажаль, не вдалось змінити ціни для клієнта. Спробуйте ще раз'
             };
 
         case types.UPDATE_ORDER_QUANTITY_FAILURE:
@@ -110,6 +124,12 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Нажаль, не вдалось змінити кількість в замовленні. Спробуйте ще раз'
             };
 
+        case types.UPDATE_RESERVE_QUANTITY_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Нажаль, не вдалось змінити кількість зарезервованих позицій. Спробуйте ще раз'
+            };
         case types.LOAD_PAYMENTS_FAILURE:
             return {
                 ...state,
