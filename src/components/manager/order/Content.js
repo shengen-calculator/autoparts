@@ -8,7 +8,7 @@ import ReserveTable from "./ReserveTable";
 import Header from "../Header";
 import Copyright from "../../common/Copyright";
 import {Helmet} from "react-helmet";
-import {getOrdersRequest} from "../../../redux/actions/clientActions";
+import {getOrders} from "../../../redux/actions/clientActions";
 import {connect} from "react-redux";
 import {useParams} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -37,15 +37,15 @@ const styles = theme => ({
     }
 });
 
-function Content({client, getOrdersRequest, ...props}) {
+function Content({client, getOrders, ...props}) {
     const {classes, handleDrawerToggle} = props;
     let {vip} = useParams();
 
     useEffect(() => {
         if(!client.isOrdersLoaded && vip === client.vip) {
-            getOrdersRequest(vip);
+            getOrders(vip);
         }
-    }, [client.orders, client.isOrdersLoaded, client.vip, vip, getOrdersRequest]);
+    }, [client.orders, client.isOrdersLoaded, client.vip, vip, getOrders]);
 
     const isTablesShown = client && client.orders && client.orders.length > 0;
     return (
@@ -85,7 +85,7 @@ Content.propTypes = {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    getOrdersRequest
+    getOrders
 };
 
 function mapStateToProps(state) {

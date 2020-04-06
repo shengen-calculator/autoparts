@@ -9,7 +9,7 @@ import PaymentTable from "./PaymentTable";
 import {connect} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import {useParams} from "react-router-dom";
-import {getPaymentsRequest} from "../../../redux/actions/clientActions";
+import {getPayments} from "../../../redux/actions/clientActions";
 import {Helmet} from "react-helmet";
 
 const styles = theme => ({
@@ -37,15 +37,15 @@ const styles = theme => ({
     }
 });
 
-function Content({client, getPaymentsRequest, ...props}) {
+function Content({client, getPayments, ...props}) {
     const {classes, handleDrawerToggle} = props;
     let {vip} = useParams();
 
     useEffect(() => {
         if(!client.isPaymentsLoaded && vip === client.vip) {
-            getPaymentsRequest(vip);
+            getPayments(vip);
         }
-    }, [client.payments, client.isPaymentsLoaded, client.vip, vip, getPaymentsRequest]);
+    }, [client.payments, client.isPaymentsLoaded, client.vip, vip, getPayments]);
 
     const isTableShown = client && client.payments && client.payments.length > 0;
 
@@ -83,7 +83,7 @@ Content.propTypes = {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    getPaymentsRequest
+    getPayments
 };
 
 function mapStateToProps(state) {

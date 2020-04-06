@@ -1,23 +1,34 @@
 import * as types from './actionTypes';
 
-export function getClientRequest(vip) {
+export function getClient(vip) {
     return { type: types.LOAD_CLIENT_REQUEST, vip};
 }
 
-export function getPaymentsRequest(vip) {
+export function getPayments(vip) {
     return { type: types.LOAD_PAYMENTS_REQUEST, vip};
 }
 
-export function getOrdersRequest(vip) {
+export function getOrders(vip) {
     return { type: types.LOAD_ORDERS_REQUEST, vip};
 }
 
-export function deleteOrdersByIdsRequest(ids) {
+export function getReserves(vip) {
+    return { type: types.LOAD_RESERVES_REQUEST, vip};
+}
+
+export function deleteOrdersByIds(ids) {
     return { type: types.DELETE_ORDERS_REQUEST, ids};
 }
 
-export function updateOrdersPriceRequest(prices) {
-    return { type: types.UPDATE_ORDERS_PRICE_REQUEST, prices};
+export function deleteReservesByIds(ids) {
+    return { type: types.DELETE_RESERVES_REQUEST, ids};
+}
+
+export function updateReservePrice(params) {
+    return { type: types.UPDATE_RESERVE_PRICE_REQUEST, params};
+}
+export function updateReserveQuantity(params) {
+    return { type: types.UPDATE_RESERVE_QUANTITY_REQUEST, params};
 }
 
 export function updateOrderQuantityRequest(params) {
