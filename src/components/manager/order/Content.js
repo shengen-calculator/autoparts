@@ -8,7 +8,7 @@ import ReserveTable from "./ReserveTable";
 import Header from "../Header";
 import Copyright from "../../common/Copyright";
 import {Helmet} from "react-helmet";
-import {getOrders} from "../../../redux/actions/clientActions";
+import {getOrders, getReserves} from "../../../redux/actions/clientActions";
 import {connect} from "react-redux";
 import {useParams} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -37,7 +37,7 @@ const styles = theme => ({
     }
 });
 
-function Content({client, getOrders, ...props}) {
+function Content({client, getOrders, getReserves, ...props}) {
     const {classes, handleDrawerToggle} = props;
     let {vip} = useParams();
 
@@ -47,7 +47,14 @@ function Content({client, getOrders, ...props}) {
         }
     }, [client.orders, client.isOrdersLoaded, client.vip, vip, getOrders]);
 
-    const isTablesShown = client && client.orders && client.orders.length > 0;
+    useEffect(() => {
+        if(!client.isReservesLoaded && vip === client.vip) {
+            getReserves(vip);
+        }
+    }, [client.reserves, client.isReservesLoaded, client.vip, vip, getReserves]);
+
+    const isOrderTablesShown = client && client.orders && client.orders.length > 0;
+    const isReserveTablesShown = client && client.reserves && client.reserves.length > 0;
     return (
         <div className={classes.app}>
             <Helmet>
@@ -58,10 +65,10 @@ function Content({client, getOrders, ...props}) {
                 <Paper className={classes.paper}>
                     <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                     <div className={classes.contentWrapper}>
-                        {isTablesShown ?
+                        {isOrderTablesShown || isReserveTablesShown ?
                             <React.Fragment>
-                                <OrderTable orders={client.orders.filter(o => o.delivered === 0)}/>
-                                <ReserveTable orders={client.orders.filter(o => o.delivered > 0)}/>
+                                {isOrderTablesShown && <OrderTable orders={client.orders}/>}
+                                {isReserveTablesShown && <ReserveTable reserves={client.reserves}/>}
                             </React.Fragment>
                             :
                             <Typography color="textSecondary" align="center">
@@ -85,7 +92,8 @@ Content.propTypes = {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    getOrders
+    getOrders,
+    getReserves
 };
 
 function mapStateToProps(state) {

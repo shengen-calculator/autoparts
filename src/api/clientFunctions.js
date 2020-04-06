@@ -9,6 +9,10 @@ class FunctionsApi {
         const func = functions.httpsCallable('getOrdersByVip');
         return func(vip);
     }
+    static getReservesByVip(vip){
+        const func = functions.httpsCallable('getReservesByVip');
+        return func(vip);
+    }
     static deleteOrdersByIds(ids){
         const func = functions.httpsCallable('deleteOrdersByIds');
         return func(ids);

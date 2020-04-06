@@ -73,14 +73,14 @@ export default function ReserveTable(props) {
     };
 
     const handleSelectAllClick = (event) => {
-        handleTableSelectAllClick(event, props.orders, setSelected);
+        handleTableSelectAllClick(event, props.reserves, setSelected);
     };
     return(
       <EnhancedTable
           handleClick={handleClick}
           handleSelectAllClick={handleSelectAllClick}
           selected={selected}
-          rows={props.orders}
+          rows={props.reserves}
           headCells={headCells}
           tableRow={tableRow}
           title="Виконано"
