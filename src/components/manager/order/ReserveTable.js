@@ -52,12 +52,12 @@ function tableRow(row, index, isSelected, handleClick) {
             <TableCell align="left">{row.brand}</TableCell>
             <TableCell align="left">{row.number}</TableCell>
             <TableCell align="left">{row.description}</TableCell>
-            <TableCell align="right">{row.delivered}</TableCell>
+            <TableCell align="right">{row.quantity}</TableCell>
             <TableCell align="right">{row.euro}</TableCell>
             <TableCell align="right">{row.uah}</TableCell>
             <TableCell align="left">{row.note}</TableCell>
             <TableCell align="left">{row.orderDate}</TableCell>
-            <TableCell align="left">{row.shipmentDate}</TableCell>
+            <TableCell align="left">{row.date}</TableCell>
             <TableCell align="center">
                 {row.source === 1 && <LanguageIcon/>}
             </TableCell>
