@@ -12,6 +12,7 @@ import EnhancedTable from '../../common/EnhancedTable';
 import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
 import DeleteOrdersDialog from "./Dialog/DeleteOrdersDialog";
+import UpdateOrderQuantityDialog from "./Dialog/UpdateOrderQuantityDialog";
 
 //status list
 //подтвержден = 0
@@ -38,11 +39,12 @@ const headCells = [
 function tableRow(row, index, isSelected, handleClick) {
     const isItemSelected = isSelected(row.id);
     const labelId = `enhanced-table-checkbox-${index}`;
+    const pointer = {cursor: 'pointer'};
 
     return (
         <TableRow
             hover
-            onClick={event => handleClick(event, row.id)}
+
             role="checkbox"
             aria-checked={isItemSelected}
             tabIndex={-1}
@@ -51,6 +53,7 @@ function tableRow(row, index, isSelected, handleClick) {
         >
             <TableCell padding="checkbox">
                 <Checkbox
+                    onClick={event => handleClick(event, row.id)}
                     checked={isItemSelected}
                     inputProps={{'aria-labelledby': labelId}}
                 />
@@ -61,7 +64,10 @@ function tableRow(row, index, isSelected, handleClick) {
             <TableCell align="left">{row.brand}</TableCell>
             <TableCell align="left">{row.number}</TableCell>
             <TableCell align="left">{row.description}</TableCell>
-            <TableCell align="right">{row.ordered}</TableCell>
+            <TableCell onClick={event => handleClick(event, row.id)}
+                       name="ordered" align="right" style={pointer}>
+                {row.ordered}
+            </TableCell>
             <TableCell align="right">{row.approved}</TableCell>
             <TableCell align="right">{row.euro}</TableCell>
             <TableCell align="right">{row.uah}</TableCell>
@@ -82,9 +88,20 @@ function tableRow(row, index, isSelected, handleClick) {
 export default function OrderTable(props) {
     const [selected, setSelected] = React.useState([]);
     const [isDeleteConfirmationOpened, setIsDeleteConfirmationOpened] = React.useState(false);
+    const [changeQuantityConfirmation, setChangeQuantityConfirmation] = React.useState({
+        isOpened: false,
+        selected: {}
+    });
 
     const handleClick = (event, name) => {
-        handleTableClick(event, name, selected, setSelected);
+        if(event.target.getAttribute("name") === "ordered") {
+            setChangeQuantityConfirmation({
+                isOpened: true,
+                selected: props.orders.find(x => x.id === name)
+            });
+        } else {
+            handleTableClick(event, name, selected, setSelected);
+        }
     };
 
     const handleDeleteClick = () => {
@@ -94,7 +111,11 @@ export default function OrderTable(props) {
     const handleCancelDeleteClick = () => {
         setIsDeleteConfirmationOpened(false);
     };
-
+    const handleCancelChangeOrderClick = () => {
+        setChangeQuantityConfirmation({
+            isOpened: false, selected: {}
+        });
+    };
     const openDeleteConfirmation = () => {
         setIsDeleteConfirmationOpened(true);
     };
@@ -123,6 +144,9 @@ export default function OrderTable(props) {
             <DeleteOrdersDialog isOpened={isDeleteConfirmationOpened}
                                 onDelete={handleDeleteClick}
                                 onClose={handleCancelDeleteClick}/>
+            <UpdateOrderQuantityDialog isOpened={changeQuantityConfirmation.isOpened}
+                                       selected={changeQuantityConfirmation.selected}
+                                       onClose={handleCancelChangeOrderClick}/>
         </React.Fragment>
     );
 }

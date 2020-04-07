@@ -31,7 +31,7 @@ export function updateReserveQuantity(params) {
     return { type: types.UPDATE_RESERVE_QUANTITY_REQUEST, params};
 }
 
-export function updateOrderQuantityRequest(params) {
+export function updateOrderQuantity(params) {
     return { type: types.UPDATE_ORDER_QUANTITY_REQUEST, params};
 }
 
