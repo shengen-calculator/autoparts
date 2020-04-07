@@ -44,7 +44,6 @@ function tableRow(row, index, isSelected, handleClick) {
     return (
         <TableRow
             hover
-
             role="checkbox"
             aria-checked={isItemSelected}
             tabIndex={-1}

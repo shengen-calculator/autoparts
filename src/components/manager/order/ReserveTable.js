@@ -8,6 +8,7 @@ import EnhancedTable from '../../common/EnhancedTable';
 import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
 import DeleteReservesDialog from "./Dialog/DeleteReservesDialog";
+import UpdateReserveQuantityDialog from "./Dialog/UpdateReserveQuantityDialog";
 
 //source
 // склад = 0
@@ -30,11 +31,10 @@ const headCells = [
 function tableRow(row, index, isSelected, handleClick) {
     const isItemSelected = isSelected(row.id);
     const labelId = `enhanced-table-checkbox-${index}`;
-
+    const pointer = {cursor: 'pointer'};
     return (
         <TableRow
             hover
-            onClick={event => handleClick(event, row.id)}
             role="checkbox"
             aria-checked={isItemSelected}
             tabIndex={-1}
@@ -44,6 +44,7 @@ function tableRow(row, index, isSelected, handleClick) {
             <TableCell padding="checkbox">
                 <Checkbox
                     checked={isItemSelected}
+                    onClick={event => handleClick(event, row.id)}
                     inputProps={{'aria-labelledby': labelId}}
                 />
             </TableCell>
@@ -53,7 +54,10 @@ function tableRow(row, index, isSelected, handleClick) {
             <TableCell align="left">{row.brand}</TableCell>
             <TableCell align="left">{row.number}</TableCell>
             <TableCell align="left">{row.description}</TableCell>
-            <TableCell align="right">{row.quantity}</TableCell>
+            <TableCell align="right" name="reserved"
+                       onClick={event => handleClick(event, row.id)} style={pointer} >
+                {row.quantity}
+            </TableCell>
             <TableCell align="right">{row.euro}</TableCell>
             <TableCell align="right">{row.uah}</TableCell>
             <TableCell align="left">{row.note}</TableCell>
@@ -69,9 +73,17 @@ function tableRow(row, index, isSelected, handleClick) {
 export default function ReserveTable(props) {
     const [selected, setSelected] = React.useState([]);
     const [isDeleteConfirmationOpened, setIsDeleteConfirmationOpened] = React.useState(false);
-
+    const [changeQuantityConfirmation, setChangeQuantityConfirmation] = React.useState({
+        isOpened: false,
+        selected: {}
+    });
     const handleCancelDeleteClick = () => {
         setIsDeleteConfirmationOpened(false);
+    };
+    const handleCancelChangeReserveClick = () => {
+        setChangeQuantityConfirmation({
+            isOpened: false, selected: {}
+        });
     };
 
     const openDeleteConfirmation = () => {
@@ -79,7 +91,14 @@ export default function ReserveTable(props) {
     };
 
     const handleClick = (event, name) => {
-        handleTableClick(event, name, selected, setSelected);
+        if(event.target.getAttribute("name") === "reserved") {
+            setChangeQuantityConfirmation({
+                isOpened: true,
+                selected: props.reserves.find(x => x.id === name)
+            });
+        } else {
+            handleTableClick(event, name, selected, setSelected);
+        }
     };
 
     const handleDeleteClick = () => {
@@ -111,6 +130,10 @@ export default function ReserveTable(props) {
             <DeleteReservesDialog isOpened={isDeleteConfirmationOpened}
                                   onDelete={handleDeleteClick}
                                   onClose={handleCancelDeleteClick}/>
+
+            <UpdateReserveQuantityDialog isOpened={changeQuantityConfirmation.isOpened}
+                                         selected={changeQuantityConfirmation.selected}
+                                         onClose={handleCancelChangeReserveClick}/>
         </React.Fragment>
     );
 }
