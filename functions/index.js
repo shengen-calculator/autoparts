@@ -15,6 +15,9 @@ const deleteReservesByIds = require('./order/deleteReservesByIds');
 const updateReservePrices = require('./order/updateReservePrices');
 const updateOrderQuantity = require('./order/updateOrderQuantity');
 const updateReserveQuantity = require('./order/updateReserveQuantity');
+const getInfoByVendor = require('./search/getInfoByVendor');
+const searchByNumber = require('./search/searchByNumber');
+const searchByBrandAndNumber = require('./search/searchByBrandAndNumber');
 
 admin.initializeApp();
 
@@ -76,4 +79,16 @@ exports.updateOrderQuantity = functions.https.onCall(async (data, context) => {
 
 exports.updateReserveQuantity = functions.https.onCall(async (data, context) => {
     return updateReserveQuantity(data, context);
+});
+
+exports.getInfoByVendor = functions.https.onCall(async (data, context) => {
+    return getInfoByVendor(data, context);
+});
+
+exports.searchByNumber = functions.https.onCall(async (data, context) => {
+    return searchByNumber(data, context);
+});
+
+exports.searchByBrandAndNumber = functions.https.onCall(async (data, context) => {
+    return searchByBrandAndNumber(data, context);
 });
