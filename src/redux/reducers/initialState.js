@@ -14,6 +14,8 @@ export default {
         fullName: '',
         orders: [],
         isOrdersLoaded: false,
+        reserves: [],
+        isReservesLoaded: false,
         payments: [],
         isPaymentsLoaded: false,
         isClientNotExists: false

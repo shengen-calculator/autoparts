@@ -53,6 +53,7 @@ export default function EnhancedTable(props) {
         handleClick,
         handleSelectAllClick,
         selected = [],
+        onDelete,
         isRowSelectorShown } = props;
 
     const classes = useStyles();
@@ -90,6 +91,7 @@ export default function EnhancedTable(props) {
                 <EnhancedTableToolbar
                     numSelected={selected.length}
                     title={title}
+                    onDelete={onDelete}
                     titleIcon={titleIcon}
                     total={total}
                     isFilterShown={isFilterShown}

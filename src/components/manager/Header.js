@@ -6,7 +6,7 @@ import SearchToolbar from "./SearchToolbar";
 import LoginToolbar from "./LoginToolbar";
 import Progress from "../common/Progress";
 import {useHistory, useParams} from "react-router-dom";
-import {getClientRequest} from "../../redux/actions/clientActions";
+import {getClient} from "../../redux/actions/clientActions";
 import {connect} from "react-redux";
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
@@ -33,7 +33,7 @@ const styles = theme => ({
     },
 });
 
-function Header({getClientRequest, client, ...props}) {
+function Header({getClient, client, ...props}) {
     const {onDrawerToggle} = props;
     let {vip} = useParams();
     let history = useHistory();
@@ -42,10 +42,10 @@ function Header({getClientRequest, client, ...props}) {
     useEffect(() => {
         if(vip) {
             if(client.vip !== vip) {
-                getClientRequest(vip);
+                getClient(vip);
             }
         }
-    }, [vip, client.vip, getClientRequest]);
+    }, [vip, client.vip, getClient]);
 
     useEffect(() => {
         if (didMountRef.current && client.isClientNotExists)
@@ -72,7 +72,7 @@ Header.propTypes = {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    getClientRequest
+    getClient
 };
 
 function mapStateToProps(state) {

@@ -16,6 +16,8 @@ export default function clientReducer(state = initialState.client, action) {
                 fullName: action.client.fullName,
                 orders: [],
                 isOrdersLoaded: false,
+                reserves: [],
+                isReservesLoaded: false,
                 payments: [],
                 isPaymentsLoaded: false,
             };
@@ -25,6 +27,55 @@ export default function clientReducer(state = initialState.client, action) {
                 ...state,
                 payments: action.payments,
                 isPaymentsLoaded: true
+            };
+
+        case types.LOAD_ORDERS_SUCCESS:
+            return {
+                ...state,
+                orders: action.orders,
+                isOrdersLoaded: true
+            };
+
+        case types.LOAD_RESERVES_SUCCESS:
+            return {
+                ...state,
+                reserves: action.reserves,
+                isReservesLoaded: true
+            };
+
+        case types.DELETE_ORDERS_SUCCESS:
+            return {
+                ...state,
+                orders: action.orders,
+                isOrdersLoaded: true
+            };
+
+        case types.DELETE_RESERVES_SUCCESS:
+            return {
+                ...state,
+                reserves: action.reserves,
+                isReservesLoaded: true
+            };
+
+        case types.UPDATE_ORDER_QUANTITY_SUCCESS:
+            return {
+                ...state,
+                orders: action.orders,
+                isOrdersLoaded: true
+            };
+
+        case types.UPDATE_RESERVE_PRICES_SUCCESS:
+            return {
+                ...state,
+                reserves: action.reserves,
+                isReservesLoaded: true
+            };
+
+        case types.UPDATE_RESERVE_QUANTITY_SUCCESS:
+            return {
+                ...state,
+                reserves: action.reserves,
+                isReservesLoaded: true
             };
 
         case types.CLIENT_DOESNT_EXIST:

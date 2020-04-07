@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Paper from '@material-ui/core/Paper';
@@ -8,6 +8,11 @@ import ReserveTable from "./ReserveTable";
 import Header from "../Header";
 import Copyright from "../../common/Copyright";
 import {Helmet} from "react-helmet";
+import {getOrders, getReserves, deleteOrdersByIds, deleteReservesByIds} from "../../../redux/actions/clientActions";
+import {connect} from "react-redux";
+import {useParams} from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+
 
 const styles = theme => ({
     paper: {
@@ -33,24 +38,54 @@ const styles = theme => ({
     }
 });
 
-function Content(props) {
+function Content({client, getOrders, getReserves, deleteOrdersByIds, deleteReservesByIds, ...props}) {
     const {classes, handleDrawerToggle} = props;
+    let {vip} = useParams();
+
+    const handleOrderDeleteClick = (selected) => {
+        deleteOrdersByIds(selected);
+    };
+
+    const handleReserveDeleteClick = (selected) => {
+        deleteReservesByIds(selected);
+    };
+
+    useEffect(() => {
+        if(!client.isOrdersLoaded && vip === client.vip) {
+            getOrders(vip);
+        }
+    }, [client.orders, client.isOrdersLoaded, client.vip, vip, getOrders]);
+
+    useEffect(() => {
+        if(!client.isReservesLoaded && vip === client.vip) {
+            getReserves(vip);
+        }
+    }, [client.reserves, client.isReservesLoaded, client.vip, vip, getReserves]);
+
+    const isOrderTablesShown = client && client.orders && client.orders.length > 0;
+    const isReserveTablesShown = client && client.reserves && client.reserves.length > 0;
     return (
         <div className={classes.app}>
             <Helmet>
-                <title>Autoparts - Замовлення - </title>
+                <title>Autoparts - Замовлення - {client.vip}</title>
             </Helmet>
             <Header onDrawerToggle={handleDrawerToggle}/>
             <main className={classes.main}>
                 <Paper className={classes.paper}>
                     <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                     <div className={classes.contentWrapper}>
-                        {/*<Typography color="textSecondary" align="center">
-                      По Вашему запросу ничего не найдено
-                  </Typography>*/
+                        {isOrderTablesShown || isReserveTablesShown ?
+                            <React.Fragment>
+                                {isOrderTablesShown && <OrderTable
+                                    orders={client.orders} onDelete={handleOrderDeleteClick} />}
+                                {isReserveTablesShown && <ReserveTable
+                                    reserves={client.reserves} onDelete={handleReserveDeleteClick} />}
+                            </React.Fragment>
+                            :
+                            <Typography color="textSecondary" align="center">
+                                Інформація відсутня
+                            </Typography>
                         }
-                        <OrderTable/>
-                        <ReserveTable/>
                     </div>
                 </Paper>
             </main>
@@ -66,4 +101,18 @@ Content.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Content);
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    getOrders,
+    getReserves,
+    deleteOrdersByIds,
+    deleteReservesByIds
+};
+
+function mapStateToProps(state) {
+    return {
+        client: state.client
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Content));
