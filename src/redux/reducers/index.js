@@ -26,7 +26,15 @@ const authPersistConfig = {
 const clientPersistConfig = {
     key: 'client',
     storage: storage,
-    blacklist: ['orders', 'isOrdersLoaded', 'payments', 'isPaymentsLoaded', 'isClientNotExists']
+    blacklist: [
+        'orders',
+        'isOrdersLoaded',
+        'payments',
+        'isPaymentsLoaded',
+        'isClientNotExists',
+        'isReservesLoaded',
+        'reserves'
+    ]
 };
 
 const rootReducer = combineReducers({
