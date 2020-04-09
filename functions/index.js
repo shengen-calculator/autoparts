@@ -18,8 +18,64 @@ const updateReserveQuantity = require('./order/updateReserveQuantity');
 const getInfoByVendor = require('./search/getInfoByVendor');
 const searchByNumber = require('./search/searchByNumber');
 const searchByBrandAndNumber = require('./search/searchByBrandAndNumber');
+const checkIfPresentInOrderList = require('./search/checkIfPresentInOrderList');
+const createOrder = require('./search/createOrder');
+const createReserve = require('./search/createReserve');
+const getByAnalog = require('./search/getByAnalog');
+const updatePrice = require('./search/updatePrice');
 
 admin.initializeApp();
+
+exports.search = {
+
+    getInfoByVendor: functions.https.onCall(async (data, context) => {
+        return getInfoByVendor(data, context);
+    }),
+
+    searchByNumber: functions.https.onCall(async (data, context) => {
+        return searchByNumber(data, context);
+    }),
+
+    searchByBrandAndNumber: functions.https.onCall(async (data, context) => {
+        return searchByBrandAndNumber(data, context);
+    }),
+
+
+    checkIfPresentInOrderList: functions.https.onCall(async (data, context) => {
+        return checkIfPresentInOrderList(data, context);
+    }),
+
+    createOrder: functions.https.onCall(async (data, context) => {
+        return createOrder(data, context);
+    }),
+
+
+    createReserve: functions.https.onCall(async (data, context) => {
+        return createReserve(data, context);
+    }),
+
+
+    getByAnalog: functions.https.onCall(async (data, context) => {
+        return getByAnalog(data, context);
+    }),
+
+
+    updatePrice: functions.https.onCall(async (data, context) => {
+        return updatePrice(data, context);
+    })
+};
+
+exports.statistic = {
+
+};
+
+exports.order = {
+
+};
+
+exports.main = {
+
+};
 
 exports.processSignUp = functions.auth.user().onCreate((user) => {
     return processSignUp(user);
@@ -79,16 +135,4 @@ exports.updateOrderQuantity = functions.https.onCall(async (data, context) => {
 
 exports.updateReserveQuantity = functions.https.onCall(async (data, context) => {
     return updateReserveQuantity(data, context);
-});
-
-exports.getInfoByVendor = functions.https.onCall(async (data, context) => {
-    return getInfoByVendor(data, context);
-});
-
-exports.searchByNumber = functions.https.onCall(async (data, context) => {
-    return searchByNumber(data, context);
-});
-
-exports.searchByBrandAndNumber = functions.https.onCall(async (data, context) => {
-    return searchByBrandAndNumber(data, context);
 });

@@ -5,7 +5,7 @@ const searchByBrandAndNumber = async (data, context) => {
 
     util.CheckForManagerRole(context);
 
-    if (!data) {
+    if (!data ||!data.number ||!data.brand ) {
         throw new functions.https.HttpsError('invalid-argument',
             'The function must be called with two arguments "Brand and Number"');
     }
