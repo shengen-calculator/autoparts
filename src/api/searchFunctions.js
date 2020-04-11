@@ -1,4 +1,5 @@
 import {functions} from "./database";
+import FunctionsApi from "./clientFunctions";
 
 class SearchFunctionsApi {
     static checkIfPresentInOrderList(analogId) {
@@ -34,3 +35,4 @@ class SearchFunctionsApi {
         return func({productId, price, discount, retail});
     }
 }
+export default SearchFunctionsApi;
