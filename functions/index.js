@@ -26,56 +26,42 @@ const updatePrice = require('./search/updatePrice');
 
 admin.initializeApp();
 
-exports.search = {
 
-    getInfoByVendor: functions.https.onCall(async (data, context) => {
-        return getInfoByVendor(data, context);
-    }),
+exports.getInfoByVendor = functions.https.onCall(async (data, context) => {
+    return getInfoByVendor(data, context);
+});
 
-    searchByNumber: functions.https.onCall(async (data, context) => {
-        return searchByNumber(data, context);
-    }),
+exports.searchByNumber = functions.https.onCall(async (data, context) => {
+    return searchByNumber(data, context);
+});
 
-    searchByBrandAndNumber: functions.https.onCall(async (data, context) => {
-        return searchByBrandAndNumber(data, context);
-    }),
-
-
-    checkIfPresentInOrderList: functions.https.onCall(async (data, context) => {
-        return checkIfPresentInOrderList(data, context);
-    }),
-
-    createOrder: functions.https.onCall(async (data, context) => {
-        return createOrder(data, context);
-    }),
+exports.searchByBrandAndNumber = functions.https.onCall(async (data, context) => {
+    return searchByBrandAndNumber(data, context);
+});
 
 
-    createReserve: functions.https.onCall(async (data, context) => {
-        return createReserve(data, context);
-    }),
+exports.checkIfPresentInOrderList = functions.https.onCall(async (data, context) => {
+    return checkIfPresentInOrderList(data, context);
+});
+
+exports.createOrder = functions.https.onCall(async (data, context) => {
+    return createOrder(data, context);
+});
 
 
-    getByAnalog: functions.https.onCall(async (data, context) => {
-        return getByAnalog(data, context);
-    }),
+exports.createReserve = functions.https.onCall(async (data, context) => {
+    return createReserve(data, context);
+});
 
 
-    updatePrice: functions.https.onCall(async (data, context) => {
-        return updatePrice(data, context);
-    })
-};
+exports.getByAnalog = functions.https.onCall(async (data, context) => {
+    return getByAnalog(data, context);
+});
 
-exports.statistic = {
 
-};
-
-exports.order = {
-
-};
-
-exports.main = {
-
-};
+exports.updatePrice = functions.https.onCall(async (data, context) => {
+    return updatePrice(data, context);
+});
 
 exports.processSignUp = functions.auth.user().onCreate((user) => {
     return processSignUp(user);
@@ -87,26 +73,6 @@ exports.getClientByVip = functions.https.onCall(async (data, context) => {
 
 exports.getPaymentsByVip = functions.https.onCall(async (data, context) => {
     return getPaymentsByVip(data, context);
-});
-
-exports.getQueryStatistic = functions.https.onCall(async (data, context) => {
-    return getQueryStatistic(data, context);
-});
-
-exports.getVendorStatistic = functions.https.onCall(async (data, context) => {
-    return getVendorStatistic(data, context);
-});
-
-exports.getStatisticByVendor = functions.https.onCall(async (data, context) => {
-    return getStatisticByVendor(data, context);
-});
-
-exports.getClientStatistic = functions.https.onCall(async (data, context) => {
-    return getClientStatistic(data, context);
-});
-
-exports.getStatisticByClient = functions.https.onCall(async (data, context) => {
-    return getStatisticByClient(data, context);
 });
 
 exports.getOrdersByVip = functions.https.onCall(async (data, context) => {
@@ -135,4 +101,24 @@ exports.updateOrderQuantity = functions.https.onCall(async (data, context) => {
 
 exports.updateReserveQuantity = functions.https.onCall(async (data, context) => {
     return updateReserveQuantity(data, context);
+});
+
+exports.getVendorStatistic = functions.https.onCall(async (data, context) => {
+    return getVendorStatistic(data, context);
+});
+
+exports.getStatisticByVendor = functions.https.onCall(async (data, context) => {
+    return getStatisticByVendor(data, context);
+});
+
+exports.getClientStatistic = functions.https.onCall(async (data, context) => {
+    return getClientStatistic(data, context);
+});
+
+exports.getStatisticByClient = functions.https.onCall(async (data, context) => {
+    return getStatisticByClient(data, context);
+});
+
+exports.getQueryStatistic = functions.https.onCall(async (data, context) => {
+    return getQueryStatistic(data, context);
 });
