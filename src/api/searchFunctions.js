@@ -1,36 +1,36 @@
 import {functions} from "./database";
 
 class SearchFunctionsApi {
-    static checkIfPresentInOrderList(vip) {
+    static checkIfPresentInOrderList(analogId) {
         const func = functions.httpsCallable('checkIfPresentInOrderList');
-        return func(vip);
+        return func(analogId);
     }
-    static createOrder(vip) {
+    static createOrder(vendorProductId) {
         const func = functions.httpsCallable('createOrder');
-        return func(vip);
+        return func(vendorProductId);
     }
-    static createReserve(vip) {
+    static createReserve(productId) {
         const func = functions.httpsCallable('createReserve');
-        return func(vip);
+        return func(productId);
     }
-    static getByAnalog(vip) {
+    static getByAnalog(analogId) {
         const func = functions.httpsCallable('getByAnalog');
-        return func(vip);
+        return func(analogId);
     }
-    static getInfoByVendor(vip) {
+    static getInfoByVendor(vendorId) {
         const func = functions.httpsCallable('getInfoByVendor');
-        return func(vip);
+        return func(vendorId);
     }
-    static searchByBrandAndNumber(vip) {
+    static searchByBrandAndNumber({brand, number}) {
         const func = functions.httpsCallable('searchByBrandAndNumber');
-        return func(vip);
+        return func({brand, number});
     }
-    static searchByNumber(vip) {
+    static searchByNumber(number) {
         const func = functions.httpsCallable('searchByNumber');
-        return func(vip);
+        return func(number);
     }
-    static updatePrice(vip) {
+    static updatePrice({productId, price, discount, retail}) {
         const func = functions.httpsCallable('updatePrice');
-        return func(vip);
+        return func({productId, price, discount, retail});
     }
 }
