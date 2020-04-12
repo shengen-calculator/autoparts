@@ -18,10 +18,8 @@ const searchByNumber = async (data, context) => {
         createData('CTR', 'CRN-73', 'Свеча зажигания 3330'),
         createData('RENAULT', '401604793R', 'Свеча зажигания 3330'),
         createData('HUTCHINSON', '590153', 'Свеча зажигания 3330'),
-        createData('HUTCHINSON', '590153', 'Свеча зажигания 3330'),
         createData('AKITAKA', '590153', '',),
         createData('PARTS-MALL', 'PKW-015', ''),
-        createData('NIPPARTS', 'N4961039', ''),
         createData('NIPPARTS', 'N4961039', 'Свеча зажигания 3330'),
     ];
 };

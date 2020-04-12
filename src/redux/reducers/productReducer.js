@@ -1,7 +1,7 @@
 import initialState from "./initialState";
 import * as types from "../actions/actionTypes";
 
-export default function productReducer(state = initialState.products, action) {
+export default function productReducer(state = initialState.product, action) {
     switch (action.type) {
         case types.LOAD_BY_NUMBER_SUCCESS:
             return {

@@ -1,5 +1,4 @@
 import {functions} from "./database";
-import FunctionsApi from "./clientFunctions";
 
 class SearchFunctionsApi {
     static checkIfPresentInOrderList(analogId) {
