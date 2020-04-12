@@ -6,10 +6,10 @@
     "serve": "firebase serve --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
-    "deploy": "firebase deploy --only functions:processSignUp,functions:getClientByVip,functions:getPaymentsByVip",
-    "deploy:order": "firebase deploy --only functions:getOrdersByVip,functions:getReservesByVip,functions:deleteOrdersByIds,functions:deleteReservesByIds,functions:updateReservePrices,functions:updateOrderQuantity,functions:updateReserveQuantity",
-    "deploy:search": "firebase deploy --only functions:getInfoByVendor,functions:searchByNumber,functions:searchByBrandAndNumber,functions:checkIfPresentInOrderList,functions:createOrder,functions:createReserve,functions:getByAnalog,functions:updatePrice",
-    "deploy:statistic": "firebase deploy --only functions:getQueryStatistic,functions:getVendorStatistic,functions:getStatisticByVendor,functions:getClientStatistic,functions:getStatisticByClient",
+    "deploy:main": "firebase deploy --only functions:main",
+    "deploy:order": "firebase deploy --only functions:order",
+    "deploy:search": "firebase deploy --only functions:search",
+    "deploy:statistic": "firebase deploy --only functions:statistic",
     "logs": "firebase functions:log"
   },
   "engines": {

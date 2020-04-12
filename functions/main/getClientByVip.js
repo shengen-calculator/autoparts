@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-const util = require('./util');
+const util = require('../util');
 
 const getClientByVip = async (data, context) => {
 

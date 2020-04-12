@@ -3,35 +3,35 @@ import FunctionsApi from "./clientFunctions";
 
 class SearchFunctionsApi {
     static checkIfPresentInOrderList(analogId) {
-        const func = functions.httpsCallable('checkIfPresentInOrderList');
+        const func = functions.httpsCallable('search-checkIfPresentInOrderList');
         return func(analogId);
     }
     static createOrder(vendorProductId) {
-        const func = functions.httpsCallable('createOrder');
+        const func = functions.httpsCallable('search-createOrder');
         return func(vendorProductId);
     }
     static createReserve(productId) {
-        const func = functions.httpsCallable('createReserve');
+        const func = functions.httpsCallable('search-createReserve');
         return func(productId);
     }
     static getByAnalog(analogId) {
-        const func = functions.httpsCallable('getByAnalog');
+        const func = functions.httpsCallable('search-getByAnalog');
         return func(analogId);
     }
     static getInfoByVendor(vendorId) {
-        const func = functions.httpsCallable('getInfoByVendor');
+        const func = functions.httpsCallable('search-getInfoByVendor');
         return func(vendorId);
     }
     static searchByBrandAndNumber({brand, number}) {
-        const func = functions.httpsCallable('searchByBrandAndNumber');
+        const func = functions.httpsCallable('search-searchByBrandAndNumber');
         return func({brand, number});
     }
     static searchByNumber(number) {
-        const func = functions.httpsCallable('searchByNumber');
+        const func = functions.httpsCallable('search-searchByNumber');
         return func(number);
     }
     static updatePrice({productId, price, discount, retail}) {
-        const func = functions.httpsCallable('updatePrice');
+        const func = functions.httpsCallable('search-updatePrice');
         return func({productId, price, discount, retail});
     }
 }
