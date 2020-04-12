@@ -38,5 +38,8 @@ export default {
         endDate:0
 
     },
-    //products
+    product: {
+        productsGrouped: [],
+        products: []
+    }
 };
