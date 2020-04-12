@@ -11,6 +11,7 @@ import Header from '../Header';
 import Copyright from '../../common/Copyright';
 import {connect} from "react-redux";
 import {Helmet} from "react-helmet";
+import GroupedTable from "./GroupedTable";
 
 
 const drawerWidth = 256;
@@ -89,6 +90,7 @@ function Content({auth, client, ...props}) {
                       По Вашему запросу ничего не найдено
                   </Typography>*/
                     }
+                    <GroupedTable/>
                     <GeneralTable/>
                     <VendorTable/>
                     <AnalogTable/>

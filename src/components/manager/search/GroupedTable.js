@@ -4,10 +4,6 @@ import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from '../../common/EnhancedTable';
 import {TitleIconEnum} from '../../../util/Enums';
 
-function createData(brand, number, description) {
-    return { brand, number, description };
-}
-
 const headCells = [
     { id: 'brand', numeric: false, disablePadding: false, label: 'Бренд' },
     { id: 'number', numeric: false, disablePadding: false, label: 'Номер' },
