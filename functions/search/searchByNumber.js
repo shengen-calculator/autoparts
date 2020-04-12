@@ -15,12 +15,12 @@ const searchByNumber = async (data, context) => {
     }
 
     return [
-        createData('CTR', 'CRN-73', 'Свеча зажигания 3330'),
+        createData('BERU', 'Z30', 'Свеча зажигания 3330'),
         createData('RENAULT', '401604793R', 'Свеча зажигания 3330'),
         createData('HUTCHINSON', '590153', 'Свеча зажигания 3330'),
         createData('AKITAKA', '590153', '',),
-        createData('PARTS-MALL', 'PKW-015', ''),
-        createData('NIPPARTS', 'N4961039', 'Свеча зажигания 3330'),
+        createData('BOSCH', '0242245536', 'Свеча зажигания FR7DCE 0.8'),
+        createData('RUVILE', '5413', 'Свеча зажигания 3330'),
     ];
 };
 

@@ -95,6 +95,13 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
     if(numb) {
         title += ` - ${numb}`;
     }
+    let generalRows = [], vendorRows = [], analogRows = [];
+    if(product.products.length > 0) {
+        generalRows = product.products.filter(x => x.available > 0);
+        vendorRows = product.products.filter(x => x.available === 0 && x.brand === brand && x.number === numb);
+        analogRows = product.products.filter(x => x.available === 0 && (x.brand !== brand || x.number !== numb));
+    }
+
 
     return (<div className={classes.app}>
         <Header onDrawerToggle={handleDrawerToggle}/>
@@ -111,9 +118,9 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
                         </Typography> :
                         <React.Fragment>
                             {product.productsGrouped.length > 0 && <GroupedTable rows={product.productsGrouped} vip={auth.vip}/>}
-                            {product.products.length > 0 && <GeneralTable/>}
-                            {product.products.length > 0 && <VendorTable/>}
-                            {product.products.length > 0 && <AnalogTable/>}
+                            {generalRows.length > 0 && <GeneralTable rows={generalRows}/>}
+                            {vendorRows.length > 0 && <VendorTable rows={vendorRows}/>}
+                            {analogRows.length > 0 && <AnalogTable rows={analogRows}/>}
                         </React.Fragment>
                     }
                 </div>
