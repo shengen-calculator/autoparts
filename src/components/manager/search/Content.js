@@ -12,6 +12,8 @@ import Copyright from '../../common/Copyright';
 import {connect} from "react-redux";
 import {Helmet} from "react-helmet";
 import GroupedTable from "./GroupedTable";
+import {getByNumber, getByBrand} from "../../../redux/actions/searchActions";
+import Typography from "@material-ui/core/Typography";
 
 
 const drawerWidth = 256;
@@ -61,10 +63,10 @@ const styles = theme => ({
     }
 });
 
-function Content({auth, client, ...props}) {
+function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
     const {classes, handleDrawerToggle} = props;
     let history = useHistory();
-    let {vip} = useParams();
+    let {vip, numb, brand} = useParams();
 
 
     useEffect(() => {
@@ -77,23 +79,43 @@ function Content({auth, client, ...props}) {
         }
     }, [vip, client.vip, auth.vip, history]);
 
+    useEffect(() => {
+        if (brand) {
+            getByBrand({brand, numb});
+        } else if(numb) {
+            getByNumber(numb);
+        }
+    }, [numb, brand, getByNumber, getByBrand]);
+
+    let title = `Autoparts - Клієнт - ${client.vip}`;
+
+    if(brand) {
+        title += ` - ${brand}`;
+    }
+    if(numb) {
+        title += ` - ${numb}`;
+    }
+
     return (<div className={classes.app}>
         <Header onDrawerToggle={handleDrawerToggle}/>
         <Helmet>
-            <title>Autoparts - Клієнт - {client.vip}</title>
+            <title>{title}</title>
         </Helmet>
         <main className={classes.main}>
             <Paper className={classes.paper}>
                 <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                 <div className={classes.contentWrapper}>
-                    {/*<Typography color="textSecondary" align="center">
-                      По Вашему запросу ничего не найдено
-                  </Typography>*/
+                    {(product.productsGrouped.length === 0 && product.products.length === 0) ?
+                        <Typography color="textSecondary" align="center">
+                            По Вашему запросу ничего не найдено
+                        </Typography> :
+                        <React.Fragment>
+                            {product.productsGrouped.length > 0 && <GroupedTable rows={product.productsGrouped} vip={auth.vip}/>}
+                            {product.products.length > 0 && <GeneralTable/>}
+                            {product.products.length > 0 && <VendorTable/>}
+                            {product.products.length > 0 && <AnalogTable/>}
+                        </React.Fragment>
                     }
-                    <GroupedTable/>
-                    <GeneralTable/>
-                    <VendorTable/>
-                    <AnalogTable/>
                 </div>
             </Paper>
         </main>
@@ -107,12 +129,19 @@ Content.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    getByNumber,
+    getByBrand
+
+};
 
 function mapStateToProps(state) {
     return {
         auth: state.authentication,
-        client: state.client
+        client: state.client,
+        product: state.product
     }
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(Content));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Content));

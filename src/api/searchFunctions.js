@@ -21,9 +21,9 @@ class SearchFunctionsApi {
         const func = functions.httpsCallable('search-getInfoByVendor');
         return func(vendorId);
     }
-    static searchByBrandAndNumber({brand, number}) {
+    static searchByBrandAndNumber({brand, numb}) {
         const func = functions.httpsCallable('search-searchByBrandAndNumber');
-        return func({brand, number});
+        return func({brand, number: numb});
     }
     static searchByNumber(number) {
         const func = functions.httpsCallable('search-searchByNumber');

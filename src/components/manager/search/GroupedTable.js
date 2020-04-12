@@ -2,7 +2,7 @@ import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from '../../common/EnhancedTable';
-import {TitleIconEnum} from '../../../util/Enums';
+import {useHistory} from "react-router-dom";
 
 const headCells = [
     { id: 'brand', numeric: false, disablePadding: false, label: 'Бренд' },
@@ -10,35 +10,40 @@ const headCells = [
     { id: 'description', numeric: false, disablePadding: false, label: 'Опис' },
 ];
 
-function tableRow(row, index, handleClick) {
+function tableRow(row, index, isSelected, handleClick) {
     const labelId = `enhanced-table-checkbox-${index}`;
-
+    const pointer = {cursor: 'pointer'};
     return (
         <TableRow
             hover
-            onClick={event => handleClick(event, row.id)}
             role="checkbox"
             tabIndex={-1}
             key={index}
+            onClick={event => handleClick(event, {brand: row.brand, number: row.number})}
         >
 
-            <TableCell padding="default" component="th" id={labelId} scope="row">
+            <TableCell padding="default" component="th" id={labelId}
+                       scope="row" style={pointer}>
                 {row.brand}
             </TableCell>
-            <TableCell align="left">{row.number}</TableCell>
-            <TableCell align="left">{row.description}</TableCell>
+            <TableCell style={pointer} align="left">{row.number}</TableCell>
+            <TableCell style={pointer} align="left">{row.description}</TableCell>
         </TableRow>
     );
 }
 
 function GroupedTable(props) {
+    let history = useHistory();
+
+    const handleClick = (event, {brand, number}) => {
+        history.push(`/manager/search/${props.vip}/${number}/${brand}`)
+    };
     return(
         <EnhancedTable
+            handleClick={handleClick}
             rows={props.rows}
             headCells={headCells}
             tableRow={tableRow}
-            title="В наявності на складі"
-            titleIcon={TitleIconEnum.check}
             columns={7}
             isFilterShown={false}
             rowsPerPageOptions={[5, 10, 25]}
