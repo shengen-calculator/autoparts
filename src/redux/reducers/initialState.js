@@ -40,6 +40,10 @@ export default {
     },
     product: {
         productsGrouped: [],
-        products: []
+        products: [],
+        criteria: {
+            brand: '',
+            numb: ''
+        }
     }
 };
