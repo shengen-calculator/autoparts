@@ -65,8 +65,8 @@ const styles = theme => ({
 
 function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
     const {classes, handleDrawerToggle} = props;
-    let history = useHistory();
-    let {vip, numb, brand} = useParams();
+    const history = useHistory();
+    const {vip, numb, brand} = useParams();
 
 
     useEffect(() => {
@@ -117,7 +117,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
                             По Вашему запросу ничего не найдено
                         </Typography> :
                         <React.Fragment>
-                            {product.productsGrouped.length > 0 && <GroupedTable rows={product.productsGrouped} vip={auth.vip}/>}
+                            {product.productsGrouped.length > 0 && <GroupedTable rows={product.productsGrouped} vip={vip}/>}
                             {generalRows.length > 0 && <GeneralTable rows={generalRows}/>}
                             {vendorRows.length > 0 && <VendorTable rows={vendorRows}/>}
                             {analogRows.length > 0 && <AnalogTable rows={analogRows}/>}

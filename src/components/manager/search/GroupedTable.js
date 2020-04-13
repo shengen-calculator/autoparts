@@ -46,7 +46,7 @@ function GroupedTable(props) {
             tableRow={tableRow}
             columns={7}
             isFilterShown={false}
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[10, 15, 25]}
             isRowSelectorShown={false}
         />
     );

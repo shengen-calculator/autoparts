@@ -17,6 +17,13 @@ export default function productReducer(state = initialState.product, action) {
                 products: action.products
             };
 
+        case types.LOAD_CLIENT_SUCCESS:
+            return {
+                ...state,
+                productsGrouped: [],
+                products: []
+            };
+
         default:
             return state;
     }
