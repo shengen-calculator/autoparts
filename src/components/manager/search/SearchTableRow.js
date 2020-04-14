@@ -10,6 +10,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 export default function SearchTableRow(row, index, isSelected, handleClick) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
+    const pointer = {cursor: 'pointer'};
 
     return (
         <TableRow
@@ -21,10 +22,10 @@ export default function SearchTableRow(row, index, isSelected, handleClick) {
             key={row.id}
             selected={isItemSelected}
         >
-            <TableCell padding="default" component="th" id={labelId} scope="row">
+            <TableCell padding="default" component="th" id={labelId} scope="row" style={pointer} name="order" onClick={event => handleClick(event, row.id)}>
                 {row.brand}
             </TableCell>
-            <TableCell align="left">
+            <TableCell align="left" name="order" style={pointer} onClick={event => handleClick(event, row.id)}>
                 {
                     row.isGoodQuality ?
                     <Grid container>
@@ -39,11 +40,11 @@ export default function SearchTableRow(row, index, isSelected, handleClick) {
                     </Grid> : row.number
                 }
             </TableCell>
-            <TableCell align="left">{row.description}</TableCell>
-            <TableCell align="right">{row.retail}</TableCell>
-            <TableCell align="right">{row.cost}</TableCell>
-            <TableCell align="right">{row.order}</TableCell>
-            <TableCell align="left">
+            <TableCell align="left" name="order" style={pointer} onClick={event => handleClick(event, row.id)}>{row.description}</TableCell>
+            <TableCell align="right" name="price" style={pointer} onClick={event => handleClick(event, row.id)}>{row.retail}</TableCell>
+            <TableCell align="right" name="price" style={pointer} onClick={event => handleClick(event, row.id)}>{row.cost}</TableCell>
+            <TableCell align="right" name="order" style={pointer} onClick={event => handleClick(event, row.id)}>{row.order}</TableCell>
+            <TableCell align="left" name="order" style={pointer} onClick={event => handleClick(event, row.id)}>
                 {
                     row.isGuaranteedTerm ?
                         <Grid container>
@@ -58,8 +59,8 @@ export default function SearchTableRow(row, index, isSelected, handleClick) {
                         </Grid> : row.term
                 }
             </TableCell>
-            <TableCell align="left">{row.date}</TableCell>
-            <TableCell align="center">
+            <TableCell align="left" name="order" style={pointer} onClick={event => handleClick(event, row.id)}>{row.date}</TableCell>
+            <TableCell align="center" style={pointer} onClick={event => handleClick(event, row.id)}>
                 <InfoIcon/>
             </TableCell>
         </TableRow>
