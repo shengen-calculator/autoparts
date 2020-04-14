@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import {createOrder} from "../../../../redux/actions/searchActions";
 
 function OrderDialog(props) {
-    const {isOpened, selected, onClose, createOrder} = props;
+    const {isOpened, selected, onClose, createOrder, client} = props;
     const [order, setOrder] = useState({
     });
 
@@ -35,9 +35,11 @@ function OrderDialog(props) {
             && Number.isInteger(Number(order.quantity))
             && !isNaN(order.price)) {
             createOrder({
+                productId: selected.id,
                 quantity: Number(order.quantity),
                 price: Number(order.price),
-                agreeToAnalog: order.agreeToAnalog
+                agreeToAnalog: order.agreeToAnalog,
+                vip: client.vip
             });
             onClose();
         }
@@ -111,5 +113,10 @@ const mapDispatchToProps = {
     createOrder
 };
 
+function mapStateToProps(state) {
+    return {
+        client: state.client
+    }
+}
 
-export default connect(null, mapDispatchToProps)(OrderDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderDialog);

@@ -149,7 +149,18 @@ export default function messageReducer(state = initialState.message, action) {
                 type: 'success',
                 text: 'Вітаємо в системі'
             };
-
+        case types.CREATE_ORDER_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Виникла помилка під час замовлення. Повторіть спробу'
+            };
+        case types.CREATE_RESERVE_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Виникла помилка під час резерву позиції. Повторіть спробу'
+            };
         default:
             return state;
     }

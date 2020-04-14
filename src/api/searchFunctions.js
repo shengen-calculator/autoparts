@@ -5,9 +5,9 @@ class SearchFunctionsApi {
         const func = functions.httpsCallable('search-checkIfPresentInOrderList');
         return func(analogId);
     }
-    static createOrder(vendorProductId) {
+    static createOrder(params) {
         const func = functions.httpsCallable('search-createOrder');
-        return func(vendorProductId);
+        return func(params);
     }
     static createReserve(productId) {
         const func = functions.httpsCallable('search-createReserve');

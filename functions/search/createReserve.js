@@ -5,7 +5,7 @@ const createReserve = async (data, context) => {
 
     util.CheckForManagerRole(context);
 
-    if (!data || !data.productId || !data.quantity || !data.price || !data.vip || !data.agreeToAnalog) {
+    if (!data || !data.productId || !data.quantity || !data.price || !data.vip || typeof data.agreeToAnalog === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
             'The function must be called with the next arguments "ProductId, Quantity, Price, Vip, AgreeToAnalog"');
     }
