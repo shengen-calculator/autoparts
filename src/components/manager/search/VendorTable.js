@@ -30,7 +30,7 @@ export default function VendorTable(props) {
             });
         }
     };
-    const handleCancelOrderClick = (event, name) => {
+    const handleCancelOrderClick = () => {
         setOrderDialog({
             isOpened: false, selected: {}
         });
