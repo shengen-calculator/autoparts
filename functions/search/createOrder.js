@@ -5,9 +5,9 @@ const createOrder = async (data, context) => {
 
     util.CheckForManagerRole(context);
 
-    if (!data || !data.productId || !data.quantity || !data.price || !data.vip || typeof data.agreeToAnalog === 'undefined') {
+    if (!data || !data.productId || !data.quantity || !data.price || !data.vip || typeof data.onlyOrderedQuantity === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with the next arguments "ProductId, Quantity, Price, Vip, AgreeToAnalog"');
+            'The function must be called with the next arguments "ProductId, Quantity, Price, Vip, OnlyOrderedQuantity"');
     }
 
     function createData(id, vendor, brand, number, description, note, ordered, approved, euro, uah, orderDate, shipmentDate, status) {

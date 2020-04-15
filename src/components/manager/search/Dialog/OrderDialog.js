@@ -18,7 +18,7 @@ function OrderDialog(props) {
 
     useEffect(() => {
         if(selected.retail) {
-            setOrder({price: selected.retail, quantity: '', agreeToAnalog: false})
+            setOrder({price: selected.retail, quantity: '', onlyOrderedQuantity: false})
         }
     }, [selected]);
 
@@ -38,7 +38,7 @@ function OrderDialog(props) {
                 productId: selected.id,
                 quantity: Number(order.quantity),
                 price: Number(order.price),
-                agreeToAnalog: order.agreeToAnalog,
+                onlyOrderedQuantity: order.onlyOrderedQuantity,
                 vip: client.vip
             });
             onClose();
@@ -86,13 +86,13 @@ function OrderDialog(props) {
                     <FormControlLabel control={
                         <Checkbox
                             margin="dense"
-                            name="agreeToAnalog"
-                            id="agreeToAnalog"
+                            name="onlyOrderedQuantity"
+                            id="onlyOrderedQuantity"
                             onKeyPress={keyPress}
                             onChange={handleChange}
-                            value={order.agreeToAnalog}
+                            value={order.onlyOrderedQuantity}
                         />
-                    } label="Погоджуюсь на аналог" />
+                    } label="Тільки замовлена кількість" />
 
                 </DialogContent>
                 <DialogActions>
