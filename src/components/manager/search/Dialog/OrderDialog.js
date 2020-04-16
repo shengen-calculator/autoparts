@@ -18,7 +18,7 @@ function OrderDialog(props) {
 
     useEffect(() => {
         if(selected.retail) {
-            setOrder({price: selected.retail, quantity: '', onlyOrderedQuantity: false})
+            setOrder({price: selected.cost, quantity: '', onlyOrderedQuantity: false})
         }
     }, [selected]);
 
@@ -30,7 +30,8 @@ function OrderDialog(props) {
         }));
     }
 
-    function handleOrderClick() {
+    function handleOrderClick(event) {
+        event.preventDefault();
         if(order.quantity && order.price
             && Number.isInteger(Number(order.quantity))
             && !isNaN(order.price)) {
@@ -45,64 +46,57 @@ function OrderDialog(props) {
         }
     }
 
-    function keyPress(target) {
-        if(target.charCode === 13 || target.type === 'click') {
-            handleOrderClick();
-        }
-    }
-
     return (
         <div>
-            <Dialog open={isOpened} aria-labelledby="form-dialog-title">
+            <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose}>
                 <DialogTitle id="form-dialog-title">Замовити запчастину у постачальника</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Бренд: {selected.brand} <br/>
-                        Номер: {selected.number} <br/>
-                    </DialogContentText>
-                    <TextField
-                        name="quantity"
-                        autoFocus
-                        margin="dense"
-                        id="quantity"
-                        label="Кількість"
-                        onKeyPress={keyPress}
-                        onChange={handleChange}
-                        value={order.quantity}
-                        type="text"
-                    />
-                    <br/>
-                    <TextField
-                        name="price"
-                        margin="dense"
-                        id="price"
-                        label="Ціна"
-                        onKeyPress={keyPress}
-                        onChange={handleChange}
-                        value={order.price}
-                        type="text"
-                    />
-                    <br/>
-                    <FormControlLabel control={
-                        <Checkbox
+                <form onSubmit={handleOrderClick}>
+                    <DialogContent>
+                        <DialogContentText>
+                            Бренд: {selected.brand} <br/>
+                            Номер: {selected.number} <br/>
+                        </DialogContentText>
+                        <TextField
+                            name="quantity"
+                            autoFocus
                             margin="dense"
-                            name="onlyOrderedQuantity"
-                            id="onlyOrderedQuantity"
-                            onKeyPress={keyPress}
+                            id="quantity"
+                            label="Кількість"
                             onChange={handleChange}
-                            value={order.onlyOrderedQuantity}
+                            value={order.quantity}
+                            type="text"
                         />
-                    } label="Тільки замовлена кількість" />
+                        <br/>
+                        <TextField
+                            name="price"
+                            margin="dense"
+                            id="price"
+                            label="Ціна"
+                            onChange={handleChange}
+                            value={order.price}
+                            type="text"
+                        />
+                        <br/>
+                        <FormControlLabel control={
+                            <Checkbox
+                                margin="dense"
+                                name="onlyOrderedQuantity"
+                                id="onlyOrderedQuantity"
+                                onChange={handleChange}
+                                value={order.onlyOrderedQuantity}
+                            />
+                        } label="Тільки замовлена кількість"/>
 
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onClose} color="primary">
-                        Відміна
-                    </Button>
-                    <Button onClick={handleOrderClick} color="primary">
-                        Замовити
-                    </Button>
-                </DialogActions>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={onClose} color="primary">
+                            Відміна
+                        </Button>
+                        <Button type="submit" color="primary">
+                            Замовити
+                        </Button>
+                    </DialogActions>
+                </form>
             </Dialog>
         </div>
     );
