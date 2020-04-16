@@ -34,7 +34,10 @@ function OrderDialog(props) {
         event.preventDefault();
         if(order.quantity && order.price
             && Number.isInteger(Number(order.quantity))
-            && !isNaN(order.price)) {
+            && !isNaN(order.price)
+            && order.price > 0
+            && Number(order.quantity) > -1
+        ) {
             createOrder({
                 productId: selected.id,
                 quantity: Number(order.quantity),

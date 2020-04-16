@@ -28,7 +28,10 @@ function UpdateReserveQuantityDialog(props) {
     }
     function updateQuantity(event) {
         event.preventDefault();
-        if(reserveUpdate.quantity && Number.isInteger(Number(reserveUpdate.quantity))) {
+        if(reserveUpdate.quantity
+            && Number.isInteger(Number(reserveUpdate.quantity))
+            && Number(reserveUpdate.quantity) > -1
+        ) {
             updateReserveQuantity({
                 reserveId: selected.id,
                 quantity: Number(reserveUpdate.quantity)

@@ -3,6 +3,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from '../../common/EnhancedTable';
 import {TitleIconEnum} from '../../../util/Enums';
+import ReserveDialog from "./Dialog/ReserveDialog";
 
 const headCells = [
     { id: 'brand', numeric: false, disablePadding: false, label: 'Бренд' },
@@ -17,6 +18,7 @@ const headCells = [
 function tableRow(row, index, isSelected, handleClick) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
+    const pointer = {cursor: 'pointer'};
 
     return (
         <TableRow
@@ -29,31 +31,57 @@ function tableRow(row, index, isSelected, handleClick) {
             selected={isItemSelected}
         >
 
-            <TableCell padding="default" component="th" id={labelId} scope="row">
+            <TableCell name="reserve" padding="default" component="th" id={labelId} scope="row" style={pointer}>
                 {row.brand}
             </TableCell>
-            <TableCell align="left">{row.number}</TableCell>
-            <TableCell align="left">{row.description}</TableCell>
-            <TableCell align="right">{row.retail}</TableCell>
-            <TableCell align="right">{row.cost}</TableCell>
-            <TableCell align="right">{row.available}</TableCell>
-            <TableCell align="right">{row.reserve}</TableCell>
+            <TableCell align="left" name="reserve" style={pointer}>{row.number}</TableCell>
+            <TableCell align="left" name="reserve" style={pointer}>{row.description}</TableCell>
+            <TableCell align="right" name="price" style={pointer}>{row.retail}</TableCell>
+            <TableCell align="right" name="price" style={pointer}>{row.cost}</TableCell>
+            <TableCell align="right" name="reserve" style={pointer}>{row.available}</TableCell>
+            <TableCell align="right" name="reserve" style={pointer}>{row.reserve}</TableCell>
         </TableRow>
     );
 }
 
 export default function GeneralTable(props) {
+    const [reserveDialog, setReserveDialog] = React.useState({
+        isOpened: false,
+        selected: {}
+    });
+
+    const handleClick = (event, name) => {
+        if (event.target.getAttribute("name") === "reserve") {
+            setReserveDialog({
+                isOpened: true,
+                selected: props.rows.find(x => x.id === name)
+            });
+        }
+    };
+    const handleCancelReserveClick = () => {
+        setReserveDialog({
+            isOpened: false, selected: {}
+        });
+    };
     return(
-        <EnhancedTable
-            rows={props.rows}
-            headCells={headCells}
-            tableRow={tableRow}
-            title="В наявності на складі"
-            titleIcon={TitleIconEnum.check}
-            columns={7}
-            isFilterShown={false}
-            rowsPerPageOptions={[5, 10, 25]}
-            isRowSelectorShown={false}
-        />
+        <React.Fragment>
+            <EnhancedTable
+                rows={props.rows}
+                handleClick={handleClick}
+                headCells={headCells}
+                tableRow={tableRow}
+                title="В наявності на складі"
+                titleIcon={TitleIconEnum.check}
+                columns={7}
+                isFilterShown={false}
+                rowsPerPageOptions={[5, 10, 25]}
+                isRowSelectorShown={false}
+            />
+            <ReserveDialog isOpened={reserveDialog.isOpened}
+                         selected={reserveDialog.selected}
+                         onClose={handleCancelReserveClick}
+            />
+        </React.Fragment>
+
     );
 }

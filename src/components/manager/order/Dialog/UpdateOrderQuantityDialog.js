@@ -28,7 +28,10 @@ function UpdateOrderQuantityDialog(props) {
     }
     function updateQuantity(event) {
         event.preventDefault();
-        if(orderUpdate.quantity && Number.isInteger(Number(orderUpdate.quantity))) {
+        if(orderUpdate.quantity
+            && Number.isInteger(Number(orderUpdate.quantity))
+            && Number(orderUpdate.quantity) > -1
+        ) {
             updateOrderQuantity({
                 orderId: selected.id,
                 quantity: Number(orderUpdate.quantity)

@@ -60,7 +60,7 @@ export default function SearchTableRow(row, index, isSelected, handleClick) {
                 }
             </TableCell>
             <TableCell align="left" name="order" style={pointer}>{row.date}</TableCell>
-            <TableCell align="center" style={pointer}>
+            <TableCell align="center" name="info" style={pointer}>
                 <InfoIcon/>
             </TableCell>
         </TableRow>
