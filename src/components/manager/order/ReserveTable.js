@@ -101,7 +101,8 @@ export default function ReserveTable(props) {
         }
     };
 
-    const handleDeleteClick = () => {
+    const handleDeleteClick = (event) => {
+        event.preventDefault();
         props.onDelete(selected);
         setIsDeleteConfirmationOpened(false);
     };
