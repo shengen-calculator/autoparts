@@ -110,13 +110,6 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Не вдалось скасувати резерви клієнта, спробуйте ще раз'
             };
 
-        case types.UPDATE_RESERVE_PRICES_FAILURE:
-            return {
-                ...state,
-                type: 'error',
-                text: 'Нажаль, не вдалось змінити ціни для клієнта. Спробуйте ще раз'
-            };
-
         case types.UPDATE_ORDER_QUANTITY_FAILURE:
             return {
                 ...state,

@@ -24,9 +24,6 @@ export function deleteReservesByIds(ids) {
     return { type: types.DELETE_RESERVES_REQUEST, ids};
 }
 
-export function updateReservePrices(prices) {
-    return { type: types.UPDATE_RESERVE_PRICES_REQUEST, prices};
-}
 export function updateReserveQuantity(params) {
     return { type: types.UPDATE_RESERVE_QUANTITY_REQUEST, params};
 }

@@ -62,13 +62,6 @@ export default function clientReducer(state = initialState.client, action) {
                 isOrdersLoaded: true
             };
 
-        case types.UPDATE_RESERVE_PRICES_SUCCESS:
-            return {
-                ...state,
-                reserves: action.reserves,
-                isReservesLoaded: true
-            };
-
         case types.UPDATE_RESERVE_QUANTITY_SUCCESS:
             return {
                 ...state,
