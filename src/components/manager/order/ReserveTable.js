@@ -113,6 +113,8 @@ export default function ReserveTable(props) {
     };
     const totalEur = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
         .format(props.reserves.reduce((a, b) => a + b.euro * b.quantity, 0));
+    const totalUah = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'UAH'})
+        .format(props.reserves.reduce((a, b) => a + b.uah * b.quantity, 0));
     return (
         <React.Fragment>
 
@@ -127,7 +129,7 @@ export default function ReserveTable(props) {
                 title="Виконано"
                 titleIcon={TitleIconEnum.mall}
                 columns={12}
-                total={totalEur}
+                total={`${totalEur} = ${totalUah}`}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={true}

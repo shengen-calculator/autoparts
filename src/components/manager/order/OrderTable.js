@@ -129,6 +129,10 @@ export default function OrderTable(props) {
     };
     const totalEur = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
         .format(props.orders.reduce((a, b) => a + b.euro * b.ordered, 0));
+
+    const totalUah = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'UAH'})
+        .format(props.orders.reduce((a, b) => a + b.uah * b.ordered, 0));
+
     return (
         <React.Fragment>
             <EnhancedTable
@@ -141,7 +145,7 @@ export default function OrderTable(props) {
                 tableRow={tableRow}
                 title="Замовлення"
                 titleIcon={TitleIconEnum.flight}
-                total={totalEur}
+                total={`${totalEur} = ${totalUah}`}
                 columns={13}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
