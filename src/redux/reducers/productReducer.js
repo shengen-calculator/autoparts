@@ -42,6 +42,21 @@ export default function productReducer(state = initialState.product, action) {
                 }
             };
 
+        case types.CREATE_RESERVE_REQUEST:
+            return {
+                ...state,
+                products: state.products.map((item) => {
+                    if(item.id !== action.params.productId) {
+                        return item
+                    }
+                    return {
+                        ...item,
+                        available: item.available - action.params.quantity,
+                        reserve: action.params.quantity + item.reserve
+                    }
+                })
+            };
+
         default:
             return state;
     }

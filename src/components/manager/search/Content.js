@@ -97,7 +97,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
     }
     let generalRows = [], vendorRows = [], analogRows = [];
     if(product.products.length > 0) {
-        generalRows = product.products.filter(x => x.available > 0);
+        generalRows = product.products.filter(x => x.available > 0 || x.reserve > 0);
         vendorRows = product.products.filter(x => x.available === 0 && x.brand === brand && x.number === numb);
         analogRows = product.products.filter(x => x.available === 0 && (x.brand !== brand || x.number !== numb));
     }

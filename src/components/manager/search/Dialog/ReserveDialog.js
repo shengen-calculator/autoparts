@@ -38,7 +38,7 @@ function ReserveDialog(props) {
             && Number(reserve.quantity) > -1
         ) {
             if(Number(reserve.quantity) > reserve.available) {
-                showToastrMessage({type: 'warning', message: 'Кількість не може бути більшою ніж доступна'})
+                showToastrMessage({type: 'warning', message: 'Кількість не може бути більшою ніж доступно'})
             } else {
                 createReserve({
                     productId: selected.id,
