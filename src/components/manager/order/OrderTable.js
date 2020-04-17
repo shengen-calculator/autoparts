@@ -13,6 +13,7 @@ import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
 import DeleteOrdersDialog from "./Dialog/DeleteOrdersDialog";
 import UpdateOrderQuantityDialog from "./Dialog/UpdateOrderQuantityDialog";
+import {formatCurrency} from "../../../util/Formatter";
 
 //status list
 //подтвержден = 0
@@ -68,8 +69,8 @@ function tableRow(row, index, isSelected, handleClick) {
                 {row.ordered}
             </TableCell>
             <TableCell align="right">{row.approved}</TableCell>
-            <TableCell align="right">{row.euro}</TableCell>
-            <TableCell align="right">{row.uah}</TableCell>
+            <TableCell align="right">{row.euro.toFixed(2)}</TableCell>
+            <TableCell align="right">{row.uah.toFixed(2)}</TableCell>
             <TableCell align="left">{row.note}</TableCell>
             <TableCell align="left">{row.orderDate}</TableCell>
             <TableCell align="left">{row.shipmentDate}</TableCell>
@@ -129,11 +130,8 @@ export default function OrderTable(props) {
         setIsDeleteConfirmationOpened(true);
     };
 
-    const totalEur = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
-        .format(props.orders.reduce((a, b) => a + b.euro * b.ordered, 0));
-
-    const totalUah = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'UAH'})
-        .format(props.orders.reduce((a, b) => a + b.uah * b.ordered, 0));
+    const totalEur = formatCurrency(props.orders.reduce((a, b) => a + b.euro * b.ordered, 0), 'EUR');
+    const totalUah = formatCurrency(props.orders.reduce((a, b) => a + b.uah * b.ordered, 0), 'UAH');
 
     return (
         <React.Fragment>

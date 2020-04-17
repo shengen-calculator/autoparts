@@ -9,6 +9,7 @@ import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
 import DeleteReservesDialog from "./Dialog/DeleteReservesDialog";
 import UpdateReserveQuantityDialog from "./Dialog/UpdateReserveQuantityDialog";
+import {formatCurrency} from "../../../util/Formatter";
 
 //source
 // склад = 0
@@ -58,8 +59,8 @@ function tableRow(row, index, isSelected, handleClick) {
                        onClick={event => handleClick(event, row.id)} style={pointer} >
                 {row.quantity}
             </TableCell>
-            <TableCell align="right">{row.euro}</TableCell>
-            <TableCell align="right">{row.uah}</TableCell>
+            <TableCell align="right">{row.euro.toFixed(2)}</TableCell>
+            <TableCell align="right">{row.uah.toFixed(2)}</TableCell>
             <TableCell align="left">{row.note}</TableCell>
             <TableCell align="left">{row.orderDate}</TableCell>
             <TableCell align="left">{row.date}</TableCell>
@@ -111,10 +112,8 @@ export default function ReserveTable(props) {
     const handleSelectAllClick = (event) => {
         handleTableSelectAllClick(event, props.reserves, setSelected);
     };
-    const totalEur = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
-        .format(props.reserves.reduce((a, b) => a + b.euro * b.quantity, 0));
-    const totalUah = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'UAH'})
-        .format(props.reserves.reduce((a, b) => a + b.uah * b.quantity, 0));
+    const totalEur = formatCurrency(props.reserves.reduce((a, b) => a + b.euro * b.quantity, 0), 'EUR');
+    const totalUah = formatCurrency(props.reserves.reduce((a, b) => a + b.uah * b.quantity, 0), 'UAH');
     return (
         <React.Fragment>
 

@@ -43,9 +43,10 @@ export default function VendorTable(props) {
                 handleClick={handleClick}
                 headCells={headCells}
                 tableRow={SearchTableRow}
+                isEur={props.isEur}
                 title="Знайдено за артикулом"
                 titleIcon={TitleIconEnum.track}
-                columns={9}
+                columns={10}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={false}

@@ -118,9 +118,9 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
                         </Typography> :
                         <React.Fragment>
                             {product.productsGrouped.length > 0 && <GroupedTable rows={product.productsGrouped} vip={vip}/>}
-                            {generalRows.length > 0 && <GeneralTable rows={generalRows}/>}
-                            {vendorRows.length > 0 && <VendorTable rows={vendorRows}/>}
-                            {analogRows.length > 0 && <AnalogTable rows={analogRows}/>}
+                            {generalRows.length > 0 && <GeneralTable rows={generalRows} isEur={client.isEuroClient}/>}
+                            {vendorRows.length > 0 && <VendorTable rows={vendorRows} isEur={client.isEuroClient}/>}
+                            {analogRows.length > 0 && <AnalogTable rows={analogRows} isEur={client.isEuroClient}/>}
                         </React.Fragment>
                     }
                 </div>

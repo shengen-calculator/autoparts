@@ -16,7 +16,7 @@ const headCells = [
     { id: 'reserve', numeric: true, disablePadding: false, label: 'Резерв' }
 ];
 
-function tableRow(row, index, isSelected, handleClick) {
+function tableRow(row, index, isSelected, handleClick, isEur) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
@@ -37,8 +37,8 @@ function tableRow(row, index, isSelected, handleClick) {
             </TableCell>
             <TableCell align="left" name="reserve" style={pointer}>{row.number}</TableCell>
             <TableCell align="left" name="reserve" style={pointer}>{row.description}</TableCell>
-            <TableCell align="right" name="price" style={pointer}>{row.retail}</TableCell>
-            <TableCell align="right" name="price" style={pointer}>{row.cost}</TableCell>
+            <TableCell align="right" name="price" style={pointer}>{isEur ? row.retailEur.toFixed(2) : row.retail.toFixed(2)}</TableCell>
+            <TableCell align="right" name="price" style={pointer}>{isEur ? row.costEur.toFixed(2) : row.cost.toFixed(2)}</TableCell>
             <TableCell align="right" name="reserve" style={pointer}>{row.available}</TableCell>
             <TableCell align="right" name="reserve" style={pointer}>{row.reserve}</TableCell>
         </TableRow>
@@ -71,9 +71,10 @@ export default function GeneralTable(props) {
                 handleClick={handleClick}
                 headCells={headCells}
                 tableRow={tableRow}
+                isEur={props.isEur}
                 title="В наявності на складі"
                 titleIcon={TitleIconEnum.check}
-                columns={7}
+                columns={8}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={false}

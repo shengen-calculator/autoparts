@@ -7,7 +7,7 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import Tooltip from "@material-ui/core/Tooltip";
 
-export default function SearchTableRow(row, index, isSelected, handleClick) {
+export default function SearchTableRow(row, index, isSelected, handleClick, isEur) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
@@ -42,8 +42,8 @@ export default function SearchTableRow(row, index, isSelected, handleClick) {
                 }
             </TableCell>
             <TableCell align="left" name="order" style={pointer}>{row.description}</TableCell>
-            <TableCell align="right" name="price" style={pointer}>{row.retail}</TableCell>
-            <TableCell align="right" name="order" style={pointer}>{row.cost}</TableCell>
+            <TableCell align="right" name="price" style={pointer}>{isEur ? row.retailEur.toFixed(2) : row.retail.toFixed(2)}</TableCell>
+            <TableCell align="right" name="order" style={pointer}>{isEur ? row.costEur.toFixed(2) : row.cost.toFixed(2)}</TableCell>
             <TableCell align="right" name="order" style={pointer}>{row.order}</TableCell>
             <TableCell align="left" name="order" style={pointer}>
                 {

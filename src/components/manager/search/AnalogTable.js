@@ -45,9 +45,10 @@ export default function AnalogTable(props) {
                 handleClick={handleClick}
                 headCells={headCells}
                 tableRow={SearchTableRow}
+                isEur={props.isEur}
                 title="Аналоги артикула"
                 titleIcon={TitleIconEnum.infinity}
-                columns={9}
+                columns={10}
                 isFilterShown={false}
                 rowsPerPageOptions={[15, 25, 50]}
                 isRowSelectorShown={false}
