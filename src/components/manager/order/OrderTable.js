@@ -145,7 +145,7 @@ export default function OrderTable(props) {
                 tableRow={tableRow}
                 title="Замовлення"
                 titleIcon={TitleIconEnum.flight}
-                total={`${totalEur} = ${totalUah}`}
+                total={`${totalEur} / ${totalUah}`}
                 columns={13}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
