@@ -5,7 +5,7 @@ const updateOrderQuantity = async (data, context) => {
 
     util.CheckForManagerRole(context);
 
-    if (!data || !data.orderId || !data.quantity) {
+    if (!data || !data.orderId || typeof data.quantity === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
             'The function must be called with argument "order Id and quantity"');
     }
