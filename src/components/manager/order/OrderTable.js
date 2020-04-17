@@ -94,10 +94,13 @@ export default function OrderTable(props) {
 
     const handleClick = (event, name) => {
         if(event.target.getAttribute("name") === "ordered") {
-            setChangeQuantityConfirmation({
-                isOpened: true,
-                selected: props.orders.find(x => x.id === name)
-            });
+            const selected = props.orders.find(x => x.id === name);
+            if(selected.approved === 0) {
+                setChangeQuantityConfirmation({
+                    isOpened: true,
+                    selected: selected
+                });
+            }
         } else {
             handleTableClick(event, name, selected, setSelected);
         }
@@ -124,6 +127,8 @@ export default function OrderTable(props) {
     const handleSelectAllClick = (event) => {
         handleTableSelectAllClick(event, props.orders, setSelected);
     };
+    const totalEur = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
+        .format(props.orders.reduce((a, b) => a + b.euro * b.ordered, 0));
     return (
         <React.Fragment>
             <EnhancedTable
@@ -136,8 +141,7 @@ export default function OrderTable(props) {
                 tableRow={tableRow}
                 title="Замовлення"
                 titleIcon={TitleIconEnum.flight}
-                total={new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
-                    .format(props.orders.reduce((a, b) => a + b.euro, 0))}
+                total={totalEur}
                 columns={13}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}

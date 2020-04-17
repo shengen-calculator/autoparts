@@ -55,18 +55,32 @@ export default function clientReducer(state = initialState.client, action) {
                 reserves: state.reserves.filter((item, index) => !action.ids.includes(item.id))
             };
 
-        case types.UPDATE_ORDER_QUANTITY_SUCCESS:
+        case types.UPDATE_ORDER_QUANTITY_REQUEST:
             return {
                 ...state,
-                orders: action.orders,
-                isOrdersLoaded: true
+                orders: state.orders.map((item) => {
+                    if (item.id !== action.params.orderId) {
+                        return item
+                    }
+                    return {
+                        ...item,
+                        ordered: action.params.quantity
+                    }
+                })
             };
 
-        case types.UPDATE_RESERVE_QUANTITY_SUCCESS:
+        case types.UPDATE_RESERVE_QUANTITY_REQUEST:
             return {
                 ...state,
-                reserves: action.reserves,
-                isReservesLoaded: true
+                reserves: state.reserves.map((item) => {
+                    if (item.id !== action.params.reserveId) {
+                        return item
+                    }
+                    return {
+                        ...item,
+                        quantity: action.params.quantity
+                    }
+                })
             };
 
         case types.CLIENT_DOESNT_EXIST:

@@ -111,8 +111,11 @@ export default function ReserveTable(props) {
     const handleSelectAllClick = (event) => {
         handleTableSelectAllClick(event, props.reserves, setSelected);
     };
+    const totalEur = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
+        .format(props.reserves.reduce((a, b) => a + b.euro * b.quantity, 0));
     return (
         <React.Fragment>
+
             <EnhancedTable
                 handleClick={handleClick}
                 handleSelectAllClick={handleSelectAllClick}
@@ -124,8 +127,7 @@ export default function ReserveTable(props) {
                 title="Виконано"
                 titleIcon={TitleIconEnum.mall}
                 columns={12}
-                total={new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
-                    .format(props.reserves.reduce((a, b) => a + b.euro, 0))}
+                total={totalEur}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={true}
