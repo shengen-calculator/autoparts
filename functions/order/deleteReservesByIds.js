@@ -9,7 +9,6 @@ const deleteReservesByIds = async (data, context) => {
         throw new functions.https.HttpsError('invalid-argument',
             'The function must be called with argument "array of reserves Ids"');
     }
-    return [];
 };
 
 module.exports = deleteReservesByIds;
