@@ -6,6 +6,7 @@ import {TitleIconEnum} from '../../../util/Enums';
 import ReserveDialog from "./Dialog/ReserveDialog";
 
 const headCells = [
+    { id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
     { id: 'brand', numeric: false, disablePadding: false, label: 'Бренд' },
     { id: 'number', numeric: false, disablePadding: false, label: 'Номер' },
     { id: 'description', numeric: false, disablePadding: false, label: 'Опис' },
@@ -30,7 +31,7 @@ function tableRow(row, index, isSelected, handleClick) {
             key={row.id}
             selected={isItemSelected}
         >
-
+            <TableCell align="left" name="reserve" style={pointer}>{row.vendor}</TableCell>
             <TableCell name="reserve" padding="default" component="th" id={labelId} scope="row" style={pointer}>
                 {row.brand}
             </TableCell>

@@ -5,6 +5,7 @@ import {TitleIconEnum} from "../../../util/Enums";
 import OrderDialog from "./Dialog/OrderDialog";
 
 const headCells = [
+    {id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
     { id: 'brand', numeric: false, disablePadding: false, label: 'Бренд' },
     { id: 'number', numeric: false, disablePadding: false, label: 'Номер' },
     { id: 'description', numeric: false, disablePadding: false, label: 'Опис' },

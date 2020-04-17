@@ -22,6 +22,7 @@ export default function SearchTableRow(row, index, isSelected, handleClick) {
             key={row.id}
             selected={isItemSelected}
         >
+            <TableCell align="left" name="order" style={pointer}>{row.vendor}</TableCell>
             <TableCell padding="default" component="th" id={labelId} scope="row" style={pointer} name="order">
                 {row.brand}
             </TableCell>

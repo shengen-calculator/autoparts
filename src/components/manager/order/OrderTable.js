@@ -120,13 +120,15 @@ export default function OrderTable(props) {
             isOpened: false, selected: {}
         });
     };
-    const openDeleteConfirmation = () => {
-        setIsDeleteConfirmationOpened(true);
-    };
 
     const handleSelectAllClick = (event) => {
         handleTableSelectAllClick(event, props.orders, setSelected);
     };
+
+    const openDeleteConfirmation = () => {
+        setIsDeleteConfirmationOpened(true);
+    };
+
     const totalEur = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
         .format(props.orders.reduce((a, b) => a + b.euro * b.ordered, 0));
 

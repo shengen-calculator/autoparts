@@ -70,6 +70,15 @@ export default function clientReducer(state = initialState.client, action) {
                 })
             };
 
+        case types.CREATE_ORDER_REQUEST:
+            return {
+                ...state,
+                orders: {
+                    ...state.orders,
+                    
+                }
+            };
+
         case types.UPDATE_RESERVE_QUANTITY_REQUEST:
             return {
                 ...state,
