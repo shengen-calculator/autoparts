@@ -105,6 +105,7 @@ export default function ReserveTable(props) {
         event.preventDefault();
         props.onDelete(selected);
         setIsDeleteConfirmationOpened(false);
+        setSelected([]);
     };
 
     const handleSelectAllClick = (event) => {

@@ -107,6 +107,7 @@ export default function OrderTable(props) {
         event.preventDefault();
         props.onDelete(selected);
         setIsDeleteConfirmationOpened(false);
+        setSelected([]);
     };
     const handleCancelDeleteClick = () => {
         setIsDeleteConfirmationOpened(false);
