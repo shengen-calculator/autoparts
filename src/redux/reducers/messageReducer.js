@@ -4,6 +4,13 @@ import initialState from './initialState';
 export default function messageReducer(state = initialState.message, action) {
     switch (action.type) {
 
+        case types.MESSAGE_SHOW:
+            return {
+                ...state,
+                type: action.msg.type,
+                text: action.msg.message
+            };
+
         case types.REGISTRATION_SUCCESS:
             return {
                 ...state,

@@ -8,15 +8,16 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
 import {createReserve} from "../../../../redux/actions/searchActions";
+import {showToastrMessage} from "../../../../redux/actions/messageActions";
 
 function ReserveDialog(props) {
-    const {isOpened, selected, onClose, createReserve, client} = props;
+    const {isOpened, selected, onClose, createReserve, showToastrMessage, client} = props;
     const [reserve, setReserve] = useState({
     });
 
     useEffect(() => {
         if(selected.retail) {
-            setReserve({price: selected.cost, quantity: '', onlyOrderedQuantity: false})
+            setReserve({price: selected.cost, quantity: '', onlyOrderedQuantity: false, available: selected.available})
         }
     }, [selected]);
 
@@ -36,13 +37,17 @@ function ReserveDialog(props) {
             && reserve.price > 0
             && Number(reserve.quantity) > -1
         ) {
-            createReserve({
-                productId: selected.id,
-                quantity: Number(reserve.quantity),
-                price: Number(reserve.price),
-                vip: client.vip
-            });
-            onClose();
+            if(Number(reserve.quantity) > reserve.available) {
+                showToastrMessage({type: 'warning', message: 'Кількість не може бути більшою ніж доступна'})
+            } else {
+                createReserve({
+                    productId: selected.id,
+                    quantity: Number(reserve.quantity),
+                    price: Number(reserve.price),
+                    vip: client.vip
+                });
+                onClose();
+            }
         }
     }
 
@@ -93,7 +98,8 @@ function ReserveDialog(props) {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    createReserve
+    createReserve,
+    showToastrMessage
 };
 
 function mapStateToProps(state) {
