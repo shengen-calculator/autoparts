@@ -32,7 +32,7 @@ const searchByBrandAndNumber = async (data, context) => {
     }
 
     return [
-        createData(1, 'ELIT','BERU', 'Z30', 'Свеча зажигания 3330', 64.53, 41.855, 1, 1, 0, '1дн', '20.02.2020', true, false),
+        createData(1, 'ELIT','BERU', 'Z30', 'Свеча зажигания 3330', 64.53, 2.15, 41.855, 2.03, 1, 1, 0, '1дн', '20.02.2020', true, false),
         createData(2,'IC', 'BERU', 'Z30', '(16:00, Сб. до 13:00) BERU 14FR-5DU Свеча зажигания ULTRA', 51.30, 2.2, 34.95, 2.05, 5, 1, 0, '1дн', '20.02.2020', true, false),
         createData(3,'ELIT',  'BERU', 'Z30', '(16:00, Сб. до 13:00) BERU 14FR-5DU Свеча зажигания ULTRA', 24.40, 1.05, 26.10,  0.95, 5, 1, 0, '1дн', '20.02.2020', true, false),
         createData(4,'VA',  'BERU', 'Z30', '(Вт/Чт 17:00, Сб. до 13:00) SPARK PLUG (14 FR-5 DU EA 0,8)', 24.99, 0.85, 34.10,  0.75, 5, 1, 0, '1дн', '20.02.2020', true, false),
