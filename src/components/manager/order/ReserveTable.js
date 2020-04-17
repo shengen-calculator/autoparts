@@ -124,7 +124,8 @@ export default function ReserveTable(props) {
                 title="Виконано"
                 titleIcon={TitleIconEnum.mall}
                 columns={12}
-                total={2349.44}
+                total={new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
+                    .format(props.reserves.reduce((a, b) => a + b.euro, 0))}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={true}

@@ -136,7 +136,8 @@ export default function OrderTable(props) {
                 tableRow={tableRow}
                 title="Замовлення"
                 titleIcon={TitleIconEnum.flight}
-                total={319.26}
+                total={new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'})
+                    .format(props.orders.reduce((a, b) => a + b.euro, 0))}
                 columns={13}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
