@@ -129,7 +129,7 @@ export default function ReserveTable(props) {
                 title="Виконано"
                 titleIcon={TitleIconEnum.mall}
                 columns={12}
-                total={`${totalEur} / ${totalUah}`}
+                total={props.isEuroClient ? `${totalEur} / ${totalUah}` : `${totalUah} / ${totalEur}`}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={true}

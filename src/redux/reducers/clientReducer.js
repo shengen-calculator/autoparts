@@ -14,6 +14,7 @@ export default function clientReducer(state = initialState.client, action) {
                 ...state,
                 vip: action.client.vip,
                 fullName: action.client.fullName,
+                isEuroClient: action.client.isEuroClient,
                 orders: [],
                 isOrdersLoaded: false,
                 reserves: [],

@@ -12,6 +12,7 @@ export default {
     client: {
         vip: '',
         fullName: '',
+        isEuroClient: false,
         orders: [],
         isOrdersLoaded: false,
         reserves: [],
