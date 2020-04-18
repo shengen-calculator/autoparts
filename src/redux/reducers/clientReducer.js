@@ -47,13 +47,13 @@ export default function clientReducer(state = initialState.client, action) {
         case types.DELETE_ORDERS_REQUEST:
             return {
                 ...state,
-                orders: state.orders.filter((item, index) => !action.ids.includes(item.id))
+                orders: state.orders.filter((item) => !action.ids.includes(item.id))
             };
 
         case types.DELETE_RESERVES_REQUEST:
             return {
                 ...state,
-                reserves: state.reserves.filter((item, index) => !action.ids.includes(item.id))
+                reserves: state.reserves.filter((item) => !action.ids.includes(item.id))
             };
 
         case types.UPDATE_ORDER_QUANTITY_REQUEST:
@@ -69,7 +69,7 @@ export default function clientReducer(state = initialState.client, action) {
                     }
                 })
             };
-        case types.CREATE_RESERVE_REQUEST:
+        case types.CREATE_RESERVE_SUCCESS:
             return {
                 ...state,
                 orders: {
@@ -78,7 +78,7 @@ export default function clientReducer(state = initialState.client, action) {
                 }
             };
 
-        case types.CREATE_ORDER_REQUEST:
+        case types.CREATE_ORDER_SUCCESS:
             return {
                 ...state,
                 orders: {

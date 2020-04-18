@@ -54,7 +54,7 @@ export default function GeneralTable(props) {
     const handleClick = (event, name) => {
         if (event.target.getAttribute("name") === "reserve") {
             const selected = props.rows.find(x => x.id === name);
-            if(selected.available === 0) {
+            if(selected.available > 0) {
                 setReserveDialog({
                     isOpened: true,
                     selected: props.rows.find(x => x.id === name)
