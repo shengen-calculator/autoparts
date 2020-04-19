@@ -50,7 +50,7 @@ export function* createOrder(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
         const {data} = yield call(SearchFunctionsApi.createOrder, action.params);
-        yield put({type: types.CREATE_ORDER_SUCCESS, orders: data});
+        yield put({type: types.CREATE_ORDER_SUCCESS, order: data});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.CREATE_ORDER_FAILURE, text: e.message});
@@ -61,7 +61,7 @@ export function* createReserve(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
         const {data} = yield call(SearchFunctionsApi.createReserve, action.params);
-        yield put({type: types.CREATE_RESERVE_SUCCESS, reserves: data});
+        yield put({type: types.CREATE_RESERVE_SUCCESS, reserve: data});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.CREATE_RESERVE_FAILURE, text: e.message});

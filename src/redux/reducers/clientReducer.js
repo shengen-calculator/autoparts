@@ -72,19 +72,19 @@ export default function clientReducer(state = initialState.client, action) {
         case types.CREATE_RESERVE_SUCCESS:
             return {
                 ...state,
-                orders: {
-                    ...state.orders,
-
-                }
+                reserves: [
+                    action.reserve,
+                    ...state.reserves
+                ]
             };
 
         case types.CREATE_ORDER_SUCCESS:
             return {
                 ...state,
-                orders: {
-                    ...state.orders,
-
-                }
+                orders: [
+                    action.order,
+                    ...state.orders
+                ]
             };
 
         case types.UPDATE_RESERVE_QUANTITY_REQUEST:
