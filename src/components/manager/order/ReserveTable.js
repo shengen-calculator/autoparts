@@ -9,6 +9,7 @@ import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
 import DeleteReservesDialog from "./Dialog/DeleteReservesDialog";
 import UpdateReserveQuantityDialog from "./Dialog/UpdateReserveQuantityDialog";
+import {formatCurrency} from "../../../util/Formatter";
 
 //source
 // склад = 0
@@ -58,8 +59,8 @@ function tableRow(row, index, isSelected, handleClick) {
                        onClick={event => handleClick(event, row.id)} style={pointer} >
                 {row.quantity}
             </TableCell>
-            <TableCell align="right">{row.euro}</TableCell>
-            <TableCell align="right">{row.uah}</TableCell>
+            <TableCell align="right">{row.euro.toFixed(2)}</TableCell>
+            <TableCell align="right">{row.uah.toFixed(2)}</TableCell>
             <TableCell align="left">{row.note}</TableCell>
             <TableCell align="left">{row.orderDate}</TableCell>
             <TableCell align="left">{row.date}</TableCell>
@@ -101,16 +102,21 @@ export default function ReserveTable(props) {
         }
     };
 
-    const handleDeleteClick = () => {
+    const handleDeleteClick = (event) => {
+        event.preventDefault();
         props.onDelete(selected);
         setIsDeleteConfirmationOpened(false);
+        setSelected([]);
     };
 
     const handleSelectAllClick = (event) => {
         handleTableSelectAllClick(event, props.reserves, setSelected);
     };
+    const totalEur = formatCurrency(props.reserves.reduce((a, b) => a + b.euro * b.quantity, 0), 'EUR');
+    const totalUah = formatCurrency(props.reserves.reduce((a, b) => a + b.uah * b.quantity, 0), 'UAH');
     return (
         <React.Fragment>
+
             <EnhancedTable
                 handleClick={handleClick}
                 handleSelectAllClick={handleSelectAllClick}
@@ -122,7 +128,7 @@ export default function ReserveTable(props) {
                 title="Виконано"
                 titleIcon={TitleIconEnum.mall}
                 columns={12}
-                total={2349.44}
+                total={props.isEuroClient ? `${totalEur} / ${totalUah}` : `${totalUah} / ${totalEur}`}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={true}

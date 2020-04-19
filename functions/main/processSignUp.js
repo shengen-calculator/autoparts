@@ -1,4 +1,4 @@
-const RoleEnum = require('./RoleEnum');
+const RoleEnum = require('../RoleEnum');
 const admin = require('firebase-admin');
 
 const managers = ['pete@mail.com'];

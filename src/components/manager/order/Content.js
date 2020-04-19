@@ -77,9 +77,11 @@ function Content({client, getOrders, getReserves, deleteOrdersByIds, deleteReser
                         {isOrderTablesShown || isReserveTablesShown ?
                             <React.Fragment>
                                 {isOrderTablesShown && <OrderTable
-                                    orders={client.orders} onDelete={handleOrderDeleteClick} />}
+                                    orders={client.orders} isEuroClient={client.isEuroClient}
+                                    onDelete={handleOrderDeleteClick} />}
                                 {isReserveTablesShown && <ReserveTable
-                                    reserves={client.reserves} onDelete={handleReserveDeleteClick} />}
+                                    reserves={client.reserves} isEuroClient={client.isEuroClient}
+                                    onDelete={handleReserveDeleteClick} />}
                             </React.Fragment>
                             :
                             <Typography color="textSecondary" align="center">

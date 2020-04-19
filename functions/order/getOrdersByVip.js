@@ -9,6 +9,10 @@ const getOrdersByVip = async (data, context) => {
         throw new functions.https.HttpsError('invalid-argument',
             'The function must be called with one argument "vip"');
     }
+
+//status list
+//подтвержден = 0
+//в обработке = 1
 //неполное количество = 2
 //задерживается = 3
 //нет в наличии = 4

@@ -13,6 +13,7 @@ import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
 import DeleteOrdersDialog from "./Dialog/DeleteOrdersDialog";
 import UpdateOrderQuantityDialog from "./Dialog/UpdateOrderQuantityDialog";
+import {formatCurrency} from "../../../util/Formatter";
 
 //status list
 //подтвержден = 0
@@ -68,8 +69,8 @@ function tableRow(row, index, isSelected, handleClick) {
                 {row.ordered}
             </TableCell>
             <TableCell align="right">{row.approved}</TableCell>
-            <TableCell align="right">{row.euro}</TableCell>
-            <TableCell align="right">{row.uah}</TableCell>
+            <TableCell align="right">{row.euro.toFixed(2)}</TableCell>
+            <TableCell align="right">{row.uah.toFixed(2)}</TableCell>
             <TableCell align="left">{row.note}</TableCell>
             <TableCell align="left">{row.orderDate}</TableCell>
             <TableCell align="left">{row.shipmentDate}</TableCell>
@@ -94,18 +95,23 @@ export default function OrderTable(props) {
 
     const handleClick = (event, name) => {
         if(event.target.getAttribute("name") === "ordered") {
-            setChangeQuantityConfirmation({
-                isOpened: true,
-                selected: props.orders.find(x => x.id === name)
-            });
+            const selected = props.orders.find(x => x.id === name);
+            if(selected.approved === 0) {
+                setChangeQuantityConfirmation({
+                    isOpened: true,
+                    selected: selected
+                });
+            }
         } else {
             handleTableClick(event, name, selected, setSelected);
         }
     };
 
-    const handleDeleteClick = () => {
+    const handleDeleteClick = (event) => {
+        event.preventDefault();
         props.onDelete(selected);
         setIsDeleteConfirmationOpened(false);
+        setSelected([]);
     };
     const handleCancelDeleteClick = () => {
         setIsDeleteConfirmationOpened(false);
@@ -115,13 +121,18 @@ export default function OrderTable(props) {
             isOpened: false, selected: {}
         });
     };
-    const openDeleteConfirmation = () => {
-        setIsDeleteConfirmationOpened(true);
-    };
 
     const handleSelectAllClick = (event) => {
         handleTableSelectAllClick(event, props.orders, setSelected);
     };
+
+    const openDeleteConfirmation = () => {
+        setIsDeleteConfirmationOpened(true);
+    };
+
+    const totalEur = formatCurrency(props.orders.reduce((a, b) => a + b.euro * b.ordered, 0), 'EUR');
+    const totalUah = formatCurrency(props.orders.reduce((a, b) => a + b.uah * b.ordered, 0), 'UAH');
+
     return (
         <React.Fragment>
             <EnhancedTable
@@ -134,7 +145,7 @@ export default function OrderTable(props) {
                 tableRow={tableRow}
                 title="Замовлення"
                 titleIcon={TitleIconEnum.flight}
-                total={319.26}
+                total={props.isEuroClient ? `${totalEur} / ${totalUah}` : `${totalUah} / ${totalEur}`}
                 columns={13}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}

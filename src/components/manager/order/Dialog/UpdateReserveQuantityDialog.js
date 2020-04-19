@@ -26,8 +26,12 @@ function UpdateReserveQuantityDialog(props) {
             [name]: value
         }));
     }
-    function updateQuantity() {
-        if(reserveUpdate.quantity && Number.isInteger(Number(reserveUpdate.quantity))) {
+    function updateQuantity(event) {
+        event.preventDefault();
+        if(reserveUpdate.quantity
+            && Number.isInteger(Number(reserveUpdate.quantity))
+            && Number(reserveUpdate.quantity) > -1
+        ) {
             updateReserveQuantity({
                 reserveId: selected.id,
                 quantity: Number(reserveUpdate.quantity)
@@ -36,42 +40,37 @@ function UpdateReserveQuantityDialog(props) {
         }
     }
 
-    const quantityKeyPress = (target) => {
-        if(target.charCode === 13 || target.type === 'click') {
-            updateQuantity();
-        }
-    };
-
     return (
         <div>
-            <Dialog open={isOpened} aria-labelledby="form-dialog-title">
+            <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose}>
                 <DialogTitle id="form-dialog-title">Змінити к-сть зарезервованих позицій</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Постачальник: {selected.vendor} <br/>
-                        Бренд: {selected.brand} <br/>
-                        Номер: {selected.number} <br/>
-                    </DialogContentText>
-                    <TextField
-                        name="quantity"
-                        autoFocus
-                        margin="dense"
-                        id="quantity"
-                        label="Кількість"
-                        onKeyPress={quantityKeyPress}
-                        onChange={handleChange}
-                        value={reserveUpdate.quantity}
-                        type="text"
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onClose} color="primary">
-                        Відміна
-                    </Button>
-                    <Button onClick={updateQuantity} color="primary">
-                        Змінити
-                    </Button>
-                </DialogActions>
+                <form onSubmit={updateQuantity}>
+                    <DialogContent>
+                        <DialogContentText>
+                            Постачальник: {selected.vendor} <br/>
+                            Бренд: {selected.brand} <br/>
+                            Номер: {selected.number} <br/>
+                        </DialogContentText>
+                        <TextField
+                            name="quantity"
+                            autoFocus
+                            margin="dense"
+                            id="quantity"
+                            label="Кількість"
+                            onChange={handleChange}
+                            value={reserveUpdate.quantity}
+                            type="text"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={onClose} color="primary">
+                            Відміна
+                        </Button>
+                        <Button type="submit" color="primary">
+                            Змінити
+                        </Button>
+                    </DialogActions>
+                </form>
             </Dialog>
         </div>
     );

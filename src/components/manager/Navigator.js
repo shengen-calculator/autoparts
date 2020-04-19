@@ -19,7 +19,7 @@ const categories = [
     {
         id: 'Робота',
         children: [
-            { id: 'Пошук', icon: <BuildIcon />, path: 'search', isVipSpecified: true },
+            { id: 'Пошук', icon: <BuildIcon />, path: 'search', isVipSpecified: true, isSearchCriteriaSpecified: true },
             { id: 'Замовлення', icon: <DnsRoundedIcon />, path: 'order', isVipSpecified: true },
             { id: 'Оплата', icon: <PaymentIcon />, path: 'payment', isVipSpecified: true},
         ],
@@ -74,7 +74,7 @@ const styles = theme => ({
 });
 
 function Navigator(props) {
-    const {classes, vip, fullName, ...other} = props;
+    const {classes, vip, brand, numb, fullName, ...other} = props;
 
     return (
         <Drawer variant="permanent" {...other}>
@@ -105,11 +105,16 @@ function Navigator(props) {
                                 {id}
                             </ListItemText>
                         </ListItem>
-                        {children.map(({id: childId, icon, path, isVipSpecified}) => (
+                        {children.map(({id: childId, icon, path, isVipSpecified, isSearchCriteriaSpecified}) => (
                             <ListItem
                                 key={childId}
                                 button
-                                component={NavLink} to={ isVipSpecified ? `/manager/${path}/${vip}` : `/manager/${path}` }
+                                component={NavLink} to={ isVipSpecified ?
+                                (isSearchCriteriaSpecified ?
+                                    (brand ? `/manager/${path}/${vip}/${numb}/${brand}` :
+                                        `/manager/${path}/${vip}/${numb}`) :
+                                    `/manager/${path}/${vip}`) :
+                                `/manager/${path}` }
                                 activeClassName={classes.itemActiveItem}
                                 isActive={(match, location) => {
                                     if (match) {

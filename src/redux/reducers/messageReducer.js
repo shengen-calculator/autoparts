@@ -4,6 +4,13 @@ import initialState from './initialState';
 export default function messageReducer(state = initialState.message, action) {
     switch (action.type) {
 
+        case types.MESSAGE_SHOW:
+            return {
+                ...state,
+                type: action.msg.type,
+                text: action.msg.message
+            };
+
         case types.REGISTRATION_SUCCESS:
             return {
                 ...state,
@@ -110,13 +117,6 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Не вдалось скасувати резерви клієнта, спробуйте ще раз'
             };
 
-        case types.UPDATE_RESERVE_PRICES_FAILURE:
-            return {
-                ...state,
-                type: 'error',
-                text: 'Нажаль, не вдалось змінити ціни для клієнта. Спробуйте ще раз'
-            };
-
         case types.UPDATE_ORDER_QUANTITY_FAILURE:
             return {
                 ...state,
@@ -149,7 +149,18 @@ export default function messageReducer(state = initialState.message, action) {
                 type: 'success',
                 text: 'Вітаємо в системі'
             };
-
+        case types.CREATE_ORDER_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Виникла помилка під час замовлення. Повторіть спробу'
+            };
+        case types.CREATE_RESERVE_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Виникла помилка під час резерву позиції. Повторіть спробу'
+            };
         default:
             return state;
     }

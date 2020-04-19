@@ -27,7 +27,7 @@ const styles = theme => ({
     }
 });
 
-function App({client, ...props}) {
+function App({client, product, ...props}) {
     const {classes, match} = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -53,6 +53,8 @@ function App({client, ...props}) {
                         <Navigator
                             PaperProps={{style: {width: drawerWidth}}}
                             vip={client.vip}
+                            brand={product.criteria.brand}
+                            numb={product.criteria.numb}
                             fullName={client.fullName}
                         />
                     </Hidden>
@@ -91,7 +93,8 @@ App.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        client: state.client
+        client: state.client,
+        product: state.product
     }
 }
 

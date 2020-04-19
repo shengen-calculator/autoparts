@@ -12,6 +12,7 @@ export default {
     client: {
         vip: '',
         fullName: '',
+        isEuroClient: false,
         orders: [],
         isOrdersLoaded: false,
         reserves: [],
@@ -38,5 +39,12 @@ export default {
         endDate:0
 
     },
-    //products
+    product: {
+        productsGrouped: [],
+        products: [],
+        criteria: {
+            brand: '',
+            numb: ''
+        }
+    }
 };

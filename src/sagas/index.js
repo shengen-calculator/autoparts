@@ -14,7 +14,6 @@ import {
     deleteReserves,
     updateOrderQuantity,
     updateReserveQuantity,
-    updateReservePrices,
     getPayments
 } from "./clientSaga";
 import {getQueryStatistic,
@@ -23,6 +22,15 @@ import {getQueryStatistic,
     getStatisticByVendor,
     getStatisticByClient
 } from "./statisticSaga";
+import {
+    createOrder,
+    createReserve,
+    getAnalogsFromOrderList,
+    getByAnalog,
+    searchByBrandAndNumber,
+    searchByNumber,
+    updatePrice
+} from "./searchSaga";
 
 function* mySaga() {
     yield takeLatest(types.LOG_OUT_REQUEST, logOut);
@@ -37,12 +45,18 @@ function* mySaga() {
     yield takeLatest(types.DELETE_ORDERS_REQUEST, deleteOrders);
     yield takeLatest(types.UPDATE_ORDER_QUANTITY_REQUEST, updateOrderQuantity);
     yield takeLatest(types.UPDATE_RESERVE_QUANTITY_REQUEST, updateReserveQuantity);
-    yield takeLatest(types.UPDATE_RESERVE_PRICES_REQUEST, updateReservePrices);
     yield takeLatest(types.LOAD_QUERY_STATISTIC_REQUEST, getQueryStatistic);
     yield takeLatest(types.LOAD_CLIENT_STATISTIC_REQUEST, getClientStatistic);
     yield takeLatest(types.LOAD_VENDOR_STATISTIC_REQUEST, getVendorStatistic);
     yield takeLatest(types.LOAD_STATISTIC_BY_VENDOR_REQUEST, getStatisticByVendor);
     yield takeLatest(types.LOAD_STATISTIC_BY_CLIENT_REQUEST, getStatisticByClient);
+    yield takeLatest(types.LOAD_BY_NUMBER_REQUEST, searchByNumber);
+    yield takeLatest(types.LOAD_BY_BRAND_REQUEST, searchByBrandAndNumber);
+    yield takeLatest(types.UPDATE_PRICE_REQUEST, updatePrice);
+    yield takeLatest(types.CREATE_ORDER_REQUEST, createOrder);
+    yield takeLatest(types.CREATE_RESERVE_REQUEST, createReserve);
+    yield takeLatest(types.LOAD_BY_ANALOG_REQUEST, getByAnalog);
+    yield takeLatest(types.CHECK_ORDER_REQUEST, getAnalogsFromOrderList);
 }
 
 export default mySaga;

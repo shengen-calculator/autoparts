@@ -5,11 +5,23 @@ import React from "react";
 import Grid from '@material-ui/core/Grid';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import {withStyles} from '@material-ui/core/styles';
 import Tooltip from "@material-ui/core/Tooltip";
+import Typography from '@material-ui/core/Typography';
 
-export default function SearchTableRow(row, index, isSelected, handleClick) {
+export default function SearchTableRow(row, index, isSelected, handleClick, isEur) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
+    const pointer = {cursor: 'pointer'};
+    const HtmlTooltip = withStyles((theme) => ({
+        tooltip: {
+            backgroundColor: '#f5f5f9',
+            color: 'rgba(0, 0, 0, 0.87)',
+            maxWidth: 220,
+            fontSize: theme.typography.pxToRem(12),
+            border: '1px solid #dadde9',
+        },
+    }))(Tooltip);
 
     return (
         <TableRow
@@ -21,33 +33,36 @@ export default function SearchTableRow(row, index, isSelected, handleClick) {
             key={row.id}
             selected={isItemSelected}
         >
-            <TableCell padding="default" component="th" id={labelId} scope="row">
+            <TableCell align="left" name="order" style={pointer}>{row.vendor}</TableCell>
+            <TableCell padding="default" component="th" id={labelId} scope="row" style={pointer} name="order">
                 {row.brand}
             </TableCell>
-            <TableCell align="left">
+            <TableCell align="left" name="order" style={pointer}>
                 {
                     row.isGoodQuality ?
-                    <Grid container>
-                        <Grid item>
-                            {row.number}
-                        </Grid>
-                        <Grid item>
-                            <Tooltip title="Гарантія відповідності виробнику">
-                                <ThumbUpIcon style={{fontSize: 10, marginBottom: 5, marginLeft: 3}}/>
-                            </Tooltip>
-                        </Grid>
-                    </Grid> : row.number
+                        <Grid container name="order">
+                            <Grid item name="order">
+                                {row.number}
+                            </Grid>
+                            <Grid item>
+                                <Tooltip title="Гарантія відповідності виробнику">
+                                    <ThumbUpIcon style={{fontSize: 10, marginBottom: 5, marginLeft: 3}}/>
+                                </Tooltip>
+                            </Grid>
+                        </Grid> : row.number
                 }
             </TableCell>
-            <TableCell align="left">{row.description}</TableCell>
-            <TableCell align="right">{row.retail}</TableCell>
-            <TableCell align="right">{row.cost}</TableCell>
-            <TableCell align="right">{row.order}</TableCell>
-            <TableCell align="left">
+            <TableCell align="left" name="order" style={pointer}>{row.description}</TableCell>
+            <TableCell align="right" name="price"
+                       style={pointer}>{isEur ? row.retailEur.toFixed(2) : row.retail.toFixed(2)}</TableCell>
+            <TableCell align="right" name="order"
+                       style={pointer}>{isEur ? row.costEur.toFixed(2) : row.cost.toFixed(2)}</TableCell>
+            <TableCell align="right" name="order" style={pointer}>{row.order}</TableCell>
+            <TableCell align="left" name="order" style={pointer}>
                 {
                     row.isGuaranteedTerm ?
-                        <Grid container>
-                            <Grid item>
+                        <Grid container name="order">
+                            <Grid item name="order">
                                 {row.term}
                             </Grid>
                             <Grid item>
@@ -58,9 +73,18 @@ export default function SearchTableRow(row, index, isSelected, handleClick) {
                         </Grid> : row.term
                 }
             </TableCell>
-            <TableCell align="left">{row.date}</TableCell>
-            <TableCell align="center">
-                <InfoIcon/>
+            <TableCell align="left" name="order" style={pointer}>{row.date}</TableCell>
+            <TableCell align="center" name="info" style={pointer}>
+                <HtmlTooltip placement="top-start" title={
+                    <React.Fragment>
+                        Час формування замовлення:
+                        <Typography color="inherit">{row.orderTime}</Typography>
+                        Час прийому товару:
+                        <Typography color="inherit">{row.arrivalTime}</Typography>
+                    </React.Fragment>
+                }>
+                    <InfoIcon/>
+                </HtmlTooltip>
             </TableCell>
         </TableRow>
     );

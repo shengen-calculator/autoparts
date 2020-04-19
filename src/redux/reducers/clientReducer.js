@@ -14,6 +14,7 @@ export default function clientReducer(state = initialState.client, action) {
                 ...state,
                 vip: action.client.vip,
                 fullName: action.client.fullName,
+                isEuroClient: action.client.isEuroClient,
                 orders: [],
                 isOrdersLoaded: false,
                 reserves: [],
@@ -43,39 +44,61 @@ export default function clientReducer(state = initialState.client, action) {
                 isReservesLoaded: true
             };
 
-        case types.DELETE_ORDERS_SUCCESS:
+        case types.DELETE_ORDERS_REQUEST:
             return {
                 ...state,
-                orders: action.orders,
-                isOrdersLoaded: true
+                orders: state.orders.filter((item) => !action.ids.includes(item.id))
             };
 
-        case types.DELETE_RESERVES_SUCCESS:
+        case types.DELETE_RESERVES_REQUEST:
             return {
                 ...state,
-                reserves: action.reserves,
-                isReservesLoaded: true
+                reserves: state.reserves.filter((item) => !action.ids.includes(item.id))
             };
 
-        case types.UPDATE_ORDER_QUANTITY_SUCCESS:
+        case types.UPDATE_ORDER_QUANTITY_REQUEST:
             return {
                 ...state,
-                orders: action.orders,
-                isOrdersLoaded: true
+                orders: state.orders.map((item) => {
+                    if (item.id !== action.params.orderId) {
+                        return item
+                    }
+                    return {
+                        ...item,
+                        ordered: action.params.quantity
+                    }
+                })
+            };
+        case types.CREATE_RESERVE_SUCCESS:
+            return {
+                ...state,
+                reserves: [
+                    action.reserve,
+                    ...state.reserves
+                ]
             };
 
-        case types.UPDATE_RESERVE_PRICES_SUCCESS:
+        case types.CREATE_ORDER_SUCCESS:
             return {
                 ...state,
-                reserves: action.reserves,
-                isReservesLoaded: true
+                orders: [
+                    action.order,
+                    ...state.orders
+                ]
             };
 
-        case types.UPDATE_RESERVE_QUANTITY_SUCCESS:
+        case types.UPDATE_RESERVE_QUANTITY_REQUEST:
             return {
                 ...state,
-                reserves: action.reserves,
-                isReservesLoaded: true
+                reserves: state.reserves.map((item) => {
+                    if (item.id !== action.params.reserveId) {
+                        return item
+                    }
+                    return {
+                        ...item,
+                        quantity: action.params.quantity
+                    }
+                })
             };
 
         case types.CLIENT_DOESNT_EXIST:
