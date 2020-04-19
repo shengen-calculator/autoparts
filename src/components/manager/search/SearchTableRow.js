@@ -5,12 +5,23 @@ import React from "react";
 import Grid from '@material-ui/core/Grid';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import {withStyles} from '@material-ui/core/styles';
 import Tooltip from "@material-ui/core/Tooltip";
+import Typography from '@material-ui/core/Typography';
 
 export default function SearchTableRow(row, index, isSelected, handleClick, isEur) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
+    const HtmlTooltip = withStyles((theme) => ({
+        tooltip: {
+            backgroundColor: '#f5f5f9',
+            color: 'rgba(0, 0, 0, 0.87)',
+            maxWidth: 220,
+            fontSize: theme.typography.pxToRem(12),
+            border: '1px solid #dadde9',
+        },
+    }))(Tooltip);
 
     return (
         <TableRow
@@ -29,21 +40,23 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
             <TableCell align="left" name="order" style={pointer}>
                 {
                     row.isGoodQuality ?
-                    <Grid container name="order">
-                        <Grid item name="order">
-                            {row.number}
-                        </Grid>
-                        <Grid item >
-                            <Tooltip title="Гарантія відповідності виробнику">
-                                <ThumbUpIcon style={{fontSize: 10, marginBottom: 5, marginLeft: 3}}/>
-                            </Tooltip>
-                        </Grid>
-                    </Grid> : row.number
+                        <Grid container name="order">
+                            <Grid item name="order">
+                                {row.number}
+                            </Grid>
+                            <Grid item>
+                                <Tooltip title="Гарантія відповідності виробнику">
+                                    <ThumbUpIcon style={{fontSize: 10, marginBottom: 5, marginLeft: 3}}/>
+                                </Tooltip>
+                            </Grid>
+                        </Grid> : row.number
                 }
             </TableCell>
             <TableCell align="left" name="order" style={pointer}>{row.description}</TableCell>
-            <TableCell align="right" name="price" style={pointer}>{isEur ? row.retailEur.toFixed(2) : row.retail.toFixed(2)}</TableCell>
-            <TableCell align="right" name="order" style={pointer}>{isEur ? row.costEur.toFixed(2) : row.cost.toFixed(2)}</TableCell>
+            <TableCell align="right" name="price"
+                       style={pointer}>{isEur ? row.retailEur.toFixed(2) : row.retail.toFixed(2)}</TableCell>
+            <TableCell align="right" name="order"
+                       style={pointer}>{isEur ? row.costEur.toFixed(2) : row.cost.toFixed(2)}</TableCell>
             <TableCell align="right" name="order" style={pointer}>{row.order}</TableCell>
             <TableCell align="left" name="order" style={pointer}>
                 {
@@ -62,7 +75,16 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
             </TableCell>
             <TableCell align="left" name="order" style={pointer}>{row.date}</TableCell>
             <TableCell align="center" name="info" style={pointer}>
-                <InfoIcon/>
+                <HtmlTooltip placement="top-start" title={
+                    <React.Fragment>
+                        Час формування замовлення:
+                        <Typography color="inherit">{row.orderTime}</Typography>
+                        Час прийому товару:
+                        <Typography color="inherit">{row.arrivalTime}</Typography>
+                    </React.Fragment>
+                }>
+                    <InfoIcon/>
+                </HtmlTooltip>
             </TableCell>
         </TableRow>
     );
