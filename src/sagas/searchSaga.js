@@ -35,17 +35,6 @@ export function* updatePrice(action) {
     }
 }
 
-export function* getVendorInfo(action) {
-    try {
-        yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(SearchFunctionsApi.getInfoByVendor, action.vendorId);
-        yield put({type: types.LOAD_VENDOR_INFO_SUCCESS, info: data});
-    } catch (e) {
-        yield put({type: types.API_CALL_ERROR});
-        yield put({type: types.LOAD_VENDOR_INFO_FAILURE, text: e.message});
-    }
-}
-
 export function* createOrder(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});

@@ -27,7 +27,6 @@ import {
     createReserve,
     getAnalogsFromOrderList,
     getByAnalog,
-    getVendorInfo,
     searchByBrandAndNumber,
     searchByNumber,
     updatePrice
@@ -54,7 +53,6 @@ function* mySaga() {
     yield takeLatest(types.LOAD_BY_NUMBER_REQUEST, searchByNumber);
     yield takeLatest(types.LOAD_BY_BRAND_REQUEST, searchByBrandAndNumber);
     yield takeLatest(types.UPDATE_PRICE_REQUEST, updatePrice);
-    yield takeLatest(types.LOAD_VENDOR_INFO_REQUEST, getVendorInfo);
     yield takeLatest(types.CREATE_ORDER_REQUEST, createOrder);
     yield takeLatest(types.CREATE_RESERVE_REQUEST, createReserve);
     yield takeLatest(types.LOAD_BY_ANALOG_REQUEST, getByAnalog);

@@ -24,10 +24,6 @@ export function checkIfPresentInOrder(analogId) {
     return {type: types.CHECK_ORDER_REQUEST, analogId};
 }
 
-export function getVendorInfo(vendorId) {
-    return {type: types.LOAD_VENDOR_INFO_REQUEST, vendorId};
-}
-
 export function updatePrice(params) {
     return {type: types.UPDATE_PRICE_REQUEST, params};
 }
