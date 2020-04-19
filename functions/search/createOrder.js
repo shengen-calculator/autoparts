@@ -14,7 +14,7 @@ const createOrder = async (data, context) => {
             'The function must be called with the next arguments "ProductId, Quantity, Price, Vip, OnlyOrderedQuantity"');
     }
 
-    return createData(35, 'IC', 'CTR', 'CRN-73', 'Только что добавленая в заказ позиция', '', data.onlyOrderedQuantity, 0, 11.53, 416, '22.02.2020', '26.02.2020', 2);
+    return createData(35, 'IC', 'CTR', 'CRN-73', 'Только что добавленая в заказ позиция', '', data.onlyOrderedQuantity, 0, 11.53, 416, '22.02.2020', '26.02.2020', 1);
 
 };
 
