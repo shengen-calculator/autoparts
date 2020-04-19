@@ -1,5 +1,4 @@
 const functions = require('firebase-functions');
-const getInfoByVendor = require('./search/getInfoByVendor');
 const searchByNumber = require('./search/searchByNumber');
 const searchByBrandAndNumber = require('./search/searchByBrandAndNumber');
 const checkIfPresentInOrderList = require('./search/checkIfPresentInOrderList');
@@ -7,11 +6,6 @@ const createOrder = require('./search/createOrder');
 const createReserve = require('./search/createReserve');
 const getByAnalog = require('./search/getByAnalog');
 const updatePrice = require('./search/updatePrice');
-
-
-exports.getInfoByVendor = functions.https.onCall(async (data, context) => {
-    return getInfoByVendor(data, context);
-});
 
 exports.searchByNumber = functions.https.onCall(async (data, context) => {
     return searchByNumber(data, context);
