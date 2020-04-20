@@ -19,11 +19,11 @@ SELECT DISTINCT
 			,Дата as orderDate
 			,Описание as description
 			,CASE
+				WHEN Задерживается = 1 THEN 3  /* задерживается */
+				WHEN Нет = 1 THEN 4  /* нету */
 				WHEN Заказано = Подтверждение AND Подтверждение > 0 THEN 0 /* подтвержден */
 				WHEN Подтверждение = 0 AND Нет = 0 THEN 1  /* в обработке */
 				WHEN Заказано > Подтверждение AND Подтверждение > 0 THEN 2  /* неполное кол-во */
-				WHEN Задерживается = 1 THEN 3  /* задерживается */
-				WHEN Нет = 1 THEN 4  /* нету */
 				ELSE 1
 			END as status
 
