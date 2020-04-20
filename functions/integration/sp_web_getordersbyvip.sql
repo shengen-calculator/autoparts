@@ -11,7 +11,7 @@ SELECT DISTINCT
 			,Альтернатива as note
 			,Заказано as ordered
 			,Подтверждение as approved
-			,Предварительная_дата as shipmentDate
+			,ISNULL(Предварительная_дата, Дата_прихода) as shipmentDate
 			,Цена as euro
 			,Грн as uah
 			,ID_Запчасти as productId
