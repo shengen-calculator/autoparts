@@ -2,7 +2,7 @@ CREATE PROCEDURE [dbo].[sp_web_getordersbyvip]
 	@vip varchar(10)
 AS
 BEGIN
-SELECT DISTINCT
+    SELECT DISTINCT
 			TOP (100) VIP
 			,ID_Запроса as id
 			,[Сокращенное название] as vendor
