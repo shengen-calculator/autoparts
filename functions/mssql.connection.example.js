@@ -1,4 +1,4 @@
-export const configSource = {
+exports.config = {
     user: 'XXXXX',
     password: 'XXXXXXX',
     server: 'XXXXX', // You can use 'localhost\\instance' to connect to named instance
