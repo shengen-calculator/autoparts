@@ -1,5 +1,7 @@
 const functions = require('firebase-functions');
 const util = require('../util');
+const sql = require('mssql');
+const config = require('../mssql.connection').config;
 
 const getClientByVip = async (data, context) => {
 
@@ -10,19 +12,19 @@ const getClientByVip = async (data, context) => {
             'The function must be called with one argument "vip"');
     }
 
-    function createData(vip, fullName, isEuroClient) {
-        return { vip, fullName, isEuroClient };
-    }
+    sql.connect(config).then(pool => {
+        return pool.request()
+            .input('vip', sql.VarChar(10), data)
+            .execute('sp_web_getclientbyvip')
+    }).then(result => {
+        return result.recordset;
+    }).catch(err => {
+        if(err) {
+            throw new functions.https.HttpsError('internal',
+                err.message);
+        }
+    });
 
-    const rows = [
-        createData('1000','Юрий Петров', true),
-        createData('2000','Сергей Иванов', true),
-        createData('3000','Иван Сидоров', true),
-        createData('4000','Николай Пупкин', false),
-        createData('5000','Петр Комаровский', false),
-    ];
-
-    return rows.find(x => x.vip === data);
 };
 
 module.exports = getClientByVip;
