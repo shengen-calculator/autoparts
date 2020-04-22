@@ -12,7 +12,7 @@ const getClientByVip = async (data, context) => {
             'The function must be called with one argument "vip"');
     }
 
-    sql.connect(config).then(pool => {
+    return  sql.connect(config).then(pool => {
         return pool.request()
             .input('vip', sql.VarChar(10), data)
             .execute('sp_web_getclientbyvip')
