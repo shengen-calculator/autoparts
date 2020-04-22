@@ -17,7 +17,7 @@ function tableRow(row, index) {
             hover
             role="checkbox"
             tabIndex={-1}
-            key={row.date}
+            key={index}
         >
 
             <TableCell padding="default" component="th" id={labelId} scope="row">
