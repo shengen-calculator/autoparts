@@ -1,5 +1,7 @@
 const functions = require('firebase-functions');
 const util = require('../util');
+const sql = require('mssql');
+const config = require('../mssql.connection').config;
 
 const getPaymentsByVip = async (data, context) => {
 
@@ -10,27 +12,18 @@ const getPaymentsByVip = async (data, context) => {
             'The function must be called with one argument "vip"');
     }
 
-    function createData(vip, amount, date) {
-        return { vip, amount, date };
-    }
-
-    const rows = [
-        createData('1000',15.76, '28.02.2020'),
-        createData('1000',9.84, '29.02.2020' ),
-        createData('1000', 3.45, '01.03.2020'),
-        createData('1000', 0,'02.03.2020'),
-        createData('1000', 0, '03.03.2020'),
-        createData('1000',0, '04.03.2020'),
-
-        createData('3000',25.99, '28.02.2020'),
-        createData('3000',15.26, '29.02.2020' ),
-        createData('3000', 12.31, '01.03.2020'),
-        createData('3000', 9.75,'02.03.2020'),
-        createData('3000', 0, '03.03.2020'),
-        createData('3000',0, '04.03.2020'),
-    ];
-
-    return rows.filter(v => v.vip === data);
+    return  sql.connect(config).then(pool => {
+        return pool.request()
+            .input('vip', sql.VarChar(10), data)
+            .execute('sp_web_getpaymentplanbyvip')
+    }).then(result => {
+        return result.recordset;
+    }).catch(err => {
+        if(err) {
+            throw new functions.https.HttpsError('internal',
+                err.message);
+        }
+    });
 };
 
 module.exports = getPaymentsByVip;

@@ -14,6 +14,6 @@ BEGIN
         UNION ALL
         SELECT DATEADD(day, num+1, CURRENT_TIMESTAMP) as PaymentDate, (dbo.GetAmountOverdueDebt(@id, -@days+num+1) - dbo.GetAmountOverdueDebt(@id, -@days+num)) as Amount, num+1 FROM gen WHERE num+1<=@days
     )
-    SELECT PaymentDate, Amount FROM gen
+    SELECT FORMAT (PaymentDate, 'd', 'de-de' ) as date, Amount as amount FROM gen
 
 END
