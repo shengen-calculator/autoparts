@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 const sql = require('mssql');
 const config = require('../mssql.connection').config;
 
-const managers = ['admin@fenix.com'];
+const managers = ['puhach.alex@fenix.parts', 'ucin.sergiy@fenix.parts'];
 
 const processSignUp = (user) => {
     // Check if user meets role criteria.
