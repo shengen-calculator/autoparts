@@ -6,26 +6,26 @@ const deleteReservesByIds = require('./order/deleteReservesByIds');
 const updateOrderQuantity = require('./order/updateOrderQuantity');
 const updateReserveQuantity = require('./order/updateReserveQuantity');
 
-exports.deleteOrdersByIds = functions.https.onCall(async (data, context) => {
+exports.deleteOrdersByIds = functions.region('europe-west1').https.onCall(async (data, context) => {
     return deleteOrdersByIds(data, context);
 });
 
-exports.deleteReservesByIds = functions.https.onCall(async (data, context) => {
+exports.deleteReservesByIds = functions.region('europe-west1').https.onCall(async (data, context) => {
     return deleteReservesByIds(data, context);
 });
 
-exports.updateOrderQuantity = functions.https.onCall(async (data, context) => {
+exports.updateOrderQuantity = functions.region('europe-west1').https.onCall(async (data, context) => {
     return updateOrderQuantity(data, context);
 });
 
-exports.updateReserveQuantity = functions.https.onCall(async (data, context) => {
+exports.updateReserveQuantity = functions.region('europe-west1').https.onCall(async (data, context) => {
     return updateReserveQuantity(data, context);
 });
 
-exports.getOrdersByVip = functions.https.onCall(async (data, context) => {
+exports.getOrdersByVip = functions.region('europe-west1').https.onCall(async (data, context) => {
     return getOrdersByVip(data, context);
 });
 
-exports.getReservesByVip = functions.https.onCall(async (data, context) => {
+exports.getReservesByVip = functions.region('europe-west1').https.onCall(async (data, context) => {
     return getReservesByVip(data, context);
 });
