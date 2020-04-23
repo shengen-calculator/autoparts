@@ -12,19 +12,20 @@ const getClientByVip = async (data, context) => {
             'The function must be called with one argument "vip"');
     }
 
-    return  sql.connect(config).then(pool => {
-        return pool.request()
+    try {
+        const pool = await sql.connect(config);
+
+        const result = await pool.request()
             .input('vip', sql.VarChar(10), data)
-            .execute('sp_web_getclientbyvip')
-    }).then(result => {
+            .execute('sp_web_getclientbyvip');
         return result.recordset;
-    }).catch(err => {
+    } catch (err) {
         if(err) {
             throw new functions.https.HttpsError('internal',
                 err.message);
         }
-    });
-
+        return {err: err.message};
+    }
 };
 
 module.exports = getClientByVip;

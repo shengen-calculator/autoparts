@@ -7,10 +7,10 @@ exports.processSignUp = functions.auth.user().onCreate((user) => {
     return processSignUp(user);
 });
 
-exports.getClientByVip = functions.https.onCall(async (data, context) => {
+exports.getClientByVip = functions.region('europe-west1').https.onCall(async (data, context) => {
     return getClientByVip(data, context);
 });
 
-exports.getPaymentsByVip = functions.https.onCall(async (data, context) => {
+exports.getPaymentsByVip = functions.region('europe-west1').https.onCall(async (data, context) => {
     return getPaymentsByVip(data, context);
 });

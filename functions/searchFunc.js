@@ -7,25 +7,25 @@ const createReserve = require('./search/createReserve');
 const getByAnalog = require('./search/getByAnalog');
 const updatePrice = require('./search/updatePrice');
 
-exports.searchByNumber = functions.https.onCall(async (data, context) => {
+exports.searchByNumber = functions.region('europe-west1').https.onCall(async (data, context) => {
     return searchByNumber(data, context);
 });
 
-exports.searchByBrandAndNumber = functions.https.onCall(async (data, context) => {
+exports.searchByBrandAndNumber = functions.region('europe-west1').https.onCall(async (data, context) => {
     return searchByBrandAndNumber(data, context);
 });
 
 
-exports.checkIfPresentInOrderList = functions.https.onCall(async (data, context) => {
+exports.checkIfPresentInOrderList = functions.region('europe-west1').https.onCall(async (data, context) => {
     return checkIfPresentInOrderList(data, context);
 });
 
-exports.createOrder = functions.https.onCall(async (data, context) => {
+exports.createOrder = functions.region('europe-west1').https.onCall(async (data, context) => {
     return createOrder(data, context);
 });
 
 
-exports.createReserve = functions.https.onCall(async (data, context) => {
+exports.createReserve = functions.region('europe-west1').https.onCall(async (data, context) => {
     return createReserve(data, context);
 });
 
