@@ -1,27 +1,38 @@
 const functions = require('firebase-functions');
 const util = require('../util');
+const sql = require('mssql');
+const config = require('../mssql.connection').config;
+
 
 const searchByNumber = async (data, context) => {
 
     util.CheckForManagerRole(context);
+    const special = ['@', '#', '_', '&', '-', '+', '(' , ')', '/', '*', '"', "'", ':', ';', '!', '?', '=', '[', ']', '©', '|', '\\', '%', ' ' ];
 
     if (!data) {
         throw new functions.https.HttpsError('invalid-argument',
             'The function must be called with one argument "Number"');
     }
 
-    function createData(brand, number, description) {
-        return {brand, number, description};
-    }
+    special.forEach(el => {
+        const tokens = data.split(el);
+        data = tokens.join('');
+    });
 
-    return [
-        createData('BERU', 'Z30', 'Свеча зажигания 3330'),
-        createData('RENAULT', '401604793R', 'Свеча зажигания 3330'),
-        createData('HUTCHINSON', '590153', 'Свеча зажигания 3330'),
-        createData('AKITAKA', '590153', '',),
-        createData('BOSCH', '0242245536', 'Свеча зажигания FR7DCE 0.8'),
-        createData('RUVILE', '5413', 'Свеча зажигания 3330'),
-    ];
+    try {
+        const pool = await sql.connect(config);
+
+        const result = await pool.request()
+            .input('number', sql.VarChar(25), data)
+            .execute('sp_web_getproductsbynumber');
+        return result.recordset;
+    } catch (err) {
+        if(err) {
+            throw new functions.https.HttpsError('internal',
+                err.message);
+        }
+        return {err: err.message};
+    }
 };
 
 module.exports = searchByNumber;
