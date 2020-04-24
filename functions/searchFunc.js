@@ -30,11 +30,11 @@ exports.createReserve = functions.region('europe-west1').https.onCall(async (dat
 });
 
 
-exports.getByAnalog = functions.https.onCall(async (data, context) => {
+exports.getByAnalog = functions.region('europe-west1').https.onCall(async (data, context) => {
     return getByAnalog(data, context);
 });
 
 
-exports.updatePrice = functions.https.onCall(async (data, context) => {
+exports.updatePrice = functions.region('europe-west1').https.onCall(async (data, context) => {
     return updatePrice(data, context);
 });

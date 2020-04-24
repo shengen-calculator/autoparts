@@ -3,7 +3,7 @@ const processSignUp = require('./main/processSignUp');
 const getClientByVip = require('./main/getClientByVip');
 const getPaymentsByVip = require('./main/getPaymentsByVip');
 
-exports.processSignUp = functions.auth.user().onCreate((user) => {
+exports.processSignUp = functions.region('europe-west1').auth.user().onCreate((user) => {
     return processSignUp(user);
 });
 
