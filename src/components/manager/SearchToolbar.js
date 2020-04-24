@@ -10,6 +10,7 @@ import {withStyles} from "@material-ui/core/styles";
 import ContentStyle from "./statistic/ContentStyle";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
+import {removeSpecialCharacters} from "../../util/Search";
 
 const styles = theme => ContentStyle(theme);
 
@@ -44,7 +45,8 @@ function SearchToolbar({client, ...props}) {
                 number: ''
             }));
             if(number) {
-                history.push(`/manager/search/${client.vip}/${number}`);
+                const shortNumber = removeSpecialCharacters(number);
+                history.push(`/manager/search/${client.vip}/${shortNumber}`);
             }
         }
     }
