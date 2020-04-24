@@ -2,22 +2,22 @@ CREATE PROCEDURE [dbo].[sp_web_getordersbyvip]
 	@vip varchar(10)
 AS
 BEGIN
-    SELECT DISTINCT
-			TOP (100) VIP
+SELECT DISTINCT
+			TOP (100) TRIM(VIP) as vip
 			,ID_Запроса as id
-			,[Сокращенное название] as vendor
-			,Брэнд as brand
-			,[Номер поставщика] as number
+			,TRIM([Сокращенное название]) as vendor
+			,TRIM(Брэнд) as brand
+			,TRIM([Номер поставщика]) as number
 			,Альтернатива as note
 			,Заказано as ordered
 			,Подтверждение as approved
-			,ISNULL(Предварительная_дата, Дата_прихода) as shipmentDate
+			,FORMAT(ISNULL(Предварительная_дата, Дата_прихода), 'd', 'de-de') as shipmentDate
 			,Цена as euro
 			,Грн as uah
 			,ID_Запчасти as productId
 			,ID_Заказа as orderId
-			,Дата as orderDate
-			,Описание as description
+			,FORMAT (Дата, 'd', 'de-de' ) as orderDate
+			,TRIM(Описание) as description
 			,CASE
 				WHEN Задерживается = 1 THEN 3  /* задерживается */
 				WHEN Нет = 1 THEN 4  /* нету */
