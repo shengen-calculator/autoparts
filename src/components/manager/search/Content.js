@@ -114,7 +114,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
                 <div className={classes.contentWrapper}>
                     {(product.productsGrouped.length === 0 && product.products.length === 0) ?
                         <Typography color="textSecondary" align="center">
-                            По Вашему запросу ничего не найдено
+                            Інформація відсутня
                         </Typography> :
                         <React.Fragment>
                             {product.productsGrouped.length > 0 && <GroupedTable rows={product.productsGrouped} vip={vip}/>}
