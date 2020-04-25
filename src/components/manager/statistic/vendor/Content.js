@@ -9,25 +9,21 @@ import ContentStyle from "../ContentStyle";
 import {connect} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import {getVendorStatistic, getStatisticByVendor} from "../../../../redux/actions/clientActions";
-import {setStatisticPeriod} from "../../../../redux/actions/statisticActions";
 import {useHistory, useParams} from "react-router-dom";
 import {Helmet} from "react-helmet";
 
 const styles = theme => ContentStyle(theme);
 
-function Content({stat, getVendorStatistic, setStatisticPeriod, getStatisticByVendor, ...props}) {
+function Content({stat, getVendorStatistic, getStatisticByVendor, ...props}) {
     const {classes} = props;
     const isTableShown = stat && stat.vendorStatistic && stat.vendorStatistic.length > 0;
     let {id} = useParams();
     let history = useHistory();
 
     useEffect(() => {
-        if(stat.startDate && stat.endDate){
-            getVendorStatistic({startDate: stat.startDate, endDate: stat.endDate});
-        } else {
-            setStatisticPeriod({startDate: Date.now(), endDate: Date.now()});
-        }
-    }, [stat.startDate, stat.endDate, getVendorStatistic, setStatisticPeriod]);
+        getVendorStatistic();
+
+    }, [getVendorStatistic]);
 
     useEffect(() => {
         if(stat.vendorStatistic.length && !id){
@@ -37,10 +33,10 @@ function Content({stat, getVendorStatistic, setStatisticPeriod, getStatisticByVe
     }, [stat.vendorStatistic, id, history]);
 
     useEffect(() => {
-        if(id && stat.startDate && stat.endDate) {
-            getStatisticByVendor({startDate: stat.startDate, endDate: stat.endDate, vendorId: id});
+        if(id) {
+            getStatisticByVendor(id);
         }
-    }, [id, getStatisticByVendor, stat.startDate, stat.endDate]);
+    }, [id, getStatisticByVendor]);
 
     const onMainTableClick = (event, name) => {
         history.push(`/manager/statistic/vendor/${name}`);
@@ -84,8 +80,7 @@ Content.propTypes = {
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
     getVendorStatistic,
-    getStatisticByVendor,
-    setStatisticPeriod
+    getStatisticByVendor
 };
 
 function mapStateToProps(state) {
