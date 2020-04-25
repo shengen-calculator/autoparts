@@ -1,5 +1,5 @@
 export const removeSpecialCharacters = (data) => {
-    const special = ['@', '#', '_', '&', '-', '+', '(' , ')', '/', '*', '"', "'", ':', ';', '!', '?', '=', '[', ']', '©', '|', '\\', '%',' ' ];
+    const special = ['/', '%'];
     special.forEach(el => {
         const tokens = data.split(el);
         data = tokens.join('');
