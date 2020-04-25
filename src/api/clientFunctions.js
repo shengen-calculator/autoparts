@@ -45,13 +45,13 @@ class FunctionsApi {
         const func = functions.httpsCallable('statistic-getStatisticByClient');
         return func({startDate, endDate, vip});
     }
-    static getStatisticByVendor({startDate, endDate, vendorId}){
+    static getStatisticByVendor(vendorId){
         const func = functions.httpsCallable('statistic-getStatisticByVendor');
-        return func({startDate, endDate, vendorId});
+        return func(vendorId);
     }
-    static getVendorStatistic({startDate, endDate}){
+    static getVendorStatistic(){
         const func = functions.httpsCallable('statistic-getVendorStatistic');
-        return func({startDate, endDate});
+        return func();
     }
 }
 

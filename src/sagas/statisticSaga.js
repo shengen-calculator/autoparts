@@ -24,10 +24,10 @@ export function* getClientStatistic(action) {
     }
 }
 
-export function* getVendorStatistic(action) {
+export function* getVendorStatistic() {
     try {
         yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(FunctionsApi.getVendorStatistic, action.params);
+        const {data} = yield call(FunctionsApi.getVendorStatistic);
         yield put({type: types.LOAD_VENDOR_STATISTIC_SUCCESS, result: data});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
@@ -38,7 +38,7 @@ export function* getVendorStatistic(action) {
 export function* getStatisticByVendor(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(FunctionsApi.getStatisticByVendor, action.params);
+        const {data} = yield call(FunctionsApi.getStatisticByVendor, action.vendorId);
         yield put({type: types.LOAD_STATISTIC_BY_VENDOR_SUCCESS, result: data});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
