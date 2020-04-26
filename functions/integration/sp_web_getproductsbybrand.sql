@@ -20,10 +20,10 @@ BEGIN
 		,TRIM([Время заказа]) as orderTime
 	    ,TRIM([Время прихода]) as arrivalTime
 		,TRIM([Номер запчасти]) AS number
-		,Цена * ' + STR(dbo.GetUahRate()) + N' AS retail
+		,Цена * ' + STR(dbo.GetUahRate(), 9, 2) + N' AS retail
 		,Цена AS retailEur
 		,' + dbo.GetClientPriceColumn(@clientId) + N' AS costEur
-		,' + dbo.GetClientPriceColumn(@clientId) + N'*' + STR(dbo.GetUahRate()) + N' AS cost
+		,' + dbo.GetClientPriceColumn(@clientId) + N'*' + STR(dbo.GetUahRate(), 9, 2) + N' AS cost
 		,Доступно AS available
 		,Резерв AS reserve
 		,TRIM(Описание) AS description
