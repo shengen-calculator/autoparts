@@ -17,9 +17,9 @@ class SearchFunctionsApi {
         const func = functions.httpsCallable('search-getByAnalog');
         return func(analogId);
     }
-    static searchByBrandAndNumber({brand, numb}) {
+    static searchByBrandAndNumber({brand, numb, clientId}) {
         const func = functions.httpsCallable('search-searchByBrandAndNumber');
-        return func({brand, number: numb});
+        return func({brand, number: numb, clientId});
     }
     static searchByNumber(number) {
         const func = functions.httpsCallable('search-searchByNumber');

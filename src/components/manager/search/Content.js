@@ -81,11 +81,11 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
 
     useEffect(() => {
         if (brand && brand !== product.criteria.brand) {
-            getByBrand({brand, numb});
+            getByBrand({brand, numb, clientId: client.id});
         } else if(numb && numb !== product.criteria.numb) {
             getByNumber(numb);
         }
-    }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, product.criteria.numb]);
+    }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, product.criteria.numb, client.id]);
 
     let title = `Autoparts - Клієнт - ${client.vip}`;
 
