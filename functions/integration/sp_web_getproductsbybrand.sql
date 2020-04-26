@@ -1,4 +1,4 @@
-CREATE PROCEDURE [dbo].[sp_web_getproductsbybrand]
+ALTER PROCEDURE [dbo].[sp_web_getproductsbybrand] 	
 	@number varchar(25), @brand varchar(18), @klientId int
 AS
 BEGIN
@@ -18,8 +18,6 @@ BEGIN
 		ID_Запчасти AS id
 		,TRIM(Брэнд) AS brand
 		,TRIM([Сокращенное название]) AS vendor
-		,TRIM([Время заказа]) as orderTime
-	    ,TRIM([Время прихода]) as arrivalTime
 		,TRIM([Номер запчасти]) AS number
 		,Цена AS retail
 		,Доступно AS available
@@ -55,8 +53,6 @@ BEGIN
 		ID_Запчасти AS id
 		,TRIM(Брэнд) AS brand
 		,TRIM([Сокращенное название]) AS vendor
-        ,TRIM([Время заказа]) as orderTime
-        ,TRIM([Время прихода]) as arrivalTime
 		,TRIM([Номер запчасти]) AS number
 		,Цена AS retail
 		,Доступно AS available
@@ -92,8 +88,6 @@ BEGIN
 		ID_Запчасти AS id
 		,TRIM(Брэнд) AS brand
 		,TRIM([Сокращенное название]) AS vendor
-        ,TRIM([Время заказа]) as orderTime
-        ,TRIM([Время прихода]) as arrivalTime
 		,TRIM([Номер запчасти]) AS number
 		,Цена AS retail
 		,Доступно AS available
