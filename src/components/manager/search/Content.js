@@ -107,9 +107,9 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
 
     if(product.products.length > 0) {
         generalRows = product.products.filter(x => x.available > 0 || x.reserve > 0);
-        vendorRows = product.products.filter(x => x.available === 0 && x.brand === brand &&
+        vendorRows = product.products.filter(x => x.available === 0 && x.brand === brand && x.reserve === 0 &&
             removeAllSpecialCharacters(x.number) === removeAllSpecialCharacters(numb));
-        analogRows = product.products.filter(x => x.available === 0 && (x.brand !== brand || x.number !== numb));
+        analogRows = product.products.filter(x => x.available === 0 && x.reserve === 0 && (x.brand !== brand || removeAllSpecialCharacters(x.number) !== removeAllSpecialCharacters(numb)));
     }
 
 
@@ -127,7 +127,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
                             Інформація відсутня
                         </Typography> :
                         <React.Fragment>
-                            {product.productsGrouped.length > 0 && <GroupedTable rows={product.productsGrouped} vip={vip}/>}
+                            {product.productsGrouped.length > 1 && <GroupedTable rows={product.productsGrouped} vip={vip}/>}
                             {generalRows.length > 0 && <GeneralTable rows={StableSort(generalRows,
                                 (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}/>}
                             {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
