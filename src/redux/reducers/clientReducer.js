@@ -12,6 +12,7 @@ export default function clientReducer(state = initialState.client, action) {
         case types.LOAD_CLIENT_SUCCESS:
             return {
                 ...state,
+                id: action.client.id,
                 vip: action.client.vip,
                 fullName: action.client.fullName,
                 isEuroClient: action.client.isEuroClient,
