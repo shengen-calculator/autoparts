@@ -14,6 +14,9 @@ import {Helmet} from "react-helmet";
 import GroupedTable from "./GroupedTable";
 import {getByNumber, getByBrand} from "../../../redux/actions/searchActions";
 import Typography from "@material-ui/core/Typography";
+import {removeAllSpecialCharacters} from "../../../util/Search";
+import GetComparator from "../../../util/GetComparator";
+import StableSort from "../../../util/StableSort";
 
 
 const drawerWidth = 256;
@@ -98,7 +101,8 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
     let generalRows = [], vendorRows = [], analogRows = [];
     if(product.products.length > 0) {
         generalRows = product.products.filter(x => x.available > 0 || x.reserve > 0);
-        vendorRows = product.products.filter(x => x.available === 0 && x.brand === brand && x.number === numb);
+        vendorRows = product.products.filter(x => x.available === 0 && x.brand === brand &&
+            removeAllSpecialCharacters(x.number) === removeAllSpecialCharacters(numb));
         analogRows = product.products.filter(x => x.available === 0 && (x.brand !== brand || x.number !== numb));
     }
 
@@ -118,9 +122,12 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
                         </Typography> :
                         <React.Fragment>
                             {product.productsGrouped.length > 0 && <GroupedTable rows={product.productsGrouped} vip={vip}/>}
-                            {generalRows.length > 0 && <GeneralTable rows={generalRows} isEur={client.isEuroClient}/>}
-                            {vendorRows.length > 0 && <VendorTable rows={vendorRows} isEur={client.isEuroClient}/>}
-                            {analogRows.length > 0 && <AnalogTable rows={analogRows} isEur={client.isEuroClient}/>}
+                            {generalRows.length > 0 && <GeneralTable rows={StableSort(generalRows,
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}/>}
+                            {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}/>}
+                            {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}/>}
                         </React.Fragment>
                     }
                 </div>
