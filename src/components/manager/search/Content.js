@@ -82,7 +82,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
     useEffect(() => {
         if (brand && brand !== product.criteria.brand) {
             getByBrand({brand, numb, clientId: client.id});
-        } else if(numb && numb !== product.criteria.numb) {
+        } else if((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand)) {
             getByNumber(numb);
         }
     }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, product.criteria.numb, client.id]);
