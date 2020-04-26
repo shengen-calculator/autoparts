@@ -87,8 +87,11 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
             getByBrand({brand, numb, clientId: client.id});
         } else if((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand)) {
             getByNumber(numb);
+        } else if(product.productsGrouped.length === 1 && !brand) {
+            history.push(`/manager/search/${client.vip}/${product.productsGrouped[0].number}/${product.productsGrouped[0].brand}`)
         }
-    }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, product.criteria.numb, client.id]);
+    }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, client.vip, history,
+        product.criteria.numb, client.id, product.productsGrouped]);
 
     let title = `Autoparts - Клієнт - ${client.vip}`;
 
@@ -99,6 +102,9 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
         title += ` - ${numb}`;
     }
     let generalRows = [], vendorRows = [], analogRows = [];
+
+
+
     if(product.products.length > 0) {
         generalRows = product.products.filter(x => x.available > 0 || x.reserve > 0);
         vendorRows = product.products.filter(x => x.available === 0 && x.brand === brand &&
