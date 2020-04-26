@@ -18,7 +18,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Copyright from '../../common/Copyright';
 import SendIcon from "@material-ui/icons/Send";
 import QueryContent from './query/Content';
-import VendorContent from './vendor/Сontent';
+import VendorContent from './vendor/Content';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../../PageNotFound";
 import { Link as RouterLink } from 'react-router-dom';
