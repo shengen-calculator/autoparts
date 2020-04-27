@@ -50,7 +50,7 @@ export function* createReserve(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
         const {data} = yield call(SearchFunctionsApi.createReserve, action.params);
-        yield put({type: types.CREATE_RESERVE_SUCCESS, reserve: data});
+        yield put({type: types.CREATE_RESERVE_SUCCESS, reserve: data[0]});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.CREATE_RESERVE_FAILURE, text: e.message});
