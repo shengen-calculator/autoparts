@@ -13,6 +13,7 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
+    const bold = {fontWeight: row.term < 1 ? 800 : 500, cursor: 'pointer'};
     const HtmlTooltip = withStyles((theme) => ({
         tooltip: {
             backgroundColor: '#f5f5f9',
@@ -58,7 +59,7 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
             <TableCell align="right" name="order"
                        style={pointer}>{isEur ? row.costEur.toFixed(2) : row.cost.toFixed(2)}</TableCell>
             <TableCell align="right" name="order" style={pointer}>{row.order}</TableCell>
-            <TableCell align="left" name="order" style={pointer}>
+            <TableCell align="left" name="order" style={bold} >
                 {
                     row.isGuaranteedTerm ?
                         <Grid container name="order">
