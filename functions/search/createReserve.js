@@ -1,18 +1,40 @@
 const functions = require('firebase-functions');
 const util = require('../util');
+const sql = require('mssql');
+const config = require('../mssql.connection').config;
 
 const createReserve = async (data, context) => {
 
     util.CheckForManagerRole(context);
-    function createData(id, brand, number, description, note, quantity, vendor, euro, uah, orderDate, date, source) {
-        return {id, brand, number, description, quantity, note, vendor, euro, uah, orderDate, date, source };
+
+    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || !data.priceUah || !data.clientId ) {
+        throw new functions.https.HttpsError('invalid-argument',
+            'The function must be called with the next arguments "ProductId, Quantity, Price, PriceUah, ClientId"');
     }
 
-    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || !data.vip ) {
-        throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with the next arguments "ProductId, Quantity, Price, Vip"');
+//source
+// склад = 0
+// заказ = 1
+
+    try {
+        const pool = await sql.connect(config);
+
+        const result = await pool.request()
+            .input('clientId', sql.Int, data.clientId)
+            .input('productId', sql.Int, data.productId)
+            .input('price', sql.Decimal(9, 2), data.price)
+            .input('priceUah', sql.Decimal(9, 2), data.priceUah)
+            .input('quantity', sql.Int, data.quantity)
+            .input('status', sql.VarChar(50), 'internet')
+            .input('customer', sql.VarChar(20), context.auth.token.email)
+            .execute('sp_web_addreserve');
+        return result.recordset;
+    } catch (err) {
+        if(err) {
+            throw new functions.https.HttpsError('internal', err.message);
+        }
+        return {err: err.message};
     }
-    return createData(35, 'DELPHI', 'TA2913', 'Только что зарезервированая ŚWIECA ZAPŁONOWA PSA/FIAT', '', 2, '', 33.95, 872.52, '19.02.2020', '23.02.2020', 0)
 };
 
 module.exports = createReserve;
