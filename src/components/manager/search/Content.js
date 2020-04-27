@@ -88,7 +88,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
         } else if((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand)) {
             getByNumber(numb);
         } else if(product.productsGrouped.length === 1 && !brand) {
-            history.push(`/manager/search/${client.vip}/${removeSpecialCharacters(product.productsGrouped[0].number)}/${removeSpecialCharacters(product.productsGrouped[0].brand)}`)
+            history.push(`/manager/search/${client.vip}/${removeSpecialCharacters(product.productsGrouped[0].number)}/${product.productsGrouped[0].brand}`)
         }
     }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, client.vip, history,
         product.criteria.numb, client.id, product.productsGrouped]);
