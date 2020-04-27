@@ -3,6 +3,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from '../../common/EnhancedTable';
 import {useHistory} from "react-router-dom";
+import {removeSpecialCharacters} from "../../../util/Search";
 
 const headCells = [
     { id: 'brand', numeric: false, disablePadding: false, label: 'Бренд' },
@@ -19,7 +20,7 @@ function tableRow(row, index, isSelected, handleClick) {
             role="checkbox"
             tabIndex={-1}
             key={index}
-            onClick={event => handleClick(event, {brand: row.brand, number: row.number})}
+            onClick={event => handleClick(event, {brand: row.brand, number: removeSpecialCharacters(row.number)})}
         >
 
             <TableCell padding="default" component="th" id={labelId}
