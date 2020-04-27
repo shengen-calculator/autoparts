@@ -14,7 +14,7 @@ import {Helmet} from "react-helmet";
 import GroupedTable from "./GroupedTable";
 import {getByNumber, getByBrand} from "../../../redux/actions/searchActions";
 import Typography from "@material-ui/core/Typography";
-import {removeAllSpecialCharacters} from "../../../util/Search";
+import {removeAllSpecialCharacters, removeSpecialCharacters} from "../../../util/Search";
 import GetComparator from "../../../util/GetComparator";
 import StableSort from "../../../util/StableSort";
 
@@ -88,7 +88,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
         } else if((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand)) {
             getByNumber(numb);
         } else if(product.productsGrouped.length === 1 && !brand) {
-            history.push(`/manager/search/${client.vip}/${product.productsGrouped[0].number}/${product.productsGrouped[0].brand}`)
+            history.push(`/manager/search/${client.vip}/${removeSpecialCharacters(product.productsGrouped[0].number)}/${removeSpecialCharacters(product.productsGrouped[0].brand)}`)
         }
     }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, client.vip, history,
         product.criteria.numb, client.id, product.productsGrouped]);
@@ -109,7 +109,8 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
         generalRows = product.products.filter(x => x.available > 0 || x.reserve > 0);
         vendorRows = product.products.filter(x => x.available === 0 && x.brand === brand && x.reserve === 0 &&
             removeAllSpecialCharacters(x.number) === removeAllSpecialCharacters(numb));
-        analogRows = product.products.filter(x => x.available === 0 && x.reserve === 0 && (x.brand !== brand || removeAllSpecialCharacters(x.number) !== removeAllSpecialCharacters(numb)));
+        analogRows = product.products.filter(x => x.available === 0 && x.reserve === 0 && (x.brand !== brand ||
+            removeAllSpecialCharacters(x.number) !== removeAllSpecialCharacters(numb)));
     }
 
 
