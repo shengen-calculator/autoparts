@@ -7,9 +7,9 @@ const createReserve = async (data, context) => {
 
     util.CheckForManagerRole(context);
 
-    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || !data.priceUah || !data.clientId ) {
+    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || typeof data.isEuroClient === 'undefined' || !data.clientId ) {
         throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with the next arguments "ProductId, Quantity, Price, PriceUah, ClientId"');
+            'The function must be called with the next arguments "ProductId, Quantity, Price, IsEuroClient, ClientId"');
     }
 
 //source
@@ -23,7 +23,7 @@ const createReserve = async (data, context) => {
             .input('clientId', sql.Int, data.clientId)
             .input('productId', sql.Int, data.productId)
             .input('price', sql.Decimal(9, 2), data.price)
-            .input('priceUah', sql.Decimal(9, 2), data.priceUah)
+            .input('isEuroClient', sql.Bit, data.isEuroClient)
             .input('quantity', sql.Int, data.quantity)
             .input('status', sql.VarChar(50), 'internet')
             .input('customer', sql.VarChar(20), context.auth.token.email)

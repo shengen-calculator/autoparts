@@ -2,12 +2,24 @@ CREATE PROCEDURE [dbo].[sp_web_addreserve]
 	@clientId int,
 	@productId int,
 	@price decimal(9,2),
-	@priceUah decimal(9,2),
+	@isEuroClient bit,
 	@quantity int,
 	@status char(50),
 	@customer char(20)
 AS
 BEGIN
+	DECLARE @priceUah decimal(9,2)
+
+	IF(@isEuroClient = 1)
+	BEGIN
+		SET @priceUah = @price * dbo.GetUahRate()
+	END
+	ELSE
+	BEGIN
+		SET @priceUah = @price
+		SET @price = @priceUah/dbo.GetUahRate()
+	END
+
 	INSERT INTO [Подчиненная накладные]
 	  (ID_Клиента, ID_Запчасти, Цена, Грн, Количество, Статус, Работник)
 	  VALUES (@clientId, @productId, @price, @priceUah, @quantity, @status, @customer);
