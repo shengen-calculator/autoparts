@@ -88,15 +88,17 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
         } else if((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand)) {
             getByNumber(numb);
         } else if(product.productsGrouped.length === 1 && !brand) {
-            history.push(`/manager/search/${client.vip}/${removeSpecialCharacters(product.productsGrouped[0].number)}/${product.productsGrouped[0].brand}`)
+            history.push(`/manager/search/${client.vip}/${removeSpecialCharacters(product.productsGrouped[0].number)}/${product.productsGrouped[0].brand.replace('/','%2F')}`)
         }
     }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, client.vip, history,
         product.criteria.numb, client.id, product.productsGrouped]);
 
+
     let title = `Autoparts - Клієнт - ${client.vip}`;
 
     if(brand) {
-        title += ` - ${brand}`;
+        const restoredBrand = brand.replace('%2F', '/');
+        title += ` - ${restoredBrand}`;
     }
     if(numb) {
         title += ` - ${numb}`;
@@ -105,11 +107,12 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
 
 
 
-    if(product.products.length > 0) {
+    if(product.products.length > 0 && brand) {
+        const restoredBrand = brand.replace('%2F', '/');
         generalRows = product.products.filter(x => x.available > 0 || x.reserve > 0);
-        vendorRows = product.products.filter(x => x.available === 0 && x.brand === brand && x.reserve === 0 &&
+        vendorRows = product.products.filter(x => x.available === 0 && x.brand === restoredBrand && x.reserve === 0 &&
             removeAllSpecialCharacters(x.number) === removeAllSpecialCharacters(numb));
-        analogRows = product.products.filter(x => x.available === 0 && x.reserve === 0 && (x.brand !== brand ||
+        analogRows = product.products.filter(x => x.available === 0 && x.reserve === 0 && (x.brand !== restoredBrand ||
             removeAllSpecialCharacters(x.number) !== removeAllSpecialCharacters(numb)));
     }
 

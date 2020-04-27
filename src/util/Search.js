@@ -8,7 +8,7 @@ export const removeSpecialCharacters = (data) => {
 };
 
 export const removeAllSpecialCharacters = (data) => {
-    const special = ['@', '#', '_', '&', '-', '+', '(' , ')', '/', '*', '"', "'", ':', ';', '!', '?', '=', '[', ']', '©', '|', '\\', '%', ' ' ];
+    const special = ['@', '#', '_', '&', '-', '+', '(' , ')', '/', '*', '"', "'", ':', ';', '!', '?', '=', '[', ']', '©', '|', '\\', '%', ' ', '.' ];
     special.forEach(el => {
         const tokens = data.split(el);
         data = tokens.join('');
