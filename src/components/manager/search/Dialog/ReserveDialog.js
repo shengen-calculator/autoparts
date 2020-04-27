@@ -17,9 +17,14 @@ function ReserveDialog(props) {
 
     useEffect(() => {
         if(selected.retail) {
-            setReserve({price: selected.cost, quantity: '', onlyOrderedQuantity: false, available: selected.available})
+            setReserve({
+                price: client.isEuroClient ? selected.costEur.toFixed(2) : selected.cost.toFixed(2),
+                quantity: '',
+                onlyOrderedQuantity: false,
+                available: selected.available
+            })
         }
-    }, [selected]);
+    }, [selected, client.isEuroClient]);
 
     function handleChange(event) {
         const { name, value, checked, type } = event.target;
@@ -44,7 +49,8 @@ function ReserveDialog(props) {
                     productId: selected.id,
                     quantity: Number(reserve.quantity),
                     price: Number(reserve.price),
-                    vip: client.vip
+                    isEuroClient: client.isEuroClient,
+                    clientId: client.id
                 });
                 onClose();
             }

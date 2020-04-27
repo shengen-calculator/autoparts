@@ -9,9 +9,9 @@ class SearchFunctionsApi {
         const func = functions.httpsCallable('search-createOrder');
         return func(params);
     }
-    static createReserve(productId) {
+    static createReserve({clientId, productId, price, isEuroClient, quantity}) {
         const func = functions.httpsCallable('search-createReserve');
-        return func(productId);
+        return func({clientId, productId, price, isEuroClient, quantity});
     }
     static getByAnalog(analogId) {
         const func = functions.httpsCallable('search-getByAnalog');
