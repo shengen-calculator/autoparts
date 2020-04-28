@@ -18,7 +18,11 @@ function OrderDialog(props) {
 
     useEffect(() => {
         if(selected.retail) {
-            setOrder({price: selected.cost, quantity: '', onlyOrderedQuantity: false})
+            setOrder({
+                price: selected.cost,
+                quantity: '',
+                onlyOrderedQuantity: false
+            })
         }
     }, [selected]);
 
@@ -43,7 +47,8 @@ function OrderDialog(props) {
                 quantity: Number(order.quantity),
                 price: Number(order.price),
                 onlyOrderedQuantity: order.onlyOrderedQuantity,
-                vip: client.vip
+                isEuroClient: client.isEuroClient,
+                clientId: client.id
             });
             onClose();
         }

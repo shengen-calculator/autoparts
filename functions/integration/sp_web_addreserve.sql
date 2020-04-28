@@ -5,7 +5,7 @@ CREATE PROCEDURE [dbo].[sp_web_addreserve]
 	@isEuroClient bit,
 	@quantity int,
 	@status char(50),
-	@customer char(20)
+	@currentUser char(20)
 AS
 BEGIN
 	DECLARE @priceUah decimal(9,2)
@@ -22,7 +22,7 @@ BEGIN
 
 	INSERT INTO [Подчиненная накладные]
 	  (ID_Клиента, ID_Запчасти, Цена, Грн, Количество, Статус, Работник)
-	  VALUES (@clientId, @productId, @price, @priceUah, @quantity, @status, @customer);
+	  VALUES (@clientId, @productId, @price, @priceUah, @quantity, @status, @currentUser);
 
 	SELECT TOP (1) [ID] as id
       ,[ID_Накладной] as invoiceId
