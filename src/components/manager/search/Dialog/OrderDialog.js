@@ -19,7 +19,7 @@ function OrderDialog(props) {
     useEffect(() => {
         if(selected.retail) {
             setOrder({
-                price: selected.cost,
+                price: client.isEuroClient ? selected.costEur.toFixed(2) : selected.cost.toFixed(2),
                 quantity: '',
                 onlyOrderedQuantity: false
             })
