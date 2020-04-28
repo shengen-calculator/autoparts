@@ -26,7 +26,7 @@ const createReserve = async (data, context) => {
             .input('isEuroClient', sql.Bit, data.isEuroClient)
             .input('quantity', sql.Int, data.quantity)
             .input('status', sql.VarChar(50), 'internet')
-            .input('customer', sql.VarChar(20), context.auth.token.email)
+            .input('currentUser', sql.VarChar(20), context.auth.token.email)
             .execute('sp_web_addreserve');
         return result.recordset;
     } catch (err) {

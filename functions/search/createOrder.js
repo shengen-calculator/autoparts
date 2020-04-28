@@ -1,20 +1,37 @@
 const functions = require('firebase-functions');
 const util = require('../util');
+const sql = require('mssql');
+const config = require('../mssql.connection').config;
 
 const createOrder = async (data, context) => {
 
     util.CheckForManagerRole(context);
-    function createData(id, vendor, brand, number, description, note, ordered, approved, euro, uah, orderDate, shipmentDate, status) {
-        return {id, vendor, brand, number, description, note, ordered, approved, euro, uah, orderDate, shipmentDate, status };
-    }
 
-
-    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || !data.vip || typeof data.onlyOrderedQuantity === 'undefined') {
+    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || !data.clientId || typeof data.isEuroClient === 'undefined' || typeof data.onlyOrderedQuantity === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with the next arguments "ProductId, Quantity, Price, Vip, OnlyOrderedQuantity"');
+            'The function must be called with the next arguments "ProductId, Quantity, Price, ClientId, IsEuroClient, OnlyOrderedQuantity"');
     }
 
-    return createData(35, 'IC', 'CTR', 'CRN-73', 'Только что добавленая в заказ позиция', '', data.onlyOrderedQuantity, 0, 11.53, 416, '22.02.2020', '26.02.2020', 1);
+
+    try {
+        const pool = await sql.connect(config);
+
+        const result = await pool.request()
+            .input('clientId', sql.Int, data.clientId)
+            .input('productId', sql.Int, data.productId)
+            .input('price', sql.Decimal(9, 2), data.price)
+            .input('isEuroClient', sql.Bit, data.isEuroClient)
+            .input('quantity', sql.Int, data.quantity)
+            .input('onlyOrderedQuantity', sql.Bit, data.onlyOrderedQuantity)
+            .input('currentUser', sql.VarChar(20), context.auth.token.email)
+            .execute('sp_web_addorder');
+        return result.recordset;
+    } catch (err) {
+        if(err) {
+            throw new functions.https.HttpsError('internal', err.message);
+        }
+        return {err: err.message};
+    }
 
 };
 
