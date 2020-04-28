@@ -37,7 +37,7 @@ function GroupedTable(props) {
     let history = useHistory();
 
     const handleClick = (event, {brand, number}) => {
-        history.push(`/manager/search/${props.vip}/${number}/${brand}`)
+        history.push(`/manager/search/${props.vip}/${number}/${brand.replace('/','%2F')}`)
     };
     return(
         <EnhancedTable
