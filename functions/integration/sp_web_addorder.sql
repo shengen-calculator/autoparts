@@ -40,7 +40,7 @@ IF (@@ROWCOUNT = 0)
     END
 
 
-SELECT   @productId = dbo.[Каталог запчастей].ID
+SELECT   @productId = dbo.[Каталог запчастей].ID_Запчасти
 FROM    dbo.[Каталог запчастей]
 WHERE   (ID_Брэнда LIKE @brandId) AND ([namepost] LIKE @shortNumber) AND (ID_Поставщика LIKE @vendorId)
 
