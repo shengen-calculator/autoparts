@@ -31,6 +31,8 @@ export default function productReducer(state = initialState.product, action) {
         case types.LOAD_BY_NUMBER_REQUEST:
             return {
                 ...state,
+                productsGrouped: [],
+                products: [],
                 criteria: {
                     numb: action.number,
                     brand: ''
