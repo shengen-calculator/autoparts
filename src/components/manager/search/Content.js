@@ -66,7 +66,7 @@ const styles = theme => ({
     }
 });
 
-function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
+function Content({auth, calls, client, product, getByBrand, getByNumber, ...props}) {
     const {classes, handleDrawerToggle} = props;
     const history = useHistory();
     const {vip, numb, brand} = useParams();
@@ -123,7 +123,8 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
             <title>{title}</title>
         </Helmet>
         <main className={classes.main}>
-            {product.products.length > 0 && <Paper className={classes.paper}>
+            {(product.products.length > 0 || calls === 0)  &&
+            <Paper className={classes.paper}>
                 <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                 <div className={classes.contentWrapper}>
                     {(product.productsGrouped.length === 0 && product.products.length === 0) ?
@@ -164,7 +165,8 @@ function mapStateToProps(state) {
     return {
         auth: state.authentication,
         client: state.client,
-        product: state.product
+        product: state.product,
+        calls: state.apiCallsInProgress
     }
 }
 
