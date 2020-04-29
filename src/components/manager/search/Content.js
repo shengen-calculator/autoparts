@@ -123,7 +123,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
             <title>{title}</title>
         </Helmet>
         <main className={classes.main}>
-            <Paper className={classes.paper}>
+            {product.products.length > 0 && <Paper className={classes.paper}>
                 <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                 <div className={classes.contentWrapper}>
                     {(product.productsGrouped.length === 0 && product.products.length === 0) ?
@@ -141,7 +141,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
                         </React.Fragment>
                     }
                 </div>
-            </Paper>
+            </Paper>}
         </main>
         <footer className={classes.footer}>
             <Copyright/>
