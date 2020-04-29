@@ -17,14 +17,14 @@ function OrderDialog(props) {
     });
 
     useEffect(() => {
-        if(selected.retail) {
+        if(selected.costEur) {
             setOrder({
                 price: client.isEuroClient ? selected.costEur.toFixed(2) : selected.cost.toFixed(2),
                 quantity: '',
                 onlyOrderedQuantity: false
             })
         }
-    }, [selected]);
+    }, [selected, client.isEuroClient]);
 
     function handleChange(event) {
         const { name, value, checked, type } = event.target;
