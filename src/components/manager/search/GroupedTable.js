@@ -3,7 +3,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from '../../common/EnhancedTable';
 import {useHistory} from "react-router-dom";
-import {removeSpecialCharacters} from "../../../util/Search";
+import {removeSpecialCharacters, htmlEncode} from "../../../util/Search";
 
 const headCells = [
     { id: 'brand', numeric: false, disablePadding: false, label: 'Бренд' },
@@ -37,7 +37,7 @@ function GroupedTable(props) {
     let history = useHistory();
 
     const handleClick = (event, {brand, number}) => {
-        history.push(`/manager/search/${props.vip}/${number}/${brand.replace('/','%2F')}`)
+        history.push(`/manager/search/${props.vip}/${number}/${htmlEncode(brand)}`)
     };
     return(
         <EnhancedTable

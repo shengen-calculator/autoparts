@@ -1,4 +1,5 @@
 import {functions} from "./database";
+import {htmlDecode} from "../util/Search";
 
 class SearchFunctionsApi {
     static checkIfPresentInOrderList(analogId) {
@@ -19,7 +20,7 @@ class SearchFunctionsApi {
     }
     static searchByBrandAndNumber({brand, numb, clientId}) {
         const func = functions.httpsCallable('search-searchByBrandAndNumber');
-        return func({brand, number: numb, clientId});
+        return func({brand: htmlDecode(brand), number: numb, clientId});
     }
     static searchByNumber(number) {
         const func = functions.httpsCallable('search-searchByNumber');

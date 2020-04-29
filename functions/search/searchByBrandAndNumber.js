@@ -15,7 +15,7 @@ const searchByBrandAndNumber = async (data, context) => {
         const pool = await sql.connect(config);
         const result = await pool.request()
             .input('number', sql.VarChar(25), data.number)
-            .input('brand', sql.VarChar(18), data.brand.replace('%2F', '/'))
+            .input('brand', sql.VarChar(18), data.brand)
             .input('clientId', sql.Int, data.clientId)
             .execute('sp_web_getproductsbybrand');
         return result.recordset;
