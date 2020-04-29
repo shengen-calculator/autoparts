@@ -37,7 +37,7 @@ const styles = theme => ({
     }
 });
 
-function Content({client, getPayments, ...props}) {
+function Content({client, calls, getPayments, ...props}) {
     const {classes, handleDrawerToggle} = props;
     let {vip} = useParams();
 
@@ -56,6 +56,7 @@ function Content({client, getPayments, ...props}) {
                 <title>Autoparts - План платежів - {client.vip}</title>
             </Helmet>
             <main className={classes.main}>
+                {calls === 0 &&
                 <Paper className={classes.paper}>
                     <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                     <div className={classes.contentWrapper}>
@@ -67,7 +68,7 @@ function Content({client, getPayments, ...props}) {
                             </Typography>
                         }
                     </div>
-                </Paper>
+                </Paper>}
             </main>
             <footer className={classes.footer}>
                 <Copyright/>
@@ -88,7 +89,8 @@ const mapDispatchToProps = {
 
 function mapStateToProps(state) {
     return {
-        client: state.client
+        client: state.client,
+        calls: state.apiCallsInProgress
     }
 }
 
