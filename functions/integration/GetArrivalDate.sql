@@ -5,19 +5,25 @@ CREATE FUNCTION GetArrivalDate
 RETURNS DATE
 AS
 BEGIN
-    DECLARE @days varchar(15), @time time(7), @diff int, @weekday int
+    DECLARE @days varchar(15), @time time(7), @diff int, @weekday int, @orderday int
     SELECT  @days = OrderDays, @time = OrderTime
     FROM    dbo.Поставщики
     WHERE   ID_Поставщика = @vendorId
 
     IF(@days IS NULL OR @time IS NULL) RETURN NULL
 
-    IF(CAST(GETDATE() AS time) > @time) SET @diff = @diff + 1
     SET @weekday = DATEPART(weekday, GETDATE())
 
-    /*SELECT value FROM STRING_SPLIT(@days, ',')*/
+    IF(CAST(GETDATE() AS time) > @time) SET @weekday = @weekday + 1
 
-	RETURN DATEADD(day, 2, GETDATE())
+    SELECT @orderday = MIN(IIF(Name < @weekday, 8, Name)) FROM dbo.SplitString (@days)
+
+    IF(@orderday = 8)
+        BEGIN
+           SELECT @orderday = MIN(Name) FROM dbo.SplitString (@days)
+           RETURN DATEADD(hour, (7 - DATEPART(weekday, GETDATE()) + @orderday + @term)*24, GETDATE())
+        END
+
+    RETURN DATEADD(hour, (@orderday - DATEPART(weekday, GETDATE()) + @term)*24, GETDATE())
 
 END
-GO
