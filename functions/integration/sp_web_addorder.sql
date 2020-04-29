@@ -1,4 +1,4 @@
-CREATE PROCEDURE [dbo].[sp_web_addorder]
+CREATE PROCEDURE sp_web_addorder
     @clientId int,
     @productId int,
     @price decimal(9,2),
@@ -20,12 +20,13 @@ ELSE
         SET @price = @priceUah/dbo.GetUahRate()
     END
 
-DECLARE @brandName varchar(50), @brandId int, @vendorId int, @shortNumber varchar(26),
+DECLARE @brandName varchar(50), @brandId int, @vendorId int, @shortNumber varchar(26), @term decimal(9, 1),
     @number varchar(26), @vendorNumber varchar(26), @analogId int, @description varchar(80), @carId int, @groupId int
 
-SELECT    @brandName = dbo.[Каталоги поставщиков].Брэнд, @vendorId = dbo.[Каталоги поставщиков].ID_Поставщика,
-       @shortNumber = dbo.[Каталоги поставщиков].Name, @number = dbo.[Каталоги поставщиков].[Номер запчасти],
-       @vendorNumber = dbo.[Каталоги поставщиков].[Номер поставщика], @description = dbo.[Каталоги поставщиков].Описание
+SELECT    @brandName = dbo.[Каталоги поставщиков].Брэнд, @vendorId = dbo.[Каталоги поставщиков].ID_Поставщика, 
+       @shortNumber = dbo.[Каталоги поставщиков].Name, @number = dbo.[Каталоги поставщиков].[Номер поставщика],
+       @vendorNumber = dbo.[Каталоги поставщиков].[Номер запчасти], @description = dbo.[Каталоги поставщиков].Описание,
+       @term = dbo.[Каталоги поставщиков].[Срок доставки]
 FROM            dbo.[Каталоги поставщиков]
 WHERE     (ID_Запчасти = @productId)
 
@@ -33,7 +34,7 @@ SELECT    @brandId = ID_Брэнда
 FROM      Брэнды
 WHERE     (Брэнд LIKE @brandName)
 
-IF (@@ROWCOUNT = 0)
+IF (@@ROWCOUNT = 0) 
     BEGIN
         INSERT INTO Брэнды(Брэнд) VALUES (@brandName)
         SET @brandId = CAST(SCOPE_IDENTITY() AS int)
@@ -44,14 +45,14 @@ SELECT   @productId = dbo.[Каталог запчастей].ID_Запчаст�
 FROM    dbo.[Каталог запчастей]
 WHERE   (ID_Брэнда LIKE @brandId) AND ([namepost] LIKE @shortNumber) AND (ID_Поставщика LIKE @vendorId)
 
-IF (@@ROWCOUNT = 0)
+IF (@@ROWCOUNT = 0)    
     BEGIN
 
         SELECT    @analogId = dbo.[Каталог запчастей].ID_аналога, @carId = dbo.[Каталог запчастей].ID_Автомобиля,
                   @groupId = dbo.[Каталог запчастей].[ID_Группы товаров], @description = dbo.[Каталог запчастей].Описание
         FROM      dbo.[Каталог запчастей]
         WHERE     (ID_Брэнда LIKE @brandId and [namepost] like @shortNumber)
-
+        
         IF (@@ROWCOUNT = 0)
             BEGIN
                 INSERT INTO [Каталог запчастей] (ID_Поставщика, ID_брэнда,
@@ -71,14 +72,17 @@ IF (@@ROWCOUNT = 0)
                         @price, @currentUser, 0)
 
                 SET @productId = CAST(SCOPE_IDENTITY() AS int)
-
-            END
-
+                
+            END        
+        
     END
 
+DECLARE @arrivalDate datetime
+
 INSERT INTO [Запросы клиентов]
-(ID_Клиента, ID_Запчасти, Заказано, Цена, грн, Без_замен, Интернет, Работник)
-VALUES (@clientId, @productId, @quantity, @price, @priceUah, @onlyOrderedQuantity, 1, @currentUser)
+(ID_Клиента, ID_Запчасти, Заказано, Цена, грн, Без_замен, Интернет, Работник, Дата_прихода)
+VALUES (@clientId, @productId, @quantity, @price, @priceUah, @onlyOrderedQuantity, 1, 
+        @currentUser, dbo.GetArrivalDate(@vendorId, @term))
 
 
 SELECT
@@ -110,3 +114,6 @@ FROM   dbo.Запросы
 WHERE [ID_Запроса] = @@IDENTITY
 
 END
+GO
+
+
