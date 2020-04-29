@@ -14,7 +14,7 @@ import {Helmet} from "react-helmet";
 import GroupedTable from "./GroupedTable";
 import {getByNumber, getByBrand} from "../../../redux/actions/searchActions";
 import Typography from "@material-ui/core/Typography";
-import {removeAllSpecialCharacters, removeSpecialCharacters} from "../../../util/Search";
+import {htmlDecode, htmlEncode, removeAllSpecialCharacters, removeSpecialCharacters} from "../../../util/Search";
 import GetComparator from "../../../util/GetComparator";
 import StableSort from "../../../util/StableSort";
 
@@ -88,7 +88,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
         } else if((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand)) {
             getByNumber(numb);
         } else if(product.productsGrouped.length === 1 && !brand) {
-            history.push(`/manager/search/${client.vip}/${removeSpecialCharacters(product.productsGrouped[0].number)}/${product.productsGrouped[0].brand.replace('/','%2F')}`)
+            history.push(`/manager/search/${client.vip}/${removeSpecialCharacters(product.productsGrouped[0].number)}/${htmlEncode(product.productsGrouped[0].brand)}`)
         }
     }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, client.vip, history,
         product.criteria.numb, client.id, product.productsGrouped]);
@@ -97,7 +97,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
     let title = `Autoparts - Клієнт - ${client.vip}`;
 
     if(brand) {
-        const restoredBrand = brand.replace('%2F', '/');
+        const restoredBrand = htmlDecode(brand);
         title += ` - ${restoredBrand}`;
     }
     if(numb) {
@@ -108,7 +108,7 @@ function Content({auth, client, product, getByBrand, getByNumber, ...props}) {
 
 
     if(product.products.length > 0 && brand) {
-        const restoredBrand = brand.replace('%2F', '/');
+        const restoredBrand = htmlDecode(brand);
         generalRows = product.products.filter(x => x.available > 0 || x.reserve > 0);
         vendorRows = product.products.filter(x => x.available === 0 && x.brand === restoredBrand && x.reserve === 0 &&
             removeAllSpecialCharacters(x.number) === removeAllSpecialCharacters(numb));
