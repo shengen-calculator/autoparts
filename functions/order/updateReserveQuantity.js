@@ -1,5 +1,7 @@
 const functions = require('firebase-functions');
 const util = require('../util');
+const sql = require('mssql');
+const config = require('../mssql.connection').config;
 
 const updateReserveQuantity = async (data, context) => {
 
