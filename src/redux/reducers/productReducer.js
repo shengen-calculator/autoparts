@@ -48,6 +48,23 @@ export default function productReducer(state = initialState.product, action) {
                 }
             };
 
+        case types.DELETE_RESERVES_REQUEST:
+            return {
+                ...state,
+                products: state.products.map((item, index) => {
+                    if (action.params.reserves.some(x => item.id === x.productId)) {
+                        const reserve = action.params.reserves.find(x => x.productId === item.id);
+                        return {
+                            ...item,
+                            available: item.available + reserve.quantity,
+                            reserve: item.reserve - reserve.quantity
+                        }
+                    }
+                    return item
+                })
+            };
+
+
         case types.CREATE_RESERVE_REQUEST:
             return {
                 ...state,

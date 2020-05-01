@@ -47,7 +47,7 @@ function Content({client, calls, getOrders, getReserves, deleteOrdersByIds, dele
     };
 
     const handleReserveDeleteClick = (selected) => {
-        deleteReservesByIds(selected);
+        deleteReservesByIds({selected, reserves: client.reserves.filter(x => selected.includes(x.id))});
     };
 
     useEffect(() => {
