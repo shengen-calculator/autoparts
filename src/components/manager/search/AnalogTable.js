@@ -9,7 +9,7 @@ const headCells = [
     { id: 'brand', numeric: false, disablePadding: false, label: 'Бренд' },
     { id: 'number', numeric: false, disablePadding: false, label: 'Номер' },
     { id: 'description', numeric: false, disablePadding: false, label: 'Опис' },
-    { id: 'retail', numeric: true, disablePadding: false, label: 'Роздрібна' },
+    { id: 'retail', numeric: true, disablePadding: false, label: 'Роздріб' },
     { id: 'cost', numeric: true, disablePadding: false, label: 'Ціна' },
     { id: 'order', numeric: true, disablePadding: false, label: 'Замовлення' },
     { id: 'term', numeric: false, disablePadding: false, label: 'Термін' },
