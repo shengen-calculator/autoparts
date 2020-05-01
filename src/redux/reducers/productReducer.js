@@ -53,11 +53,12 @@ export default function productReducer(state = initialState.product, action) {
                 ...state,
                 products: state.products.map((item, index) => {
                     if (action.params.reserves.some(x => item.id === x.productId)) {
-                        const reserve = action.params.reserves.find(x => x.productId === item.id);
+                        const reserves = action.params.reserves.filter(x => x.productId === item.id);
+                        const quantity = reserves.reduce((a,b) => a + b.quantity, 0);
                         return {
                             ...item,
-                            available: item.available + reserve.quantity,
-                            reserve: item.reserve - reserve.quantity
+                            available: item.available + quantity,
+                            reserve: item.reserve - quantity
                         }
                     }
                     return item
