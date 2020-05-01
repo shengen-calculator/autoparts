@@ -74,7 +74,6 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                         </Grid> : row.term
                 }
             </TableCell>
-            <TableCell align="left" name="order" style={pointer}>{row.date}</TableCell>
             <TableCell align="center" name="info" style={pointer}>
                 <HtmlTooltip placement="top-start" title={
                     <React.Fragment>
@@ -82,6 +81,8 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                         <Typography color="inherit">{row.orderTime}</Typography>
                         Час прийому товару:
                         <Typography color="inherit">{row.arrivalTime}</Typography>
+                        Дата оновлення:
+                        <Typography color="inherit">{row.date}</Typography>
                     </React.Fragment>
                 }>
                     <InfoIcon/>

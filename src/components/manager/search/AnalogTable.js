@@ -13,7 +13,6 @@ const headCells = [
     { id: 'cost', numeric: true, disablePadding: false, label: 'Ціна' },
     { id: 'order', numeric: true, disablePadding: false, label: 'Замовлення' },
     { id: 'term', numeric: false, disablePadding: false, label: 'Термін' },
-    { id: 'date', numeric: false, disablePadding: false, label: 'Дата оновл.' },
     { id: 'info', numeric: false, disablePadding: false, label: 'Інфо', align: 'center' }
 ];
 
