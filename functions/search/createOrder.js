@@ -7,7 +7,7 @@ const createOrder = async (data, context) => {
 
     util.CheckForManagerRole(context);
 
-    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || !data.clientId || typeof data.isEuroClient === 'undefined' || typeof data.onlyOrderedQuantity === 'undefined') {
+    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || !data.vip || !data.clientId || typeof data.isEuroClient === 'undefined' || typeof data.onlyOrderedQuantity === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
             'The function must be called with the next arguments "ProductId, Quantity, Price, ClientId, IsEuroClient, OnlyOrderedQuantity"');
     }
@@ -23,7 +23,7 @@ const createOrder = async (data, context) => {
             .input('isEuroClient', sql.Bit, data.isEuroClient)
             .input('quantity', sql.Int, data.quantity)
             .input('onlyOrderedQuantity', sql.Bit, data.onlyOrderedQuantity)
-            .input('currentUser', sql.VarChar(20), context.auth.token.email)
+            .input('currentUser', sql.VarChar(20), data.vip)
             .execute('sp_web_addorder');
         return result.recordset;
     } catch (err) {
