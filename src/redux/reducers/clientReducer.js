@@ -54,7 +54,7 @@ export default function clientReducer(state = initialState.client, action) {
         case types.DELETE_RESERVES_REQUEST:
             return {
                 ...state,
-                reserves: state.reserves.filter((item) => !action.ids.includes(item.id))
+                reserves: state.reserves.filter((item) => !action.params.selected.includes(item.id))
             };
 
         case types.UPDATE_ORDER_QUANTITY_REQUEST:

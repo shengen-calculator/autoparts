@@ -20,8 +20,8 @@ export function deleteOrdersByIds(ids) {
     return { type: types.DELETE_ORDERS_REQUEST, ids};
 }
 
-export function deleteReservesByIds(ids) {
-    return { type: types.DELETE_RESERVES_REQUEST, ids};
+export function deleteReservesByIds(params) {
+    return { type: types.DELETE_RESERVES_REQUEST, params};
 }
 
 export function updateReserveQuantity(params) {

@@ -17,9 +17,9 @@ class FunctionsApi {
         const func = functions.httpsCallable('order-deleteOrdersByIds');
         return func(ids);
     }
-    static deleteReservesByIds(ids){
+    static deleteReservesByIds({selected}){
         const func = functions.httpsCallable('order-deleteReservesByIds');
-        return func(ids);
+        return func(selected);
     }
     static updateReserveQuantity({reserveId, quantity}){
         const func = functions.httpsCallable('order-updateReserveQuantity');

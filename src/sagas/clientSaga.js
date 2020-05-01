@@ -55,7 +55,7 @@ export function* deleteOrders(action) {
 export function* deleteReserves(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(FunctionsApi.deleteReservesByIds, action.ids);
+        const {data} = yield call(FunctionsApi.deleteReservesByIds, action.params);
         yield put({type: types.DELETE_RESERVES_SUCCESS, reserves: data});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
