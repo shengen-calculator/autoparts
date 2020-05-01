@@ -48,7 +48,8 @@ function OrderDialog(props) {
                 price: Number(order.price),
                 onlyOrderedQuantity: order.onlyOrderedQuantity,
                 isEuroClient: client.isEuroClient,
-                clientId: client.id
+                clientId: client.id,
+                vip: client.vip
             });
             onClose();
         }
