@@ -62,7 +62,7 @@ function Content({stat, getStatisticByClient, getClientStatistic, getQueryStatis
     return (
         <Paper className={classes.paper}>
             <Helmet>
-                <title>Autoparts - Статистика Клієнта - {clientVip}</title>
+                <title>Fenix - Статистика Клієнта - {clientVip}</title>
             </Helmet>
             <div className={classes.contentWrapper}>
                 <Grid container spacing={2} alignItems="center">

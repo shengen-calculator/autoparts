@@ -51,7 +51,7 @@ function Content({stat, getVendorStatistic, getStatisticByVendor, ...props}) {
     return (
         <Paper className={classes.paper}>
             <Helmet>
-                <title>Autoparts - Статистика Постачальника - {vendorName}</title>
+                <title>Fenix - Статистика Постачальника - {vendorName}</title>
             </Helmet>
             <div className={classes.contentWrapper}>
                 {isTableShown ?

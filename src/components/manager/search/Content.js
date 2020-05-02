@@ -94,7 +94,7 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
         product.criteria.numb, client.id, product.productsGrouped]);
 
 
-    let title = `Autoparts - Клієнт - ${client.vip}`;
+    let title = `Fenix - Клієнт - ${client.vip}`;
 
     if(brand) {
         const restoredBrand = htmlDecode(brand);

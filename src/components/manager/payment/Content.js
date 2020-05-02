@@ -53,7 +53,7 @@ function Content({client, calls, getPayments, ...props}) {
         <div className={classes.app}>
             <Header onDrawerToggle={handleDrawerToggle}/>
             <Helmet>
-                <title>Autoparts - План платежів - {client.vip}</title>
+                <title>Fenix - План платежів - {client.vip}</title>
             </Helmet>
             <main className={classes.main}>
                 {calls === 0 &&
