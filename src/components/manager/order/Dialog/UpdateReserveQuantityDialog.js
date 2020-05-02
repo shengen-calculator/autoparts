@@ -35,7 +35,8 @@ function UpdateReserveQuantityDialog(props) {
             updateReserveQuantity({
                 reserveId: selected.id,
                 quantity: Number(reserveUpdate.quantity),
-                productId: selected.productId
+                productId: selected.productId,
+                prevQuantity: selected.quantity
             });
             onClose();
         }
