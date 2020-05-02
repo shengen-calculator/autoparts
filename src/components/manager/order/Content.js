@@ -67,7 +67,7 @@ function Content({client, calls, getOrders, getReserves, deleteOrdersByIds, dele
     return (
         <div className={classes.app}>
             <Helmet>
-                <title>Autoparts - Замовлення - {client.vip}</title>
+                <title>Fenix - Замовлення - {client.vip}</title>
             </Helmet>
             <Header onDrawerToggle={handleDrawerToggle}/>
             <main className={classes.main}>
