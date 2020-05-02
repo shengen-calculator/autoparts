@@ -44,8 +44,8 @@ export function* getReserves(action) {
 export function* deleteOrders(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(FunctionsApi.deleteOrdersByIds, action.ids);
-        yield put({type: types.DELETE_ORDERS_SUCCESS, orders: data});
+        yield call(FunctionsApi.deleteOrdersByIds, action.ids);
+        yield put({type: types.DELETE_ORDERS_SUCCESS});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.DELETE_ORDERS_FAILURE, text: e.message});
@@ -55,8 +55,8 @@ export function* deleteOrders(action) {
 export function* deleteReserves(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(FunctionsApi.deleteReservesByIds, action.params);
-        yield put({type: types.DELETE_RESERVES_SUCCESS, reserves: data});
+        yield call(FunctionsApi.deleteReservesByIds, action.params);
+        yield put({type: types.DELETE_RESERVES_SUCCESS});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.DELETE_RESERVES_FAILURE, text: e.message});
@@ -66,8 +66,8 @@ export function* deleteReserves(action) {
 export function* updateOrderQuantity(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(FunctionsApi.updateOrderQuantity, action.params);
-        yield put({type: types.UPDATE_ORDER_QUANTITY_SUCCESS, orders: data});
+        yield call(FunctionsApi.updateOrderQuantity, action.params);
+        yield put({type: types.UPDATE_ORDER_QUANTITY_SUCCESS});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.UPDATE_ORDER_QUANTITY_FAILURE, text: e.message});
@@ -77,8 +77,8 @@ export function* updateOrderQuantity(action) {
 export function* updateReserveQuantity(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(FunctionsApi.updateReserveQuantity, action.params);
-        yield put({type: types.UPDATE_RESERVE_QUANTITY_SUCCESS, reserves: data});
+        yield call(FunctionsApi.updateReserveQuantity, action.params);
+        yield put({type: types.UPDATE_RESERVE_QUANTITY_SUCCESS, params: action.params});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.UPDATE_RESERVE_QUANTITY_FAILURE, params: action.params});

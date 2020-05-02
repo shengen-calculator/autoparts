@@ -65,6 +65,23 @@ export default function productReducer(state = initialState.product, action) {
                 })
             };
 
+        case types.UPDATE_RESERVE_QUANTITY_SUCCESS:
+            return {
+                ...state,
+                products: state.products.map((item) => {
+                    if (item.id !== action.params.productId) {
+                        // This isn't the item we care about - keep it as-is
+                        return item
+                    }
+
+                    // Otherwise, this is the one we want - return an updated value
+                    return {
+                        ...item,
+                        available: item.available + action.params.prevQuantity - action.params.quantity,
+                        reserve: item.reserve + action.params.quantity - action.params.prevQuantity
+                    }
+                })
+            };
 
         case types.CREATE_RESERVE_REQUEST:
             return {
