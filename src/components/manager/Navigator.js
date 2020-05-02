@@ -14,6 +14,7 @@ import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import PaymentIcon from '@material-ui/icons/Payment';
 import {NavLink} from "react-router-dom";
+import logo from "../../logo.png";
 
 const categories = [
     {
@@ -80,7 +81,7 @@ function Navigator(props) {
         <Drawer variant="permanent" {...other}>
             <List disablePadding>
                 <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
-                    Fenix.Parts
+                    <img src={logo} width={143} alt='logo'/>
                 </ListItem>
                 <ListItem className={clsx(classes.item, classes.itemCategory)}>
                     <ListItemIcon className={classes.itemIcon}>
