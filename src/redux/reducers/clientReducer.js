@@ -102,6 +102,20 @@ export default function clientReducer(state = initialState.client, action) {
                 })
             };
 
+        case types.UPDATE_RESERVE_QUANTITY_FAILURE:
+            return {
+                ...state,
+                reserves: state.reserves.map((item) => {
+                    if (item.id !== action.params.reserveId) {
+                        return item
+                    }
+                    return {
+                        ...item,
+                        quantity: action.params.prevQuantity
+                    }
+                })
+            };
+
         case types.CLIENT_DOESNT_EXIST:
             return {
                 ...state,
