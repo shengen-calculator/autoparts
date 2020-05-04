@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
         height: '100vh',
     },
     image: {
-        backgroundImage: 'url(https://firebasestorage.googleapis.com/v0/b/autoparts-95d56.appspot.com/o/photo-1558981396-5fcf84bdf14d.jpeg?alt=media&token=bf1d3351-f7de-4f2f-ad6d-46889852ddae)',
+        backgroundImage: 'url(https://firebasestorage.googleapis.com/v0/b/autoparts-95d56.appspot.com/o/alessio-lin--6LYjG0H32E-unsplash.jpg?alt=media&token=520f22e9-ac54-4dd4-863f-0b75822906e8)',
         backgroundRepeat: 'no-repeat',
         backgroundColor:
             theme.palette.type === 'dark' ? theme.palette.grey[900] : theme.palette.grey[50],
