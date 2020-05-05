@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 const sql = require('mssql');
 const config = require('../mssql.connection').config;
 
-const managers = ['puhach.alex@fenix.parts', 'ucin.sergiy@fenix.parts', 'test@fenix.parts'];
+const managers = ['puhach.alex@fenix.parts', 'ucin.sergiy@fenix.parts', 'vasyl@fenix.parts'];
 
 const processSignUp = async (user) => {
     // Check if user meets role criteria.
@@ -26,13 +26,15 @@ const processSignUp = async (user) => {
             emailVerified = true;
             customClaims = {
                 role: RoleEnum.Manager,
-                vip: client.vip
+                vip: client.vip,
+                clientId: client.id
             }
         } else if (client && client.isWebUser) {
             emailVerified = true;
             customClaims = {
                 role: RoleEnum.Client,
-                vip: client.vip
+                vip: client.vip,
+                clientId: client.id
             }
         }
         console.log(client);

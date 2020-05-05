@@ -1,5 +1,5 @@
 CREATE PROCEDURE [dbo].[sp_web_getproductsbybrand]
-	@number varchar(25), @brand varchar(18), @clientId int
+	@number varchar(25), @brand varchar(18), @clientId int, @isVendorShown bit
 AS
 BEGIN
 	DECLARE @analogId INT, @productId INT,
@@ -14,10 +14,13 @@ BEGIN
 	FROM getPartsByNumber(@number)
 	WHERE brand LIKE @brand
 
-    SET @cols = N'ID_Запчасти AS id
-		,TRIM(Брэнд) AS brand
-		,TRIM([Сокращенное название]) AS vendor
-		,TRIM([Время заказа]) as orderTime
+    SET @cols = N'ID_Запчасти AS id'
+
+    IF(@isVendorShown = 1)
+		SET @cols = @cols + N',TRIM([Сокращенное название]) AS vendor'
+
+    SET @cols = @cols + N',TRIM([Время заказа]) as orderTime
+        ,TRIM(Брэнд) AS brand
 	    ,TRIM([Время прихода]) as arrivalTime
 		,TRIM([Номер запчасти]) AS number
 		,Цена * ' + STR(dbo.GetUahRate(), 9, 2) + N' AS retail
@@ -46,3 +49,5 @@ BEGIN
     exec sp_executesql @query
 
 END
+go
+
