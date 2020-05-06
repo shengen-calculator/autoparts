@@ -6,7 +6,7 @@ const config = require('../mssql.connection').config;
 
 const searchByNumber = async (data, context) => {
 
-    util.CheckForManagerRole(context);
+    util.checkForClientRole(context);
     const special = ['@', '#', '_', '&', '-', '+', '(' , ')', '/', '*', '"', "'", ':', ';', '!', '?', '=', '[', ']', '©', '|', '\\', '%', ' ' ];
 
     if (!data) {
