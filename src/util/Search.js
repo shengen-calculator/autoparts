@@ -13,7 +13,7 @@ export const removeAllSpecialCharacters = (data) => {
         const tokens = data.split(el);
         data = tokens.join('');
     });
-    return data;
+    return data.toLowerCase();
 };
 
 export const htmlEncode = (data) => {
