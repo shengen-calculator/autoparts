@@ -9,7 +9,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {withStyles} from "@material-ui/core/styles";
 import {logoutRequest} from "../../redux/actions/authenticationActions";
-import ContentStyle from "./statistic/ContentStyle";
+import ContentStyle from "./ContentStyle";
 
 const styles = theme => ContentStyle(theme);
 
