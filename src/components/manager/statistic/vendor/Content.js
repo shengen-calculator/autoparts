@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import MainTable from './MainTable';
 import DetailsTable from './DetailsTable';
-import ContentStyle from "../ContentStyle";
+import ContentStyle from "../../../common/ContentStyle";
 import {connect} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import {getVendorStatistic, getStatisticByVendor} from "../../../../redux/actions/clientActions";

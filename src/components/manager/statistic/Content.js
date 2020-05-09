@@ -22,11 +22,11 @@ import VendorContent from './vendor/Content';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../../PageNotFound";
 import { Link as RouterLink } from 'react-router-dom';
-import LoginToolbar from "../LoginToolbar";
 import SearchToolbar from "../SearchToolbar";
 import Progress from "../../common/Progress";
 import {setStatisticPeriod} from "../../../redux/actions/statisticActions";
 import {connect} from "react-redux";
+import LoginToolbar from "../../common/LoginToolbar";
 
 const styles = theme => ({
     root: {

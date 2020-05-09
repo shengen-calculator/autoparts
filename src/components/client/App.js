@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Switch, Route} from "react-router-dom";
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Navigator from './Navigator';
@@ -9,9 +8,9 @@ import SearchContent from './search/Content';
 import OrderContent from './order/Content';
 import PaymentContent from './payment/Content';
 import StatisticContent from './statistic/Content';
-import Header from './Header';
+import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../PageNotFound";
-import Copyright from "../common/Copyright";
+import {connect} from "react-redux";
 
 const drawerWidth = 256;
 
@@ -25,25 +24,11 @@ const styles = theme => ({
       width: drawerWidth,
       flexShrink: 0,
     },
-  },
-  app: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  main: {
-    flex: 1,
-    padding: theme.spacing(6, 4),
-    background: '#eaeff1',
-  },
-  footer: {
-    padding: theme.spacing(2),
-    background: '#eaeff1',
-  },
+  }
 });
 
-function App(props) {
-  const {classes} = props;
+function App({client, product, ...props}) {
+  const {classes, match} = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -58,40 +43,46 @@ function App(props) {
             <Navigator
                 PaperProps={{style: {width: drawerWidth}}}
                 variant="temporary"
+                vip={client.vip}
+                fullName={client.fullName}
                 open={mobileOpen}
                 onClose={handleDrawerToggle}
             />
           </Hidden>
           <Hidden xsDown implementation="css">
-            <Navigator PaperProps={{style: {width: drawerWidth}}}/>
+            <Navigator
+                PaperProps={{style: {width: drawerWidth}}}
+                vip={client.vip}
+                brand={product.criteria.brand}
+                numb={product.criteria.numb}
+                fullName={client.fullName}
+            />
           </Hidden>
         </nav>
-        <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle}/>
-          <main className={classes.main}>
-            <Switch>
-              <Route path={`/order`}>
-                <OrderContent/>
-              </Route>
-              <Route path={`/statistic`}>
-                <StatisticContent/>
-              </Route>
-              <Route path={`/payment`}>
-                <PaymentContent/>
-              </Route>
-              <Route exact path={`/search`}>
-                <SearchContent/>
-              </Route>
-              <Route exact path={`/`}>
-                <SearchContent/>
-              </Route>
-              <Route component={PageNotFound}/>
-            </Switch>
-          </main>
-          <footer className={classes.footer}>
-            <Copyright/>
-          </footer>
-        </div>
+        <Switch>
+          <Route path={`/order`}>
+            <OrderContent handleDrawerToggle={handleDrawerToggle}/>
+          </Route>
+          <Route path={`/statistic`}>
+            <StatisticContent match={match} handleDrawerToggle={handleDrawerToggle}/>
+          </Route>
+          <Route path={`/payment`}>
+            <PaymentContent handleDrawerToggle={handleDrawerToggle}/>
+          </Route>
+          <Route exact path={`/search`}>
+            <SearchContent handleDrawerToggle={handleDrawerToggle}/>
+          </Route>
+          <Route exact path={`/search/:numb`}>
+            <SearchContent handleDrawerToggle={handleDrawerToggle}/>
+          </Route>
+          <Route exact path={`/search/:numb/:brand`}>
+            <SearchContent handleDrawerToggle={handleDrawerToggle}/>
+          </Route>
+          <Route exact path={`${match.path}/`}>
+            <SearchContent handleDrawerToggle={handleDrawerToggle}/>
+          </Route>
+          <Route component={PageNotFound}/>
+        </Switch>
       </div>
   );
 }
@@ -100,4 +91,11 @@ App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(App);
+function mapStateToProps(state) {
+  return {
+    client: state.client,
+    product: state.product
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(App));

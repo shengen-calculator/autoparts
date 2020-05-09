@@ -24,19 +24,6 @@ function SearchToolbar({client, ...props}) {
 
     let history = useHistory();
 
-    function loadClientKeyPress(target) {
-        if(target.charCode === 13 || target.type === 'click') {
-            const { vip } = criteria;
-            setCriteria(prev => ({
-                ...prev,
-                vip: ''
-            }));
-            if(vip) {
-                history.push(`/manager/search/${vip}`);
-            }
-        }
-    }
-
     function searchKeyPress(target) {
         if(target.charCode === 13 || target.type === 'click') {
             const { number } = criteria;
@@ -46,7 +33,7 @@ function SearchToolbar({client, ...props}) {
             }));
             if(number) {
                 const shortNumber = removeSpecialCharacters(number);
-                history.push(`/manager/search/${client.vip}/${shortNumber}`);
+                history.push(`/search/${shortNumber}`);
             }
         }
     }
@@ -89,29 +76,9 @@ function SearchToolbar({client, ...props}) {
                         </IconButton>
                     </Tooltip>
                 </Grid>
-                <Grid item>
-                    <SearchIcon className={classes.block} color="inherit"/>
-                </Grid>
                 <Grid item xs>
-                    <TextField
-                        fullWidth
-                        placeholder="Введіть код клієнта"
-                        onChange={handleChange}
-                        onKeyPress={loadClientKeyPress}
-                        name="vip"
-                        value={criteria.vip}
-                        InputProps={{
-                            className: classes.searchInput,
-                        }}
-                    />
                 </Grid>
-                <Grid item>
-                    <Tooltip title="Розпочати пошук">
-                        <IconButton onClick={loadClientKeyPress}>
-                            <SendIcon className={classes.block} color="inherit"/>
-                        </IconButton>
-                    </Tooltip>
-                </Grid>
+
             </Grid>
         </Toolbar>
     )

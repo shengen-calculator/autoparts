@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import {withStyles} from '@material-ui/core/styles';
 import SearchToolbar from "./SearchToolbar";
-import LoginToolbar from "./LoginToolbar";
 import Progress from "../common/Progress";
 import {useHistory, useParams} from "react-router-dom";
 import {getClient} from "../../redux/actions/clientActions";
 import {connect} from "react-redux";
+import LoginToolbar from "../common/LoginToolbar";
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
