@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import ClientPage from "./client/App";
 import ManagerPage from "./manager/App";
-import PageNotFound from "./PageNotFound";
 import Auth from "./auth/Auth";
 import {createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { ukUA } from '@material-ui/core/locale';
@@ -126,11 +125,9 @@ function App({auth}) {
         <ThemeProvider theme={theme}>
             <div>
                 <Switch>
-                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager, RoleEnum.Client]} exact path="/" component={ClientPage}/>
-                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager, RoleEnum.Client]}  path="/client" component={ClientPage}/>
                     <PrivateRoute role={auth.role} only={[RoleEnum.Manager]}  path="/manager" component={ManagerPage}/>
                     <Route path="/auth" component={Auth}/>
-                    <Route component={PageNotFound}/>
+                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager, RoleEnum.Client]} path="/" component={ClientPage}/>
                 </Switch>
             </div>
         </ThemeProvider>
