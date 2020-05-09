@@ -1,4 +1,4 @@
-import EnhancedTable from "../../common/EnhancedTable";
+import EnhancedTable from "../EnhancedTable";
 import {TitleIconEnum} from "../../../util/Enums";
 import React from "react";
 import TableRow from "@material-ui/core/TableRow";
