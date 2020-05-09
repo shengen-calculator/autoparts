@@ -22,7 +22,7 @@ const categories = [
         children: [
             { id: 'Пошук', icon: <BuildIcon />, path: 'search', isVipSpecified: true, isSearchCriteriaSpecified: true },
             { id: 'Замовлення', icon: <DnsRoundedIcon />, path: 'order', isVipSpecified: true },
-            { id: 'Оплата', icon: <PaymentIcon />, path: 'payment', isVipSpecified: true},
+            { id: 'Фінанси', icon: <PaymentIcon />, path: 'payment', isVipSpecified: true},
         ],
     },
     {

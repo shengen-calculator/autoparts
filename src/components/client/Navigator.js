@@ -10,7 +10,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import BuildIcon from '@material-ui/icons/Build';
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
+import HistoryIcon from '@material-ui/icons/History';
 import PaymentIcon from '@material-ui/icons/Payment';
 import {NavLink} from "react-router-dom";
 import logo from "../../logo.png";
@@ -19,17 +19,12 @@ const categories = [
     {
         id: 'Робота',
         children: [
-            { id: 'Пошук', icon: <BuildIcon />, path: 'search', isVipSpecified: true, isSearchCriteriaSpecified: true },
-            { id: 'Замовлення', icon: <DnsRoundedIcon />, path: 'order', isVipSpecified: true },
-            { id: 'Оплата', icon: <PaymentIcon />, path: 'payment', isVipSpecified: true},
+            { id: 'Пошук', icon: <BuildIcon />, path: 'search', isSearchCriteriaSpecified: true },
+            { id: 'Замовлення', icon: <DnsRoundedIcon />, path: 'order' },
+            { id: 'Фінанси', icon: <PaymentIcon />, path: 'payment'},
+            { id: 'Історія запитів', icon: <HistoryIcon />, path: 'statistic'},
         ],
-    },
-    {
-        id: 'Аналітика',
-        children: [
-            { id: 'Статистика', icon: <EqualizerIcon />, path: 'statistic', isVipSpecified: false },
-        ],
-    },
+    }
 ];
 
 const styles = theme => ({
