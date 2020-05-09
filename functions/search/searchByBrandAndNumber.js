@@ -5,7 +5,7 @@ const config = require('../mssql.connection').config;
 const searchByBrandAndNumber = async (data, context) => {
 
     if (data && data.clientId) {
-        util.CheckForManagerRole(context);
+        util.checkForManagerRole(context);
     } else {
         util.checkForClientRole(context);
     }
