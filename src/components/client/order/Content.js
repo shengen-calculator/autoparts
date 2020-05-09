@@ -80,6 +80,7 @@ function Content({client, calls, getOrders, getReserves, ...props}) {
                                             shipmentDate: el.shipmentDate,
                                             euro: el.euro,
                                             uah: el.uah,
+                                            status: el.status,
                                             price: client.isEuroClient ? el.euro : el.uah
                                         }
                                     })} isEuroClient={client.isEuroClient}
