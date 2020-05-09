@@ -5,7 +5,7 @@ const config = require('../mssql.connection').config;
 
 const createReserve = async (data, context) => {
 
-    util.CheckForManagerRole(context);
+    util.checkForManagerRole(context);
 
     if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || typeof data.isEuroClient === 'undefined' || !data.clientId ) {
         throw new functions.https.HttpsError('invalid-argument',

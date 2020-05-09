@@ -3,7 +3,7 @@ const util = require('../util');
 
 const getByAnalog = async (data, context) => {
 
-    util.CheckForManagerRole(context);
+    util.checkForManagerRole(context);
 
     if (!data) {
         throw new functions.https.HttpsError('invalid-argument',

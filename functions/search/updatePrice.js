@@ -3,7 +3,7 @@ const util = require('../util');
 
 const updatePrice = async (data, context) => {
 
-    util.CheckForManagerRole(context);
+    util.checkForManagerRole(context);
 
     if (!data || !data.productId || !data.price || !data.discount || !data.retail) {
         throw new functions.https.HttpsError('invalid-argument',
