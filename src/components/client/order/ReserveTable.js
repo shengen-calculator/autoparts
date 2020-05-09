@@ -16,8 +16,7 @@ const headCells = [
     {id: 'number', numeric: false, disablePadding: false, label: 'Номер'},
     {id: 'description', numeric: false, disablePadding: false, label: 'Опис'},
     {id: 'quantity', numeric: true, disablePadding: false, label: 'К-сть'},
-    {id: 'euro', numeric: true, disablePadding: false, label: 'Євро'},
-    {id: 'uah', numeric: true, disablePadding: false, label: 'Грн'},
+    {id: 'price', numeric: true, disablePadding: false, label: 'Ціна'},
     {id: 'note', numeric: false, disablePadding: false, label: 'Примітка'},
     {id: 'orderDate', numeric: false, disablePadding: false, label: 'Замовл.'},
     {id: 'date', numeric: false, disablePadding: false, label: 'Дата'},
@@ -41,8 +40,7 @@ function tableRow(row, index, isSelected) {
             <TableCell align="right" name="reserved" >
                 {row.quantity}
             </TableCell>
-            <TableCell align="right">{row.euro.toFixed(2)}</TableCell>
-            <TableCell align="right">{row.uah.toFixed(2)}</TableCell>
+            <TableCell align="right">{row.price.toFixed(2)}</TableCell>
             <TableCell align="left">{row.note}</TableCell>
             <TableCell align="left">{row.orderDate}</TableCell>
             <TableCell align="left">{row.date}</TableCell>

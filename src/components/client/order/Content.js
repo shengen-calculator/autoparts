@@ -68,10 +68,38 @@ function Content({client, calls, getOrders, getReserves, ...props}) {
                         {isOrderTablesShown || isReserveTablesShown ?
                             <React.Fragment>
                                 {isOrderTablesShown && <OrderTable
-                                    orders={client.orders} isEuroClient={client.isEuroClient}
+                                    orders={client.orders.map(el => {
+                                        return {
+                                            brand: el.brand,
+                                            number: el.number,
+                                            ordered: el.ordered,
+                                            description: el.description,
+                                            approved: el.approved,
+                                            note: el.note,
+                                            orderDate: el.orderDate,
+                                            shipmentDate: el.shipmentDate,
+                                            euro: el.euro,
+                                            uah: el.uah,
+                                            price: client.isEuroClient ? el.euro : el.uah
+                                        }
+                                    })} isEuroClient={client.isEuroClient}
                                      />}
                                 {isReserveTablesShown && <ReserveTable
-                                    reserves={client.reserves} isEuroClient={client.isEuroClient}
+                                    reserves={client.reserves.map(el => {
+                                        return {
+                                            brand: el.brand,
+                                            number: el.number,
+                                            quantity: el.quantity,
+                                            description: el.description,
+                                            note: el.note,
+                                            orderDate: el.orderDate,
+                                            price: client.isEuroClient ? el.euro : el.uah,
+                                            euro: el.euro,
+                                            uah: el.uah,
+                                            date: el.date,
+                                            source: el.source
+                                        }
+                                    })} isEuroClient={client.isEuroClient}
                                      />}
                             </React.Fragment>
                             :
