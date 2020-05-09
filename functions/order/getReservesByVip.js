@@ -5,11 +5,11 @@ const config = require('../mssql.connection').config;
 
 const getReservesByVip = async (data, context) => {
 
-    util.CheckForManagerRole(context);
 
-    if (!data) {
-        throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with one argument "vip"');
+    if (data) {
+        util.checkForManagerRole(context);
+    } else {
+        util.checkForClientRole(context);
     }
 
 //source
@@ -20,7 +20,7 @@ const getReservesByVip = async (data, context) => {
         const pool = await sql.connect(config);
 
         const result = await pool.request()
-            .input('vip', sql.VarChar(10), data)
+            .input('vip', sql.VarChar(10), data ? data : context.auth.token.vip)
             .execute('sp_web_getreservesbyvip');
         return result.recordset;
     } catch (err) {
