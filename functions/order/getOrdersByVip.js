@@ -4,12 +4,13 @@ const sql = require('mssql');
 const config = require('../mssql.connection').config;
 const getOrdersByVip = async (data, context) => {
 
-    util.CheckForManagerRole(context);
 
-    if (!data) {
-        throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with one argument "vip"');
+    if (data) {
+        util.checkForManagerRole(context);
+    } else {
+        util.checkForClientRole(context);
     }
+
 
 //status list
 //подтвержден = 0
@@ -22,7 +23,7 @@ const getOrdersByVip = async (data, context) => {
         const pool = await sql.connect(config);
 
         const result = await pool.request()
-            .input('vip', sql.VarChar(10), data)
+            .input('vip', sql.VarChar(10), data ? data : context.auth.token.vip)
             .execute('sp_web_getordersbyvip');
         return result.recordset;
     } catch (err) {
