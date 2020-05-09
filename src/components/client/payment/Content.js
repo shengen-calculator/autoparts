@@ -5,47 +5,18 @@ import Paper from '@material-ui/core/Paper';
 import {withStyles} from '@material-ui/core/styles';
 import Header from "../Header";
 import Copyright from "../../common/Copyright";
-import PaymentTable from "./PaymentTable";
 import {connect} from "react-redux";
 import Typography from "@material-ui/core/Typography";
-import {useParams} from "react-router-dom";
 import {getPayments} from "../../../redux/actions/clientActions";
 import {Helmet} from "react-helmet";
+import PaymentTable from "../../common/Tables/PaymentTable";
+import PaymentStyle from "../../common/Tables/PaymentStyle";
 
-const styles = theme => ({
-    paper: {
-        margin: 'auto',
-        overflow: 'hidden',
-        maxWidth: 650,
-    },
-    app: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    contentWrapper: {
-        margin: '40px 16px',
-    },
-    main: {
-        flex: 1,
-        padding: theme.spacing(1, 2),
-        background: '#eaeff1'
-    },
-    footer: {
-        padding: theme.spacing(4),
-        background: '#eaeff1'
-    }
-});
+
+const styles = theme => PaymentStyle(theme);
 
 function Content({client, calls, getPayments, ...props}) {
     const {classes, handleDrawerToggle} = props;
-    let {vip} = useParams();
-
-    useEffect(() => {
-        if(!client.isPaymentsLoaded && vip === client.vip) {
-            getPayments(vip);
-        }
-    }, [client.payments, client.isPaymentsLoaded, client.vip, vip, getPayments]);
 
     const isTableShown = client && client.payments && client.payments.length > 0;
 
