@@ -9,6 +9,7 @@ CREATE PROCEDURE sp_web_addorder
 AS
 BEGIN
 DECLARE @priceUah decimal(9,2)
+SET DATEFIRST 1
 
 IF(@isEuroClient = 1)
     BEGIN
