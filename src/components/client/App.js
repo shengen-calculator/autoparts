@@ -43,7 +43,7 @@ const styles = theme => ({
 });
 
 function App(props) {
-  const {classes, match} = props;
+  const {classes} = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
