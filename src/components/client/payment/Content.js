@@ -20,7 +20,7 @@ function Content({client, calls, getPayments, ...props}) {
 
     useEffect(() => {
         if (client.isPaymentsLoaded === false) {
-           getPayments('1533A');
+           getPayments();
         }
     }, [client.isPaymentsLoaded, getPayments]);
 

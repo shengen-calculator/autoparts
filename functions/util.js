@@ -28,5 +28,5 @@ const checkForClientRole = (context) => {
     }
 };
 
-module.exports.CheckForManagerRole = checkForManagerRole;
+module.exports.checkForManagerRole = checkForManagerRole;
 module.exports.checkForClientRole = checkForClientRole;
