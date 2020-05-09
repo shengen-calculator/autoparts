@@ -26,8 +26,7 @@ const headCells = [
     {id: 'description', numeric: false, disablePadding: false, label: 'Опис'},
     {id: 'ordered', numeric: true, disablePadding: false, label: 'Замовлено'},
     {id: 'approved', numeric: true, disablePadding: false, label: 'Підтв'},
-    {id: 'euro', numeric: true, disablePadding: false, label: 'Євро'},
-    {id: 'uah', numeric: true, disablePadding: false, label: 'Грн'},
+    {id: 'price', numeric: true, disablePadding: false, label: 'Ціна'},
     {id: 'note', numeric: false, disablePadding: false, label: 'Примітка'},
     {id: 'orderDate', numeric: false, disablePadding: false, label: 'Замовл.'},
     {id: 'shipmentDate', numeric: false, disablePadding: false, label: 'Доставка'},
@@ -63,8 +62,7 @@ function tableRow(row, index, isSelected, handleClick) {
                 {row.ordered}
             </TableCell>
             <TableCell align="right">{row.approved}</TableCell>
-            <TableCell align="right">{row.euro.toFixed(2)}</TableCell>
-            <TableCell align="right">{row.uah.toFixed(2)}</TableCell>
+            <TableCell align="right">{row.price.toFixed(2)}</TableCell>
             <TableCell align="left">{row.note}</TableCell>
             <TableCell align="left">{row.orderDate}</TableCell>
             <TableCell align="left">{row.shipmentDate}</TableCell>
@@ -84,7 +82,7 @@ export default function OrderTable(props) {
 
     const handleClick = (event, name) => {
         if(event.target.getAttribute("name") === "ordered") {
-            const selected = props.orders.find(x => x.id === name);
+
         } else {
             handleTableClick(event, name, selected, setSelected);
         }
