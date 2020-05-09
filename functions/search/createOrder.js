@@ -5,7 +5,7 @@ const config = require('../mssql.connection').config;
 
 const createOrder = async (data, context) => {
 
-    util.CheckForManagerRole(context);
+    util.checkForManagerRole(context);
 
     if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || !data.vip || !data.clientId || typeof data.isEuroClient === 'undefined' || typeof data.onlyOrderedQuantity === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',

@@ -24,6 +24,7 @@ const getOrdersByVip = async (data, context) => {
 
         const result = await pool.request()
             .input('vip', sql.VarChar(10), data ? data : context.auth.token.vip)
+            .input('isVendorShown', sql.Bit, data ? 1 : 0)
             .execute('sp_web_getordersbyvip');
         return result.recordset;
     } catch (err) {
