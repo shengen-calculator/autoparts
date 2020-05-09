@@ -72,7 +72,7 @@ function Content(props) {
             </AppBar>
             <div className={classes.contentWrapper}>
                 <Typography color="textSecondary" align="center">
-                    No users for this project yet
+                    No STATISTIC for this project yet
                 </Typography>
             </div>
         </Paper>

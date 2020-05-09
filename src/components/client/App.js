@@ -70,19 +70,19 @@ function App(props) {
           <Header onDrawerToggle={handleDrawerToggle}/>
           <main className={classes.main}>
             <Switch>
-              <Route path={`${match.path}/order`}>
+              <Route path={`/order`}>
                 <OrderContent/>
               </Route>
-              <Route path={`${match.path}/statistic`}>
+              <Route path={`/statistic`}>
                 <StatisticContent/>
               </Route>
-              <Route path={`${match.path}/payment`}>
+              <Route path={`/payment`}>
                 <PaymentContent/>
               </Route>
-              <Route exact path={`${match.path}/search`}>
+              <Route exact path={`/search`}>
                 <SearchContent/>
               </Route>
-              <Route exact path={`${match.path}/`}>
+              <Route exact path={`/`}>
                 <SearchContent/>
               </Route>
               <Route component={PageNotFound}/>
