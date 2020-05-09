@@ -18,13 +18,20 @@ const styles = theme => PaymentStyle(theme);
 function Content({client, calls, getPayments, ...props}) {
     const {classes, handleDrawerToggle} = props;
 
+    useEffect(() => {
+        if (client.isPaymentsLoaded === false) {
+           getPayments('1533A');
+        }
+    }, [client.isPaymentsLoaded, getPayments]);
+
+
     const isTableShown = client && client.payments && client.payments.length > 0;
 
     return (
         <div className={classes.app}>
             <Header onDrawerToggle={handleDrawerToggle}/>
             <Helmet>
-                <title>Fenix - План платежів - {client.vip}</title>
+                <title>Fenix - План платежів</title>
             </Helmet>
             <main className={classes.main}>
                 {calls === 0 &&

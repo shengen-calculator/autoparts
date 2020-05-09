@@ -131,8 +131,16 @@ export default function clientReducer(state = initialState.client, action) {
         case types.LOG_OUT_SUCCESS:
             return {
                 ...state,
-                vip:'',
-                fullName: ''
+                vip: '',
+                fullName: '',
+                isEuroClient: false,
+                orders: [],
+                isOrdersLoaded: false,
+                reserves: [],
+                isReservesLoaded: false,
+                payments: [],
+                isPaymentsLoaded: false,
+                isClientNotExists: false
             };
 
         default:
