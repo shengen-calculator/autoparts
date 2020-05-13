@@ -14,8 +14,9 @@ const headCells = [
     { id: 'description', numeric: false, disablePadding: false, label: 'Опис' },
     { id: 'retail', numeric: true, disablePadding: false, label: 'Роздріб' },
     { id: 'cost', numeric: true, disablePadding: false, label: 'Ціна' },
-    { id: 'available', numeric: true, disablePadding: false, label: 'Доступно' },
-    { id: 'reserve', numeric: true, disablePadding: false, label: 'Резерв' }
+    { id: 'available', numeric: true, disablePadding: false, label: 'Доступн.' },
+    { id: 'reserve', numeric: true, disablePadding: false, label: 'Резерв', align: 'left' },
+    { id: 'empty', numeric: false, disablePadding: false, label: '', align: 'center' }
 ];
 
 function tableRow(row, index, isSelected, handleClick, isEur, role) {
@@ -40,16 +41,17 @@ function tableRow(row, index, isSelected, handleClick, isEur, role) {
             selected={isItemSelected}
 
         >
-            {RoleEnum.Manager === role && <TableCell align="left" name="reserve" style={pointer}>{row.vendor}</TableCell>}
-            <TableCell name="reserve" padding="default" component="th" id={labelId} scope="row" style={pointer}>
+            {RoleEnum.Manager === role && <TableCell width="10%" align="left" name="reserve" style={pointer}>{row.vendor}</TableCell>}
+            <TableCell width="10%" name="reserve" padding="default" component="th" id={labelId} scope="row" style={pointer}>
                 {row.brand}
             </TableCell>
-            <TableCell align="left" name="reserve" style={pointer}>{row.number}</TableCell>
-            <TableCell align="left" name="reserve" style={pointer}>{row.description}</TableCell>
-            <TableCell align="right" name="price" style={pointer}>{isEur ? row['retailEur'].toFixed(2) : row.retail.toFixed(2)}</TableCell>
-            <TableCell align="right" name="price" style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>
-            <TableCell align="right" name="reserve" style={pointer}>{row.available}</TableCell>
-            <TableCell align="right" name="reserve" style={pointer}>{row.reserve}</TableCell>
+            <TableCell width="10%" align="left" name="reserve" style={pointer}>{row.number}</TableCell>
+            <TableCell width="30%" align="left" name="reserve" style={pointer}>{row.description}</TableCell>
+            <TableCell width="10%" align="right" name="price" style={pointer}>{isEur ? row['retailEur'].toFixed(2) : row.retail.toFixed(2)}</TableCell>
+            <TableCell width="10%" align="right" name="price" style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>
+            <TableCell width="5%" align="right" name="reserve" style={pointer}>{row.available}</TableCell>
+            <TableCell width="5%" align="left" name="reserve" style={pointer}>{row.reserve}</TableCell>
+            <TableCell width="5%" align="left" name="reserve" style={pointer}></TableCell>
         </StyledTableRow>
     );
 }

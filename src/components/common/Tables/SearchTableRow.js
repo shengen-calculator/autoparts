@@ -17,8 +17,8 @@ export const headCells = [
     {id: 'description', numeric: false, disablePadding: false, label: 'Опис'},
     {id: 'retail', numeric: true, disablePadding: false, label: 'Роздріб'},
     {id: 'cost', numeric: true, disablePadding: false, label: 'Ціна'},
-    {id: 'order', numeric: true, disablePadding: false, label: 'Замовлення'},
-    {id: 'term', numeric: false, disablePadding: false, label: 'Термін'},
+    {id: 'order', numeric: true, disablePadding: false, label: 'Замовл.'},
+    {id: 'term', numeric: true, disablePadding: false, label: 'Термін', align: 'left'},
     {id: 'info', numeric: false, disablePadding: false, label: 'Інфо', align: 'center'}
 ];
 
@@ -47,11 +47,11 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
             key={row.id}
             selected={isItemSelected}
         >
-            {RoleEnum.Manager === role &&  <TableCell align="left" name="order" style={pointer}>{row.vendor}</TableCell>}
-            <TableCell padding="default" component="th" id={labelId} scope="row" style={pointer} name="order">
+            {RoleEnum.Manager === role &&  <TableCell width="10%" align="left" name="order" style={pointer}>{row.vendor}</TableCell>}
+            <TableCell width="10%" padding="default" component="th" id={labelId} scope="row" style={pointer} name="order">
                 {row.brand}
             </TableCell>
-            <TableCell align="left" name="order" style={pointer}>
+            <TableCell width="10%" align="left" name="order" style={pointer}>
                 {
                     row['isGoodQuality'] ?
                         <Grid container name="order">
@@ -66,13 +66,13 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                         </Grid> : row.number
                 }
             </TableCell>
-            <TableCell align="left" name="order" style={pointer}>{row.description}</TableCell>
-            <TableCell align="right" name="price"
+            <TableCell width="30%" align="left" name="order" style={pointer}>{row.description}</TableCell>
+            <TableCell width="10%" align="right" name="price"
                        style={pointer}>{isEur ? row['retailEur'].toFixed(2) : row.retail.toFixed(2)}</TableCell>
-            <TableCell align="right" name="order"
+            <TableCell width="10%" align="right" name="order"
                        style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>
-            <TableCell align="right" name="order" style={pointer}>{row.order}</TableCell>
-            <TableCell align="left" name="order" style={bold} >
+            <TableCell width="5%" align="right" name="order" style={pointer}>{row.order}</TableCell>
+            <TableCell width="5%" align="left" name="order" style={bold} >
                 {
                     row['isGuaranteedTerm'] ?
                         <Grid container name="order">
@@ -87,7 +87,7 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                         </Grid> : row['term']
                 }
             </TableCell>
-            <TableCell align="center" name="info" style={pointer}>
+            <TableCell width="5%" align="center" name="info" style={pointer}>
                 <HtmlTooltip placement="top-start" title={
                     <React.Fragment>
                         Час формування замовлення:
