@@ -82,11 +82,14 @@ function Navigator(props) {
                         <ListItem className={classes.categoryHeader}>
 
                         </ListItem>
-                        {children.map(({id: childId, icon, path}) => (
+                        {children.map(({id: childId, icon, path, isSearchCriteriaSpecified}) => (
                             <ListItem
                                 key={childId}
                                 button
-                                component={NavLink} to={ `/${path}` }
+                                component={NavLink} to={ isSearchCriteriaSpecified ?
+                                (brand ? `/${path}/${numb}/${brand}` :
+                                    `/${path}/${numb}`) :
+                                `/${path}` }
                                 activeClassName={classes.itemActiveItem}
                                 isActive={(match, location) => {
                                     if (match) {
