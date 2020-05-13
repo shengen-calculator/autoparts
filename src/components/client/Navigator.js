@@ -22,7 +22,7 @@ const categories = [
             { id: 'Пошук', icon: <BuildIcon />, path: 'search', isSearchCriteriaSpecified: true },
             { id: 'Замовлення', icon: <DnsRoundedIcon />, path: 'order' },
             { id: 'Фінанси', icon: <PaymentIcon />, path: 'payment'},
-            { id: 'Історія запитів', icon: <HistoryIcon />, path: 'statistic'},
+            { id: 'Звірка', icon: <HistoryIcon />, path: 'statistic'},
         ],
     }
 ];

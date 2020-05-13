@@ -1,9 +1,10 @@
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import EnhancedTable from '../../common/EnhancedTable';
+import EnhancedTable from '../EnhancedTable';
 import {useHistory} from "react-router-dom";
 import {removeSpecialCharacters, htmlEncode} from "../../../util/Search";
+import {RoleEnum} from "../../../util/Enums";
 
 const headCells = [
     { id: 'brand', numeric: false, disablePadding: false, label: 'Бренд' },
@@ -37,14 +38,25 @@ function GroupedTable(props) {
     let history = useHistory();
 
     const handleClick = (event, {brand, number}) => {
-        history.push(`/manager/search/${props.vip}/${number}/${htmlEncode(brand)}`)
+        if(RoleEnum.Manager === props.role) {
+            history.push(`/manager/search/${props.vip}/${number}/${htmlEncode(brand)}`)
+        } else {
+            history.push(`/search/${number}/${htmlEncode(brand)}`)
+        }
+
     };
+
+    if(RoleEnum.Client === props.role) {
+        headCells.splice(0,1);
+    }
+
     return(
         <EnhancedTable
             handleClick={handleClick}
             rows={props.rows}
             headCells={headCells}
             tableRow={tableRow}
+            role={props.role}
             columns={7}
             isFilterShown={false}
             rowsPerPageOptions={[10, 15, 25]}

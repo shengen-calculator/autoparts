@@ -4,67 +4,26 @@ import AppBar from '@material-ui/core/AppBar';
 import Paper from '@material-ui/core/Paper';
 import {useParams, useHistory} from 'react-router-dom';
 import {withStyles} from '@material-ui/core/styles';
-import GeneralTable from "./GeneralTable";
-import VendorTable from "./VendorTable";
-import AnalogTable from "./AnalogTable";
+import GeneralTable from "../../common/Tables/GeneralTable";
+import VendorTable from "../../common/Tables/VendorTable";
+import AnalogTable from "../../common/Tables/AnalogTable";
 import Header from '../Header';
 import Copyright from '../../common/Copyright';
 import {connect} from "react-redux";
 import {Helmet} from "react-helmet";
-import GroupedTable from "./GroupedTable";
+import GroupedTable from "../../common/Tables/GroupedTable";
 import {getByNumber, getByBrand} from "../../../redux/actions/searchActions";
 import Typography from "@material-ui/core/Typography";
-import {htmlDecode, htmlEncode, removeAllSpecialCharacters, removeSpecialCharacters} from "../../../util/Search";
+import {
+    getTables,
+    htmlEncode,
+    removeSpecialCharacters
+} from "../../../util/Search";
 import GetComparator from "../../../util/GetComparator";
 import StableSort from "../../../util/StableSort";
+import SearchContentStyle from "../../common/SearchContentStyle";
 
-
-const drawerWidth = 256;
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        minHeight: '100vh'
-    },
-    drawer: {
-        [theme.breakpoints.up('sm')]: {
-            width: drawerWidth,
-            flexShrink: 0
-        }
-    },
-    app: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    main: {
-        flex: 1,
-        padding: theme.spacing(1, 2),
-        background: '#eaeff1'
-    },
-    footer: {
-        padding: theme.spacing(4),
-        background: '#eaeff1'
-    },
-    paper: {
-        margin: 'auto',
-        overflow: 'hidden'
-    },
-    searchBar: {
-        borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
-    },
-    searchInput: {
-        fontSize: theme.typography.fontSize
-    },
-    block: {
-        display: 'block'
-    },
-    addUser: {
-        marginRight: theme.spacing(1)
-    },
-    contentWrapper: {
-        margin: '40px 16px'
-    }
-});
+const styles = theme => SearchContentStyle(theme);
 
 function Content({auth, calls, client, product, getByBrand, getByNumber, ...props}) {
     const {classes, handleDrawerToggle} = props;
@@ -93,29 +52,8 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
     }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, client.vip, history,
         product.criteria.numb, client.id, product.productsGrouped]);
 
-
-    let title = `Fenix - Клієнт - ${client.vip}`;
-
-    if(brand) {
-        const restoredBrand = htmlDecode(brand);
-        title += ` - ${restoredBrand}`;
-    }
-    if(numb) {
-        title += ` - ${numb}`;
-    }
-    let generalRows = [], vendorRows = [], analogRows = [];
-
-
-
-    if(product.products.length > 0 && brand) {
-        const restoredBrand = htmlDecode(brand);
-        generalRows = product.products.filter(x => x.available > 0 || x.reserve > 0);
-        vendorRows = product.products.filter(x => x.available === 0 && x.brand === restoredBrand && x.reserve === 0 &&
-            removeAllSpecialCharacters(x.number) === removeAllSpecialCharacters(numb));
-        analogRows = product.products.filter(x => x.available === 0 && x.reserve === 0 && (x.brand !== restoredBrand ||
-            removeAllSpecialCharacters(x.number) !== removeAllSpecialCharacters(numb)));
-    }
-
+    const tables = getTables(brand, numb, `Fenix - Клієнт - ${client.vip}`, product.products);
+    const {generalRows, vendorRows, analogRows, title} = tables;
 
     return (<div className={classes.app}>
         <Header onDrawerToggle={handleDrawerToggle}/>
@@ -132,13 +70,13 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
                             Інформація відсутня
                         </Typography> :
                         <React.Fragment>
-                            {product.productsGrouped.length > 1 && <GroupedTable rows={product.productsGrouped} vip={vip}/>}
+                            {product.productsGrouped.length > 1 && <GroupedTable rows={product.productsGrouped} vip={vip} role={auth.role}/>}
                             {generalRows.length > 0 && <GeneralTable rows={StableSort(generalRows,
-                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}/>}
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}/>}
                             {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
-                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}/>}
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}/>}
                             {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
-                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}/>}
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}/>}
                         </React.Fragment>
                     }
                 </div>

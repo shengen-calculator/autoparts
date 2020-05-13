@@ -49,6 +49,7 @@ export default function EnhancedTable(props) {
         total,
         columns,
         isEur,
+        role,
         isFilterShown,
         rowsPerPageOptions,
         handleClick,
@@ -120,7 +121,7 @@ export default function EnhancedTable(props) {
                             {StableSort(rows, GetComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    return tableRow(row, index, isSelected, handleClick, isEur)
+                                    return tableRow(row, index, isSelected, handleClick, isEur, role)
                                 })}
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>

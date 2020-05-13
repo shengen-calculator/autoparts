@@ -1,86 +1,101 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
-import RefreshIcon from '@material-ui/icons/Refresh';
+import {useParams, useHistory} from 'react-router-dom';
+import {withStyles} from '@material-ui/core/styles';
+import Header from '../Header';
+import Copyright from '../../common/Copyright';
+import {connect} from "react-redux";
+import {Helmet} from "react-helmet";
+import {getByNumber, getByBrand} from "../../../redux/actions/searchActions";
+import Typography from "@material-ui/core/Typography";
+import {
+    getTables,
+    htmlEncode,
+    removeSpecialCharacters
+} from "../../../util/Search";
+import GetComparator from "../../../util/GetComparator";
+import StableSort from "../../../util/StableSort";
+import GeneralTable from "../../common/Tables/GeneralTable";
+import VendorTable from "../../common/Tables/VendorTable";
+import AnalogTable from "../../common/Tables/AnalogTable";
+import GroupedTable from "../../common/Tables/GroupedTable";
+import SearchContentStyle from "../../common/SearchContentStyle";
 
-const styles = theme => ({
-    paper: {
-        maxWidth: 936,
-        margin: 'auto',
-        overflow: 'hidden',
-    },
-    searchBar: {
-        borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-    },
-    searchInput: {
-        fontSize: theme.typography.fontSize,
-    },
-    block: {
-        display: 'block',
-    },
-    addUser: {
-        marginRight: theme.spacing(1),
-    },
-    contentWrapper: {
-        margin: '40px 16px',
-    },
-});
+const styles = theme => SearchContentStyle(theme);
 
-function Content(props) {
-    const { classes } = props;
+function Content({auth, calls, client, product, getByBrand, getByNumber, ...props}) {
+    const {classes, handleDrawerToggle} = props;
+    const history = useHistory();
+    const { numb, brand} = useParams();
 
-    return (
-        <Paper className={classes.paper}>
-            <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
-                <Toolbar>
-                    <Grid container spacing={2} alignItems="center">
-                        <Grid item>
-                            <SearchIcon className={classes.block} color="inherit" />
-                        </Grid>
-                        <Grid item xs>
-                            <TextField
-                                fullWidth
-                                placeholder="Search by email address, phone number, or user UID"
-                                InputProps={{
-                                    disableUnderline: true,
-                                    className: classes.searchInput,
-                                }}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <Button variant="contained" color="primary" className={classes.addUser}>
-                                Add user
-                            </Button>
-                            <Tooltip title="Reload">
-                                <IconButton>
-                                    <RefreshIcon className={classes.block} color="inherit" />
-                                </IconButton>
-                            </Tooltip>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-            <div className={classes.contentWrapper}>
-                <Typography color="textSecondary" align="center">
-                    No PRODUCTS for this project yet
-                </Typography>
-            </div>
-        </Paper>
-    );
+
+    useEffect(() => {
+        if (brand && brand !== product.criteria.brand) {
+            getByBrand({brand, numb});
+        } else if((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand)) {
+            getByNumber(numb);
+        } else if(product.productsGrouped.length === 1 && !brand) {
+            history.push(`/search/${removeSpecialCharacters(product.productsGrouped[0].number)}/${htmlEncode(product.productsGrouped[0].brand)}`)
+        }
+    }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, history,
+        product.criteria.numb, product.productsGrouped]);
+
+    const tables = getTables(brand, numb, `Fenix - Клієнт`, product.products);
+    const {generalRows, vendorRows, analogRows, title} = tables;
+
+    return (<div className={classes.app}>
+        <Header onDrawerToggle={handleDrawerToggle}/>
+        <Helmet>
+            <title>{title}</title>
+        </Helmet>
+        <main className={classes.main}>
+            {(product.products.length > 0 || calls === 0)  &&
+            <Paper className={classes.paper}>
+                <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
+                <div className={classes.contentWrapper}>
+                    {(product.productsGrouped.length === 0 && product.products.length === 0) ?
+                        <Typography color="textSecondary" align="center">
+                            Інформація відсутня
+                        </Typography> :
+                        <React.Fragment>
+                            {product.productsGrouped.length > 1 && <GroupedTable rows={product.productsGrouped} role={auth.role}/>}
+                            {generalRows.length > 0 && <GeneralTable rows={StableSort(generalRows,
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}/>}
+                            {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}/>}
+                            {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}/>}
+                        </React.Fragment>
+                    }
+                </div>
+            </Paper>}
+        </main>
+        <footer className={classes.footer}>
+            <Copyright/>
+        </footer>
+    </div>);
 }
 
 Content.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Content);
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    getByNumber,
+    getByBrand
+
+};
+
+function mapStateToProps(state) {
+    return {
+        auth: state.authentication,
+        client: state.client,
+        product: state.product,
+        calls: state.apiCallsInProgress
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Content));
