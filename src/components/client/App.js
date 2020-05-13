@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +11,7 @@ import StatisticContent from './statistic/Content';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../PageNotFound";
 import {connect} from "react-redux";
+import {getClient} from "../../redux/actions/clientActions";
 
 const drawerWidth = 256;
 
@@ -27,9 +28,13 @@ const styles = theme => ({
   }
 });
 
-function App({client, product, ...props}) {
+function App({client, product, getClient, ...props}) {
   const {classes, match} = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  useEffect(() => {
+    if(!client.vip) getClient();
+  }, [getClient, client.vip]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -91,6 +96,11 @@ App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+  getClient
+};
+
 function mapStateToProps(state) {
   return {
     client: state.client,
@@ -98,4 +108,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(App));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));
