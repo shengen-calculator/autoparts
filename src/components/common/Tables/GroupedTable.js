@@ -46,10 +46,6 @@ function GroupedTable(props) {
 
     };
 
-    if(RoleEnum.Client === props.role) {
-        headCells.splice(0,1);
-    }
-
     return(
         <EnhancedTable
             handleClick={handleClick}

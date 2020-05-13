@@ -26,7 +26,7 @@ export default function VendorTable(props) {
         });
     };
 
-    if(RoleEnum.Client === props.role) {
+    if(RoleEnum.Client === props.role  && headCells.length > 8) {
         headCells.splice(0,1);
     }
 
