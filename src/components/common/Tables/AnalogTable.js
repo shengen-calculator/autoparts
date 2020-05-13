@@ -26,6 +26,11 @@ export default function AnalogTable(props) {
         }
     };
 
+    const rowsPerPageOptions = [15, 25, 50];
+    if(props.rows.length < rowsPerPageOptions[0]) {
+        rowsPerPageOptions.splice(0, 1, props.rows.length)
+    }
+
     return(
         <React.Fragment>
             <EnhancedTable
@@ -39,7 +44,7 @@ export default function AnalogTable(props) {
                 titleIcon={TitleIconEnum.infinity}
                 columns={10}
                 isFilterShown={false}
-                rowsPerPageOptions={[15, 25, 50]}
+                rowsPerPageOptions={rowsPerPageOptions}
                 isRowSelectorShown={false}
             />
             <OrderDialog isOpened={orderDialog.isOpened}

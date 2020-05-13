@@ -26,6 +26,11 @@ export default function VendorTable(props) {
         });
     };
 
+    const rowsPerPageOptions = [5, 10, 25];
+    if(props.rows.length < rowsPerPageOptions[0]) {
+        rowsPerPageOptions.splice(0, 1, props.rows.length)
+    }
+
     const isContainVendorField = headCells.some(elem => elem.id === 'vendor');
     if(RoleEnum.Client === props.role  && isContainVendorField) {
         headCells.splice(0,1);
@@ -44,7 +49,7 @@ export default function VendorTable(props) {
                 titleIcon={TitleIconEnum.track}
                 columns={10}
                 isFilterShown={false}
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={rowsPerPageOptions}
                 isRowSelectorShown={false}
             />
             <OrderDialog isOpened={orderDialog.isOpened}
