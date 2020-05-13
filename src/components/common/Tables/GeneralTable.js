@@ -1,9 +1,9 @@
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import EnhancedTable from '../../common/EnhancedTable';
-import {TitleIconEnum} from '../../../util/Enums';
-import ReserveDialog from "./Dialog/ReserveDialog";
+import EnhancedTable from '../EnhancedTable';
+import {RoleEnum, TitleIconEnum} from '../../../util/Enums';
+import ReserveDialog from "../Dialog/ReserveDialog";
 
 const headCells = [
     { id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
@@ -16,7 +16,7 @@ const headCells = [
     { id: 'reserve', numeric: true, disablePadding: false, label: 'Резерв' }
 ];
 
-function tableRow(row, index, isSelected, handleClick, isEur) {
+function tableRow(row, index, isSelected, handleClick, isEur, role) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
@@ -31,14 +31,14 @@ function tableRow(row, index, isSelected, handleClick, isEur) {
             key={row.id}
             selected={isItemSelected}
         >
-            <TableCell align="left" name="reserve" style={pointer}>{row.vendor}</TableCell>
+            {RoleEnum.Manager === role && <TableCell align="left" name="reserve" style={pointer}>{row.vendor}</TableCell>}
             <TableCell name="reserve" padding="default" component="th" id={labelId} scope="row" style={pointer}>
                 {row.brand}
             </TableCell>
             <TableCell align="left" name="reserve" style={pointer}>{row.number}</TableCell>
             <TableCell align="left" name="reserve" style={pointer}>{row.description}</TableCell>
-            <TableCell align="right" name="price" style={pointer}>{isEur ? row.retailEur.toFixed(2) : row.retail.toFixed(2)}</TableCell>
-            <TableCell align="right" name="price" style={pointer}>{isEur ? row.costEur.toFixed(2) : row.cost.toFixed(2)}</TableCell>
+            <TableCell align="right" name="price" style={pointer}>{isEur ? row['retailEur'].toFixed(2) : row.retail.toFixed(2)}</TableCell>
+            <TableCell align="right" name="price" style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>
             <TableCell align="right" name="reserve" style={pointer}>{row.available}</TableCell>
             <TableCell align="right" name="reserve" style={pointer}>{row.reserve}</TableCell>
         </TableRow>
@@ -67,6 +67,10 @@ export default function GeneralTable(props) {
             isOpened: false, selected: {}
         });
     };
+
+    if(RoleEnum.Client === props.role) {
+        headCells.splice(0,1);
+    }
     return(
         <React.Fragment>
             <EnhancedTable
@@ -75,6 +79,7 @@ export default function GeneralTable(props) {
                 headCells={headCells}
                 tableRow={tableRow}
                 isEur={props.isEur}
+                role={props.role}
                 title="В наявності на складі"
                 titleIcon={TitleIconEnum.check}
                 columns={8}

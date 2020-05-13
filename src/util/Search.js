@@ -36,3 +36,24 @@ export const htmlDecode = (data) => {
     });
     return data;
 };
+
+export const getTables = (brand, numb, title, products) => {
+    if(brand) {
+        const restoredBrand = htmlDecode(brand);
+        title += ` - ${restoredBrand}`;
+    }
+    if(numb) {
+        title += ` - ${numb}`;
+    }
+    let generalRows = [], vendorRows = [], analogRows = [];
+
+    if(products.length > 0 && brand) {
+        const restoredBrand = htmlDecode(brand);
+        generalRows = products.filter(x => x.available > 0 || x.reserve > 0);
+        vendorRows = products.filter(x => x.available === 0 && x.brand === restoredBrand && x.reserve === 0 &&
+            removeAllSpecialCharacters(x.number) === removeAllSpecialCharacters(numb));
+        analogRows = products.filter(x => x.available === 0 && x.reserve === 0 && (x.brand !== restoredBrand ||
+            removeAllSpecialCharacters(x.number) !== removeAllSpecialCharacters(numb)));
+    }
+    return {generalRows, vendorRows, analogRows, title};
+};

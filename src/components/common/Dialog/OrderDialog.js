@@ -2,66 +2,64 @@ import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import Checkbox from '@material-ui/core/Checkbox';
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
-import {createReserve} from "../../../../redux/actions/searchActions";
-import {showToastrMessage} from "../../../../redux/actions/messageActions";
+import {createOrder} from "../../../redux/actions/searchActions";
 
-function ReserveDialog(props) {
-    const {isOpened, selected, onClose, createReserve, showToastrMessage, client} = props;
-    const [reserve, setReserve] = useState({
+function OrderDialog(props) {
+    const {isOpened, selected, onClose, createOrder, client} = props;
+    const [order, setOrder] = useState({
     });
 
     useEffect(() => {
-        if(selected.retail) {
-            setReserve({
-                price: client.isEuroClient ? selected.costEur.toFixed(2) : selected.cost.toFixed(2),
+        if(selected['costEur']) {
+            setOrder({
+                price: client.isEuroClient ? selected['costEur'].toFixed(2) : selected['cost'].toFixed(2),
                 quantity: '',
-                onlyOrderedQuantity: false,
-                available: selected.available
+                onlyOrderedQuantity: false
             })
         }
     }, [selected, client.isEuroClient]);
 
     function handleChange(event) {
         const { name, value, checked, type } = event.target;
-        setReserve(prev => ({
+        setOrder(prev => ({
             ...prev,
             [name]: type === "checkbox" ? checked : value
         }));
     }
 
-    function handleReserveClick(event) {
+    function handleOrderClick(event) {
         event.preventDefault();
-        if(reserve.quantity && reserve.price
-            && Number.isInteger(Number(reserve.quantity))
-            && !isNaN(reserve.price)
-            && reserve.price > 0
-            && Number(reserve.quantity) > -1
+        if(order.quantity && order.price
+            && Number.isInteger(Number(order.quantity))
+            && !isNaN(order.price)
+            && order.price > 0
+            && Number(order.quantity) > -1
         ) {
-            if(Number(reserve.quantity) > reserve.available) {
-                showToastrMessage({type: 'warning', message: 'Кількість не може бути більшою ніж доступно'})
-            } else {
-                createReserve({
-                    productId: selected.id,
-                    quantity: Number(reserve.quantity),
-                    price: Number(reserve.price),
-                    isEuroClient: client.isEuroClient,
-                    clientId: client.id
-                });
-                onClose();
-            }
+            createOrder({
+                productId: selected.id,
+                quantity: Number(order.quantity),
+                price: Number(order.price),
+                onlyOrderedQuantity: order.onlyOrderedQuantity,
+                isEuroClient: client.isEuroClient,
+                clientId: client.id,
+                vip: client.vip
+            });
+            onClose();
         }
     }
 
     return (
         <div>
             <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose}>
-                <DialogTitle id="form-dialog-title">Резерв запчастини зі складу</DialogTitle>
-                <form onSubmit={handleReserveClick}>
+                <DialogTitle id="form-dialog-title">Замовити запчастину у постачальника</DialogTitle>
+                <form onSubmit={handleOrderClick}>
                     <DialogContent>
                         <DialogContentText>
                             Бренд: {selected.brand} <br/>
@@ -74,7 +72,7 @@ function ReserveDialog(props) {
                             id="quantity"
                             label="Кількість"
                             onChange={handleChange}
-                            value={reserve.quantity}
+                            value={order.quantity}
                             type="text"
                         />
                         <br/>
@@ -84,16 +82,27 @@ function ReserveDialog(props) {
                             id="price"
                             label="Ціна"
                             onChange={handleChange}
-                            value={reserve.price}
+                            value={order.price}
                             type="text"
                         />
+                        <br/>
+                        <FormControlLabel control={
+                            <Checkbox
+                                margin="dense"
+                                name="onlyOrderedQuantity"
+                                id="onlyOrderedQuantity"
+                                onChange={handleChange}
+                                value={order.onlyOrderedQuantity}
+                            />
+                        } label="Тільки замовлена кількість"/>
+
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={onClose} color="primary">
                             Відміна
                         </Button>
                         <Button type="submit" color="primary">
-                            Резервувати
+                            Замовити
                         </Button>
                     </DialogActions>
                 </form>
@@ -104,8 +113,7 @@ function ReserveDialog(props) {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    createReserve,
-    showToastrMessage
+    createOrder
 };
 
 function mapStateToProps(state) {
@@ -114,4 +122,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReserveDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderDialog);

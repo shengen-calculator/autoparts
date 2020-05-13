@@ -1,20 +1,10 @@
 import React from 'react';
-import EnhancedTable from "../../common/EnhancedTable";
-import SearchTableRow from './SearchTableRow';
-import {TitleIconEnum} from "../../../util/Enums";
-import OrderDialog from "./Dialog/OrderDialog";
+import EnhancedTable from "../EnhancedTable";
+import SearchTableRow, {headCells} from './SearchTableRow';
+import {RoleEnum, TitleIconEnum} from "../../../util/Enums";
+import OrderDialog from "../Dialog/OrderDialog";
 
-const headCells = [
-    {id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
-    {id: 'brand', numeric: false, disablePadding: false, label: 'Бренд'},
-    {id: 'number', numeric: false, disablePadding: false, label: 'Номер'},
-    {id: 'description', numeric: false, disablePadding: false, label: 'Опис'},
-    {id: 'retail', numeric: true, disablePadding: false, label: 'Роздріб'},
-    {id: 'cost', numeric: true, disablePadding: false, label: 'Ціна'},
-    {id: 'order', numeric: true, disablePadding: false, label: 'Замовлення'},
-    {id: 'term', numeric: false, disablePadding: false, label: 'Термін'},
-    {id: 'info', numeric: false, disablePadding: false, label: 'Інфо', align: 'center'}
-];
+
 
 export default function VendorTable(props) {
     const [orderDialog, setOrderDialog] = React.useState({
@@ -35,6 +25,11 @@ export default function VendorTable(props) {
             isOpened: false, selected: {}
         });
     };
+
+    if(RoleEnum.Client === props.role) {
+        headCells.splice(0,1);
+    }
+
     return (
         <React.Fragment>
             <EnhancedTable
@@ -43,6 +38,7 @@ export default function VendorTable(props) {
                 headCells={headCells}
                 tableRow={SearchTableRow}
                 isEur={props.isEur}
+                role={props.role}
                 title="Знайдено за артикулом"
                 titleIcon={TitleIconEnum.track}
                 columns={10}
