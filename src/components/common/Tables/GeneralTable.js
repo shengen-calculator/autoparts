@@ -68,7 +68,8 @@ export default function GeneralTable(props) {
         });
     };
 
-    if(RoleEnum.Client === props.role && headCells.length > 7) {
+    const isContainVendorField = headCells.some(elem => elem.id === 'vendor');
+    if(RoleEnum.Client === props.role && isContainVendorField) {
         headCells.splice(0,1);
     }
     return(

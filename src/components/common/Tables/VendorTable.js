@@ -26,7 +26,8 @@ export default function VendorTable(props) {
         });
     };
 
-    if(RoleEnum.Client === props.role  && headCells.length > 8) {
+    const isContainVendorField = headCells.some(elem => elem.id === 'vendor');
+    if(RoleEnum.Client === props.role  && isContainVendorField) {
         headCells.splice(0,1);
     }
 
