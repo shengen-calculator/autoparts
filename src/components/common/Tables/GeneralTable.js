@@ -68,7 +68,7 @@ export default function GeneralTable(props) {
         });
     };
 
-    if(RoleEnum.Client === props.role) {
+    if(RoleEnum.Client === props.role && headCells.length > 7) {
         headCells.splice(0,1);
     }
     return(

@@ -1,7 +1,7 @@
 import React from 'react';
 import EnhancedTable from '../EnhancedTable';
 import SearchTableRow, {headCells} from './SearchTableRow';
-import {RoleEnum, TitleIconEnum} from "../../../util/Enums";
+import {TitleIconEnum} from "../../../util/Enums";
 import OrderDialog from "../Dialog/OrderDialog";
 
 
@@ -25,10 +25,6 @@ export default function AnalogTable(props) {
             });
         }
     };
-
-    if(RoleEnum.Client === props.role) {
-        headCells.splice(0,1);
-    }
 
     return(
         <React.Fragment>
