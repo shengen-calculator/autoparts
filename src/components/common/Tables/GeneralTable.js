@@ -4,7 +4,8 @@ import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from '../EnhancedTable';
 import {RoleEnum, TitleIconEnum} from '../../../util/Enums';
 import ReserveDialog from "../Dialog/ReserveDialog";
-import grey from '@material-ui/core/colors/grey';
+import lightBlue from '@material-ui/core/colors/lightBlue';
+import { withStyles } from '@material-ui/core/styles';
 
 const headCells = [
     { id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
@@ -21,10 +22,15 @@ function tableRow(row, index, isSelected, handleClick, isEur, role) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
-    const stockColor = grey[300];
+    const stockColor = lightBlue[50];
+    const StyledTableRow = withStyles((theme) => ({
+        root: {
+            backgroundColor: stockColor,
+        },
+    }))(TableRow);
 
     return (
-        <TableRow
+        <StyledTableRow
             hover
             onClick={event => handleClick(event, row.id)}
             role="checkbox"
@@ -32,7 +38,7 @@ function tableRow(row, index, isSelected, handleClick, isEur, role) {
             tabIndex={-1}
             key={row.id}
             selected={isItemSelected}
-            style={{backgroundColor:stockColor}}
+
         >
             {RoleEnum.Manager === role && <TableCell align="left" name="reserve" style={pointer}>{row.vendor}</TableCell>}
             <TableCell name="reserve" padding="default" component="th" id={labelId} scope="row" style={pointer}>
@@ -44,7 +50,7 @@ function tableRow(row, index, isSelected, handleClick, isEur, role) {
             <TableCell align="right" name="price" style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>
             <TableCell align="right" name="reserve" style={pointer}>{row.available}</TableCell>
             <TableCell align="right" name="reserve" style={pointer}>{row.reserve}</TableCell>
-        </TableRow>
+        </StyledTableRow>
     );
 }
 
@@ -75,6 +81,10 @@ export default function GeneralTable(props) {
     if(RoleEnum.Client === props.role && isContainVendorField) {
         headCells.splice(0,1);
     }
+    const rowsPerPageOptions = [5, 10, 25];
+    if(props.rows.length < rowsPerPageOptions[0]) {
+        rowsPerPageOptions.splice(0, 1, props.rows.length)
+    }
     return(
         <React.Fragment>
             <EnhancedTable
@@ -88,7 +98,7 @@ export default function GeneralTable(props) {
                 titleIcon={TitleIconEnum.check}
                 columns={8}
                 isFilterShown={false}
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={rowsPerPageOptions}
                 isRowSelectorShown={false}
             />
             <ReserveDialog isOpened={reserveDialog.isOpened}
