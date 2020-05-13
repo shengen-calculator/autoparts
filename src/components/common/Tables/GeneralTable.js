@@ -4,6 +4,7 @@ import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from '../EnhancedTable';
 import {RoleEnum, TitleIconEnum} from '../../../util/Enums';
 import ReserveDialog from "../Dialog/ReserveDialog";
+import grey from '@material-ui/core/colors/grey';
 
 const headCells = [
     { id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
@@ -20,6 +21,7 @@ function tableRow(row, index, isSelected, handleClick, isEur, role) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
+    const stockColor = grey[300];
 
     return (
         <TableRow
@@ -30,6 +32,7 @@ function tableRow(row, index, isSelected, handleClick, isEur, role) {
             tabIndex={-1}
             key={row.id}
             selected={isItemSelected}
+            style={{backgroundColor:stockColor}}
         >
             {RoleEnum.Manager === role && <TableCell align="left" name="reserve" style={pointer}>{row.vendor}</TableCell>}
             <TableCell name="reserve" padding="default" component="th" id={labelId} scope="row" style={pointer}>
