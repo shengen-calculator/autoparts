@@ -10,9 +10,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
 import {createOrder} from "../../../redux/actions/searchActions";
+import {RoleEnum} from "../../../util/Enums";
 
 function OrderDialog(props) {
-    const {isOpened, selected, onClose, createOrder, client} = props;
+    const {isOpened, selected, onClose, createOrder, client, auth} = props;
     const [order, setOrder] = useState({
     });
 
@@ -48,7 +49,7 @@ function OrderDialog(props) {
                 price: Number(order.price),
                 onlyOrderedQuantity: order.onlyOrderedQuantity,
                 isEuroClient: client.isEuroClient,
-                clientId: client.id,
+                clientId: auth.role === RoleEnum.Manager ? client.id : null,
                 vip: client.vip
             });
             onClose();
@@ -118,7 +119,8 @@ const mapDispatchToProps = {
 
 function mapStateToProps(state) {
     return {
-        client: state.client
+        client: state.client,
+        auth: state.authentication
     }
 }
 

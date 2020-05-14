@@ -5,11 +5,16 @@ const config = require('../mssql.connection').config;
 
 const createReserve = async (data, context) => {
 
-    util.checkForManagerRole(context);
 
-    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || typeof data.isEuroClient === 'undefined' || !data.clientId ) {
+    if (data.clientId) {
+        util.checkForManagerRole(context);
+    } else {
+        util.checkForClientRole(context);
+    }
+
+    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || typeof data.isEuroClient === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with the next arguments "ProductId, Quantity, Price, IsEuroClient, ClientId"');
+            'The function must be called with the next arguments "ProductId, Quantity, Price, IsEuroClient"');
     }
 
 //source
@@ -20,7 +25,7 @@ const createReserve = async (data, context) => {
         const pool = await sql.connect(config);
 
         const result = await pool.request()
-            .input('clientId', sql.Int, data.clientId)
+            .input('clientId', sql.Int, data.clientId ? data.clientId : context.auth.token.clientId)
             .input('productId', sql.Int, data.productId)
             .input('price', sql.Decimal(9, 2), data.price)
             .input('isEuroClient', sql.Bit, data.isEuroClient)
