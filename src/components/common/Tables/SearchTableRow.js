@@ -17,7 +17,7 @@ export const headCells = [
     {id: 'description', numeric: false, disablePadding: false, label: 'Опис'},
     {id: 'retail', numeric: true, disablePadding: false, label: 'Роздріб'},
     {id: 'cost', numeric: true, disablePadding: false, label: 'Ціна'},
-    {id: 'order', numeric: true, disablePadding: false, label: 'Замовл.'},
+    {id: 'order', numeric: true, disablePadding: false, label: 'Доступно'},
     {id: 'term', numeric: true, disablePadding: false, label: 'Термін', align: 'left'},
     {id: 'info', numeric: false, disablePadding: false, label: 'Інфо', align: 'center'}
 ];

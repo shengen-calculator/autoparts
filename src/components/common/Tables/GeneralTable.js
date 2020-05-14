@@ -14,7 +14,7 @@ const headCells = [
     { id: 'description', numeric: false, disablePadding: false, label: 'Опис' },
     { id: 'retail', numeric: true, disablePadding: false, label: 'Роздріб' },
     { id: 'cost', numeric: true, disablePadding: false, label: 'Ціна' },
-    { id: 'available', numeric: true, disablePadding: false, label: 'Доступн.' },
+    { id: 'available', numeric: true, disablePadding: false, label: 'Доступно' },
     { id: 'reserve', numeric: true, disablePadding: false, label: 'Резерв', align: 'left' },
     { id: 'empty', numeric: false, disablePadding: false, label: '', align: 'center' }
 ];
