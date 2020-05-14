@@ -15,7 +15,7 @@ import GroupedTable from "../../common/Tables/GroupedTable";
 import {getByNumber, getByBrand} from "../../../redux/actions/searchActions";
 import Typography from "@material-ui/core/Typography";
 import {
-    getTables,
+    getTables, htmlDecode,
     htmlEncode,
     removeSpecialCharacters
 } from "../../../util/Search";
@@ -76,7 +76,8 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
                             {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
                                 (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}/>}
                             {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
-                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}/>}
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
+                                                                   role={auth.role} criteria={`${htmlDecode(brand)} ${numb}`}/>}
                         </React.Fragment>
                     }
                 </div>

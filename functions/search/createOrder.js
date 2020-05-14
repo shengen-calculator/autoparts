@@ -5,11 +5,16 @@ const config = require('../mssql.connection').config;
 
 const createOrder = async (data, context) => {
 
-    util.checkForManagerRole(context);
 
-    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || !data.vip || !data.clientId || typeof data.isEuroClient === 'undefined' || typeof data.onlyOrderedQuantity === 'undefined') {
+    if (data.clientId) {
+        util.checkForManagerRole(context);
+    } else {
+        util.checkForClientRole(context);
+    }
+
+    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || !data.vip || typeof data.isEuroClient === 'undefined' || typeof data.onlyOrderedQuantity === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with the next arguments "ProductId, Quantity, Price, ClientId, IsEuroClient, OnlyOrderedQuantity"');
+            'The function must be called with the next arguments "ProductId, Quantity, Price, IsEuroClient, OnlyOrderedQuantity"');
     }
 
 
@@ -17,7 +22,7 @@ const createOrder = async (data, context) => {
         const pool = await sql.connect(config);
 
         const result = await pool.request()
-            .input('clientId', sql.Int, data.clientId)
+            .input('clientId', sql.Int, data.clientId ? data.clientId : context.auth.token.clientId)
             .input('productId', sql.Int, data.productId)
             .input('price', sql.Decimal(9, 2), data.price)
             .input('isEuroClient', sql.Bit, data.isEuroClient)

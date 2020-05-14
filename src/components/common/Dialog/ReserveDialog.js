@@ -9,9 +9,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
 import {createReserve} from "../../../redux/actions/searchActions";
 import {showToastrMessage} from "../../../redux/actions/messageActions";
+import {RoleEnum} from "../../../util/Enums";
 
 function ReserveDialog(props) {
-    const {isOpened, selected, onClose, createReserve, showToastrMessage, client} = props;
+    const {isOpened, selected, onClose, createReserve, showToastrMessage, client, auth} = props;
     const [reserve, setReserve] = useState({
     });
 
@@ -50,7 +51,7 @@ function ReserveDialog(props) {
                     quantity: Number(reserve.quantity),
                     price: Number(reserve.price),
                     isEuroClient: client.isEuroClient,
-                    clientId: client.id
+                    clientId: auth.role === RoleEnum.Manager ? client.id : null
                 });
                 onClose();
             }
@@ -110,7 +111,8 @@ const mapDispatchToProps = {
 
 function mapStateToProps(state) {
     return {
-        client: state.client
+        client: state.client,
+        auth: state.authentication
     }
 }
 

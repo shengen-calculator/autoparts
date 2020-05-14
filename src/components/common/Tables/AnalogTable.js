@@ -40,8 +40,7 @@ export default function AnalogTable(props) {
                 role={props.role}
                 tableRow={SearchTableRow}
                 isEur={props.isEur}
-                title="Аналоги артикула"
-                titleIcon={TitleIconEnum.infinity}
+                title={`Аналоги артикула ${props.criteria}`}
                 columns={10}
                 isFilterShown={false}
                 rowsPerPageOptions={rowsPerPageOptions}

@@ -70,6 +70,7 @@ function Content({client, calls, getOrders, getReserves, ...props}) {
                                 {isOrderTablesShown && <OrderTable
                                     orders={client.orders.map(el => {
                                         return {
+                                            id: el.id,
                                             brand: el.brand,
                                             number: el.number,
                                             ordered: el.ordered,
@@ -88,6 +89,7 @@ function Content({client, calls, getOrders, getReserves, ...props}) {
                                 {isReserveTablesShown && <ReserveTable
                                     reserves={client.reserves.map(el => {
                                         return {
+                                            id: el.id,
                                             brand: el.brand,
                                             number: el.number,
                                             quantity: el.quantity,
