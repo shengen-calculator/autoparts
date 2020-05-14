@@ -1,7 +1,6 @@
 import React from 'react';
 import EnhancedTable from '../EnhancedTable';
 import SearchTableRow, {headCells} from './SearchTableRow';
-import {TitleIconEnum} from "../../../util/Enums";
 import OrderDialog from "../Dialog/OrderDialog";
 
 
