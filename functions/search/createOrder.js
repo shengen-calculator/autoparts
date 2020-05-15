@@ -6,7 +6,7 @@ const config = require('../mssql.connection').config;
 const createOrder = async (data, context) => {
 
 
-    if (data.clientId) {
+    if (data.clientId || data.price || data.vip) {
         util.checkForManagerRole(context);
     } else {
         util.checkForClientRole(context);
@@ -28,7 +28,7 @@ const createOrder = async (data, context) => {
             .input('isEuroClient', sql.Bit, data.isEuroClient)
             .input('quantity', sql.Int, data.quantity)
             .input('onlyOrderedQuantity', sql.Bit, data.onlyOrderedQuantity)
-            .input('currentUser', sql.VarChar(20), context.auth.token.vip)
+            .input('currentUser', sql.VarChar(20), data.vip ? data.vip : context.auth.token.vip)
             .execute('sp_web_addorder');
         return result.recordset;
     } catch (err) {
