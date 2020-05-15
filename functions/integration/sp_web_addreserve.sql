@@ -10,6 +10,16 @@ AS
 BEGIN
 	DECLARE @priceUah decimal(9,2)
 
+	IF(@price = 0)
+	    BEGIN
+            DECLARE @query nvarchar(max) = N'SELECT TOP(1) @p = ' + dbo.GetClientPriceColumn(@clientId) + N' FROM dbo.[Каталог запчастей] WHERE (ID_Запчасти = ' + STR(@productId) + N')'
+
+            EXEC sp_executesql @query, N'@p decimal(9,2) out', @price out
+
+	        SET @price = COALESCE(dbo.GetSpecialPrice(@clientId, @productId), @price)
+
+        END
+
 	IF(@isEuroClient = 1)
 	BEGIN
 		SET @priceUah = @price * dbo.GetUahRate()
@@ -44,3 +54,5 @@ BEGIN
   WHERE ID = @@IDENTITY
 
 END
+go
+
