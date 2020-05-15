@@ -28,7 +28,7 @@ const createOrder = async (data, context) => {
             .input('isEuroClient', sql.Bit, data.isEuroClient)
             .input('quantity', sql.Int, data.quantity)
             .input('onlyOrderedQuantity', sql.Bit, data.onlyOrderedQuantity)
-            .input('currentUser', sql.VarChar(20), data.vip)
+            .input('currentUser', sql.VarChar(20), context.auth.token.vip)
             .execute('sp_web_addorder');
         return result.recordset;
     } catch (err) {
