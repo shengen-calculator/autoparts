@@ -12,9 +12,9 @@ const createReserve = async (data, context) => {
         util.checkForClientRole(context);
     }
 
-    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || typeof data.isEuroClient === 'undefined') {
+    if (!data || !data.productId || typeof data.quantity === 'undefined' || typeof data.isEuroClient === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with the next arguments "ProductId, Quantity, Price, IsEuroClient"');
+            'The function must be called with the next arguments "ProductId, Quantity, IsEuroClient"');
     }
 
 //source
@@ -27,7 +27,7 @@ const createReserve = async (data, context) => {
         const result = await pool.request()
             .input('clientId', sql.Int, data.clientId ? data.clientId : context.auth.token.clientId)
             .input('productId', sql.Int, data.productId)
-            .input('price', sql.Decimal(9, 2), data.price)
+            .input('price', sql.Decimal(9, 2), data.price ? data.price : 0)
             .input('isEuroClient', sql.Bit, data.isEuroClient)
             .input('quantity', sql.Int, data.quantity)
             .input('status', sql.VarChar(50), 'internet')

@@ -12,9 +12,9 @@ const createOrder = async (data, context) => {
         util.checkForClientRole(context);
     }
 
-    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || typeof data.isEuroClient === 'undefined' || typeof data.onlyOrderedQuantity === 'undefined') {
+    if (!data || !data.productId || typeof data.quantity === 'undefined' || typeof data.isEuroClient === 'undefined' || typeof data.onlyOrderedQuantity === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with the next arguments "ProductId, Quantity, Price, IsEuroClient, OnlyOrderedQuantity"');
+            'The function must be called with the next arguments "ProductId, Quantity, IsEuroClient, OnlyOrderedQuantity"');
     }
 
 
@@ -24,7 +24,7 @@ const createOrder = async (data, context) => {
         const result = await pool.request()
             .input('clientId', sql.Int, data.clientId ? data.clientId : context.auth.token.clientId)
             .input('productId', sql.Int, data.productId)
-            .input('price', sql.Decimal(9, 2), data.price)
+            .input('price', sql.Decimal(9, 2), data.price ? data.price : 0)
             .input('isEuroClient', sql.Bit, data.isEuroClient)
             .input('quantity', sql.Int, data.quantity)
             .input('onlyOrderedQuantity', sql.Bit, data.onlyOrderedQuantity)
