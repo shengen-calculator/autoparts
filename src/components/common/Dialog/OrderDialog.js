@@ -46,11 +46,10 @@ function OrderDialog(props) {
             createOrder({
                 productId: selected.id,
                 quantity: Number(order.quantity),
-                price: Number(order.price),
+                price: auth.role === RoleEnum.Manager ? Number(order.price) : null,
                 onlyOrderedQuantity: order.onlyOrderedQuantity,
                 isEuroClient: client.isEuroClient,
-                clientId: auth.role === RoleEnum.Manager ? client.id : null,
-                vip: client.vip
+                clientId: auth.role === RoleEnum.Manager ? client.id : null
             });
             onClose();
         }
@@ -85,6 +84,7 @@ function OrderDialog(props) {
                             onChange={handleChange}
                             value={order.price}
                             type="text"
+                            disabled={auth.role === RoleEnum.Client}
                         />
                         <br/>
                         <FormControlLabel control={
