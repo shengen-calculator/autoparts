@@ -49,7 +49,7 @@ function ReserveDialog(props) {
                 createReserve({
                     productId: selected.id,
                     quantity: Number(reserve.quantity),
-                    price: Number(reserve.price),
+                    price: auth.role === RoleEnum.Manager ? Number(reserve.price) : null,
                     isEuroClient: client.isEuroClient,
                     clientId: auth.role === RoleEnum.Manager ? client.id : null
                 });
@@ -87,6 +87,7 @@ function ReserveDialog(props) {
                             onChange={handleChange}
                             value={reserve.price}
                             type="text"
+                            disabled={auth.role === RoleEnum.Client}
                         />
                     </DialogContent>
                     <DialogActions>
