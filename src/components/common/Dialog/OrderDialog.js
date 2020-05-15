@@ -49,7 +49,8 @@ function OrderDialog(props) {
                 price: auth.role === RoleEnum.Manager ? Number(order.price) : null,
                 onlyOrderedQuantity: order.onlyOrderedQuantity,
                 isEuroClient: client.isEuroClient,
-                clientId: auth.role === RoleEnum.Manager ? client.id : null
+                clientId: auth.role === RoleEnum.Manager ? client.id : null,
+                vip: auth.role === RoleEnum.Manager ? client.vip : null
             });
             onClose();
         }
