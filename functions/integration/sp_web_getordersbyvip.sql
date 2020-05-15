@@ -8,13 +8,12 @@ BEGIN
 
 
     IF(@isVendorShown = 1)
-        SET @query = @query + N',TRIM([Сокращенное название]) AS vendor'
+        SET @query = @query + N',TRIM([Сокращенное название]) AS vendor, Альтернатива as note'
 
     SET @query = @query + N'
 			,ID_Запроса as id
 			,TRIM(Брэнд) as brand
 			,TRIM([Номер поставщика]) as number
-			,Альтернатива as note
 			,Заказано as ordered
 			,Подтверждение as approved
 			,FORMAT(ISNULL(Предварительная_дата, Дата_прихода), ''d'', ''de-de'') as shipmentDate
@@ -38,4 +37,5 @@ BEGIN
     exec sp_executesql @query
 END
 go
+
 

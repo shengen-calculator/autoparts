@@ -7,7 +7,7 @@ BEGIN
     SET @query = N'SELECT TOP (100) [ID] as id'
 
     IF(@isVendorShown = 1)
-        SET @query = @query + N',TRIM([Поставщик]) as vendor'
+        SET @query = @query + N',TRIM([Поставщик]) as vendor, TRIM([Статус]) as note'
 
     SET @query = @query + N'
       ,[ID_Накладной] as invoiceId
@@ -19,7 +19,6 @@ BEGIN
       ,[ID_Клиента] as clientId
       ,[ID_Запчасти] as productId
       ,TRIM([Описание]) as description
-      ,TRIM([Статус]) as note
       ,FORMAT([Дата резерва], ''d'', ''de-de'') as ''date''
       ,FORMAT([Дата запроса], ''d'', ''de-de'') as orderDate
       ,[Интернет] as source
@@ -30,3 +29,5 @@ BEGIN
     exec sp_executesql @query
 
 END
+go
+

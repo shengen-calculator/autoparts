@@ -27,7 +27,6 @@ const headCells = [
     {id: 'ordered', numeric: true, disablePadding: false, label: 'Замовлено'},
     {id: 'approved', numeric: true, disablePadding: false, label: 'Підтв'},
     {id: 'price', numeric: true, disablePadding: false, label: 'Ціна'},
-    {id: 'note', numeric: false, disablePadding: false, label: 'Примітка'},
     {id: 'orderDate', numeric: false, disablePadding: false, label: 'Замовл.'},
     {id: 'shipmentDate', numeric: false, disablePadding: false, label: 'Доставка'},
     {id: 'status', numeric: false, disablePadding: false, label: 'Статус'},
@@ -63,7 +62,6 @@ function tableRow(row, index, isSelected, handleClick) {
             </TableCell>
             <TableCell align="right">{row.approved}</TableCell>
             <TableCell align="right">{row.price.toFixed(2)}</TableCell>
-            <TableCell align="left">{row.note}</TableCell>
             <TableCell align="left">{row.orderDate}</TableCell>
             <TableCell align="left">{row.shipmentDate}</TableCell>
             <TableCell align="center">
