@@ -12,7 +12,7 @@ const createOrder = async (data, context) => {
         util.checkForClientRole(context);
     }
 
-    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || !data.vip || typeof data.isEuroClient === 'undefined' || typeof data.onlyOrderedQuantity === 'undefined') {
+    if (!data || !data.productId || typeof data.quantity === 'undefined' || !data.price || typeof data.isEuroClient === 'undefined' || typeof data.onlyOrderedQuantity === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
             'The function must be called with the next arguments "ProductId, Quantity, Price, IsEuroClient, OnlyOrderedQuantity"');
     }
