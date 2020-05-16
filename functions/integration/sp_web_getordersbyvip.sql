@@ -1,13 +1,12 @@
-CREATE PROCEDURE [dbo].[sp_web_getordersbyvip]
-	@vip varchar(10), @isVendorShown bit
+CREATE PROCEDURE [dbo].[sp_web_getordersbyvip] @vip varchar(10), @isVendorShown bit
 AS
 BEGIN
-    DECLARE @query  AS NVARCHAR(MAX)
+    DECLARE @query AS NVARCHAR(MAX)
 
     SET @query = N'SELECT DISTINCT TOP (100) TRIM(VIP) as vip'
 
 
-    IF(@isVendorShown = 1)
+    IF (@isVendorShown = 1)
         SET @query = @query + N',TRIM([Сокращенное название]) AS vendor, Альтернатива as note'
 
     SET @query = @query + N'
@@ -16,12 +15,12 @@ BEGIN
 			,TRIM([Номер поставщика]) as number
 			,Заказано as ordered
 			,Подтверждение as approved
-			,FORMAT(ISNULL(Предварительная_дата, Дата_прихода), ''d'', ''de-de'') as shipmentDate
+			,FORMAT(ISNULL(Предварительная_дата, Дата_прихода), ''dd.MM.yyyy'') as shipmentDate
 			,Цена as euro
 			,Грн as uah
 			,ID_Запчасти as productId
 			,ID_Заказа as orderId
-			,FORMAT (Дата, ''d'', ''de-de'' ) as orderDate
+			,FORMAT (Дата, ''dd.MM.yyyy HH:mm'' ) as orderDate
 			,TRIM(Описание) as description
 			,CASE
 				WHEN Задерживается = 1 THEN 3  /* задерживается */
@@ -37,5 +36,4 @@ BEGIN
     exec sp_executesql @query
 END
 go
-
 

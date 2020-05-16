@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import {withStyles} from "@material-ui/core/styles";
 import {logoutRequest} from "../../redux/actions/authenticationActions";
 import ContentStyle from "./ContentStyle";
+import {RoleEnum} from "../../util/Enums";
 
 const styles = theme => ContentStyle(theme);
 
@@ -32,7 +33,7 @@ function LoginToolbar({logoutRequest, auth, ...props}) {
                 </Hidden>
                 <Grid item xs/>
                 <Grid item>
-                    {auth.vip}
+                    { auth.role === RoleEnum.Manager ? auth.vip : `K0000${auth.vip}`}
                 </Grid>
                 <Grid item>
                     <Tooltip title="Вийти">
