@@ -14,6 +14,7 @@ import {handleTableClick, handleTableSelectAllClick} from "../../common/Enhanced
 import DeleteOrdersDialog from "./Dialog/DeleteOrdersDialog";
 import UpdateOrderQuantityDialog from "./Dialog/UpdateOrderQuantityDialog";
 import {formatCurrency} from "../../../util/Formatter";
+import Tooltip from "@material-ui/core/Tooltip";
 
 //status list
 //подтвержден = 0
@@ -75,11 +76,26 @@ function tableRow(row, index, isSelected, handleClick) {
             <TableCell align="left">{row.orderDate}</TableCell>
             <TableCell align="left">{row.shipmentDate}</TableCell>
             <TableCell align="center">
-                {row.status === 0 && <DoneAllIcon/>}
-                {row.status === 1 && <HourglassEmptyIcon/>}
-                {row.status === 2 && <CallSplitIcon/>}
-                {row.status === 3 && <SnoozeIcon/>}
-                {row.status === 4 && <ClearIcon/>}
+                {row.status === 0 &&
+                <Tooltip title="підтверджений" placement="top">
+                    <DoneAllIcon/>
+                </Tooltip>}
+                {row.status === 1 &&
+                <Tooltip title="в обробці" placement="top">
+                    <HourglassEmptyIcon/>
+                </Tooltip>}
+                {row.status === 2 &&
+                <Tooltip title="не повна кількість" placement="top">
+                    <CallSplitIcon/>
+                </Tooltip>}
+                {row.status === 3 &&
+                <Tooltip title="затримується" placement="top">
+                    <SnoozeIcon/>
+                </Tooltip>}
+                {row.status === 4 &&
+                <Tooltip title="не має в наявності" placement="top">
+                    <ClearIcon/>
+                </Tooltip>}
             </TableCell>
         </TableRow>
     );
