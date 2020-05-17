@@ -11,7 +11,7 @@
       "src": "fenix_logo.png",
       "type": "image/png",
       "sizes": "512x507"
-    },
+    }
   ],
   "start_url": ".",
   "display": "standalone",
