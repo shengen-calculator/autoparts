@@ -11,6 +11,7 @@ import {getPayments} from "../../../redux/actions/clientActions";
 import {Helmet} from "react-helmet";
 import PaymentTable from "../../common/Tables/PaymentTable";
 import PaymentStyle from "../../common/Tables/PaymentStyle";
+import {formatCurrency} from "../../../util/Formatter";
 
 
 const styles = theme => PaymentStyle(theme);
@@ -25,7 +26,7 @@ function Content({client, calls, getPayments, ...props}) {
     }, [client.isPaymentsLoaded, getPayments]);
 
 
-    const isTableShown = client && client.payments && client.payments.length > 0;
+    const isTableShown = client && client.payments && client.payments.length > 1;
 
     return (
         <div className={classes.app}>
@@ -41,8 +42,11 @@ function Content({client, calls, getPayments, ...props}) {
                         {isTableShown ?
                             <PaymentTable payments={client.payments}/>
                             :
+                            client.payments.length > 0 &&
                             <Typography color="textSecondary" align="center">
-                                Інформація відсутня
+                                {client.payments[0].amount > 0 ?
+                                    `Ваш борг складає: ${formatCurrency(client.payments[0].amount, client.isEuroClient ? 'EUR' : 'UAH')}` :
+                                    `На Ващому рахунку: ${formatCurrency(client.payments[0].amount, client.isEuroClient ? 'EUR' : 'UAH')}`}
                             </Typography>
                         }
                     </div>
