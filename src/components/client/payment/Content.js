@@ -43,10 +43,10 @@ function Content({client, calls, getPayments, ...props}) {
                             <PaymentTable payments={client.payments}/>
                             :
                             client.payments.length > 0 &&
-                            <Typography color="textSecondary" align="center">
+                            <Typography className={client.payments[0].amount > 0 ? classes.debt : classes.advance} align="center">
                                 {client.payments[0].amount > 0 ?
                                     `Ваш борг складає: ${formatCurrency(client.payments[0].amount, client.isEuroClient ? 'EUR' : 'UAH')}` :
-                                    `На Ващому рахунку: ${formatCurrency(client.payments[0].amount, client.isEuroClient ? 'EUR' : 'UAH')}`}
+                                    `На Вашому рахунку: ${formatCurrency(Math.abs(client.payments[0].amount), client.isEuroClient ? 'EUR' : 'UAH')}`}
                             </Typography>
                         }
                     </div>
