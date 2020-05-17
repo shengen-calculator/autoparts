@@ -8,9 +8,9 @@
       "type": "image/x-icon"
     },
     {
-      "src": "fenix.png",
+      "src": "fenix_logo.png",
       "type": "image/png",
-      "sizes": "1114x501"
+      "sizes": "512x507"
     },
   ],
   "start_url": ".",
