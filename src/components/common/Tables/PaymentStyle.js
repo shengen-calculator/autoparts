@@ -21,6 +21,13 @@ export default function PaymentStyle(theme) {
       footer: {
           padding: theme.spacing(4),
           background: '#eaeff1'
+      },
+      debt: {
+          color: '#e91e63'
+      },
+      advance : {
+          color: '#009688'
       }
+
   };
 }
