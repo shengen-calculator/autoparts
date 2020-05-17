@@ -121,7 +121,7 @@ function LoginPage({
                     className={classes.submit}
                     disabled={authentication.requestInProcess}
                 >
-                    {authentication.requestInProcess ? "ВХІД..." : "ВВІЙТИ"}
+                    {authentication.requestInProcess ? "ВХІД..." : "ВХІД"}
                 </Button>
                 <Grid container>
                     <Grid item xs>
