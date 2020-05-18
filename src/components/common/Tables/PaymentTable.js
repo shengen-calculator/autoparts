@@ -1,5 +1,4 @@
 import EnhancedTable from "../EnhancedTable";
-import {TitleIconEnum} from "../../../util/Enums";
 import React from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
@@ -34,8 +33,7 @@ function PaymentTable(props) {
             rows={props.payments}
             headCells={headCells}
             tableRow={tableRow}
-            title="План платежів"
-            titleIcon={TitleIconEnum.payment}
+            title={`Загальний борг: ${props.debt}`}
             columns={2}
             isFilterShown={false}
             rowsPerPageOptions={[10, 15, 25]}

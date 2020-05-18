@@ -26,6 +26,7 @@ function Content({client, calls, getPayments, ...props}) {
         }
     }, [client.payments, client.isPaymentsLoaded, client.vip, vip, getPayments]);
     const isTableShown = client && client.payments && client.payments.length > 1;
+    const debtAmount = isTableShown ? client.payments.reduce((a, b) => a + b.amount, 0) : 0;
 
     return (
         <div className={classes.app}>
@@ -39,7 +40,11 @@ function Content({client, calls, getPayments, ...props}) {
                     <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                     <div className={classes.contentWrapper}>
                         {isTableShown ?
-                            <PaymentTable payments={client.payments}/>
+                            (debtAmount > 0) ?
+                                <PaymentTable payments={client.payments} debt={debtAmount}/> :
+                                <Typography className={classes.advance} align="center">
+                                    {`На Вашому рахунку: ${formatCurrency(Math.abs(debtAmount), client.isEuroClient ? 'EUR' : 'UAH')}`}
+                                </Typography>
                             :
                             client.payments.length > 0 &&
                             <Typography className={client.payments[0].amount > 0 ? classes.debt : classes.advance} align="center">
