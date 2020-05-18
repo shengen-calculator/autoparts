@@ -28,9 +28,19 @@ function tableRow(row, index) {
 }
 
 function PaymentTable(props) {
+    const payments = [];
+    let amount = 0;
+    props.payments.forEach(x => {
+        payments.push({
+            date: x.date,
+            amount: x.amount < 0 ? 0 :
+                (amount < 0 ? (amount + x.amount < 0 ? 0 : amount + x.amount) : x.amount)
+        });
+        amount += x.amount;
+    });
     return(
         <EnhancedTable
-            rows={props.payments}
+            rows={payments}
             headCells={headCells}
             tableRow={tableRow}
             title={`Загальний борг: ${props.debt}`}
