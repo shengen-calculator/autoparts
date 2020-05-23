@@ -3,7 +3,7 @@ const util = require('../util');
 
 const getStatisticByClient = async (data, context) => {
 
-    util.CheckForManagerRole(context);
+    util.checkForManagerRole(context);
 
     if (!data || !data.startDate || !data.endDate || !data.vip) {
         throw new functions.https.HttpsError('invalid-argument',

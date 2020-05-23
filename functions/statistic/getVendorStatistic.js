@@ -5,7 +5,7 @@ const config = require('../mssql.connection').config;
 
 const getVendorStatistic = async (data, context) => {
 
-    util.CheckForManagerRole(context);
+    util.checkForManagerRole(context);
 
     try {
         const pool = await sql.connect(config);
