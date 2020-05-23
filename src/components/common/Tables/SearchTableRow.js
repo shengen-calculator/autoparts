@@ -17,7 +17,7 @@ export const headCells = [
     {id: 'description', numeric: false, disablePadding: false, label: 'Опис'},
     {id: 'retail', numeric: true, disablePadding: false, label: 'Роздріб'},
     {id: 'cost', numeric: true, disablePadding: false, label: 'Ціна'},
-    {id: 'order', numeric: true, disablePadding: false, label: 'Доступно'},
+    {id: 'order', numeric: true, disablePadding: false, label: 'Доступно', align: 'center'},
     {id: 'term', numeric: true, disablePadding: false, label: 'Термін', align: 'left'},
     {id: 'info', numeric: false, disablePadding: false, label: 'Інфо', align: 'center'}
 ];
@@ -71,20 +71,20 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                        style={pointer}>{isEur ? row['retailEur'].toFixed(2) : row.retail.toFixed(2)}</TableCell>
             <TableCell width="10%" align="right" name="order"
                        style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>
-            <TableCell width="5%" align="right" name="order" style={pointer}>{row.order}</TableCell>
+            <TableCell width="5%" align="center" name="order" style={pointer}>{row.order}</TableCell>
             <TableCell width="5%" align="left" name="order" style={bold} >
                 {
                     row['isGuaranteedTerm'] ?
                         <Grid container name="order">
                             <Grid item name="order">
-                                {row['term']}
+                                {`${row['term']} дн.`}
                             </Grid>
                             <Grid item>
                                 <Tooltip title="Гарантований строк">
                                     <CheckCircleOutlineIcon style={{fontSize: 12, marginBottom: 5, marginLeft: 3}}/>
                                 </Tooltip>
                             </Grid>
-                        </Grid> : row['term']
+                        </Grid> : `${row['term']} дн.`
                 }
             </TableCell>
             <TableCell width="5%" align="center" name="info" style={pointer}>
