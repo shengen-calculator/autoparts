@@ -13,6 +13,7 @@ import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
 import {formatCurrency} from "../../../util/Formatter";
 import Tooltip from "@material-ui/core/Tooltip";
+import {getOrderRowClass} from "../../common/ConstantStyles";
 
 //status list
 //подтвержден = 0
@@ -38,6 +39,7 @@ function tableRow(row, index, isSelected, handleClick) {
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
 
+
     return (
         <TableRow
             hover
@@ -45,6 +47,7 @@ function tableRow(row, index, isSelected, handleClick) {
             aria-checked={isItemSelected}
             tabIndex={-1}
             key={row.id}
+            style={getOrderRowClass(row)}
             selected={isItemSelected}
         >
             <TableCell padding="checkbox">
