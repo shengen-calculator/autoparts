@@ -1,4 +1,4 @@
-CREATE PROCEDURE [dbo].[sp_web_getreconciliationbyvip] @vip varchar(10)
+CREATE PROCEDURE [dbo].[sp_web_getreconciliation] @clientId INT, @startDate DATE, @endDate DATE
 AS
 BEGIN
     SELECT dbo.[Подчиненная накладные].ID_Накладной                     AS InvoiceNumber,
@@ -16,9 +16,11 @@ BEGIN
          dbo.Брэнды ON dbo.[Каталог запчастей].ID_Брэнда = dbo.Брэнды.ID_Брэнда
     WHERE (dbo.[Подчиненная накладные].ID_Накладной IS NOT NULL)
       AND (dbo.[Подчиненная накладные].Дата_закрытия IS NOT NULL)
-      AND (dbo.[Подчиненная накладные].ID_Клиента = @vip)
+      AND (dbo.[Подчиненная накладные].ID_Клиента = @clientId)
       AND (dbo.[Подчиненная накладные].Нету = 0)
       AND (dbo.[Подчиненная накладные].Обработано = 1)
+      AND (dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной) >= @startDate)
+      AND (dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной) <= @endDate)
     UNION
 
     SELECT 0                   as InvoiceNumber,
@@ -30,8 +32,9 @@ BEGIN
            ''                  as Number,
            ''                  as Description
     FROM dbo.Касса
-    WHERE (ID_Клиента = @vip)
+    WHERE (ID_Клиента = @clientId)
+      AND (CONVERT(date, Дата) >= @startDate)
+      AND (CONVERT(date, Дата) <= @endDate)
     ORDER BY InvoiceDate
 END
 go
-
