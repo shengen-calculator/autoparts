@@ -19,7 +19,7 @@ const getReconciliationData = async (data, context) => {
             .input('startDate', sql.Date, data.startDate)
             .input('endDate', sql.Date, data.endDate)
             .execute('sp_web_getreconciliationdata');
-        return "https://firebasestorage.googleapis.com/v0/b/autoparts-95d56.appspot.com/o/alessio-lin--6LYjG0H32E-big.jpg?alt=media&token=8510d92b-ddcd-4eca-9022-c3226b844399";
+        return util.getReconciliationXlsLink(result.recordset);
     } catch (err) {
         if(err) {
             throw new functions.https.HttpsError('internal',

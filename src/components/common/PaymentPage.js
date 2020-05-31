@@ -6,6 +6,8 @@ import {formatCurrency} from "../../util/Formatter";
 import React from "react";
 import PaymentStyle from "./Tables/PaymentStyle";
 import {withStyles} from "@material-ui/core/styles";
+import Button from '@material-ui/core/Button';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 
 const styles = theme => PaymentStyle(theme);
 
@@ -16,7 +18,9 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
             {calls === 0 &&
             <Paper className={classes.paper}>
                 <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
+
                 <div className={classes.contentWrapper}>
+
                     {isTableShown ?
                         (debtAmount > 0) ?
                             <PaymentTable payments={client.payments} debt={debtAmount}/> :
@@ -30,8 +34,17 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
                                 `Ваш борг складає: ${formatCurrency(client.payments[0].amount, client.isEuroClient ? 'EUR' : 'UAH')}` :
                                 `На Вашому рахунку: ${formatCurrency(Math.abs(client.payments[0].amount), client.isEuroClient ? 'EUR' : 'UAH')}`}
                         </Typography>
+
                     }
+                    <br/>
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        endIcon={<SaveAltIcon/>}>
+                        Завантажити акт звірки
+                    </Button>
                 </div>
+
             </Paper>}
         </main>
     )
