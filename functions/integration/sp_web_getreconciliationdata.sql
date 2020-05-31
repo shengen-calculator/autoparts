@@ -1,14 +1,16 @@
-CREATE PROCEDURE [dbo].[sp_web_getreconciliation] @clientId INT, @startDate DATE, @endDate DATE
+CREATE PROCEDURE [dbo].[sp_web_getreconciliationdata] @clientId INT, @startDate DATE, @endDate DATE
 AS
 BEGIN
-    SELECT dbo.[Подчиненная накладные].ID_Накладной                     AS invoiceNumber,
-           dbo.[Подчиненная накладные].Количество                       AS quantity,
-           dbo.[Подчиненная накладные].Цена                             AS priceEur,
-           dbo.[Подчиненная накладные].Грн                              AS priceUah,
-           dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной) AS invoiceDate,
-           dbo.Брэнды.Брэнд                                             AS brand,
-           dbo.[Каталог запчастей].[Номер запчасти]                     AS number,
-           dbo.[Каталог запчастей].Описание                             AS description
+    SELECT dbo.[Подчиненная накладные].ID_Накладной       AS invoiceNumber,
+           dbo.[Подчиненная накладные].Количество         AS quantity,
+           dbo.[Подчиненная накладные].Цена               AS priceEur,
+           dbo.[Подчиненная накладные].Грн                AS priceUah,
+           IIF(dbo.[Подчиненная накладные].Количество > 0,
+               dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной),
+               dbo.[Подчиненная накладные].Дата_закрытия) AS invoiceDate,
+           dbo.Брэнды.Брэнд                               AS brand,
+           dbo.[Каталог запчастей].[Номер запчасти]       AS number,
+           dbo.[Каталог запчастей].Описание               AS description
     FROM dbo.[Подчиненная накладные]
              INNER JOIN
          dbo.[Каталог запчастей] ON dbo.[Подчиненная накладные].ID_Запчасти = dbo.[Каталог запчастей].ID_Запчасти
@@ -38,3 +40,4 @@ BEGIN
     ORDER BY InvoiceDate
 END
 go
+
