@@ -1,14 +1,14 @@
 CREATE PROCEDURE [dbo].[sp_web_getreconciliation] @clientId INT, @startDate DATE, @endDate DATE
 AS
 BEGIN
-    SELECT dbo.[Подчиненная накладные].ID_Накладной                     AS InvoiceNumber,
-           dbo.[Подчиненная накладные].Количество                       AS Quantity,
+    SELECT dbo.[Подчиненная накладные].ID_Накладной                     AS invoiceNumber,
+           dbo.[Подчиненная накладные].Количество                       AS quantity,
            dbo.[Подчиненная накладные].Цена                             AS priceEur,
            dbo.[Подчиненная накладные].Грн                              AS priceUah,
-           dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной) AS InvoiceDate,
-           dbo.Брэнды.Брэнд                                             AS Brand,
-           dbo.[Каталог запчастей].[Номер запчасти]                     AS Number,
-           dbo.[Каталог запчастей].Описание                             AS Description
+           dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной) AS invoiceDate,
+           dbo.Брэнды.Брэнд                                             AS brand,
+           dbo.[Каталог запчастей].[Номер запчасти]                     AS number,
+           dbo.[Каталог запчастей].Описание                             AS description
     FROM dbo.[Подчиненная накладные]
              INNER JOIN
          dbo.[Каталог запчастей] ON dbo.[Подчиненная накладные].ID_Запчасти = dbo.[Каталог запчастей].ID_Запчасти
@@ -23,14 +23,14 @@ BEGIN
       AND (dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной) <= @endDate)
     UNION
 
-    SELECT 0                   as InvoiceNumber,
-           0                   as Quantity,
+    SELECT 0                   as invoiceNumber,
+           0                   as quantity,
            Цена                as priceEur,
            Грн                 as priceUah,
-           CONVERT(date, Дата) AS InvoiceDate,
-           ''                  as Brand,
-           ''                  as Number,
-           ''                  as Description
+           CONVERT(date, Дата) AS invoiceDate,
+           ''                  as brand,
+           ''                  as number,
+           ''                  as description
     FROM dbo.Касса
     WHERE (ID_Клиента = @clientId)
       AND (CONVERT(date, Дата) >= @startDate)
