@@ -36,13 +36,17 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
                         </Typography>
 
                     }
-                    <br/>
-                    <Button
-                        variant="outlined"
-                        color="primary"
-                        endIcon={<SaveAltIcon/>}>
-                        Завантажити акт звірки
-                    </Button>
+                    <div className={classes.centered}>
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            endIcon={<SaveAltIcon/>}>
+                            Завантажити акт звірки
+                        </Button>
+                    </div>
+
+
+
                 </div>
 
             </Paper>}

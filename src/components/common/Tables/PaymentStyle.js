@@ -27,6 +27,10 @@ export default function PaymentStyle(theme) {
       },
       advance : {
           color: '#009688'
+      },
+      centered: {
+          margin: '40px auto',
+          width: '226px',
       }
 
   };
