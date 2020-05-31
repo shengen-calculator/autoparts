@@ -15,7 +15,7 @@ import DeleteOrdersDialog from "./Dialog/DeleteOrdersDialog";
 import UpdateOrderQuantityDialog from "./Dialog/UpdateOrderQuantityDialog";
 import {formatCurrency} from "../../../util/Formatter";
 import Tooltip from "@material-ui/core/Tooltip";
-import {getOrderRowClass} from "../../common/ConstantStyles";
+import {getOrderRowClass} from "../../common/OrderRowStyle";
 
 //status list
 //подтвержден = 0
