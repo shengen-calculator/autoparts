@@ -22,6 +22,7 @@ export default function clientReducer(state = initialState.client, action) {
                 isReservesLoaded: false,
                 payments: [],
                 isPaymentsLoaded: false,
+                reconciliationUrl: ''
             };
 
         case types.LOAD_PAYMENTS_SUCCESS:
@@ -29,6 +30,12 @@ export default function clientReducer(state = initialState.client, action) {
                 ...state,
                 payments: action.payments,
                 isPaymentsLoaded: true
+            };
+
+        case types.LOAD_RECONCILIATION_SUCCESS:
+            return {
+                ...state,
+                reconciliationUrl: action.url
             };
 
         case types.LOAD_ORDERS_SUCCESS:

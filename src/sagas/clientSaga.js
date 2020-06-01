@@ -41,6 +41,18 @@ export function* getReserves(action) {
     }
 }
 
+
+export function* getReconciliationData(action) {
+    try {
+        yield put({type: types.BEGIN_API_CALL});
+        const {data} = yield call(FunctionsApi.getReconciliation, action.params);
+        yield put({type: types.LOAD_RECONCILIATION_SUCCESS, url: data});
+    } catch (e) {
+        yield put({type: types.API_CALL_ERROR});
+        yield put({type: types.LOAD_RECONCILIATION_FAILURE, text: e.message});
+    }
+}
+
 export function* deleteOrders(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});

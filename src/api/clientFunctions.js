@@ -13,6 +13,10 @@ class FunctionsApi {
         const func = functions.httpsCallable('order-getReservesByVip');
         return func(vip);
     }
+    static getReconciliation({startDate, endDate}){
+        const func = functions.httpsCallable('main-getReconciliationData');
+        return func({startDate, endDate});
+    }
     static deleteOrdersByIds(ids){
         const func = functions.httpsCallable('order-deleteOrdersByIds');
         return func(ids);

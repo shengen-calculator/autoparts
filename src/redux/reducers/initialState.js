@@ -19,7 +19,8 @@ export default {
         isReservesLoaded: false,
         payments: [],
         isPaymentsLoaded: false,
-        isClientNotExists: false
+        isClientNotExists: false,
+        reconciliationUrl: ''
     },
     apiCallsInProgress: 0,
     statistic: {

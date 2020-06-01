@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import ukLocale from "date-fns/locale/uk";
 import DateFnsUtils from '@date-io/date-fns';
-import {createReserve} from "../../../redux/actions/searchActions";
+import {getReconciliationData} from "../../../redux/actions/clientActions";
 import {showToastrMessage} from "../../../redux/actions/messageActions";
 import {
     MuiPickersUtilsProvider,
@@ -23,7 +23,7 @@ const styles = theme => ({
 });
 
 function ReconciliationDialog(props) {
-    const {isOpened, onClose, showToastrMessage} = props;
+    const {isOpened, onClose, showToastrMessage, getReconciliationData} = props;
     const date = new Date();
     const [dateFilter, setDateFilter] = useState({
         startDate: new Date(date.setMonth(date.getMonth() - 1)),
@@ -61,7 +61,8 @@ function ReconciliationDialog(props) {
         } else if(Math.ceil(diffTime / (1000 * 60 * 60 * 24)) > 92) {
             showToastrMessage({type: 'warning', message: 'Помилка!!! Період не може перевищувати 90 днів'})
         } else {
-            alert('Start Download')
+            getReconciliationData(dateFilter.startDate, dateFilter.endDate)
+            onClose();
         }
     }
 
@@ -111,7 +112,7 @@ function ReconciliationDialog(props) {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    createReserve,
+    getReconciliationData,
     showToastrMessage
 };
 
