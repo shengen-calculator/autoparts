@@ -131,6 +131,7 @@ export default function clientReducer(state = initialState.client, action) {
         case types.LOG_OUT_SUCCESS:
             return {
                 ...state,
+                id: '',
                 vip: '',
                 fullName: '',
                 isEuroClient: false,
