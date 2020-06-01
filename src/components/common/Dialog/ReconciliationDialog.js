@@ -13,6 +13,7 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import {RoleEnum} from "../../../util/Enums";
 
 
 const styles = theme => ({
@@ -23,11 +24,11 @@ const styles = theme => ({
 });
 
 function ReconciliationDialog(props) {
-    const {isOpened, onClose, showToastrMessage, getReconciliationData} = props;
+    const {isOpened, onClose, showToastrMessage, getReconciliationData, auth, client } = props;
     const date = new Date();
     const [dateFilter, setDateFilter] = useState({
         startDate: new Date(date.setMonth(date.getMonth() - 1)),
-        endDate: Date.now()
+        endDate: new Date()
     });
 
     function handleStartDateChange(value) {
@@ -42,7 +43,7 @@ function ReconciliationDialog(props) {
         setDateFilter(prev => ({
             ...prev,
             startDate: new Date(date.setMonth(date.getMonth() - 1)),
-            endDate: Date.now()
+            endDate: new Date()
         }));
     }
 
@@ -61,7 +62,11 @@ function ReconciliationDialog(props) {
         } else if(Math.ceil(diffTime / (1000 * 60 * 60 * 24)) > 92) {
             showToastrMessage({type: 'warning', message: 'Помилка!!! Період не може перевищувати 90 днів'})
         } else {
-            getReconciliationData(dateFilter.startDate, dateFilter.endDate)
+            getReconciliationData({
+                startDate: dateFilter.startDate,
+                endDate: dateFilter.endDate,
+                clientId: auth.role === RoleEnum.Manager ? client.id : null
+            });
             onClose();
         }
     }
