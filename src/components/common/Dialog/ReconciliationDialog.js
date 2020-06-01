@@ -14,9 +14,10 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import {RoleEnum} from "../../../util/Enums";
+import {formatDate} from "../../../util/Formatter";
 
 
-const styles = theme => ({
+const styles = () => ({
     root: {
         display: 'flex',
         minHeight: '100vh'
@@ -63,8 +64,8 @@ function ReconciliationDialog(props) {
             showToastrMessage({type: 'warning', message: 'Помилка!!! Період не може перевищувати 90 днів'})
         } else {
             getReconciliationData({
-                startDate: dateFilter.startDate,
-                endDate: dateFilter.endDate,
+                startDate: formatDate(dateFilter.startDate),
+                endDate: formatDate(dateFilter.endDate),
                 clientId: auth.role === RoleEnum.Manager ? client.id : null
             });
             onClose();
