@@ -30,7 +30,7 @@ const checkForClientRole = (context) => {
 
 const getReconciliationXlsLink = (data) => {
     if(data)
-        return "https://firebasestorage.googleapis.com/v0/b/autoparts-95d56.appspot.com/o/alessio-lin--6LYjG0H32E-big.jpg?alt=media&token=8510d92b-ddcd-4eca-9022-c3226b844399";
+        return "https://firebasestorage.googleapis.com/v0/b/autoparts-95d56.appspot.com/o/opalbrok_invoice.xlsx?alt=media&token=2a9991db-0362-4b56-8f7c-facee6241419";
     return null
 };
 
