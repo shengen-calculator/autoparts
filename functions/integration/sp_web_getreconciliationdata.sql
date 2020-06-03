@@ -37,7 +37,7 @@ BEGIN
     WHERE (ID_Клиента = @clientId)
       AND (CONVERT(date, Дата) >= @startDate)
       AND (CONVERT(date, Дата) <= @endDate)
-    ORDER BY InvoiceDate
+    ORDER BY InvoiceDate, invoiceNumber
 END
 go
 

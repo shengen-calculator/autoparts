@@ -11,7 +11,6 @@ const getReconciliationData = async (data, context) => {
     } else {
         util.checkForClientRole(context);
     }
-
     try {
         const pool = await sql.connect(config);
 
@@ -24,10 +23,14 @@ const getReconciliationData = async (data, context) => {
             pool.request()
                 .input('clientId', sql.Int, data.clientId ? data.clientId : context.auth.token.clientId)
                 .input('day', sql.Date, data.startDate)
-                .query('SELECT dbo.GetBalanceOnDate(@clientId, @day) as balance')
+                .query('SELECT dbo.GetBalanceOnDate(@clientId, @day) as result')
         ]);
 
-        return await reconciliationXls.getReconciliationXlsLink(records.recordset, balance.recordset[0]);
+        const fileName = data.clientId ? `K0000${context.auth ? context.auth.token.vip : 'test'}-${data.clientId}.xlsx` :
+            `K0000${context.auth.token.vip}.xlsx`;
+        const initialBalance = balance.recordset[0]['result'] ? balance.recordset[0]['result'] : 0;
+        console.log(initialBalance);
+        return await reconciliationXls.getReconciliationXlsLink(records.recordset, initialBalance, fileName);
 
     } catch (err) {
         if(err) {

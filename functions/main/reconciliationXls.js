@@ -6,37 +6,49 @@ const path = require('path');
 const configuration = require('../settings');
 
 
-const getReconciliationXlsLink = async (data) => {
+const getReconciliationXlsLink = async (data, balance, fileName) => {
     const workbook = new excel.Workbook();
+
     const worksheet = workbook.addWorksheet('sheet1', {
         pageSetup: {paperSize: 15, orientation: 'landscape'}
     });
-    worksheet.columns = [
-        {header: 'Номер', key: 'invoice', width: 10},
-        {header: 'Дата', key: 'date', width: 5},
-        {header: 'Бренд', key: 'brand', width: 18},
-        {header: 'Номер запчастини', key: 'number', width: 18},
-        {header: 'Опис', key: 'description', width: 52},
-        {header: 'Ціна', key: 'price', width: 5},
-        {header: 'Кількість', key: 'quantity', width: 2},
-    ];
-    const rowEValues = [];
-    rowEValues[1] = 'Накладна №215';
-    rowEValues[2] = '20-02-2020';
-    rowEValues[3] = 'Ruvile';
-    rowEValues[4] = '5413';
-    rowEValues[5] = 'Подшипник ступицы';
-    rowEValues[6] = '10.34';
-    rowEValues[7] = '3';
-    worksheet.addRow(rowEValues);
 
-    const resultFileName = "K0000321.xlsx";
-    const resultFilePath = `OutBox/${resultFileName}`;
-    const tempLocalResultFile = path.join(os.tmpdir(), resultFileName);
+    worksheet.columns = [
+        {header: 'Документ', key: 'invoice', width: 10},
+        {header: 'Дата', key: 'date', width: 15},
+        {header: 'Бренд', key: 'brand', width: 18},
+        {header: 'Номер запчастини', key: 'number', width: 25},
+        {header: 'Опис', key: 'description', width: 67},
+        {header: 'Ціна', key: 'price', width: 15},
+        {header: 'Кількість', key: 'quantity', width: 15},
+        {header: 'Сумма', key: 'total', width: 15},
+        {header: 'Баланс', key: 'balance', width: 15},
+    ];
+
+    paintRow(worksheet, 7, 0);
+
+    worksheet.addRow(new Array(1));
+    worksheet.mergeCells('A2:G2');
+    worksheet.getCell('A2').value = `Баланс на початок періоду: ${balance}`;
+
+    data.forEach(x => {
+        const rowValues = [];
+        rowValues[1] = x['invoiceNumber'];
+        rowValues[2] = x['invoiceDate'];
+        rowValues[3] = x['brand'];
+        rowValues[4] = x['number'];
+        rowValues[5] = x['description'];
+        rowValues[6] = x['priceEur'];
+        rowValues[7] = x['quantity'];
+        worksheet.addRow(rowValues);
+    });
+
+    const resultFilePath = `OutBox/${fileName}`;
+    const tempLocalResultFile = path.join(os.tmpdir(), fileName);
     const contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     const metadata = {
         contentType: contentType,
-        contentDisposition: `filename="${resultFileName}"`
+        contentDisposition: `attachment; filename="${fileName}"`
     };
 
     await workbook.xlsx.writeFile(tempLocalResultFile);
@@ -55,5 +67,19 @@ const getReconciliationXlsLink = async (data) => {
 };
 
 const getBucket = () => admin.storage().bucket(configuration.bucketId);
+
+const paintRow = (worksheet, columnsNumber, row) => {
+    const cells = ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1', 'I1', 'J1', 'K1', 'L1', 'M1', 'N1', 'O1', 'P1'];
+
+    cells.slice(row, columnsNumber).forEach(key => {
+        worksheet.getCell(key).fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: {
+                argb: 'E6E6FA'
+            }
+        };
+    });
+};
 
 module.exports.getReconciliationXlsLink = getReconciliationXlsLink;
