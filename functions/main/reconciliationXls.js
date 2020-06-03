@@ -92,13 +92,14 @@ const getReconciliationXlsLink = async (data, balance, fileName, startDate, endD
             rowValues[7] = x['quantity'];
             rowValues[8] = x['priceEur']*x['quantity'];
             balance = balance + x['priceEur']*x['quantity'];
-            rowValues[9] = balance;
+            rowValues[9] = Math.round(balance*100)/100;
         }
 
         worksheet.addRow(rowValues);
 
         if(x['invoiceNumber'] === 0){
             worksheet.mergeCells(`C${index}:G${index}`);
+            worksheet.getCell(`C${index}`).value = x['description'];
         }
         index ++;
         prevInvNumber = x['invoiceNumber'];

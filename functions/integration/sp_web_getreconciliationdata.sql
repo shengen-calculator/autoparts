@@ -9,7 +9,7 @@ BEGIN
                dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной),
                dbo.[Подчиненная накладные].Дата_закрытия) AS invoiceDate,
            dbo.Брэнды.Брэнд                               AS brand,
-           dbo.[Каталог запчастей].[Номер запчасти]       AS number,
+           dbo.[Каталог запчастей].[Номер поставщика]     AS number,
            dbo.[Каталог запчастей].Описание               AS description
     FROM dbo.[Подчиненная накладные]
              INNER JOIN
@@ -32,7 +32,7 @@ BEGIN
            CONVERT(date, Дата) AS invoiceDate,
            ''                  as brand,
            ''                  as number,
-           ''                  as description
+           Примечание          as description
     FROM dbo.Касса
     WHERE (ID_Клиента = @clientId)
       AND (CONVERT(date, Дата) >= @startDate)
