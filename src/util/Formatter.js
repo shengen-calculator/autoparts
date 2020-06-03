@@ -7,5 +7,5 @@ export const formatDate = (date) =>
     const month = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(date);
     const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
 
-    return `${day}-${month}-${year}`;
+    return `${year}-${month}-${day}`;
 };

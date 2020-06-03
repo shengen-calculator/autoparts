@@ -28,12 +28,5 @@ const checkForClientRole = (context) => {
     }
 };
 
-const getReconciliationXlsLink = (data) => {
-    if(data)
-        return "https://firebasestorage.googleapis.com/v0/b/autoparts-95d56.appspot.com/o/opalbrok_invoice.xlsx?alt=media&token=2a9991db-0362-4b56-8f7c-facee6241419";
-    return null
-};
-
 module.exports.checkForManagerRole = checkForManagerRole;
 module.exports.checkForClientRole = checkForClientRole;
-module.exports.getReconciliationXlsLink = getReconciliationXlsLink;
