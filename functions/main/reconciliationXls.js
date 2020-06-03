@@ -6,7 +6,7 @@ const path = require('path');
 const configuration = require('../settings');
 
 
-const getReconciliationXlsLink = async (data, balance, fileName) => {
+const getReconciliationXlsLink = async (data, balance, fileName, startDate, endDate) => {
     const workbook = new excel.Workbook();
 
     const worksheet = workbook.addWorksheet('sheet1', {
@@ -14,34 +14,97 @@ const getReconciliationXlsLink = async (data, balance, fileName) => {
     });
 
     worksheet.columns = [
-        {header: 'Документ', key: 'invoice', width: 10},
-        {header: 'Дата', key: 'date', width: 15},
-        {header: 'Бренд', key: 'brand', width: 18},
-        {header: 'Номер запчастини', key: 'number', width: 25},
-        {header: 'Опис', key: 'description', width: 67},
-        {header: 'Ціна', key: 'price', width: 15},
-        {header: 'Кількість', key: 'quantity', width: 15},
-        {header: 'Сумма', key: 'total', width: 15},
-        {header: 'Баланс', key: 'balance', width: 15},
+        {key: 'invoice', width: 20},
+        {key: 'date', width: 15},
+        {key: 'brand', width: 18},
+        {key: 'number', width: 25},
+        {key: 'description', width: 67},
+        {key: 'price', width: 15},
+        {key: 'quantity', width: 15},
+        {key: 'total', width: 15},
+        {key: 'balance', width: 15},
     ];
-
-    paintRow(worksheet, 7, 0);
+    worksheet.addRow(new Array(1));
+    worksheet.mergeCells('A1:I1');
+    worksheet.getCell('A1').value = `Акт звірки`;
+    worksheet.getCell('A1').alignment = {vertical: 'middle', horizontal: 'center'};
+    worksheet.getCell('A1').font = {name: 'Arial', size: 32 };
 
     worksheet.addRow(new Array(1));
-    worksheet.mergeCells('A2:G2');
-    worksheet.getCell('A2').value = `Баланс на початок періоду: ${balance}`;
+    worksheet.mergeCells('A2:C2');
+    worksheet.getCell('A2').value = `Початок періоду звірки:`;
+    worksheet.getCell('D2').value = new Date(startDate);
+    worksheet.getCell('A2').font = {name: 'Arial', size: 14 };
+    worksheet.getCell('D2').font = {name: 'Arial', size: 14 };
 
+    worksheet.addRow(new Array(1));
+    worksheet.mergeCells('A3:C3');
+    worksheet.getCell('A3').value = `Кінець періоду звірки:`;
+    worksheet.getCell('D3').value = new Date(endDate);
+    worksheet.getCell('A3').font = {name: 'Arial', size: 14 };
+    worksheet.getCell('D3').font = {name: 'Arial', size: 14 };
+
+    worksheet.addRow(new Array(1));
+    worksheet.mergeCells('A4:C4');
+    worksheet.getCell('A4').value = `Баланс на початок періоду:`;
+    worksheet.getCell('D4').value = balance;
+    worksheet.getCell('A4').font = {name: 'Arial', size: 14 };
+    worksheet.getCell('D4').font = {name: 'Arial', size: 14 };
+
+    worksheet.addRow(new Array(1));
+    worksheet.mergeCells('A5:I5');
+    worksheet.addRow(new Array(1));
+    worksheet.mergeCells('A6:I6');
+
+    const tableHeader = [
+        'Документ',
+        'Дата',
+        'Бренд',
+        'Номер запчастини',
+        'Опис',
+        'Ціна',
+        'Кількість',
+        'Сумма',
+        'Баланс'
+    ];
+
+    worksheet.addRow(tableHeader);
+    let index = 8;
+    let prevInvNumber = "";
     data.forEach(x => {
         const rowValues = [];
-        rowValues[1] = x['invoiceNumber'];
-        rowValues[2] = x['invoiceDate'];
-        rowValues[3] = x['brand'];
-        rowValues[4] = x['number'];
-        rowValues[5] = x['description'];
-        rowValues[6] = x['priceEur'];
-        rowValues[7] = x['quantity'];
+        if(x['invoiceNumber'] === 0)
+        {
+            rowValues[1] = `Оплата`;
+            rowValues[2] = x['invoiceDate'];
+            rowValues[8] = -x['priceEur'];
+            balance = balance - x['priceEur'];
+            rowValues[9] = balance;
+
+        } else  {
+            rowValues[1] = x['quantity'] < 0 ? `Повернення № ${x['invoiceNumber']}` :
+                prevInvNumber === x['invoiceNumber'] ? '' : `Накладна № ${x['invoiceNumber']}`;
+            rowValues[2] = x['invoiceDate'];
+            rowValues[3] = x['brand'];
+            rowValues[4] = x['number'];
+            rowValues[5] = x['description'];
+            rowValues[6] = x['priceEur'];
+            rowValues[7] = x['quantity'];
+            rowValues[8] = x['priceEur']*x['quantity'];
+            balance = balance + x['priceEur']*x['quantity'];
+            rowValues[9] = balance;
+        }
+
         worksheet.addRow(rowValues);
+
+        if(x['invoiceNumber'] === 0){
+            worksheet.mergeCells(`C${index}:G${index}`);
+        }
+        index ++;
+        prevInvNumber = x['invoiceNumber'];
     });
+    paintRow(worksheet, 9, 7);
+
 
     const resultFilePath = `OutBox/${fileName}`;
     const tempLocalResultFile = path.join(os.tmpdir(), fileName);
@@ -69,9 +132,9 @@ const getReconciliationXlsLink = async (data, balance, fileName) => {
 const getBucket = () => admin.storage().bucket(configuration.bucketId);
 
 const paintRow = (worksheet, columnsNumber, row) => {
-    const cells = ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1', 'I1', 'J1', 'K1', 'L1', 'M1', 'N1', 'O1', 'P1'];
+    const cells = [`A${row}`, `B${row}`,`C${row}`,`D${row}`,`E${row}`,`F${row}`,`G${row}`,`H${row}`,`I${row}`,`J${row}`,`K${row}`,`L${row}`, `M${row}`,`N${row}`,`O${row}`,`P${row}`,`R${row}`,`S${row}`];
 
-    cells.slice(row, columnsNumber).forEach(key => {
+    cells.slice(0, columnsNumber).forEach(key => {
         worksheet.getCell(key).fill = {
             type: 'pattern',
             pattern: 'solid',
@@ -79,6 +142,7 @@ const paintRow = (worksheet, columnsNumber, row) => {
                 argb: 'E6E6FA'
             }
         };
+        worksheet.getCell(key).font = {name: 'Arial', size: 11, bold: true };
     });
 };
 

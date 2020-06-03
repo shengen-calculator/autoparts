@@ -30,7 +30,8 @@ const getReconciliationData = async (data, context) => {
             `K0000${context.auth.token.vip}.xlsx`;
         const initialBalance = balance.recordset[0]['result'] ? balance.recordset[0]['result'] : 0;
         console.log(initialBalance);
-        return await reconciliationXls.getReconciliationXlsLink(records.recordset, initialBalance, fileName);
+        return await reconciliationXls.getReconciliationXlsLink(records.recordset,
+            initialBalance, fileName, data.startDate, data.endDate);
 
     } catch (err) {
         if(err) {
