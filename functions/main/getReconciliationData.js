@@ -31,7 +31,7 @@ const getReconciliationData = async (data, context) => {
         const initialBalance = balance.recordset[0]['result'] ? balance.recordset[0]['result'] : 0;
         console.log(initialBalance);
         return await reconciliationXls.getReconciliationXlsLink(records.recordset,
-            initialBalance, fileName, data.startDate, data.endDate);
+            initialBalance, fileName, data.startDate, data.endDate, data.isEuroClient);
 
     } catch (err) {
         if(err) {

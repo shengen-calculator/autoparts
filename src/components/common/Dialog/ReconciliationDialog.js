@@ -66,7 +66,8 @@ function ReconciliationDialog(props) {
             getReconciliationData({
                 startDate: formatDate(dateFilter.startDate),
                 endDate: formatDate(dateFilter.endDate),
-                clientId: auth.role === RoleEnum.Manager ? client.id : null
+                clientId: auth.role === RoleEnum.Manager ? client.id : null,
+                isEuroClient: client.isEuroClient
             });
             onClose();
         }

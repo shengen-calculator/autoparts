@@ -13,9 +13,9 @@ class FunctionsApi {
         const func = functions.httpsCallable('order-getReservesByVip');
         return func(vip);
     }
-    static getReconciliation({startDate, endDate, clientId}){
+    static getReconciliation({startDate, endDate, clientId, isEuroClient}){
         const func = functions.httpsCallable('main-getReconciliationData');
-        return func({startDate, endDate, clientId});
+        return func({startDate, endDate, clientId, isEuroClient});
     }
     static deleteOrdersByIds(ids){
         const func = functions.httpsCallable('order-deleteOrdersByIds');

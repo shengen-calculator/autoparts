@@ -6,7 +6,7 @@ const path = require('path');
 const configuration = require('../settings');
 
 
-const getReconciliationXlsLink = async (data, balance, fileName, startDate, endDate) => {
+const getReconciliationXlsLink = async (data, balance, fileName, startDate, endDate, isEuroClient) => {
     const workbook = new excel.Workbook();
 
     const worksheet = workbook.addWorksheet('sheet1', {
@@ -77,9 +77,9 @@ const getReconciliationXlsLink = async (data, balance, fileName, startDate, endD
         {
             rowValues[1] = `Оплата`;
             rowValues[2] = x['invoiceDate'];
-            rowValues[8] = -x['priceEur'];
-            balance = balance - x['priceEur'];
-            rowValues[9] = balance;
+            rowValues[8] = -(isEuroClient ? x['priceEur'] : x['priceUah']);
+            balance = balance - (isEuroClient ? x['priceEur'] : x['priceUah']);
+            rowValues[9] = Math.round(balance*100)/100;
 
         } else  {
             rowValues[1] = x['quantity'] < 0 ? `Повернення № ${x['invoiceNumber']}` :
@@ -90,8 +90,8 @@ const getReconciliationXlsLink = async (data, balance, fileName, startDate, endD
             rowValues[5] = x['description'];
             rowValues[6] = x['priceEur'];
             rowValues[7] = x['quantity'];
-            rowValues[8] = x['priceEur']*x['quantity'];
-            balance = balance + x['priceEur']*x['quantity'];
+            rowValues[8] = (isEuroClient ? x['priceEur'] : x['priceUah'])*x['quantity'];
+            balance = balance + (isEuroClient ? x['priceEur'] : x['priceUah'])*x['quantity'];
             rowValues[9] = Math.round(balance*100)/100;
         }
 
