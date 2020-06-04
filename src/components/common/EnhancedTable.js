@@ -51,6 +51,7 @@ export default function EnhancedTable(props) {
         isEur,
         role,
         isFilterShown,
+        isPaginationDisabled,
         rowsPerPageOptions,
         handleClick,
         handleSelectAllClick,
@@ -131,7 +132,7 @@ export default function EnhancedTable(props) {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <TablePagination
+                {!isPaginationDisabled && <TablePagination
                     rowsPerPageOptions={rowsPerPageOptions}
                     component="div"
                     count={rows.length}
@@ -139,7 +140,7 @@ export default function EnhancedTable(props) {
                     page={page}
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
-                />
+                />}
             </Paper>
             <FormControlLabel
                 control={<Switch checked={dense} onChange={handleChangeDense} />}
