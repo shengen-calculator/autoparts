@@ -86,7 +86,8 @@ export default function EnhancedTable(props) {
 
     const isSelected = name => selected.indexOf(name) !== -1;
 
-    const emptyRows = rowsPerPage - Math.min(Number(rowsPerPage), rows.length - page * rowsPerPage);
+    const emptyRows = isPaginationDisabled ? 0 :
+        rowsPerPage - Math.min(Number(rowsPerPage), rows.length - page * rowsPerPage);
 
     return (
         <div className={classes.root}>
@@ -119,11 +120,15 @@ export default function EnhancedTable(props) {
                             isRowSelectorShown={isRowSelectorShown}
                         />
                         <TableBody>
-                            {StableSort(rows, GetComparator(order, orderBy))
+                            {isPaginationDisabled ? StableSort(rows, GetComparator(order, orderBy))
+                                .map((row, index) => {
+                                    return tableRow(row, index, isSelected, handleClick, isEur, role)
+                                }) : StableSort(rows, GetComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
                                     return tableRow(row, index, isSelected, handleClick, isEur, role)
-                                })}
+                                })
+                            }
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                                     <TableCell colSpan={columns} />
