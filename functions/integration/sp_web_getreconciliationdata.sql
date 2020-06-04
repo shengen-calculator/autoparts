@@ -1,7 +1,8 @@
 CREATE PROCEDURE [dbo].[sp_web_getreconciliationdata] @clientId INT, @startDate DATE, @endDate DATE
 AS
 BEGIN
-    SELECT dbo.[Подчиненная накладные].ID_Накладной       AS invoiceNumber,
+    SELECT dbo.[Подчиненная накладные].ID                 AS id,
+           dbo.[Подчиненная накладные].ID_Накладной       AS invoiceNumber,
            dbo.[Подчиненная накладные].Количество         AS quantity,
            dbo.[Подчиненная накладные].Цена               AS priceEur,
            dbo.[Подчиненная накладные].Грн                AS priceUah,
@@ -21,11 +22,16 @@ BEGIN
       AND (dbo.[Подчиненная накладные].ID_Клиента = @clientId)
       AND (dbo.[Подчиненная накладные].Нету = 0)
       AND (dbo.[Подчиненная накладные].Обработано = 1)
-      AND (dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной) >= @startDate)
-      AND (dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной) <= @endDate)
+      AND (IIF(dbo.[Подчиненная накладные].Количество > 0,
+               dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной),
+               dbo.[Подчиненная накладные].Дата_закрытия) >= @startDate)
+      AND (IIF(dbo.[Подчиненная накладные].Количество > 0,
+               dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной),
+               dbo.[Подчиненная накладные].Дата_закрытия) <= @endDate)
     UNION
 
-    SELECT 0                   as invoiceNumber,
+    SELECT ID_Касса            as id,
+           0                   as invoiceNumber,
            0                   as quantity,
            Цена                as priceEur,
            Грн                 as priceUah,
