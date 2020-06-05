@@ -8,7 +8,9 @@ function ToastrMessage({message}) {
     useEffect(() => {
         if(message && message.text) {
             enqueueSnackbar(message.text, {
-                variant: message.type, anchorOrigin : {vertical: 'top', horizontal: 'right'}
+                variant: message.type,
+                anchorOrigin: {vertical: 'top', horizontal: 'right'},
+                autoHideDuration: 2000
             });
         }
     }, [message, enqueueSnackbar]);
