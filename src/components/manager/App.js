@@ -20,7 +20,7 @@ const styles = theme => ({
         minHeight: '100vh',
     },
     drawer: {
-        [theme.breakpoints.up('lg')]: {
+        [theme.breakpoints.up('xl')]: {
             width: drawerWidth,
             flexShrink: 0,
         },
@@ -39,7 +39,7 @@ function App({client, product, ...props}) {
             <div className={classes.root}>
                 <CssBaseline/>
                 <nav className={classes.drawer}>
-                    <Hidden lgUp implementation="js">
+                    <Hidden xlUp implementation="js">
                         <Navigator
                             PaperProps={{style: {width: drawerWidth}}}
                             variant="temporary"
@@ -49,7 +49,7 @@ function App({client, product, ...props}) {
                             onClose={handleDrawerToggle}
                         />
                     </Hidden>
-                    <Hidden mdDown implementation="css">
+                    <Hidden lgDown implementation="css">
                         <Navigator
                             PaperProps={{style: {width: drawerWidth}}}
                             vip={client.vip}
