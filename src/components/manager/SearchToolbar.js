@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from "@material-ui/icons/Send";
+import EuroIcon from "@material-ui/icons/Euro";
 import React, {useState} from "react";
 import {withStyles} from "@material-ui/core/styles";
 import ContentStyle from "../common/ContentStyle";
@@ -109,6 +110,15 @@ function SearchToolbar({client, ...props}) {
                     <Tooltip title="Розпочати пошук">
                         <IconButton onClick={loadClientKeyPress}>
                             <SendIcon className={classes.block} color="inherit"/>
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
+                <Grid item>
+                    <Tooltip title="Актуальні курси основних валют">
+                        <IconButton color="inherit" onClick={() => {
+                            alert("3.80")
+                        }}>
+                            <EuroIcon/>
                         </IconButton>
                     </Tooltip>
                 </Grid>
