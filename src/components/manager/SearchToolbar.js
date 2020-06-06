@@ -12,10 +12,11 @@ import ContentStyle from "../common/ContentStyle";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import {removeSpecialCharacters} from "../../util/Search";
+import {getCurrencyRate} from "../../redux/actions/clientActions";
 
 const styles = theme => ContentStyle(theme);
 
-function SearchToolbar({client, ...props}) {
+function SearchToolbar({client, getCurrencyRate, ...props}) {
     const {classes} = props;
 
     const [criteria, setCriteria] = useState({
@@ -116,7 +117,7 @@ function SearchToolbar({client, ...props}) {
                 <Grid item>
                     <Tooltip title="Актуальні курси основних валют">
                         <IconButton color="inherit" onClick={() => {
-                            alert("3.80")
+                            getCurrencyRate();
                         }}>
                             <EuroIcon/>
                         </IconButton>
@@ -132,5 +133,9 @@ function mapStateToProps(state) {
         client: state.client
     }
 }
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    getCurrencyRate
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(SearchToolbar));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SearchToolbar));
