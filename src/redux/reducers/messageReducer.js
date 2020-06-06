@@ -183,7 +183,7 @@ export default function messageReducer(state = initialState.message, action) {
             return {
                 ...state,
                 type: 'success',
-                text: `${action.rate.eur} / ${action.rate.usd}`
+                text: `EUR: ${action.rate['EUR'].toFixed(2)} / USD: ${action.rate['USD'].toFixed(2)}`
             };
         default:
             return state;
