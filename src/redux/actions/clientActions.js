@@ -51,3 +51,7 @@ export function getStatisticByClient(params) {
 export function getStatisticByVendor(vendorId) {
     return { type: types.LOAD_STATISTIC_BY_VENDOR_REQUEST, vendorId};
 }
+
+export function getCurrencyRate() {
+    return { type: types.LOAD_CURRENCY_RATE_REQUEST };
+}
