@@ -13,7 +13,7 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
     const {classes} = props;
     return (
         <main className={classes.main}>
-            {calls === 0 &&
+            {(calls === 0 || client.payments.length > 0) &&
             <Paper className={classes.paper}>
                 <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                 <div className={classes.contentWrapper}>
