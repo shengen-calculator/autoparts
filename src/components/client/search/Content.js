@@ -51,7 +51,7 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
             <title>{title}</title>
         </Helmet>
         <main className={classes.main}>
-            {(product.products.length > 0 || calls === 0)  &&
+            {(product.products.length > 0 || product.productsGrouped.length || calls === 0)  &&
             <Paper className={classes.paper}>
                 <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                 <div className={classes.contentWrapper}>
