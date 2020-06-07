@@ -34,7 +34,7 @@ function PaymentTable(props) {
         payments.push({
             date: x.date,
             amount: x.amount < 0 ? 0 :
-                (amount < 0 ? (amount + x.amount < 0 ? 0 : amount + x.amount) : x.amount)
+                Math.round((amount < 0 ? (amount + x.amount < 0 ? 0 : amount + x.amount) : x.amount)*100)/100
         });
         amount += x.amount;
     });

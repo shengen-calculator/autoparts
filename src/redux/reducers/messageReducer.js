@@ -167,6 +167,30 @@ export default function messageReducer(state = initialState.message, action) {
                 type: 'error',
                 text: 'Виникла помилка під час резерву позиції. Повторіть спробу'
             };
+        case types.LOAD_CURRENCY_RATE_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Виникла помилка під час отримання актуальних курсів валют. Повторіть спробу'
+            };
+        case types.CREATE_RESERVE_SUCCESS:
+            return {
+                ...state,
+                type: 'success',
+                text: `${action.reserve.brand} ${action.reserve.number} додано в резерв`
+            };
+        case types.CREATE_ORDER_SUCCESS:
+            return {
+                ...state,
+                type: 'success',
+                text: `${action.order.brand} ${action.order.number} додано в замовлення`
+            };
+        case types.LOAD_CURRENCY_RATE_SUCCESS:
+            return {
+                ...state,
+                type: 'success',
+                text: `EUR: ${action.rate['EUR'].toFixed(2)} / USD: ${action.rate['USD'].toFixed(2)}`
+            };
         default:
             return state;
     }

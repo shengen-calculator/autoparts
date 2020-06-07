@@ -67,6 +67,7 @@ export default function ReserveTable(props) {
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={false}
+                isPaginationDisabled={true}
             />
 
         </React.Fragment>

@@ -168,6 +168,7 @@ export default function OrderTable(props) {
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={true}
+                isPaginationDisabled={true}
             />
             <DeleteOrdersDialog isOpened={isDeleteConfirmationOpened}
                                 onDelete={handleDeleteClick}

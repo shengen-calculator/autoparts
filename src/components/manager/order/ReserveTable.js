@@ -132,6 +132,7 @@ export default function ReserveTable(props) {
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={true}
+                isPaginationDisabled={true}
             />
             <DeleteReservesDialog isOpened={isDeleteConfirmationOpened}
                                   onDelete={handleDeleteClick}

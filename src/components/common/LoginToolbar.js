@@ -19,7 +19,7 @@ function LoginToolbar({logoutRequest, auth, ...props}) {
     return (
         <Toolbar>
             <Grid container spacing={1} alignItems="center">
-                <Hidden smUp>
+                <Hidden xlUp>
                     <Grid item>
                         <IconButton
                             color="inherit"

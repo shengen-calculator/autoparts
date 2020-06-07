@@ -30,7 +30,7 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
     return (
         <React.Fragment>
             <main className={classes.main}>
-                {calls === 0 &&
+                {(calls === 0 || client.payments.length > 0) &&
                 <Paper className={classes.paper}>
                     <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                     <div className={classes.contentWrapper}>
@@ -48,7 +48,6 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
                                     `Ваш борг складає: ${formatCurrency(client.payments[0].amount, client.isEuroClient ? 'EUR' : 'UAH')}` :
                                     `На Вашому рахунку: ${formatCurrency(Math.abs(client.payments[0].amount), client.isEuroClient ? 'EUR' : 'UAH')}`}
                             </Typography>
-
                         }
                         <div className={classes.centered}>
                             <Button

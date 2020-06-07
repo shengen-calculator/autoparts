@@ -5,16 +5,18 @@ import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from "@material-ui/icons/Send";
+import EuroIcon from "@material-ui/icons/Euro";
 import React, {useState} from "react";
 import {withStyles} from "@material-ui/core/styles";
 import ContentStyle from "../common/ContentStyle";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import {removeSpecialCharacters} from "../../util/Search";
+import {getCurrencyRate} from "../../redux/actions/clientActions";
 
 const styles = theme => ContentStyle(theme);
 
-function SearchToolbar({client, ...props}) {
+function SearchToolbar({client, getCurrencyRate, ...props}) {
     const {classes} = props;
 
     const [criteria, setCriteria] = useState({
@@ -112,6 +114,15 @@ function SearchToolbar({client, ...props}) {
                         </IconButton>
                     </Tooltip>
                 </Grid>
+                <Grid item>
+                    <Tooltip title="Актуальні курси основних валют">
+                        <IconButton color="inherit" onClick={() => {
+                            getCurrencyRate();
+                        }}>
+                            <EuroIcon/>
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
             </Grid>
         </Toolbar>
     )
@@ -122,5 +133,9 @@ function mapStateToProps(state) {
         client: state.client
     }
 }
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    getCurrencyRate
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(SearchToolbar));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SearchToolbar));
