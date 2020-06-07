@@ -8,29 +8,16 @@ CREATE PROCEDURE sp_web_addorder @clientId int,
 AS
 BEGIN
     DECLARE @priceUah decimal(9, 2)
-    SET DATEFIRST 1
 
-    IF (@price = 0)
+    IF (@isEuroClient = 1)
         BEGIN
-            DECLARE @query nvarchar(max) = N'SELECT TOP(1) @p = ' + dbo.GetClientPriceColumn(@clientId) +
-                                           N' FROM dbo.[Каталоги поставщиков] WHERE (ID_Запчасти = ' + STR(@productId) +
-                                           N')'
-            EXEC sp_executesql @query, N'@p decimal(9,2) out', @price out
             SET @priceUah = @price * dbo.GetUahRate()
         END
     ELSE
         BEGIN
-            IF (@isEuroClient = 1)
-                BEGIN
-                    SET @priceUah = @price * dbo.GetUahRate()
-                END
-            ELSE
-                BEGIN
-                    SET @priceUah = @price
-                    SET @price = @priceUah / dbo.GetUahRate()
-                END
+            SET @priceUah = @price
+            SET @price = @priceUah / dbo.GetUahRate()
         END
-
 
     DECLARE @brandName varchar(50), @brandId int, @vendorId int, @shortNumber varchar(26), @term decimal(9, 1),
         @number varchar(26), @vendorNumber varchar(26), @analogId int, @description varchar(80), @carId int, @groupId int
@@ -68,7 +55,10 @@ BEGIN
             SELECT @analogId = dbo.[Каталог запчастей].ID_аналога,
                    @carId = dbo.[Каталог запчастей].ID_Автомобиля,
                    @groupId = dbo.[Каталог запчастей].[ID_Группы товаров],
-                   @description = dbo.[Каталог запчастей].Описание
+                   @description = dbo.[Каталог запчастей].Описание,
+                   @description = IIF(dbo.[Каталог запчастей].Описание IS NULL OR dbo.[Каталог запчастей].Описание = '',
+                                      @description,
+                                      dbo.[Каталог запчастей].Описание)
             FROM dbo.[Каталог запчастей]
             WHERE (ID_Брэнда LIKE @brandId and [namepost] like @shortNumber)
 
@@ -80,7 +70,7 @@ BEGIN
                     VALUES (@vendorId, @brandId,
                             @number, @vendorNumber, 0, @description, @price, @currentUser)
 
-                    SET @productId = CAST(SCOPE_IDENTITY() AS INT)
+                    SET @productId = CAST(SCOPE_IDENTITY() AS int)
                 END
             ELSE
                 BEGIN
@@ -92,7 +82,7 @@ BEGIN
                             @number, @vendorNumber, @carId, @groupId, @analogId, @description,
                             @price, @currentUser, 0)
 
-                    SET @productId = CAST(SCOPE_IDENTITY() AS INT)
+                    SET @productId = CAST(SCOPE_IDENTITY() AS int)
 
                 END
 
