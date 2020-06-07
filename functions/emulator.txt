@@ -14,4 +14,4 @@ BODY raw json(application/json)
 export GOOGLE_APPLICATION_CREDENTIALS="key.json"
 npm start
 
-calculateInvoice('opalbrok_invoice.xlsx')
+main.getReconciliationData({startDate:'2020-05-12', clientId: '5005', endDate: '2020-05-30'})

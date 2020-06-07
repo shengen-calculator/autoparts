@@ -67,6 +67,13 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Спробуйте завантажити загальну статистику для клієнтів ще раз'
             };
 
+        case types.LOAD_RECONCILIATION_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Спробуйте завантажити акт звірки ще раз'
+            };
+
         case types.LOAD_VENDOR_STATISTIC_FAILURE:
             return {
                 ...state,
@@ -80,7 +87,6 @@ export default function messageReducer(state = initialState.message, action) {
                 type: 'error',
                 text: 'Спробуйте завантажити загальну статистику за запитами ще раз'
             };
-
 
         case types.LOAD_STATISTIC_BY_CLIENT_FAILURE:
             return {

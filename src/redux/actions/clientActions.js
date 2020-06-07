@@ -16,6 +16,10 @@ export function getReserves(vip) {
     return { type: types.LOAD_RESERVES_REQUEST, vip};
 }
 
+export function getReconciliationData(params) {
+    return { type: types.LOAD_RECONCILIATION_REQUEST, params};
+}
+
 export function deleteOrdersByIds(ids) {
     return { type: types.DELETE_ORDERS_REQUEST, ids};
 }

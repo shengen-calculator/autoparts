@@ -14,7 +14,8 @@ import {
     deleteReserves,
     updateOrderQuantity,
     updateReserveQuantity,
-    getPayments,
+    getPayments, 
+    getReconciliationData,
     getCurrencyRate
 } from "./clientSaga";
 import {getQueryStatistic,
@@ -42,6 +43,7 @@ function* mySaga() {
     yield takeLatest(types.LOAD_PAYMENTS_REQUEST, getPayments);
     yield takeLatest(types.LOAD_ORDERS_REQUEST, getOrders);
     yield takeLatest(types.LOAD_RESERVES_REQUEST, getReserves);
+    yield takeLatest(types.LOAD_RECONCILIATION_REQUEST, getReconciliationData);
     yield takeLatest(types.DELETE_RESERVES_REQUEST, deleteReserves);
     yield takeLatest(types.DELETE_ORDERS_REQUEST, deleteOrders);
     yield takeLatest(types.UPDATE_ORDER_QUANTITY_REQUEST, updateOrderQuantity);

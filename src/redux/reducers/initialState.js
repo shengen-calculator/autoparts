@@ -10,6 +10,7 @@ export default {
         text: ''
     },
     client: {
+        id: '',
         vip: '',
         fullName: '',
         isEuroClient: false,
