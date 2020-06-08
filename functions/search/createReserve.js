@@ -6,7 +6,7 @@ const config = require('../mssql.connection').config;
 const createReserve = async (data, context) => {
 
 
-    if (data.clientId) {
+    if (data.clientId || data.price) {
         util.checkForManagerRole(context);
     } else {
         util.checkForClientRole(context);
