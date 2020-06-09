@@ -46,7 +46,8 @@ export function* getReconciliationData(action) {
         yield put({type: types.BEGIN_API_CALL});
         const {data} = yield call(FunctionsApi.getReconciliation, action.params);
         yield put({type: types.LOAD_RECONCILIATION_SUCCESS});
-        window.location.href = data;
+        window.location.href = data; // better for Safari browser
+        //window.open(data, '_blank'); //better for Chrome browser
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.LOAD_RECONCILIATION_FAILURE, text: e.message});
