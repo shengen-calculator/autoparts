@@ -109,7 +109,7 @@ const getReconciliationXlsLink = async (data, balance, fileName, startDate, endD
 
     const resultFilePath = `OutBox/${fileName}`;
     const tempLocalResultFile = path.join(os.tmpdir(), fileName);
-    const contentType = 'text/html'; //'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    const contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     const metadata = {
         contentType: contentType,
         contentDisposition: `attachment; filename="${fileName}"`
