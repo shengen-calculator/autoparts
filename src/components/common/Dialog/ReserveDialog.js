@@ -50,9 +50,9 @@ function ReserveDialog(props) {
                     createReserve({
                         productId: selected.id,
                         quantity: Number(reserve.quantity),
-                        price: auth.role === Number(reserve.price),
+                        price: Number(reserve.price),
                         isEuroClient: client.isEuroClient,
-                        clientId: auth.role === client.id
+                        clientId: client.id
                     });
                 } else {
                     createReserve({
