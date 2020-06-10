@@ -43,15 +43,25 @@ function OrderDialog(props) {
             && order.price > 0
             && Number(order.quantity) > -1
         ) {
-            createOrder({
-                productId: selected.id,
-                quantity: Number(order.quantity),
-                price: auth.role === RoleEnum.Manager ? Number(order.price) : null,
-                onlyOrderedQuantity: order.onlyOrderedQuantity,
-                isEuroClient: client.isEuroClient,
-                clientId: auth.role === RoleEnum.Manager ? client.id : null,
-                vip: auth.role === RoleEnum.Manager ? client.vip : null
-            });
+            if(auth.role === RoleEnum.Manager) {
+                createOrder({
+                    productId: selected.id,
+                    quantity: Number(order.quantity),
+                    price: Number(order.price),
+                    onlyOrderedQuantity: order.onlyOrderedQuantity,
+                    isEuroClient: client.isEuroClient,
+                    clientId: client.id,
+                    vip: client.vip
+                });
+            } else {
+                createOrder({
+                    productId: selected.id,
+                    quantity: Number(order.quantity),
+                    onlyOrderedQuantity: order.onlyOrderedQuantity,
+                    isEuroClient: client.isEuroClient
+                });
+            }
+
             onClose();
         }
     }

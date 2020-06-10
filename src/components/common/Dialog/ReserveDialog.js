@@ -46,13 +46,21 @@ function ReserveDialog(props) {
             if(Number(reserve.quantity) > reserve.available) {
                 showToastrMessage({type: 'warning', message: 'Кількість не може бути більшою ніж доступно'})
             } else {
-                createReserve({
-                    productId: selected.id,
-                    quantity: Number(reserve.quantity),
-                    price: auth.role === RoleEnum.Manager ? Number(reserve.price) : null,
-                    isEuroClient: client.isEuroClient,
-                    clientId: auth.role === RoleEnum.Manager ? client.id : null
-                });
+                if(auth.role === RoleEnum.Manager) {
+                    createReserve({
+                        productId: selected.id,
+                        quantity: Number(reserve.quantity),
+                        price: auth.role === Number(reserve.price),
+                        isEuroClient: client.isEuroClient,
+                        clientId: auth.role === client.id
+                    });
+                } else {
+                    createReserve({
+                        productId: selected.id,
+                        quantity: Number(reserve.quantity),
+                        isEuroClient: client.isEuroClient,
+                    });
+                }
                 onClose();
             }
         }

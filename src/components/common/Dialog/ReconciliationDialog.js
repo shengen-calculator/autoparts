@@ -63,12 +63,21 @@ function ReconciliationDialog(props) {
         } else if(Math.ceil(diffTime / (1000 * 60 * 60 * 24)) > 92) {
             showToastrMessage({type: 'warning', message: 'Помилка!!! Період не може перевищувати 90 днів'})
         } else {
-            getReconciliationData({
-                startDate: formatDate(dateFilter.startDate),
-                endDate: formatDate(dateFilter.endDate),
-                clientId: auth.role === RoleEnum.Manager ? client.id : null,
-                isEuroClient: client.isEuroClient
-            });
+            if(auth.role === RoleEnum.Manager) {
+                getReconciliationData({
+                    startDate: formatDate(dateFilter.startDate),
+                    endDate: formatDate(dateFilter.endDate),
+                    clientId: client.id,
+                    isEuroClient: client.isEuroClient
+                });
+            } else {
+                getReconciliationData({
+                    startDate: formatDate(dateFilter.startDate),
+                    endDate: formatDate(dateFilter.endDate),
+                    isEuroClient: client.isEuroClient
+                });
+            }
+
             onClose();
         }
     }
