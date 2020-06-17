@@ -31,10 +31,10 @@ const searchByNumber = async (data, context) => {
             const datastore = new Datastore();
             const queryKey = datastore.key('queries');
             const query = {
-                vip: context.auth.token.vip,
-                query: data,
                 date: new Date(),
-                success: result.recordset.length > 0
+                query: data,
+                success: result.recordset.length > 0,
+                vip: context.auth.token.vip
             };
             const entity = {
                 key: queryKey,

@@ -33,7 +33,7 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
 
     useEffect(() => {
         if (brand && brand !== product.criteria.brand) {
-            getByBrand({brand, numb});
+            getByBrand({brand, numb, queryId: product.productsGrouped.length > 0 ? product.productsGrouped[0].queryId : null});
         } else if(numb && ((numb !== product.criteria.numb) || (!brand && product.criteria.brand))) {
             getByNumber(numb);
         } else if(product.productsGrouped.length === 1 && !brand) {
