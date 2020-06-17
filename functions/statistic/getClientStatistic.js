@@ -1,8 +1,8 @@
 const functions = require('firebase-functions');
 const util = require('../util');
+const {Datastore} = require('@google-cloud/datastore');
 
 const getClientStatistic = async (data, context) => {
-
     util.checkForManagerRole(context);
 
     if (!data || !data.startDate || !data.endDate) {
@@ -10,6 +10,19 @@ const getClientStatistic = async (data, context) => {
             'The function must be called with two arguments "start date" and "end date"');
     }
 
+    const datastore = new Datastore();
+    const start = new Date(data.startDate).setHours(0,0,0,0);
+    const end = new Date(data.endDate).setHours(23,59,59,999);
+
+    const query = datastore
+        .createQuery('queries')
+        .filter('date', '>', new Date(start))
+        .filter('date', '<', new Date(end))
+        .limit(2000);
+
+    const [webQueries] = await datastore.runQuery(query);
+
+    console.log(webQueries);
 
     function createData(vip, requests, succeeded, orders, reserves) {
         return { vip, requests, succeeded, orders, reserves };
