@@ -2,7 +2,8 @@ const functions = require('firebase-functions');
 const util = require('../util');
 const sql = require('mssql');
 const config = require('../mssql.connection').config;
-
+const {Datastore} = require('@google-cloud/datastore');
+const RoleEnum = require('../RoleEnum');
 
 const searchByNumber = async (data, context) => {
 
@@ -25,6 +26,23 @@ const searchByNumber = async (data, context) => {
         const result = await pool.request()
             .input('number', sql.VarChar(25), data)
             .execute('sp_web_getproductsbynumber');
+
+        if(context.auth.token.role !== RoleEnum.Client) {
+            const datastore = new Datastore();
+            const queryKey = datastore.key('queries');
+            const query = {
+                vip: context.auth.token.vip,
+                query: data,
+                success: result.recordset.length > 0
+            };
+            const entity = {
+                key: queryKey,
+                data: query,
+            };
+            await datastore.insert(entity);
+            return  result.recordset.map(obj => ({ ...obj, queryId: entity.key.id }));
+        }
+
         return result.recordset;
     } catch (err) {
         if(err) {
