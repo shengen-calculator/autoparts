@@ -15,21 +15,19 @@ const searchByNumber = async (data, context) => {
             'The function must be called with one argument "Number"');
     }
 
-    let name = data.slice(0);
     special.forEach(el => {
-        const tokens = name.split(el);
-        name = tokens.join('');
+        const tokens = data.split(el);
+        data = tokens.join('');
     });
-    console.log(name);
 
     try {
         const pool = await sql.connect(config);
 
         const result = await pool.request()
-            .input('number', sql.VarChar(25), name)
+            .input('number', sql.VarChar(25), data)
             .execute('sp_web_getproductsbynumber');
 
-        if(context.auth.token.role !== RoleEnum.Client) {
+        if(context.auth.token.role === RoleEnum.Client) {
             const datastore = new Datastore();
             const queryKey = datastore.key('queries');
             const query = {
@@ -45,7 +43,6 @@ const searchByNumber = async (data, context) => {
             await datastore.insert(entity);
             return  result.recordset.map(obj => ({ ...obj, queryId: entity.key.id }));
         }
-
         return result.recordset;
     } catch (err) {
         if(err) {
