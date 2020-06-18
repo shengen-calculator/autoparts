@@ -1,9 +1,8 @@
 const RoleEnum = require('../RoleEnum');
 const admin = require('firebase-admin');
 const sql = require('mssql');
+const Managers = require('../managers');
 const config = require('../mssql.connection').config;
-
-const managers = ['puhach.alex@fenix.parts', 'ucin.sergiy@fenix.parts', 'vasyl@fenix.parts'];
 
 const processSignUp = async (user) => {
     // Check if user meets role criteria.
@@ -22,7 +21,7 @@ const processSignUp = async (user) => {
             client = result.recordset[0];
         }
 
-        if (managers.includes(user.email)) {
+        if (Managers.includes(user.email)) {
             emailVerified = true;
             customClaims = {
                 role: RoleEnum.Manager,
