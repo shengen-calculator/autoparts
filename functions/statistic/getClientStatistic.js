@@ -1,6 +1,9 @@
 const functions = require('firebase-functions');
 const util = require('../util');
+const sql = require('mssql');
+const config = require('../mssql.connection').config;
 const {Datastore} = require('@google-cloud/datastore');
+const Managers = require('../managers');
 
 const getClientStatistic = async (data, context) => {
     util.checkForManagerRole(context);
@@ -10,40 +13,38 @@ const getClientStatistic = async (data, context) => {
             'The function must be called with two arguments "start date" and "end date"');
     }
 
-    const datastore = new Datastore();
+    try {
+        const pool = await sql.connect(config);
 
-    const query = datastore
-        .createQuery('queries')
-        .filter('date', '>=', new Date(data.startDate))
-        .filter('date', '<=', new Date(data.endDate))
-        .limit(2000);
+        const datastore = new Datastore();
 
-    const [webQueries] = await datastore.runQuery(query);
+        const query = datastore
+            .createQuery('queries','')
+            .filter('date', '>=', new Date(`${data.startDate} 00:00:00:000`))
+            .filter('date', '<=', new Date(`${data.endDate} 23:59:59:999`))
+            .limit(2000);
 
-    console.log(webQueries);
+        const [stat, totals] = await Promise.all([
+            datastore.runQuery(query),
+            pool.request()
+                .input('startDate', sql.Date, data.startDate)
+                .input('endDate', sql.Date, data.endDate)
+                .execute('sp_web_getclientstatistic')
+        ]);
+        return  {
+            statistic: stat,
+            totals: totals.recordset,
+            managers: Managers
+        };
 
-    function createData(vip, requests, succeeded, orders, reserves) {
-        return { vip, requests, succeeded, orders, reserves };
+    } catch (err) {
+        if (err) {
+            throw new functions.https.HttpsError('internal',
+                err.message);
+        }
+        return {error: err.message};
     }
 
-    const rows = [
-        createData('3825', 554, 439, 0, 0),
-        createData('3418', 210, 193, 0, 0),
-        createData('3149', 140, 127, 31, 18),
-        createData('3853', 111, 100, 1, 6),
-        createData('2708', 94, 81, 1, 2),
-        createData('2708A', 87, 79, 10, 10),
-        createData('3003', 78, 73, 2, 3),
-        createData('3147A', 68, 62, 3, 7),
-        createData('3749', 67, 63, 3, 9),
-        createData('4249', 67, 63, 6, 5),
-        createData('3537', 58, 48, 1, 1),
-        createData('3198', 54, 43, 6, 0),
-        createData('3136', 49, 31, 0, 0),
-    ];
-
-
-    return rows;
 };
 
 module.exports = getClientStatistic;
