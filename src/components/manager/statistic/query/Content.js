@@ -10,7 +10,6 @@ import ContentStyle from "../../../common/ContentStyle";
 import {
     getStatisticByClient,
     getClientStatistic,
-    getQueryStatistic
 } from "../../../../redux/actions/clientActions";
 import {connect} from "react-redux";
 import {setStatisticPeriod} from "../../../../redux/actions/statisticActions";
@@ -20,7 +19,7 @@ import {formatDate} from "../../../../util/Formatter";
 
 const styles = theme => ContentStyle(theme);
 
-function Content({stat, getStatisticByClient, getClientStatistic, getQueryStatistic, setStatisticPeriod, ...props}) {
+function Content({stat, getStatisticByClient, getClientStatistic, setStatisticPeriod, ...props}) {
     const {classes} = props;
     const isTableShown = stat && stat.clientStatistic && stat.clientStatistic.length > 0;
     let {vip} = useParams();
@@ -28,12 +27,11 @@ function Content({stat, getStatisticByClient, getClientStatistic, getQueryStatis
 
     useEffect(() => {
         if(stat.startDate && stat.endDate){
-            getQueryStatistic({startDate: stat.startDate, endDate: stat.endDate});
             getClientStatistic({startDate: formatDate(stat.startDate), endDate: formatDate(stat.endDate)});
         } else {
             setStatisticPeriod({startDate: Date.now(), endDate: Date.now()});
         }
-    }, [stat.startDate, stat.endDate, getQueryStatistic, getClientStatistic, setStatisticPeriod]);
+    }, [stat.startDate, stat.endDate, getClientStatistic, setStatisticPeriod]);
 
 
     useEffect(() => {
@@ -67,22 +65,17 @@ function Content({stat, getStatisticByClient, getClientStatistic, getQueryStatis
             </Helmet>
             <div className={classes.contentWrapper}>
                 <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <Typography color="textSecondary" align="center">
                             Замовлень: {stat.queryStatistic.orderTotal} ({stat.queryStatistic.order})
                         </Typography>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <Typography color="textSecondary" align="center">
                             Резервів: {stat.queryStatistic.reserveTotal} ({stat.queryStatistic.reserve})
                         </Typography>
                     </Grid>
-                    <Grid item xs={3}>
-                        <Typography color="textSecondary" align="center">
-                            Реєстрацій: {stat.queryStatistic.registration}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                         <Typography color="textSecondary" align="center">
                             Всього запитів: {stat.queryStatistic.queryTotal}
                         </Typography>
@@ -119,7 +112,6 @@ Content.propTypes = {
 const mapDispatchToProps = {
     getStatisticByClient,
     getClientStatistic,
-    getQueryStatistic,
     setStatisticPeriod
 };
 

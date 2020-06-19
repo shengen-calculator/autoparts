@@ -3,18 +3,6 @@ import initialState from './initialState';
 
 export default function statisticReducer(state = initialState.statistic, action) {
     switch (action.type) {
-        case types.LOAD_QUERY_STATISTIC_SUCCESS:
-            return {
-                ...state,
-                queryStatistic: {
-                    orderTotal: action.result.orderTotal,
-                    order: action.result.order,
-                    reserveTotal: action.result.reserveTotal,
-                    reserve: action.result.reserve,
-                    registration: action.result.registration,
-                    queryTotal: action.result.queryTotal
-                }
-            };
         case types.LOAD_CLIENT_STATISTIC_REQUEST:
             return {
                 ...state,
@@ -23,7 +11,15 @@ export default function statisticReducer(state = initialState.statistic, action)
         case types.LOAD_CLIENT_STATISTIC_SUCCESS:
             return {
                 ...state,
-                clientStatistic: action.result
+                clientStatistic: action.result,
+                queryStatistic: {
+                    orderTotal: action.result.orderTotal,
+                    order: action.result.order,
+                    reserveTotal: action.result.reserveTotal,
+                    reserve: action.result.reserve,
+                    registration: action.result.registration,
+                    queryTotal: action.result.queryTotal
+                }
             };
         case types.LOAD_VENDOR_STATISTIC_REQUEST:
             return {
