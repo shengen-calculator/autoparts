@@ -16,6 +16,7 @@ import {connect} from "react-redux";
 import {setStatisticPeriod} from "../../../../redux/actions/statisticActions";
 import {useHistory, useParams} from "react-router-dom";
 import {Helmet} from "react-helmet";
+import {formatDate} from "../../../../util/Formatter";
 
 const styles = theme => ContentStyle(theme);
 
@@ -28,7 +29,7 @@ function Content({stat, getStatisticByClient, getClientStatistic, getQueryStatis
     useEffect(() => {
         if(stat.startDate && stat.endDate){
             getQueryStatistic({startDate: stat.startDate, endDate: stat.endDate});
-            getClientStatistic({startDate: stat.startDate, endDate: stat.endDate});
+            getClientStatistic({startDate: formatDate(stat.startDate), endDate: formatDate(stat.endDate)});
         } else {
             setStatisticPeriod({startDate: Date.now(), endDate: Date.now()});
         }

@@ -27,7 +27,6 @@ import Progress from "../../common/Progress";
 import {setStatisticPeriod} from "../../../redux/actions/statisticActions";
 import {connect} from "react-redux";
 import LoginToolbar from "../../common/LoginToolbar";
-import {formatDate} from "../../../util/Formatter";
 
 const styles = theme => ({
     root: {
@@ -106,8 +105,8 @@ function Content({setStatisticPeriod, ...props}) {
     function loadStatisticKeyPress(target) {
         if(target.charCode === 13 || target.type === 'click') {
             setStatisticPeriod({
-                startDate: formatDate(dateFilter.startDate),
-                endDate: formatDate(dateFilter.endDate)
+                startDate: dateFilter.startDate,
+                endDate: dateFilter.endDate
             });
         }
     }
