@@ -22,6 +22,7 @@ const getClientStatistic = async (data, context) => {
             .createQuery('queries','')
             .filter('date', '>=', new Date(`${data.startDate} 00:00:00:000`))
             .filter('date', '<=', new Date(`${data.endDate} 23:59:59:999`))
+            //.select(['available', 'brand', 'number', 'success', 'vip', 'query'])
             .limit(2000);
 
         const [stat, totals] = await Promise.all([
@@ -32,7 +33,7 @@ const getClientStatistic = async (data, context) => {
                 .execute('sp_web_getclientstatistic')
         ]);
         return  {
-            statistic: stat,
+            statistic: stat[0],
             totals: totals.recordset,
             managers: Managers
         };
