@@ -81,13 +81,6 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Спробуйте завантажити загальну статистику для постачальників ще раз'
             };
 
-        case types.LOAD_QUERY_STATISTIC_FAILURE:
-            return {
-                ...state,
-                type: 'error',
-                text: 'Спробуйте завантажити загальну статистику за запитами ще раз'
-            };
-
         case types.LOAD_STATISTIC_BY_CLIENT_FAILURE:
             return {
                 ...state,

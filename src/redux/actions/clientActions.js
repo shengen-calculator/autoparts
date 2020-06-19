@@ -40,10 +40,6 @@ export function getClientStatistic(params) {
     return { type: types.LOAD_CLIENT_STATISTIC_REQUEST, params};
 }
 
-export function getQueryStatistic(params) {
-    return { type: types.LOAD_QUERY_STATISTIC_REQUEST, params};
-}
-
 export function getVendorStatistic() {
     return { type: types.LOAD_VENDOR_STATISTIC_REQUEST };
 }

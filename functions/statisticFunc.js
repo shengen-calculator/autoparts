@@ -1,5 +1,4 @@
 const functions = require('firebase-functions');
-const getQueryStatistic = require('./statistic/getQueryStatistic');
 const getVendorStatistic = require('./statistic/getVendorStatistic');
 const getStatisticByVendor = require('./statistic/getStatisticByVendor');
 const getClientStatistic = require('./statistic/getClientStatistic');
@@ -19,8 +18,4 @@ exports.getClientStatistic = functions.region('europe-west1').https.onCall(async
 
 exports.getStatisticByClient = functions.region('europe-west1').https.onCall(async (data, context) => {
     return getStatisticByClient(data, context);
-});
-
-exports.getQueryStatistic = functions.region('europe-west1').https.onCall(async (data, context) => {
-    return getQueryStatistic(data, context);
 });
