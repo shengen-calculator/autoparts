@@ -11,13 +11,11 @@ const getClientStatistic = async (data, context) => {
     }
 
     const datastore = new Datastore();
-    const start = new Date(data.startDate).setHours(0,0,0,0);
-    const end = new Date(data.endDate).setHours(23,59,59,999);
 
     const query = datastore
         .createQuery('queries')
-        .filter('date', '>', new Date(start))
-        .filter('date', '<', new Date(end))
+        .filter('date', '>=', new Date(data.startDate))
+        .filter('date', '<=', new Date(data.endDate))
         .limit(2000);
 
     const [webQueries] = await datastore.runQuery(query);

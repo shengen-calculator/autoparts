@@ -27,6 +27,7 @@ import Progress from "../../common/Progress";
 import {setStatisticPeriod} from "../../../redux/actions/statisticActions";
 import {connect} from "react-redux";
 import LoginToolbar from "../../common/LoginToolbar";
+import {formatDate} from "../../../util/Formatter";
 
 const styles = theme => ({
     root: {
@@ -91,22 +92,22 @@ function Content({setStatisticPeriod, ...props}) {
     function handleStartDateChange(value) {
         setDateFilter(prev => ({
             ...prev,
-            startDate: value
+            startDate: new Date(value)
         }));
     }
 
     function handleEndDateChange(value) {
         setDateFilter(prev => ({
             ...prev,
-            endDate: value
+            endDate: new Date(value)
         }));
     }
 
-    function searchKeyPress(target) {
+    function loadStatisticKeyPress(target) {
         if(target.charCode === 13 || target.type === 'click') {
             setStatisticPeriod({
-                startDate: dateFilter.startDate,
-                endDate: dateFilter.endDate
+                startDate: formatDate(dateFilter.startDate),
+                endDate: formatDate(dateFilter.endDate)
             });
         }
     }
@@ -138,7 +139,7 @@ function Content({setStatisticPeriod, ...props}) {
                                     format="dd/MM/yyyy"
                                     value={dateFilter.startDate}
                                     onChange={handleStartDateChange}
-                                    onKeyPress={searchKeyPress}
+                                    onKeyPress={loadStatisticKeyPress}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
@@ -156,15 +157,15 @@ function Content({setStatisticPeriod, ...props}) {
                                     format="dd/MM/yyyy"
                                     value={dateFilter.endDate}
                                     onChange={handleEndDateChange}
-                                    onKeyPress={searchKeyPress}
+                                    onKeyPress={loadStatisticKeyPress}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
                                 />
                             </Grid>
                             <Grid item xs={1}>
-                                <Tooltip title="Розпочати пошук">
-                                    <IconButton onClick={searchKeyPress}>
+                                <Tooltip title="Завантажити статистику">
+                                    <IconButton onClick={loadStatisticKeyPress}>
                                         <SendIcon className={classes.block} color="inherit"/>
                                     </IconButton>
                                 </Tooltip>
