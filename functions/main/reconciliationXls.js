@@ -71,7 +71,13 @@ const getReconciliationXlsLink = async (data, balance, fileName, startDate, endD
     worksheet.addRow(tableHeader);
     let index = 8;
     let prevInvNumber = "";
+    let invoiceTotal = 0;
     data.forEach(x => {
+        if(prevInvNumber !== x['invoiceNumber'] && prevInvNumber !== '' && prevInvNumber !== 0) {
+            insertTotal(worksheet, balance, invoiceTotal, index);
+            invoiceTotal = 0;
+            index++;
+        }
         const rowValues = [];
         if(x['invoiceNumber'] === 0)
         {
@@ -91,8 +97,9 @@ const getReconciliationXlsLink = async (data, balance, fileName, startDate, endD
             rowValues[6] = isEuroClient ? x['priceEur'] : x['priceUah'];
             rowValues[7] = x['quantity'];
             rowValues[8] = (isEuroClient ? x['priceEur'] : x['priceUah'])*x['quantity'];
+            invoiceTotal += (isEuroClient ? x['priceEur'] : x['priceUah'])*x['quantity'];
             balance = balance + (isEuroClient ? x['priceEur'] : x['priceUah'])*x['quantity'];
-            rowValues[9] = Math.round(balance*100)/100;
+            //rowValues[9] = Math.round(balance*100)/100;
         }
 
         worksheet.addRow(rowValues);
@@ -104,6 +111,14 @@ const getReconciliationXlsLink = async (data, balance, fileName, startDate, endD
         index ++;
         prevInvNumber = x['invoiceNumber'];
     });
+
+    if(prevInvNumber !== 0) {
+        insertTotal(worksheet, balance, invoiceTotal, index);
+        index++;
+    }
+
+
+
     paintRow(worksheet, 9, 7);
 
 
@@ -145,6 +160,15 @@ const paintRow = (worksheet, columnsNumber, row) => {
         };
         worksheet.getCell(key).font = {name: 'Arial', size: 11, bold: true };
     });
+};
+
+const insertTotal = (worksheet, balance, invoiceTotal, index) => {
+    const rowTotals = [];
+    rowTotals[9] = Math.round(balance*100)/100;
+    worksheet.addRow(rowTotals);
+    worksheet.mergeCells(`F${index}:G${index}`);
+    worksheet.getCell(`G${index}`).value = `Всього`;
+    worksheet.getCell(`H${index}`).value = invoiceTotal;
 };
 
 module.exports.getReconciliationXlsLink = getReconciliationXlsLink;
