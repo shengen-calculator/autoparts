@@ -41,11 +41,14 @@ function Content({stat, getStatisticByClient, getClientStatistic, setStatisticPe
 
     }, [stat.clientStatistic, vip, history]);
 
-    useEffect(() => {
-        if(vip && stat.startDate && stat.endDate) {
-            getStatisticByClient({startDate: stat.startDate, endDate: stat.endDate, vip: vip});
-        }
-    }, [vip, getStatisticByClient, stat.startDate, stat.endDate]);
+    // useEffect(() => {
+    //     if(vip && stat.startDate && stat.endDate) {
+    //         getStatisticByClient({startDate: stat.startDate, endDate: stat.endDate, vip: vip});
+    //     }
+    // }, [vip, getStatisticByClient, stat.startDate, stat.endDate]);
+
+    const statByClient = vip ?
+        stat.statisticByClient.filter(x => x.vip === vip) : [];
 
     function onMainTableClick(event, name) {
         history.push(`/manager/statistic/query/${name}`);
@@ -67,12 +70,12 @@ function Content({stat, getStatisticByClient, getClientStatistic, setStatisticPe
                 <Grid container spacing={2} alignItems="center">
                     <Grid item xs={4}>
                         <Typography color="textSecondary" align="center">
-                            Замовлень: {stat.queryStatistic.orderTotal} ({stat.queryStatistic.order})
+                            Замовлень: {stat.queryStatistic.orderTotal}
                         </Typography>
                     </Grid>
                     <Grid item xs={4}>
                         <Typography color="textSecondary" align="center">
-                            Резервів: {stat.queryStatistic.reserveTotal} ({stat.queryStatistic.reserve})
+                            Резервів: {stat.queryStatistic.reserveTotal}
                         </Typography>
                     </Grid>
                     <Grid item xs={4}>
@@ -89,7 +92,7 @@ function Content({stat, getStatisticByClient, getClientStatistic, setStatisticPe
                             <MainTable clientStatistic={stat.clientStatistic} handleClick={onMainTableClick}/>
                         </Grid>
                         <Grid item xs={7}>
-                            <DetailsTable statisticByClient={stat.statisticByClient}/>
+                            <DetailsTable statisticByClient={statByClient}/>
                         </Grid>
                     </Grid>
                     :

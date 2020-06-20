@@ -9,16 +9,23 @@ export default function statisticReducer(state = initialState.statistic, action)
                 clientStatistic: []
             };
         case types.LOAD_CLIENT_STATISTIC_SUCCESS:
+            const totals = action.result.totals.map(x => {
+                return {
+                    vip: x['VIP'],
+                    reserves: x['Reserves'],
+                    orders: x['Orders'],
+                    requests: action.result.statistic.filter(el => el.vip === x['VIP']).length,
+                    succeeded: action.result.statistic.filter(el => el.vip === x['VIP'] && el.success).length,
+                }
+            });
             return {
                 ...state,
-                clientStatistic: action.result,
+                clientStatistic: totals.filter(el => el.requests > 0),
+                statisticByClient: action.result.statistic,
                 queryStatistic: {
-                    orderTotal: action.result.orderTotal,
-                    order: action.result.order,
-                    reserveTotal: action.result.reserveTotal,
-                    reserve: action.result.reserve,
-                    registration: action.result.registration,
-                    queryTotal: action.result.queryTotal
+                    orderTotal: action.result.totals.reduce((a, b) => a + b['Orders'], 0),
+                    reserveTotal: action.result.totals.reduce((a, b) => a + b['Reserves'], 0),
+                    queryTotal: action.result.statistic.length
                 }
             };
         case types.LOAD_VENDOR_STATISTIC_REQUEST:
