@@ -27,7 +27,7 @@ BEGIN
                dbo.[Подчиненная накладные].Дата_закрытия) >= @startDate)
       AND (IIF(dbo.[Подчиненная накладные].Количество > 0,
                dbo.GetInvoiceDate(dbo.[Подчиненная накладные].ID_Накладной),
-               dbo.[Подчиненная накладные].Дата_закрытия) <= @endDate)
+               dbo.[Подчиненная накладные].Дата_закрытия) < DATEADD(day, 1, @endDate))
     UNION
 
     SELECT ID_Касса            as id,
@@ -42,7 +42,7 @@ BEGIN
     FROM dbo.Касса
     WHERE (ID_Клиента = @clientId)
       AND (CONVERT(date, Дата) >= @startDate)
-      AND (CONVERT(date, Дата) <= @endDate)
+      AND (CONVERT(date, Дата) < DATEADD(day, 1, @endDate))
     ORDER BY InvoiceDate, invoiceNumber
 END
 go
