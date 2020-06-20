@@ -8,7 +8,6 @@ import MainTable from './MainTable';
 import DetailsTable from './DetailsTable';
 import ContentStyle from "../../../common/ContentStyle";
 import {
-    getStatisticByClient,
     getClientStatistic,
 } from "../../../../redux/actions/clientActions";
 import {connect} from "react-redux";
@@ -19,7 +18,7 @@ import {formatDate} from "../../../../util/Formatter";
 
 const styles = theme => ContentStyle(theme);
 
-function Content({stat, getStatisticByClient, getClientStatistic, setStatisticPeriod, ...props}) {
+function Content({stat, getClientStatistic, setStatisticPeriod, ...props}) {
     const {classes} = props;
     const isTableShown = stat && stat.clientStatistic && stat.clientStatistic.length > 0;
     let {vip} = useParams();
@@ -40,12 +39,6 @@ function Content({stat, getStatisticByClient, getClientStatistic, setStatisticPe
         }
 
     }, [stat.clientStatistic, vip, history]);
-
-    // useEffect(() => {
-    //     if(vip && stat.startDate && stat.endDate) {
-    //         getStatisticByClient({startDate: stat.startDate, endDate: stat.endDate, vip: vip});
-    //     }
-    // }, [vip, getStatisticByClient, stat.startDate, stat.endDate]);
 
     const statByClient = vip ?
         stat.statisticByClient.filter(x => x.vip === vip) : [];
@@ -113,7 +106,6 @@ Content.propTypes = {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    getStatisticByClient,
     getClientStatistic,
     setStatisticPeriod
 };
