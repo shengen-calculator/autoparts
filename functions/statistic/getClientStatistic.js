@@ -3,7 +3,6 @@ const util = require('../util');
 const sql = require('mssql');
 const config = require('../mssql.connection').config;
 const {Datastore} = require('@google-cloud/datastore');
-const Managers = require('../managers');
 
 const getClientStatistic = async (data, context) => {
     util.checkForManagerRole(context);
@@ -31,10 +30,21 @@ const getClientStatistic = async (data, context) => {
                 .input('endDate', sql.Date, data.endDate)
                 .execute('sp_web_getclientstatistic')
         ]);
+        const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
         return  {
-            statistic: stat[0],
-            totals: totals.recordset,
-            managers: Managers
+            statistic: stat[0].map(x => {
+                const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat .formatToParts(x.date);
+                return {
+                    vip: x.vip,
+                    brand: x.brand,
+                    number: x.number,
+                    query: x.query,
+                    available: x.available,
+                    date: `${day}-${month}-${year }`
+                }
+            }),
+            totals: totals.recordset
         };
 
     } catch (err) {

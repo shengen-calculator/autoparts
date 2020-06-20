@@ -22,12 +22,12 @@ function tableRow(row, index, isSelected) {
             role="checkbox"
             aria-checked={isItemSelected}
             tabIndex={-1}
-            key={row.id}
+            key={index}
             selected={isItemSelected}
         >
 
             <TableCell padding="default" component="th" id={labelId} scope="row">
-                {row.request}
+                {row.query}
             </TableCell>
             <TableCell align="left">{row.brand}</TableCell>
             <TableCell align="left">{row.number}</TableCell>
