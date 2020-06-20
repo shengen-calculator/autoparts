@@ -21,8 +21,7 @@ import {
 import {
     getClientStatistic,
     getVendorStatistic,
-    getStatisticByVendor,
-    getStatisticByClient
+    getStatisticByVendor
 } from "./statisticSaga";
 import {
     createOrder,
@@ -51,7 +50,6 @@ function* mySaga() {
     yield takeLatest(types.LOAD_CLIENT_STATISTIC_REQUEST, getClientStatistic);
     yield takeLatest(types.LOAD_VENDOR_STATISTIC_REQUEST, getVendorStatistic);
     yield takeLatest(types.LOAD_STATISTIC_BY_VENDOR_REQUEST, getStatisticByVendor);
-    yield takeLatest(types.LOAD_STATISTIC_BY_CLIENT_REQUEST, getStatisticByClient);
     yield takeLatest(types.LOAD_BY_NUMBER_REQUEST, searchByNumber);
     yield takeLatest(types.LOAD_BY_BRAND_REQUEST, searchByBrandAndNumber);
     yield takeLatest(types.UPDATE_PRICE_REQUEST, updatePrice);

@@ -44,10 +44,6 @@ export function getVendorStatistic() {
     return { type: types.LOAD_VENDOR_STATISTIC_REQUEST };
 }
 
-export function getStatisticByClient(params) {
-    return { type: types.LOAD_STATISTIC_BY_CLIENT_REQUEST, params};
-}
-
 export function getStatisticByVendor(vendorId) {
     return { type: types.LOAD_STATISTIC_BY_VENDOR_REQUEST, vendorId};
 }
