@@ -53,8 +53,8 @@ function Content({client, calls, getOrders, getReserves, ...props}) {
         }
     }, [ client.isReservesLoaded, client.reserveLoadingTime, getReserves]);
 
-    const isOrderTablesShown = client && client.orders && client.orders.length > 0;
-    const isReserveTablesShown = client && client.reserves && client.reserves.length > 0;
+    const isOrderTablesShown = client && client.orders;
+    const isReserveTablesShown = client && client.reserves;
     return (
         <div className={classes.app}>
             <Helmet>
