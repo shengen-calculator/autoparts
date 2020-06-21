@@ -55,7 +55,7 @@ function GroupedTable(props) {
             role={props.role}
             columns={7}
             isFilterShown={false}
-            rowsPerPageOptions={[10, 15, 25]}
+            rowsPerPageOptions={[25, 50, 100]}
             isRowSelectorShown={false}
         />
     );

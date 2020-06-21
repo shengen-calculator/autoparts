@@ -102,6 +102,7 @@ export default function GeneralTable(props) {
                 isFilterShown={false}
                 rowsPerPageOptions={rowsPerPageOptions}
                 isRowSelectorShown={false}
+                isPaginationDisabled={true}
             />
             <ReserveDialog isOpened={reserveDialog.isOpened}
                          selected={reserveDialog.selected}
