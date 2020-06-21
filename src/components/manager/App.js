@@ -44,6 +44,8 @@ function App({client, product, ...props}) {
                             PaperProps={{style: {width: drawerWidth}}}
                             variant="temporary"
                             vip={client.vip}
+                            brand={product.criteria.brand}
+                            numb={product.criteria.numb}
                             fullName={client.fullName}
                             open={mobileOpen}
                             onClose={handleDrawerToggle}
