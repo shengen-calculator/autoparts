@@ -16,8 +16,10 @@ export default {
         isEuroClient: false,
         orders: [],
         isOrdersLoaded: false,
+        orderLoadingTime: {},
         reserves: [],
         isReservesLoaded: false,
+        reserveLoadingTime: {},
         payments: [],
         isPaymentsLoaded: false,
         isClientNotExists: false
