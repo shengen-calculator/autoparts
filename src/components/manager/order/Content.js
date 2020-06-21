@@ -12,7 +12,7 @@ import {getOrders, getReserves, deleteOrdersByIds, deleteReservesByIds} from "..
 import {connect} from "react-redux";
 import {useParams} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
-
+import {refreshPeriod} from "../../../util/RefreshPeriod";
 
 const styles = theme => ({
     paper: {
@@ -51,16 +51,16 @@ function Content({client, calls, getOrders, getReserves, deleteOrdersByIds, dele
     };
 
     useEffect(() => {
-        if(!client.isOrdersLoaded && vip === client.vip) {
+        if((!client.isOrdersLoaded || (new Date() - client.reserveLoadingTime > refreshPeriod)) && vip === client.vip) {
             getOrders(vip);
         }
-    }, [client.orders, client.isOrdersLoaded, client.vip, vip, getOrders]);
+    }, [client.orders, client.isOrdersLoaded, client.reserveLoadingTime, client.vip, vip, getOrders]);
 
     useEffect(() => {
-        if(!client.isReservesLoaded && vip === client.vip) {
+        if((!client.isReservesLoaded || (new Date() - client.reserveLoadingTime > refreshPeriod)) && vip === client.vip) {
             getReserves(vip);
         }
-    }, [client.reserves, client.isReservesLoaded, client.vip, vip, getReserves]);
+    }, [client.reserves, client.isReservesLoaded, client.reserveLoadingTime, client.vip, vip, getReserves]);
 
     const isOrderTablesShown = client && client.orders && client.orders.length > 0;
     const isReserveTablesShown = client && client.reserves && client.reserves.length > 0;

@@ -11,6 +11,7 @@ import {connect} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import OrderTable from "./OrderTable";
 import ReserveTable from "./ReserveTable";
+import {refreshPeriod} from "../../../util/RefreshPeriod";
 
 
 const styles = theme => ({
@@ -41,16 +42,16 @@ function Content({client, calls, getOrders, getReserves, ...props}) {
     const {classes, handleDrawerToggle} = props;
 
     useEffect(() => {
-        if(!client.isOrdersLoaded) {
+        if(!client.isOrdersLoaded || (new Date() - client.orderLoadingTime > refreshPeriod)) {
             getOrders();
         }
-    }, [client.isOrdersLoaded, getOrders]);
+    }, [client.isOrdersLoaded, client.orderLoadingTime, getOrders]);
 
     useEffect(() => {
-        if(!client.isReservesLoaded) {
+        if(!client.isReservesLoaded || (new Date() - client.reserveLoadingTime > refreshPeriod)) {
             getReserves();
         }
-    }, [ client.isReservesLoaded, getReserves]);
+    }, [ client.isReservesLoaded, client.reserveLoadingTime, getReserves]);
 
     const isOrderTablesShown = client && client.orders && client.orders.length > 0;
     const isReserveTablesShown = client && client.reserves && client.reserves.length > 0;

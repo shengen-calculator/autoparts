@@ -18,8 +18,10 @@ export default function clientReducer(state = initialState.client, action) {
                 isEuroClient: action.client.isEuroClient,
                 orders: [],
                 isOrdersLoaded: false,
+                orderLoadingTime: {},
                 reserves: [],
                 isReservesLoaded: false,
+                reserveLoadingTime: {},
                 payments: [],
                 isPaymentsLoaded: false,
             };
@@ -35,14 +37,16 @@ export default function clientReducer(state = initialState.client, action) {
             return {
                 ...state,
                 orders: action.orders,
-                isOrdersLoaded: true
+                isOrdersLoaded: true,
+                orderLoadingTime: new Date()
             };
 
         case types.LOAD_RESERVES_SUCCESS:
             return {
                 ...state,
                 reserves: action.reserves,
-                isReservesLoaded: true
+                isReservesLoaded: true,
+                reserveLoadingTime: new Date()
             };
 
         case types.DELETE_ORDERS_REQUEST:
@@ -137,8 +141,10 @@ export default function clientReducer(state = initialState.client, action) {
                 isEuroClient: false,
                 orders: [],
                 isOrdersLoaded: false,
+                orderLoadingTime: {},
                 reserves: [],
                 isReservesLoaded: false,
+                reserveLoadingTime: {},
                 payments: [],
                 isPaymentsLoaded: false,
                 isClientNotExists: false
