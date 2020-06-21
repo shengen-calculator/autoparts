@@ -12,6 +12,7 @@ import EnhancedTableHead from "./EnhancedTableHead";
 import {EnhancedTableToolbar} from "./EnhancedTableToolbar";
 import StableSort from "../../util/StableSort";
 import GetComparator from "../../util/GetComparator";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles(theme => ({
     paper: {
         width: '100%',
         marginBottom: theme.spacing(2),
+        paddingBottom: theme.spacing(4)
     },
     table: {
         minWidth: 350,
@@ -39,7 +41,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function EnhancedTable(props) {
 
-    const { tableRow,
+    const {
+        tableRow,
         rows,
         headCells,
         title,
@@ -55,7 +58,8 @@ export default function EnhancedTable(props) {
         handleSelectAllClick,
         selected = [],
         onDelete,
-        isRowSelectorShown } = props;
+        isRowSelectorShown
+    } = props;
 
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -94,42 +98,47 @@ export default function EnhancedTable(props) {
                     isFilterShown={isFilterShown}
                     isRowSelectorShown={isRowSelectorShown}
                 />
-                <TableContainer>
-                    <Table
-                        className={classes.table}
-                        aria-labelledby="tableTitle"
-                        size='small'
-                        aria-label="enhanced table"
-                    >
-                        <EnhancedTableHead
-                            classes={classes}
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
-                            onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
-                            headCells={headCells}
-                            isRowSelectorShown={isRowSelectorShown}
-                        />
-                        <TableBody>
-                            {isPaginationDisabled ? StableSort(rows, GetComparator(order, orderBy))
-                                .map((row, index) => {
-                                    return tableRow(row, index, isSelected, handleClick, isEur, role)
-                                }) : StableSort(rows, GetComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    return tableRow(row, index, isSelected, handleClick, isEur, role)
-                                })
-                            }
-                            {emptyRows > 0 && (
-                                <TableRow style={{ height: 33 * emptyRows }}>
-                                    <TableCell colSpan={columns} />
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                {rows.length > 0 ?
+                    <TableContainer>
+                        <Table
+                            className={classes.table}
+                            aria-labelledby="tableTitle"
+                            size='small'
+                            aria-label="enhanced table"
+                        >
+                            <EnhancedTableHead
+                                classes={classes}
+                                numSelected={selected.length}
+                                order={order}
+                                orderBy={orderBy}
+                                onSelectAllClick={handleSelectAllClick}
+                                onRequestSort={handleRequestSort}
+                                rowCount={rows.length}
+                                headCells={headCells}
+                                isRowSelectorShown={isRowSelectorShown}
+                            />
+                            <TableBody>
+                                {isPaginationDisabled ? StableSort(rows, GetComparator(order, orderBy))
+                                    .map((row, index) => {
+                                        return tableRow(row, index, isSelected, handleClick, isEur, role)
+                                    }) : StableSort(rows, GetComparator(order, orderBy))
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((row, index) => {
+                                        return tableRow(row, index, isSelected, handleClick, isEur, role)
+                                    })
+                                }
+                                {emptyRows > 0 && (
+                                    <TableRow style={{height: 33 * emptyRows}}>
+                                        <TableCell colSpan={columns}/>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer> :
+                    <Typography color="textSecondary" align="center">
+                        Інформація відсутня
+                    </Typography>
+                }
                 {!isPaginationDisabled && <TablePagination
                     rowsPerPageOptions={rowsPerPageOptions}
                     component="div"
