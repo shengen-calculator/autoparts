@@ -13,7 +13,6 @@ import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import CreditCardIcon from '@material-ui/icons/CreditCard';
-import LocalMallIcon from '@material-ui/icons/LocalMall';
 import DirectionsRailwayIcon from '@material-ui/icons/DirectionsRailway';
 import Grid from "@material-ui/core/Grid";
 
@@ -73,7 +72,6 @@ export const EnhancedTableToolbar = props => {
                             {titleIcon === TitleIconEnum.track && <LocalShippingIcon className={classes.icon}/>}
                             {titleIcon === TitleIconEnum.infinity && <AllInclusiveIcon className={classes.icon}/>}
                             {titleIcon === TitleIconEnum.payment && <CreditCardIcon className={classes.icon}/>}
-                            {titleIcon === TitleIconEnum.mall && <LocalMallIcon className={classes.icon}/>}
                             {titleIcon === TitleIconEnum.railway && <DirectionsRailwayIcon className={classes.icon}/>}
                         </Typography>
                     </Grid>

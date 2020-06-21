@@ -1,7 +1,6 @@
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import LanguageIcon from '@material-ui/icons/Language';
 
 import EnhancedTable from '../../common/EnhancedTable';
 import {TitleIconEnum} from "../../../util/Enums";
@@ -43,7 +42,7 @@ function tableRow(row, index, isSelected) {
             <TableCell align="left">{row.orderDate}</TableCell>
             <TableCell align="left">{row.date}</TableCell>
             <TableCell align="center">
-                {row.source === 1 && <LanguageIcon/>}
+                {row.source === 1 && <span>Замовне</span>}
             </TableCell>
         </TableRow>
     );

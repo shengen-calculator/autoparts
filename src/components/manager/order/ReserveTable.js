@@ -2,10 +2,8 @@ import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
-import LanguageIcon from '@material-ui/icons/Language';
 
 import EnhancedTable from '../../common/EnhancedTable';
-import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
 import DeleteReservesDialog from "./Dialog/DeleteReservesDialog";
 import UpdateReserveQuantityDialog from "./Dialog/UpdateReserveQuantityDialog";
@@ -65,7 +63,7 @@ function tableRow(row, index, isSelected, handleClick) {
             <TableCell align="left">{row.orderDate}</TableCell>
             <TableCell align="left">{row.date}</TableCell>
             <TableCell align="center">
-                {row.source === 1 && <LanguageIcon/>}
+                {row.source === 1 && <span>Замовне</span>}
             </TableCell>
         </TableRow>
     );
@@ -126,7 +124,6 @@ export default function ReserveTable(props) {
                 headCells={headCells}
                 tableRow={tableRow}
                 title="Виконано"
-                titleIcon={TitleIconEnum.mall}
                 columns={12}
                 total={props.isEuroClient ? `${totalEur} / ${totalUah}` : `${totalUah} / ${totalEur}`}
                 isFilterShown={false}
