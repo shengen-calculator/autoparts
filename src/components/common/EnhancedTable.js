@@ -7,8 +7,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TablePagination from "@material-ui/core/TablePagination";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 
 import EnhancedTableHead from "./EnhancedTableHead";
 import {EnhancedTableToolbar} from "./EnhancedTableToolbar";
@@ -63,7 +61,6 @@ export default function EnhancedTable(props) {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('status');
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(true);
     const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageOptions[0]);
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -78,10 +75,6 @@ export default function EnhancedTable(props) {
     const handleChangeRowsPerPage = event => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
-    };
-
-    const handleChangeDense = event => {
-        setDense(event.target.checked);
     };
 
     const isSelected = name => selected.indexOf(name) !== -1;
@@ -105,7 +98,7 @@ export default function EnhancedTable(props) {
                     <Table
                         className={classes.table}
                         aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
+                        size='small'
                         aria-label="enhanced table"
                     >
                         <EnhancedTableHead
@@ -130,7 +123,7 @@ export default function EnhancedTable(props) {
                                 })
                             }
                             {emptyRows > 0 && (
-                                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                                <TableRow style={{ height: 33 * emptyRows }}>
                                     <TableCell colSpan={columns} />
                                 </TableRow>
                             )}
@@ -147,10 +140,6 @@ export default function EnhancedTable(props) {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />}
             </Paper>
-            <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Стиснути"
-            />
         </div>
     );
 }
