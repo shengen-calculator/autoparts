@@ -9,7 +9,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 import SnoozeIcon from '@material-ui/icons/Snooze';
 
 import EnhancedTable from '../../common/EnhancedTable';
-import {TitleIconEnum} from "../../../util/Enums";
 import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
 import DeleteOrdersDialog from "./Dialog/DeleteOrdersDialog";
 import UpdateOrderQuantityDialog from "./Dialog/UpdateOrderQuantityDialog";
@@ -162,7 +161,6 @@ export default function OrderTable(props) {
                 headCells={headCells}
                 tableRow={tableRow}
                 title="Замовлення"
-                titleIcon={TitleIconEnum.flight}
                 total={props.isEuroClient ? `${totalEur} / ${totalUah}` : `${totalUah} / ${totalEur}`}
                 columns={13}
                 isFilterShown={false}
