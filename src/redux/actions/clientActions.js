@@ -44,6 +44,14 @@ export function getVendorStatistic() {
     return { type: types.LOAD_VENDOR_STATISTIC_REQUEST };
 }
 
+export function showClientPrice() {
+    return { type: types.SHOW_CLIENT_PRICE };
+}
+
+export function hideClientPrice() {
+    return { type: types.HIDE_CLIENT_PRICE };
+}
+
 export function getStatisticByVendor(vendorId) {
     return { type: types.LOAD_STATISTIC_BY_VENDOR_REQUEST, vendorId};
 }

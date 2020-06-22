@@ -55,6 +55,18 @@ export default function clientReducer(state = initialState.client, action) {
                 orders: state.orders.filter((item) => !action.ids.includes(item.id))
             };
 
+        case types.SHOW_CLIENT_PRICE:
+            return {
+                ...state,
+                isPriceShown: true
+            };
+
+        case types.HIDE_CLIENT_PRICE:
+            return {
+                ...state,
+                isPriceShown: false
+            };
+
         case types.DELETE_RESERVES_REQUEST:
             return {
                 ...state,
