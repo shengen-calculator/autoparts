@@ -5,18 +5,19 @@ import EnhancedTable from '../EnhancedTable';
 import {RoleEnum, TitleIconEnum} from '../../../util/Enums';
 import ReserveDialog from "../Dialog/ReserveDialog";
 import lightBlue from '@material-ui/core/colors/lightBlue';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
+import {handleHeadCells} from "../../../util/HeadCellsHandler";
 
 const headCells = [
-    { id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
-    { id: 'brand', numeric: false, disablePadding: false, label: 'Бренд' },
-    { id: 'number', numeric: false, disablePadding: false, label: 'Номер' },
-    { id: 'description', numeric: false, disablePadding: false, label: 'Опис' },
-    { id: 'retail', numeric: true, disablePadding: false, label: 'Роздріб' },
-    { id: 'cost', numeric: true, disablePadding: false, label: 'Ціна' },
-    { id: 'available', numeric: true, disablePadding: false, label: 'Доступно' },
-    { id: 'reserve', numeric: true, disablePadding: false, label: 'Резерв', align: 'left' },
-    { id: 'empty', numeric: false, disablePadding: false, label: '', align: 'center' }
+    {id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
+    {id: 'brand', numeric: false, disablePadding: false, label: 'Бренд'},
+    {id: 'number', numeric: false, disablePadding: false, label: 'Номер'},
+    {id: 'description', numeric: false, disablePadding: false, label: 'Опис'},
+    {id: 'retail', numeric: true, disablePadding: false, label: 'Роздріб'},
+    {id: 'cost', numeric: true, disablePadding: false, label: 'Ціна'},
+    {id: 'available', numeric: true, disablePadding: false, label: 'Доступно'},
+    {id: 'reserve', numeric: true, disablePadding: false, label: 'Резерв', align: 'left'},
+    {id: 'empty', numeric: false, disablePadding: false, label: '', align: 'center'}
 ];
 
 function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown) {
@@ -41,14 +42,18 @@ function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown
             selected={isItemSelected}
 
         >
-            {RoleEnum.Manager === role && <TableCell width="10%" align="left" name="reserve" style={pointer}>{row.vendor}</TableCell>}
-            <TableCell width="10%" name="reserve" padding="default" component="th" id={labelId} scope="row" style={pointer}>
+            {RoleEnum.Manager === role &&
+            <TableCell width="10%" align="left" name="reserve" style={pointer}>{row.vendor}</TableCell>}
+            <TableCell width="10%" name="reserve" padding="default" component="th" id={labelId} scope="row"
+                       style={pointer}>
                 {row.brand}
             </TableCell>
             <TableCell width="10%" align="left" name="reserve" style={pointer}>{row.number}</TableCell>
             <TableCell width="30%" align="left" name="reserve" style={pointer}>{row.description}</TableCell>
-            <TableCell width="10%" align="right" name="price" style={pointer}>{isEur ? row['retailEur'].toFixed(2) : row.retail.toFixed(2)}</TableCell>
-            {isPriceShown && <TableCell width="10%" align="right" name="price" style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>}
+            <TableCell width="10%" align="right" name="price"
+                       style={pointer}>{isEur ? row['retailEur'].toFixed(2) : row.retail.toFixed(2)}</TableCell>
+            {isPriceShown && <TableCell width="10%" align="right" name="price"
+                                        style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>}
             <TableCell width="5%" align="right" name="reserve" style={pointer}>{row.available}</TableCell>
             <TableCell width="5%" align="left" name="reserve" style={pointer}>{row.reserve}</TableCell>
             <TableCell width="5%" align="left" name="reserve" style={pointer}/>
@@ -65,7 +70,7 @@ export default function GeneralTable(props) {
     const handleClick = (event, name) => {
         if (event.target.getAttribute("name") === "reserve") {
             const selected = props.rows.find(x => x.id === name);
-            if(selected.available > 0) {
+            if (selected.available > 0) {
                 setReserveDialog({
                     isOpened: true,
                     selected: props.rows.find(x => x.id === name)
@@ -79,21 +84,13 @@ export default function GeneralTable(props) {
         });
     };
 
-    const isContainVendorField = headCells.some(elem => elem.id === 'vendor');
-    if(RoleEnum.Client === props.role && isContainVendorField) {
-        headCells.splice(0,1);
-    }
-    const isContainPriceField = headCells.some(elem => elem.id === 'cost');
-    if(!props.isPriceShown && isContainPriceField) {
-        headCells.splice(4,1);
-    } else if(!isContainPriceField) {
-        headCells.splice(4,0, { id: 'cost', numeric: true, disablePadding: false, label: 'Ціна' });
-    }
+    handleHeadCells(headCells, props.role, props.isPriceShown);
+
     const rowsPerPageOptions = [5, 10, 25];
-    if(props.rows.length < rowsPerPageOptions[0]) {
+    if (props.rows.length < rowsPerPageOptions[0]) {
         rowsPerPageOptions.splice(0, 1, props.rows.length)
     }
-    return(
+    return (
         <React.Fragment>
             <EnhancedTable
                 rows={props.rows}
@@ -112,8 +109,8 @@ export default function GeneralTable(props) {
                 isPaginationDisabled={true}
             />
             <ReserveDialog isOpened={reserveDialog.isOpened}
-                         selected={reserveDialog.selected}
-                         onClose={handleCancelReserveClick}
+                           selected={reserveDialog.selected}
+                           onClose={handleCancelReserveClick}
             />
         </React.Fragment>
 

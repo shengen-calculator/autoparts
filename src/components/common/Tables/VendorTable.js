@@ -1,9 +1,9 @@
 import React from 'react';
 import EnhancedTable from "../EnhancedTable";
 import SearchTableRow, {headCells} from './SearchTableRow';
-import {RoleEnum, TitleIconEnum} from "../../../util/Enums";
+import {TitleIconEnum} from "../../../util/Enums";
 import OrderDialog from "../Dialog/OrderDialog";
-
+import {handleHeadCells} from "../../../util/HeadCellsHandler";
 
 
 export default function VendorTable(props) {
@@ -27,21 +27,11 @@ export default function VendorTable(props) {
     };
 
     const rowsPerPageOptions = [5, 10, 25];
-    if(props.rows.length < rowsPerPageOptions[0]) {
+    if (props.rows.length < rowsPerPageOptions[0]) {
         rowsPerPageOptions.splice(0, 1, props.rows.length)
     }
 
-    const isContainVendorField = headCells.some(elem => elem.id === 'vendor');
-    if(RoleEnum.Client === props.role  && isContainVendorField) {
-        headCells.splice(0,1);
-    }
-
-    const isContainPriceField = headCells.some(elem => elem.id === 'cost');
-    if(!props.isPriceShown && isContainPriceField) {
-        headCells.splice(4,1);
-    } else if(!isContainPriceField) {
-        headCells.splice(4,0, { id: 'cost', numeric: true, disablePadding: false, label: 'Ціна' });
-    }
+    handleHeadCells(headCells, props.role, props.isPriceShown);
 
     return (
         <React.Fragment>
