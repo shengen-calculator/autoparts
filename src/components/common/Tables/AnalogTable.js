@@ -37,6 +37,7 @@ export default function AnalogTable(props) {
                 handleClick={handleClick}
                 headCells={headCells}
                 role={props.role}
+                isPriceShown={props.isPriceShown}
                 tableRow={SearchTableRow}
                 isEur={props.isEur}
                 title={`Аналоги артикула ${props.criteria}`}

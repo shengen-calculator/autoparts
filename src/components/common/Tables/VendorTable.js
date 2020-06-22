@@ -36,6 +36,13 @@ export default function VendorTable(props) {
         headCells.splice(0,1);
     }
 
+    const isContainPriceField = headCells.some(elem => elem.id === 'cost');
+    if(!props.isPriceShown && isContainPriceField) {
+        headCells.splice(4,1);
+    } else if(!isContainPriceField) {
+        headCells.splice(4,0, { id: 'cost', numeric: true, disablePadding: false, label: 'Ціна' });
+    }
+
     return (
         <React.Fragment>
             <EnhancedTable
@@ -45,6 +52,7 @@ export default function VendorTable(props) {
                 tableRow={SearchTableRow}
                 isEur={props.isEur}
                 role={props.role}
+                isPriceShown={props.isPriceShown}
                 title="Знайдено за артикулом"
                 titleIcon={TitleIconEnum.track}
                 columns={10}

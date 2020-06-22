@@ -19,12 +19,12 @@ const headCells = [
     { id: 'empty', numeric: false, disablePadding: false, label: '', align: 'center' }
 ];
 
-function tableRow(row, index, isSelected, handleClick, isEur, role) {
+function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
     const stockColor = lightBlue[50];
-    const StyledTableRow = withStyles((theme) => ({
+    const StyledTableRow = withStyles(() => ({
         root: {
             backgroundColor: stockColor,
         },
@@ -48,10 +48,10 @@ function tableRow(row, index, isSelected, handleClick, isEur, role) {
             <TableCell width="10%" align="left" name="reserve" style={pointer}>{row.number}</TableCell>
             <TableCell width="30%" align="left" name="reserve" style={pointer}>{row.description}</TableCell>
             <TableCell width="10%" align="right" name="price" style={pointer}>{isEur ? row['retailEur'].toFixed(2) : row.retail.toFixed(2)}</TableCell>
-            <TableCell width="10%" align="right" name="price" style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>
+            {isPriceShown && <TableCell width="10%" align="right" name="price" style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>}
             <TableCell width="5%" align="right" name="reserve" style={pointer}>{row.available}</TableCell>
             <TableCell width="5%" align="left" name="reserve" style={pointer}>{row.reserve}</TableCell>
-            <TableCell width="5%" align="left" name="reserve" style={pointer}></TableCell>
+            <TableCell width="5%" align="left" name="reserve" style={pointer}/>
         </StyledTableRow>
     );
 }
@@ -83,6 +83,12 @@ export default function GeneralTable(props) {
     if(RoleEnum.Client === props.role && isContainVendorField) {
         headCells.splice(0,1);
     }
+    const isContainPriceField = headCells.some(elem => elem.id === 'cost');
+    if(!props.isPriceShown && isContainPriceField) {
+        headCells.splice(4,1);
+    } else if(!isContainPriceField) {
+        headCells.splice(4,0, { id: 'cost', numeric: true, disablePadding: false, label: 'Ціна' });
+    }
     const rowsPerPageOptions = [5, 10, 25];
     if(props.rows.length < rowsPerPageOptions[0]) {
         rowsPerPageOptions.splice(0, 1, props.rows.length)
@@ -96,6 +102,7 @@ export default function GeneralTable(props) {
                 tableRow={tableRow}
                 isEur={props.isEur}
                 role={props.role}
+                isPriceShown={props.isPriceShown}
                 title="В наявності на складі"
                 titleIcon={TitleIconEnum.check}
                 columns={8}
