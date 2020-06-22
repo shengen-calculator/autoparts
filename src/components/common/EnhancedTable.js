@@ -51,6 +51,7 @@ export default function EnhancedTable(props) {
         columns,
         isEur,
         role,
+        isPriceShown,
         isFilterShown,
         isPaginationDisabled,
         rowsPerPageOptions,
@@ -120,11 +121,11 @@ export default function EnhancedTable(props) {
                             <TableBody>
                                 {isPaginationDisabled ? StableSort(rows, GetComparator(order, orderBy))
                                     .map((row, index) => {
-                                        return tableRow(row, index, isSelected, handleClick, isEur, role)
+                                        return tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown)
                                     }) : StableSort(rows, GetComparator(order, orderBy))
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map((row, index) => {
-                                        return tableRow(row, index, isSelected, handleClick, isEur, role)
+                                        return tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown)
                                     })
                                 }
                                 {emptyRows > 0 && (

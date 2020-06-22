@@ -28,15 +28,19 @@ const styles = theme => SearchContentStyle(theme);
 function Content({auth, calls, client, product, getByBrand, getByNumber, ...props}) {
     const {classes, handleDrawerToggle} = props;
     const history = useHistory();
-    const { numb, brand} = useParams();
+    const {numb, brand} = useParams();
 
 
     useEffect(() => {
         if (brand && brand !== product.criteria.brand) {
-            getByBrand({brand, numb, queryId: product.productsGrouped.length > 0 ? product.productsGrouped[0].queryId : null});
-        } else if(numb && ((numb !== product.criteria.numb) || (!brand && product.criteria.brand))) {
+            getByBrand({
+                brand,
+                numb,
+                queryId: product.productsGrouped.length > 0 ? product.productsGrouped[0].queryId : null
+            });
+        } else if (numb && ((numb !== product.criteria.numb) || (!brand && product.criteria.brand))) {
             getByNumber(numb);
-        } else if(product.productsGrouped.length === 1 && !brand) {
+        } else if (product.productsGrouped.length === 1 && !brand) {
             history.push(`/search/${removeSpecialCharacters(product.productsGrouped[0].number)}/${htmlEncode(product.productsGrouped[0].brand)}`)
         }
     }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, history,
@@ -51,7 +55,7 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
             <title>{title}</title>
         </Helmet>
         <main className={classes.main}>
-            {(product.products.length > 0 || product.productsGrouped.length || calls === 0)  &&
+            {(product.products.length > 0 || product.productsGrouped.length || calls === 0) &&
             <Paper className={classes.paper}>
                 <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
                 <div className={classes.contentWrapper}>
@@ -60,14 +64,19 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
                             Інформація відсутня
                         </Typography> :
                         <React.Fragment>
-                            {product.productsGrouped.length > 1 && <GroupedTable rows={product.productsGrouped} role={auth.role}/>}
+                            {product.productsGrouped.length > 1 &&
+                            <GroupedTable rows={product.productsGrouped} role={auth.role}/>}
                             {generalRows.length > 0 && <GeneralTable rows={StableSort(generalRows,
-                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}/>}
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
+                                                                     isPriceShown={client.isPriceShown}/>}
                             {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
-                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role} />}
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
+                                                                   isPriceShown={client.isPriceShown}/>}
                             {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
                                 (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
-                                                                   role={auth.role} criteria={`${htmlDecode(brand)} ${numb}`}/>}
+                                                                   role={auth.role}
+                                                                   criteria={`${htmlDecode(brand)} ${numb}`}
+                                                                   isPriceShown={client.isPriceShown}/>}
                         </React.Fragment>
                     }
                 </div>

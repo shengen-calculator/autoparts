@@ -22,7 +22,7 @@ export const headCells = [
     {id: 'info', numeric: false, disablePadding: false, label: 'Інфо', align: 'center'}
 ];
 
-export default function SearchTableRow(row, index, isSelected, handleClick, isEur, role) {
+export default function SearchTableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
@@ -69,8 +69,8 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
             <TableCell width="30%" align="left" name="order" style={pointer}>{row.description}</TableCell>
             <TableCell width="10%" align="right" name="price"
                        style={pointer}>{isEur ? row['retailEur'].toFixed(2) : row.retail.toFixed(2)}</TableCell>
-            <TableCell width="10%" align="right" name="order"
-                       style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>
+            {isPriceShown &&  <TableCell width="10%" align="right" name="order"
+                       style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>}
             <TableCell width="5%" align="center" name="order" style={pointer}>{row.order}</TableCell>
             <TableCell width="5%" align="left" name="order" style={bold} >
                 {
