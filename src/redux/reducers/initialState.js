@@ -22,7 +22,8 @@ export default {
         reserveLoadingTime: {},
         payments: [],
         isPaymentsLoaded: false,
-        isClientNotExists: false
+        isClientNotExists: false,
+        isPriceShown: true
     },
     apiCallsInProgress: 0,
     statistic: {
