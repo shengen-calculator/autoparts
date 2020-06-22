@@ -51,10 +51,10 @@ function Content({client, calls, getOrders, getReserves, deleteOrdersByIds, dele
     };
 
     useEffect(() => {
-        if((!client.isOrdersLoaded || (new Date() - client.reserveLoadingTime > refreshPeriod)) && vip === client.vip) {
+        if((!client.isOrdersLoaded || (new Date() - client.orderLoadingTime > refreshPeriod)) && vip === client.vip) {
             getOrders(vip);
         }
-    }, [client.orders, client.isOrdersLoaded, client.reserveLoadingTime, client.vip, vip, getOrders]);
+    }, [client.orders, client.isOrdersLoaded, client.orderLoadingTime, client.vip, vip, getOrders]);
 
     useEffect(() => {
         if((!client.isReservesLoaded || (new Date() - client.reserveLoadingTime > refreshPeriod)) && vip === client.vip) {
