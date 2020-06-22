@@ -8,7 +8,7 @@ export const handleHeadCells = (headCells, role, isPriceShown) => {
     const isContainPriceField = headCells.some(elem => elem.id === 'cost');
     if(!isPriceShown && isContainPriceField) {
         headCells.splice(4,1);
-    } else if(!isContainPriceField) {
+    } else if(!isContainPriceField && isPriceShown) {
         headCells.splice(4,0, { id: 'cost', numeric: true, disablePadding: false, label: 'Ціна' });
     }
 };
