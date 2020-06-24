@@ -72,12 +72,12 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
                         <React.Fragment>
                             {product.productsGrouped.length > 1 && <GroupedTable rows={product.productsGrouped} vip={vip} role={auth.role}/>}
                             {generalRows.length > 0 && <GeneralTable rows={StableSort(generalRows,
-                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}/>}
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role} isPriceShown={true}/>}
                             {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
-                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}/>}
+                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role} isPriceShown={true}/>}
                             {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
                                 (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
-                                                                   role={auth.role} criteria={`${htmlDecode(brand)} ${numb}`}/>}
+                                                                   role={auth.role} criteria={`${htmlDecode(brand)} ${numb}`} isPriceShown={true}/>}
                         </React.Fragment>
                     }
                 </div>
