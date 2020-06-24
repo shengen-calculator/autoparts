@@ -15,6 +15,7 @@ BEGIN
                dbo.[Подчиненная накладные] ON dbo.Клиенты.ID_Клиента = dbo.[Подчиненная накладные].ID_Клиента
           WHERE (CONVERT(date, dbo.[Подчиненная накладные].Дата) >= @startDate)
             AND (CONVERT(date, dbo.[Подчиненная накладные].Дата) <= @endDate)
+            AND dbo.[Подчиненная накладные].Заказ IS NULL
           GROUP BY dbo.Клиенты.ID_Клиента, dbo.Клиенты.VIP, dbo.Клиенты.EMail
           HAVING (dbo.Клиенты.ID_Клиента <> 378)) AS RES
              FULL OUTER JOIN (SELECT dbo.Клиенты.ID_Клиента,
