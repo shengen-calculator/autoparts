@@ -12,6 +12,10 @@ export function getByBrand(params) {
     return {type: types.LOAD_BY_BRAND_REQUEST, params};
 }
 
+export function createOrderWithCheck(params) {
+    return {type: types.CHECK_ORDER_REQUEST, params};
+}
+
 export function createOrder(params) {
     return {type: types.CREATE_ORDER_REQUEST, params};
 }

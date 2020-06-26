@@ -9,11 +9,11 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DialogActions from "@material-ui/core/DialogActions";
 import TextField from "@material-ui/core/TextField";
-import {createOrder} from "../../../redux/actions/searchActions";
+import {createOrder, createOrderWithCheck} from "../../../redux/actions/searchActions";
 import {RoleEnum} from "../../../util/Enums";
 
 function OrderDialog(props) {
-    const {isOpened, selected, onClose, createOrder, client, auth} = props;
+    const {isOpened, selected, onClose, createOrder, createOrderWithCheck, client, auth} = props;
     const [order, setOrder] = useState({
     });
 
@@ -44,7 +44,7 @@ function OrderDialog(props) {
             && Number(order.quantity) > -1
         ) {
             if(auth.role === RoleEnum.Manager) {
-                createOrder({
+                createOrderWithCheck({
                     productId: selected.id,
                     quantity: Number(order.quantity),
                     price: Number(order.price),
@@ -125,7 +125,8 @@ function OrderDialog(props) {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    createOrder
+    createOrder,
+    createOrderWithCheck
 };
 
 function mapStateToProps(state) {
