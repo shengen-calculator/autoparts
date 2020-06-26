@@ -35,6 +35,23 @@ export function* updatePrice(action) {
     }
 }
 
+
+export function* createOrderWithCheck(action) {
+    try {
+        yield put({type: types.BEGIN_API_CALL});
+        const {data} = yield call(SearchFunctionsApi.checkIfPresentInOrderList, action.params);
+        if(data.length > 0) {
+            yield put({type: types.CHECK_ORDER_SUCCESS, products: data});
+        } else {
+            const {data} = yield call(SearchFunctionsApi.createOrder, action.params);
+            yield put({type: types.CREATE_ORDER_SUCCESS, order: data[0]});
+        }
+    } catch (e) {
+        yield put({type: types.API_CALL_ERROR});
+        yield put({type: types.CREATE_ORDER_FAILURE, text: e.message});
+    }
+}
+
 export function* createOrder(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
@@ -65,17 +82,5 @@ export function* getByAnalog(action) {
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.LOAD_BY_ANALOG_FAILURE, text: e.message});
-    }
-}
-
-
-export function* getAnalogsFromOrderList(action) {
-    try {
-        yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(SearchFunctionsApi.checkIfPresentInOrderList, action.analogId);
-        yield put({type: types.CHECK_ORDER_SUCCESS, products: data});
-    } catch (e) {
-        yield put({type: types.API_CALL_ERROR});
-        yield put({type: types.CHECK_ORDER_FAILURE, text: e.message});
     }
 }
