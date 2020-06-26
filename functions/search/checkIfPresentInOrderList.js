@@ -27,4 +27,4 @@ const checkIfPresentInOrderList = async (data, context) => {
 
 };
 
-module.exports = createOrder;
+module.exports = checkIfPresentInOrderList;
