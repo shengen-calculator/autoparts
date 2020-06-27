@@ -2,11 +2,6 @@ import {functions} from "./database";
 import {htmlDecode, removeAllSpecialCharacters} from "../util/Search";
 
 class SearchFunctionsApi {
-    static checkIfPresentInOrderList(params) {
-        const func = functions.httpsCallable('search-checkIfPresentInOrderList');
-        return func(params);
-    }
-
     static createOrder(params) {
         const func = functions.httpsCallable('search-createOrder');
         return func(params);
