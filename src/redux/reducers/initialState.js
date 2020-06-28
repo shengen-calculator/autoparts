@@ -46,6 +46,7 @@ export default {
         criteria: {
             brand: '',
             numb: ''
-        }
+        },
+        inOrder: []
     }
 };

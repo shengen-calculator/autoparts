@@ -14,7 +14,8 @@ export default function productReducer(state = initialState.product, action) {
             return {
                 ...state,
                 productsGrouped: [],
-                products: action.products
+                products: action.products.search,
+                inOrder: action.products.inOrder
             };
 
         case types.LOAD_CLIENT_REQUEST:
