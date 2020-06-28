@@ -13,7 +13,6 @@ const searchByBrandAndNumber = async (data, context) => {
         util.checkForClientRole(context);
     }
 
-
     if (!data ||!data.number ||!data.brand) {
         throw new functions.https.HttpsError('invalid-argument',
             'The function must be called with at least two arguments "Brand and Number"');
@@ -21,12 +20,21 @@ const searchByBrandAndNumber = async (data, context) => {
 
     try {
         const pool = await sql.connect(config);
-        const result = await pool.request()
-            .input('number', sql.VarChar(25), data.number)
-            .input('brand', sql.VarChar(18), data.brand)
-            .input('clientId', sql.Int, data.clientId ? data.clientId : context.auth.token.clientId)
-            .input('isVendorShown', sql.Bit, data.clientId ? 1 : 0)
-            .execute('sp_web_getproductsbybrand');
+
+
+        const [search, inOrder] = await Promise.all([
+            pool.request()
+                .input('number', sql.VarChar(25), data.number)
+                .input('brand', sql.VarChar(18), data.brand)
+                .input('clientId', sql.Int, data.clientId ? data.clientId : context.auth.token.clientId)
+                .input('isVendorShown', sql.Bit, data.clientId ? 1 : 0)
+                .execute('sp_web_getproductsbybrand'),
+            pool.request()
+                .input('number', sql.VarChar(25), data.number)
+                .input('brand', sql.VarChar(18), data.brand)
+                .execute('sp_web_checkifpresentinorderlist')
+        ]);
+
 
         if(context.auth.token.role === RoleEnum.Client && data.queryId) {
             const datastore = new Datastore();
@@ -47,7 +55,10 @@ const searchByBrandAndNumber = async (data, context) => {
             datastore.update(entity);
         }
 
-        return result.recordset;
+        return {
+            search: search.recordset,
+            inOrder: inOrder.recordset
+        };
     } catch (err) {
         if(err) {
             throw new functions.https.HttpsError('internal',
@@ -55,7 +66,6 @@ const searchByBrandAndNumber = async (data, context) => {
         }
         return {err: err.message};
     }
-
 };
 
 function getAvailability(data) {

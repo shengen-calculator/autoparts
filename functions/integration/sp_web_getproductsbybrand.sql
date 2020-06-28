@@ -29,7 +29,7 @@ BEGIN
 		,Доступно AS available
 		,Резерв AS reserve
 		,TRIM(Описание) AS description
-		,Заказ AS [order]
+		,RTRIM(Заказ) AS [order]
 		,Срок AS term
 		,FORMAT(Дата, ''d'', ''de-de'') AS date
 		,[Не возвратный] AS ImpossibleReturn
