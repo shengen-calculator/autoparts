@@ -1,15 +1,14 @@
-CREATE PROCEDURE sp_web_checkifpresentinorderlist
-@productId int
+CREATE PROCEDURE sp_web_checkifpresentinorderlist @number varchar(25), @brand varchar(25)
 AS
 
-SELECT RTRIM(dbo.Клиенты.VIP) AS vip,
-       RTRIM(dbo.Поставщики.[Сокращенное название]) AS vendor,
-       RTRIM(Брэнды_1.Брэнд) AS brand,
+SELECT RTRIM(dbo.Клиенты.VIP)                        AS vip,
+       RTRIM(dbo.Поставщики.[Сокращенное название])  AS vendor,
+       RTRIM(Брэнды_1.Брэнд)                         AS brand,
        RTRIM([Каталог запчастей_1].[Номер запчасти]) AS number,
-       dbo.[Запросы клиентов].Заказано AS quantity,
-       RTRIM(dbo.[Запросы клиентов].Альтернатива) AS alternative,
-       dbo.[Запросы клиентов].Дата_заказа AS date,
-       dbo.[Запросы клиентов].Срочно AS isUrgent,
+       dbo.[Запросы клиентов].Заказано               AS quantity,
+       RTRIM(dbo.[Запросы клиентов].Альтернатива)    AS alternative,
+       dbo.[Запросы клиентов].Дата_заказа            AS date,
+       dbo.[Запросы клиентов].Срочно                 AS isUrgent,
        dbo.[Заказы поставщикам].Предварительная_дата AS preliminaryDate
 FROM (SELECT MAX(dbo.[Каталог запчастей].ID_аналога) AS analogId
       FROM dbo.[Каталоги поставщиков]
@@ -18,7 +17,8 @@ FROM (SELECT MAX(dbo.[Каталог запчастей].ID_аналога) AS a
                INNER JOIN
            dbo.[Каталог запчастей] ON dbo.Брэнды.ID_Брэнда = dbo.[Каталог запчастей].ID_Брэнда AND
                                       dbo.[Каталоги поставщиков].Name = dbo.[Каталог запчастей].namepost
-      WHERE (dbo.[Каталоги поставщиков].ID_Запчасти = @productId)) AS AnalogTable
+      WHERE (dbo.Брэнды.Брэнд = @brand)
+        AND (dbo.[Каталоги поставщиков].Name = @number)) AS AnalogTable
          INNER JOIN
      dbo.[Каталог запчастей] AS [Каталог запчастей_1] ON AnalogTable.analogId = [Каталог запчастей_1].ID_аналога
          INNER JOIN
@@ -35,4 +35,3 @@ WHERE (dbo.[Запросы клиентов].Заказано <> 0)
   AND (dbo.[Запросы клиентов].Доставлено = 0)
   AND (dbo.[Запросы клиентов].Обработано = 0)
 go
-
