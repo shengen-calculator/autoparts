@@ -7,7 +7,8 @@ export default function productReducer(state = initialState.product, action) {
             return {
                 ...state,
                 productsGrouped: action.products,
-                products: []
+                products: [],
+                inOrder: []
             };
 
         case types.LOAD_BY_BRAND_SUCCESS:
@@ -23,6 +24,7 @@ export default function productReducer(state = initialState.product, action) {
                 ...state,
                 productsGrouped: [],
                 products: [],
+                inOrder: [],
                 criteria: {
                     brand: '',
                     numb: ''
@@ -34,6 +36,7 @@ export default function productReducer(state = initialState.product, action) {
                 ...state,
                 productsGrouped: [],
                 products: [],
+                inOrder: [],
                 criteria: {
                     numb: action.number,
                     brand: ''
