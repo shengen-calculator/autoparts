@@ -74,7 +74,7 @@ function OrderDialog(props) {
     return (
 
         <div>
-            <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose}>
+            <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose} maxWidth="xl">
                 <DialogTitle id="form-dialog-title">
                     {isConfirmationDialog ?
                         'Запчастина вже присутня в списку замовлень' :
