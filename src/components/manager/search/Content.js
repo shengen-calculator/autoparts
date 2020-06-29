@@ -30,7 +30,6 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
     const history = useHistory();
     const {vip, numb, brand} = useParams();
 
-
     useEffect(() => {
         if (!vip) {
             if(!client.vip) {
@@ -43,7 +42,8 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
 
     useEffect(() => {
         if (brand && brand !== product.criteria.brand) {
-            getByBrand({brand, numb, clientId: client.id});
+            const record = product.productsGrouped.find(x => x.brand === brand && x.number === numb);
+            getByBrand({brand, numb, clientId: client.id, analogId : record ? record.analogId : null});
         } else if((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand && numb)) {
             getByNumber(numb);
         } else if(product.productsGrouped.length === 1 && !brand) {
