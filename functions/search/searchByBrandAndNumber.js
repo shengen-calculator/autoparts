@@ -21,19 +21,27 @@ const searchByBrandAndNumber = async (data, context) => {
     try {
         const pool = await sql.connect(config);
 
-
-        const [search, inOrder] = await Promise.all([
+        const requests = [
             pool.request()
                 .input('number', sql.VarChar(25), data.number)
                 .input('brand', sql.VarChar(18), data.brand)
                 .input('clientId', sql.Int, data.clientId ? data.clientId : context.auth.token.clientId)
                 .input('isVendorShown', sql.Bit, data.clientId ? 1 : 0)
                 .execute('sp_web_getproductsbybrand'),
-            pool.request()
+
+        ];
+        if(data.analogId) {
+            requests.push(pool.request()
+                .input('analogId', sql.Int, data.analogId)
+                .execute('sp_web_checkifpresentinorderlistbyanalog'))
+        } else {
+            requests.push(pool.request()
                 .input('number', sql.VarChar(25), data.number)
                 .input('brand', sql.VarChar(18), data.brand)
-                .execute('sp_web_checkifpresentinorderlist')
-        ]);
+                .execute('sp_web_checkifpresentinorderlist'))
+        }
+
+        const [search, inOrder] = await Promise.all(requests);
 
 
         if(context.auth.token.role === RoleEnum.Client && data.queryId) {
