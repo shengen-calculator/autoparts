@@ -22,21 +22,25 @@ export default function OrderConfirmation(props) {
                             <TableCell align="right">Номер</TableCell>
                             <TableCell align="right">К-сть</TableCell>
                             <TableCell align="right">Примітка</TableCell>
+                            <TableCell align="right">Дата</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {inOrder.map((row) => (
-                            <TableRow key={row.vip}>
-                                <TableCell component="th" scope="row">
-                                    {row.vip}
-                                </TableCell>
-                                <TableCell align="right">{row.vendor}</TableCell>
-                                <TableCell align="right">{row.brand}</TableCell>
-                                <TableCell align="right">{row.number}</TableCell>
-                                <TableCell align="right">{row.quantity}</TableCell>
-                                <TableCell align="right">{row['alternative']}</TableCell>
-                            </TableRow>
-                        ))}
+                        {inOrder.map((row) => {
+                            return (
+                                <TableRow key={row.vip}>
+                                    <TableCell component="th" scope="row">
+                                        {row.vip}
+                                    </TableCell>
+                                    <TableCell align="right">{row.vendor}</TableCell>
+                                    <TableCell align="right">{row.brand}</TableCell>
+                                    <TableCell align="right">{row.number}</TableCell>
+                                    <TableCell align="right">{row.quantity}</TableCell>
+                                    <TableCell align="right">{row.note}</TableCell>
+                                    <TableCell align="right">{row['preliminaryDate']}</TableCell>
+                                </TableRow>
+                            )
+                        } )}
                     </TableBody>
                 </Table>
 
