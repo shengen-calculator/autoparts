@@ -26,9 +26,9 @@ export default function OrderConfirmation(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {inOrder.map((row) => {
+                        {inOrder.map((row, index) => {
                             return (
-                                <TableRow key={row.vip}>
+                                <TableRow key={index}>
                                     <TableCell component="th" scope="row">
                                         {row.vip}
                                     </TableCell>
