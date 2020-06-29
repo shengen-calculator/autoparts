@@ -34,7 +34,7 @@ const getClientStatistic = async (data, context) => {
 
         return  {
             statistic: stat[0].map(x => {
-                const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat .formatToParts(x.date);
+                const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(x.date);
                 return {
                     vip: x.vip,
                     brand: x.brand,

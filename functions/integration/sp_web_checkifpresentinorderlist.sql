@@ -6,10 +6,11 @@ SELECT RTRIM(dbo.Клиенты.VIP)                        AS vip,
        RTRIM(Брэнды_1.Брэнд)                         AS brand,
        RTRIM([Каталог запчастей_1].[Номер запчасти]) AS number,
        dbo.[Запросы клиентов].Заказано               AS quantity,
-       RTRIM(dbo.[Запросы клиентов].Альтернатива)    AS alternative,
+       RTRIM(dbo.[Запросы клиентов].Примечание)      AS note,
        dbo.[Запросы клиентов].Дата_заказа            AS date,
        dbo.[Запросы клиентов].Срочно                 AS isUrgent,
-       dbo.[Заказы поставщикам].Предварительная_дата AS preliminaryDate
+       dbo.[Заказы поставщикам].Предварительная_дата AS preliminaryDate,
+       AnalogTable.analogId                          AS analogId
 FROM (SELECT MAX(dbo.[Каталог запчастей].ID_аналога) AS analogId
       FROM dbo.[Каталоги поставщиков]
                INNER JOIN
@@ -35,3 +36,4 @@ WHERE (dbo.[Запросы клиентов].Заказано <> 0)
   AND (dbo.[Запросы клиентов].Доставлено = 0)
   AND (dbo.[Запросы клиентов].Обработано = 0)
 go
+
