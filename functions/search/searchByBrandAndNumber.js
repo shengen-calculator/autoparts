@@ -44,7 +44,7 @@ const searchByBrandAndNumber = async (data, context) => {
                 date: new Date(),
                 brand: data.brand,
                 number: data.originalNumber,
-                available: getAvailability(result.recordset),
+                available: getAvailability(search.recordset),
                 success: true,
                 vip: context.auth.token.vip
             };
