@@ -1,20 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import Checkbox from '@material-ui/core/Checkbox';
 import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import DialogActions from "@material-ui/core/DialogActions";
-import TextField from "@material-ui/core/TextField";
 import {createOrder} from "../../../redux/actions/searchActions";
 import {RoleEnum} from "../../../util/Enums";
+import OrderForm from "./OrderForm";
+import OrderConfirmation from "./OrderConfirmation";
 
 function OrderDialog(props) {
-    const {isOpened, selected, onClose, createOrder, client, auth} = props;
+    const {isOpened, selected, onClose, createOrder, client, auth, inOrder} = props;
     const [order, setOrder] = useState({
+        isConfirmed: false
     });
 
     useEffect(() => {
@@ -22,7 +18,8 @@ function OrderDialog(props) {
             setOrder({
                 price: client.isEuroClient ? selected['costEur'].toFixed(2) : selected['cost'].toFixed(2),
                 quantity: '',
-                onlyOrderedQuantity: false
+                onlyOrderedQuantity: false,
+                isConfirmed: false
             })
         }
     }, [selected, client.isEuroClient]);
@@ -32,6 +29,13 @@ function OrderDialog(props) {
         setOrder(prev => ({
             ...prev,
             [name]: type === "checkbox" ? checked : value
+        }));
+    }
+
+    function handleConfirm() {
+        setOrder(prev => ({
+            ...prev,
+            isConfirmed: true
         }));
     }
 
@@ -65,59 +69,31 @@ function OrderDialog(props) {
             onClose();
         }
     }
-
+    const isConfirmationDialog = inOrder && inOrder.length && !order.isConfirmed;
     return (
+
         <div>
             <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose}>
-                <DialogTitle id="form-dialog-title">Замовити запчастину у постачальника</DialogTitle>
-                <form onSubmit={handleOrderClick}>
-                    <DialogContent>
-                        <DialogContentText>
-                            Бренд: {selected.brand} <br/>
-                            Номер: {selected.number} <br/>
-                        </DialogContentText>
-                        <TextField
-                            name="quantity"
-                            autoFocus
-                            margin="dense"
-                            id="quantity"
-                            label="Кількість"
-                            onChange={handleChange}
-                            value={order.quantity}
-                            type="text"
-                        />
-                        <br/>
-                        <TextField
-                            name="price"
-                            margin="dense"
-                            id="price"
-                            label="Ціна"
-                            onChange={handleChange}
-                            value={order.price}
-                            type="text"
-                            disabled={auth.role === RoleEnum.Client}
-                        />
-                        <br/>
-                        <FormControlLabel control={
-                            <Checkbox
-                                margin="dense"
-                                name="onlyOrderedQuantity"
-                                id="onlyOrderedQuantity"
-                                onChange={handleChange}
-                                value={order.onlyOrderedQuantity}
-                            />
-                        } label="Тільки замовлена кількість"/>
+                <DialogTitle id="form-dialog-title">
+                    {isConfirmationDialog ?
+                        'Запчастина вже присутня в списку замовлень' :
+                        'Замовити запчастину у постачальника'}
+                </DialogTitle>
+                {
+                    (isConfirmationDialog) ?
+                        <OrderConfirmation
+                            onClose={onClose}
+                            inOrder={inOrder}
+                            handleOrderClick={handleConfirm}/> :
+                        <OrderForm
+                            selected={selected}
+                            onClose={onClose}
+                            handleChange={handleChange}
+                            order={order}
+                            auth={auth}
+                            handleOrderClick={handleOrderClick}/>
+                }
 
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={onClose} color="primary">
-                            Відміна
-                        </Button>
-                        <Button type="submit" color="primary">
-                            Замовити
-                        </Button>
-                    </DialogActions>
-                </form>
             </Dialog>
         </div>
     );
