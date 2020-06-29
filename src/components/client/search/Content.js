@@ -38,7 +38,7 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
                 numb,
                 queryId: product.productsGrouped.length > 0 ? product.productsGrouped[0].queryId : null
             });
-        } else if (numb && ((numb !== product.criteria.numb) || (!brand && product.criteria.brand))) {
+        } else if (numb && ((numb !== product.criteria.numb) || (!brand && product.criteria.brand && numb))) {
             getByNumber(numb);
         } else if (product.productsGrouped.length === 1 && !brand) {
             history.push(`/search/${removeSpecialCharacters(product.productsGrouped[0].number)}/${htmlEncode(product.productsGrouped[0].brand)}`)

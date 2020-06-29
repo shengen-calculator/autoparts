@@ -44,7 +44,7 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
     useEffect(() => {
         if (brand && brand !== product.criteria.brand) {
             getByBrand({brand, numb, clientId: client.id});
-        } else if((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand)) {
+        } else if((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand && numb)) {
             getByNumber(numb);
         } else if(product.productsGrouped.length === 1 && !brand) {
             history.push(`/manager/search/${client.vip}/${removeSpecialCharacters(product.productsGrouped[0].number)}/${htmlEncode(product.productsGrouped[0].brand)}`)
