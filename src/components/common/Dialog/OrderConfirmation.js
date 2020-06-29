@@ -13,7 +13,6 @@ export default function OrderConfirmation(props) {
     return (
         <form onSubmit={handleOrderClick}>
             <DialogContent>
-
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -22,6 +21,7 @@ export default function OrderConfirmation(props) {
                             <TableCell align="right">Бренд</TableCell>
                             <TableCell align="right">Номер</TableCell>
                             <TableCell align="right">К-сть</TableCell>
+                            <TableCell align="right">Примітка</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -34,6 +34,7 @@ export default function OrderConfirmation(props) {
                                 <TableCell align="right">{row.brand}</TableCell>
                                 <TableCell align="right">{row.number}</TableCell>
                                 <TableCell align="right">{row.quantity}</TableCell>
+                                <TableCell align="right">{row['alternative']}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

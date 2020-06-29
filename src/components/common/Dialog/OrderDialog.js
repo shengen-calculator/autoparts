@@ -32,7 +32,8 @@ function OrderDialog(props) {
         }));
     }
 
-    function handleConfirm() {
+    function handleConfirm(event) {
+        event.preventDefault();
         setOrder(prev => ({
             ...prev,
             isConfirmed: true
