@@ -54,10 +54,23 @@ const searchByBrandAndNumber = async (data, context) => {
             };
             datastore.update(entity);
         }
+        const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' });
 
         return {
             search: search.recordset,
-            inOrder: inOrder.recordset
+            inOrder: inOrder.recordset.map(x => {
+                const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(x.preliminaryDate);
+                return {
+                    vip: x.vip,
+                    vendor: x.vendor,
+                    brand: x.brand,
+                    number: x.number,
+                    quantity: x.quantity,
+                    note: x.note,
+                    preliminaryDate: x.preliminaryDate ? `${day}-${month}-${year }` : '',
+                    analogId: x.analogId
+                }
+            })
         };
     } catch (err) {
         if(err) {
