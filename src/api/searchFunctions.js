@@ -17,13 +17,15 @@ class SearchFunctionsApi {
         return func(analogId);
     }
 
-    static searchByBrandAndNumber({brand, numb, clientId, queryId}) {
+    static searchByBrandAndNumber({brand, numb, clientId, queryId, analogId}) {
         const func = functions.httpsCallable('search-searchByBrandAndNumber');
         return func({
             brand: htmlDecode(brand),
             number: removeAllSpecialCharacters(numb),
             originalNumber: numb,
-            clientId, queryId
+            clientId,
+            queryId,
+            analogId,
         });
     }
 
