@@ -4,7 +4,6 @@ import SearchTableRow, {headCells} from './SearchTableRow';
 import {TitleIconEnum} from "../../../util/Enums";
 import OrderDialog from "../Dialog/OrderDialog";
 import {handleHeadCells} from "../../../util/HeadCellsHandler";
-import OrderListDialog from "../../manager/order/Dialog/OrderListDialog";
 
 
 export default function VendorTable(props) {
@@ -13,43 +12,19 @@ export default function VendorTable(props) {
         selected: {}
     });
 
-    const [orderListDialog, setOrderListDialog] = React.useState({
-        isOpened: false,
-        name: 0
-    });
-
     const handleClick = (event, name) => {
         if (event.target.getAttribute("name") === "order") {
-            if(props.inOrder.length) {
-                setOrderListDialog({
-                    isOpened: true,
-                    name
-                });
-            } else {
-                setOrderDialog({
-                    isOpened: true,
-                    selected: props.rows.find(x => x.id === name)
-                });
-            }
+            setOrderDialog({
+                isOpened: true,
+                selected: props.rows.find(x => x.id === name),
+                inOrder: props.inOrder
+            });
         }
-    };
-
-    const continueOrder = (name) => {
-        setOrderDialog({
-            isOpened: true,
-            selected: props.rows.find(x => x.id === name)
-        });
     };
 
     const handleCancelOrderClick = () => {
         setOrderDialog({
             isOpened: false, selected: {}
-        });
-    };
-
-    const handleCancelOrderListClick = () => {
-        setOrderListDialog({
-            isOpened: false, name: 0
         });
     };
 
@@ -79,13 +54,8 @@ export default function VendorTable(props) {
             />
             <OrderDialog isOpened={orderDialog.isOpened}
                          selected={orderDialog.selected}
+                         inOrder={props.inOrder}
                          onClose={handleCancelOrderClick}
-            />
-            <OrderListDialog isOpened={orderListDialog.isOpened}
-                             name={orderListDialog.name}
-                             inOrder={props.inOrder}
-                             continueOrder={continueOrder}
-                             onClose={handleCancelOrderListClick}
             />
         </React.Fragment>
     );
