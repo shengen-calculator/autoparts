@@ -16,7 +16,7 @@ BEGIN
     SET @cols = N'ID_Запчасти AS id'
 
     IF (@isVendorShown = 1)
-        SET @cols = @cols + N',TRIM([Сокращенное название]) AS vendor'
+        SET @cols = @cols + N',TRIM([Сокращенное название]) AS vendor, ID_аналога AS analogId'
 
     SET @cols = @cols + N',TRIM([Время заказа]) as orderTime
         ,TRIM(Брэнд) AS brand
