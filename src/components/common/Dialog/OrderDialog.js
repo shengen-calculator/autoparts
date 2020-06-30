@@ -70,7 +70,7 @@ function OrderDialog(props) {
             onClose();
         }
     }
-    const isConfirmationDialog = inOrder && inOrder.length && !order.isConfirmed;
+    const isConfirmationDialog = inOrder && inOrder.length && !order.isConfirmed && selected.analogId === inOrder[0].analogId;
     return (
 
         <div>
