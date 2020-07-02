@@ -8,7 +8,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Box from '@material-ui/core/Box';
 
 function AnalogListDialog(props) {
-    const {isOpened, onClose} = props;
+    const {isOpened, onClose, analogs, calls} = props;
 
     return (
         <div>
@@ -17,7 +17,11 @@ function AnalogListDialog(props) {
                     Список аналогів артикула
                 </DialogTitle>
                 <Box display="flex" justifyContent="center">
-                    <CircularProgress />
+                    { (analogs.length === 0 && calls > 0) ?
+                        <CircularProgress /> :
+                        <span>{analogs.length}</span>
+                    }
+
                 </Box>
 
                 <DialogActions>
@@ -37,7 +41,8 @@ const mapDispatchToProps = {
 
 function mapStateToProps(state) {
     return {
-
+        analogs: state.product.analogs,
+        calls: state.apiCallsInProgress
     }
 }
 
