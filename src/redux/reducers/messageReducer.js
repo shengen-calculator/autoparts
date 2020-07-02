@@ -60,6 +60,13 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Спробуйте завантажити клієнта ще раз'
             };
 
+        case types.LOAD_ANALOGS_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Виникла помилка під час завантаження аналогів для редагування цін'
+            };
+
         case types.LOAD_CLIENT_STATISTIC_FAILURE:
             return {
                 ...state,
