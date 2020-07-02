@@ -23,7 +23,7 @@ export default function AnalogTable(props) {
                 selected: props.rows.find(x => x.id === name)
             });
         }  else if (event.target.getAttribute("name") === "price") {
-            props.onOpenAnalogDialog();
+            props.onOpenAnalogDialog(props.rows.find(x => x.id === name));
         }
     };
 

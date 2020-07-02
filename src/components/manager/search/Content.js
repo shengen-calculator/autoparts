@@ -54,7 +54,7 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
     }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, client.vip, history,
         product.criteria.numb, client.id, product.productsGrouped]);
 
-    const openAnalogListDialog = () => {
+    const openAnalogListDialog = (selected) => {
         setIsAnalogListDialogOpened(true);
     };
     const handleCancelAnalogDialog = () => {
