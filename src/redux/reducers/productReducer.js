@@ -31,6 +31,18 @@ export default function productReducer(state = initialState.product, action) {
                 }
             };
 
+        case types.LOAD_ANALOGS_REQUEST:
+            return {
+                ...state,
+                analogs: []
+            };
+
+        case types.LOAD_ANALOGS_SUCCESS:
+            return {
+                ...state,
+                analogs: action.analogs
+            };
+
         case types.LOAD_BY_NUMBER_REQUEST:
             return {
                 ...state,
@@ -58,7 +70,7 @@ export default function productReducer(state = initialState.product, action) {
                 products: state.products.map((item, index) => {
                     if (action.params.reserves.some(x => item.id === x.productId)) {
                         const reserves = action.params.reserves.filter(x => x.productId === item.id);
-                        const quantity = reserves.reduce((a,b) => a + b.quantity, 0);
+                        const quantity = reserves.reduce((a, b) => a + b.quantity, 0);
                         return {
                             ...item,
                             available: item.available + quantity,
@@ -91,7 +103,7 @@ export default function productReducer(state = initialState.product, action) {
             return {
                 ...state,
                 products: state.products.map((item) => {
-                    if(item.id !== action.params.productId) {
+                    if (item.id !== action.params.productId) {
                         return item
                     }
                     return {
