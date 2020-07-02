@@ -12,11 +12,6 @@ class SearchFunctionsApi {
         return func(params);
     }
 
-    static getByAnalog(analogId) {
-        const func = functions.httpsCallable('search-getByAnalog');
-        return func(analogId);
-    }
-
     static getAnalogs(params) {
         const func = functions.httpsCallable('search-getAnalogs');
         return func(params);
