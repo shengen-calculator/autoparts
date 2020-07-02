@@ -15,28 +15,43 @@ import TableBody from "@material-ui/core/TableBody";
 import DialogContent from "@material-ui/core/DialogContent";
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
+import EditPriceDialog from "./EditPriceDialog";
 
-const resetPrice = (id) => {
-    alert("clean ->" + id);
-};
-const setPrice = (id) => {
-    alert("updated ->" + id);
-};
-const handleClick = (event, id) => {
-    if (event.target.getAttribute("command") === "update") {
-        setPrice(id);
-    }
 
-};
 
 function AnalogListDialog(props) {
     const {isOpened, onClose, analogs, calls} = props;
+    const [editPriceDialog, setEditPriceDialog] = React.useState({
+        isOpened: false,
+        row: {}
+    });
     const pointer = {cursor: 'pointer'};
     const fixedHeight = {maxHeight: 440};
     const iconStyle = {
 
         padding: 0
     };
+
+    const resetPrice = (id) => {
+        alert("clean ->" + id);
+    };
+    const openSetPriceDialog = (row) => {
+        setEditPriceDialog({
+            isOpened: true,
+            row: row
+        });
+    };
+    const handleClick = (event, id) => {
+        if (event.target.getAttribute("command") === "update") {
+            openSetPriceDialog(id);
+        }
+    };
+    const handleCancelEditDialog = () => {
+        setEditPriceDialog({
+            isOpened: false, row: {}
+        });
+    };
+
     const sorted = analogs.concat().sort((a, b) => {
         if (a['stock'] < b['stock']) {
             return 1;
@@ -49,7 +64,7 @@ function AnalogListDialog(props) {
         <div>
             <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose} maxWidth="xl">
                 <DialogTitle id="form-dialog-title">
-                    Список аналогів артикула
+                    Робота з цінами
                 </DialogTitle>
                 <Box display="flex" justifyContent="center">
                     {(analogs.length === 0 && calls > 0) ?
@@ -73,7 +88,7 @@ function AnalogListDialog(props) {
                                         {sorted.map((row) => {
                                             return (
                                                 <TableRow key={row.productId}
-                                                          onClick={event => handleClick(event, row.productId)}
+                                                          onClick={event => handleClick(event, row)}
                                                           style={pointer}>
                                                     <TableCell align="left" command="update">{row.vendor}</TableCell>
                                                     <TableCell align="left" command="update">{row.brand}</TableCell>
@@ -107,6 +122,9 @@ function AnalogListDialog(props) {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <EditPriceDialog isOpened={editPriceDialog.isOpened}
+                             row={editPriceDialog.row}
+                             onClose={handleCancelEditDialog}/>
         </div>
     );
 }
