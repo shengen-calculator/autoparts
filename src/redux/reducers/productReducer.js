@@ -40,7 +40,7 @@ export default function productReducer(state = initialState.product, action) {
         case types.LOAD_ANALOGS_SUCCESS:
             return {
                 ...state,
-                analogs: action.analogs
+                analogs: action.analogs ? action.analogs : []
             };
 
         case types.LOAD_BY_NUMBER_REQUEST:
