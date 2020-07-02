@@ -1,7 +1,7 @@
 import React from 'react';
 import EnhancedTable from "../EnhancedTable";
 import SearchTableRow, {headCells} from './SearchTableRow';
-import {TitleIconEnum} from "../../../util/Enums";
+import {RoleEnum, TitleIconEnum} from "../../../util/Enums";
 import OrderDialog from "../Dialog/OrderDialog";
 import {handleHeadCells} from "../../../util/HeadCellsHandler";
 
@@ -13,13 +13,14 @@ export default function VendorTable(props) {
     });
 
     const handleClick = (event, name) => {
-        if (event.target.getAttribute("name") === "order") {
+        if (event.target.getAttribute("name") === "order" ||
+            (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Client)) {
             setOrderDialog({
                 isOpened: true,
                 selected: props.rows.find(x => x.id === name),
                 inOrder: props.inOrder
             });
-        } else if (event.target.getAttribute("name") === "price") {
+        } else if (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Manager) {
             props.onOpenAnalogDialog(props.rows.find(x => x.id === name));
         }
     };

@@ -68,7 +68,8 @@ export default function GeneralTable(props) {
     });
 
     const handleClick = (event, name) => {
-        if (event.target.getAttribute("name") === "reserve") {
+        if (event.target.getAttribute("name") === "reserve" ||
+            (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Client)) {
             const selected = props.rows.find(x => x.id === name);
             if (selected.available > 0) {
                 setReserveDialog({
@@ -76,7 +77,7 @@ export default function GeneralTable(props) {
                     selected: props.rows.find(x => x.id === name)
                 });
             }
-        } else if (event.target.getAttribute("name") === "price") {
+        } else if (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Manager) {
             props.onOpenAnalogDialog(props.rows.find(x => x.id === name));
         }
     };
