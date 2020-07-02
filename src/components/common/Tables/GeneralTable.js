@@ -77,7 +77,7 @@ export default function GeneralTable(props) {
                 });
             }
         } else if (event.target.getAttribute("name") === "price") {
-            props.onOpenAnalogDialog();
+            props.onOpenAnalogDialog(props.rows.find(x => x.id === name));
         }
     };
     const handleCancelReserveClick = () => {
