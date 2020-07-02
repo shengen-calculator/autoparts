@@ -61,7 +61,7 @@ export function* getAnalogs(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
         const {data} = yield call(SearchFunctionsApi.getAnalogs, action.params);
-        yield put({type: types.LOAD_ANALOGS_SUCCESS, products: data});
+        yield put({type: types.LOAD_ANALOGS_SUCCESS, analogs: data});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.LOAD_ANALOGS_FAILURE, text: e.message});
