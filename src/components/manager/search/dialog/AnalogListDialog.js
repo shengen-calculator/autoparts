@@ -6,19 +6,41 @@ import {connect} from "react-redux";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import Box from '@material-ui/core/Box';
+import TableContainer from '@material-ui/core/TableContainer';
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import DialogContent from "@material-ui/core/DialogContent";
+import ClearIcon from '@material-ui/icons/Clear';
+import IconButton from '@material-ui/core/IconButton';
+
+const resetPrice = (id) => {
+    alert("clean ->" + id);
+};
+const setPrice = (id) => {
+    alert("updated ->" + id);
+};
+const handleClick = (event, id) => {
+    if (event.target.getAttribute("command") === "update") {
+        setPrice(id);
+    }
+
+};
 
 function AnalogListDialog(props) {
     const {isOpened, onClose, analogs, calls} = props;
+    const pointer = {cursor: 'pointer'};
+    const fixedHeight = {maxHeight: 440};
+    const iconStyle = {
+
+        padding: 0
+    };
     const sorted = analogs.concat().sort((a, b) => {
-        if(a['stock'] < b['stock']) {
+        if (a['stock'] < b['stock']) {
             return 1;
-        } else if(a['stock'] === b['stock'] && a.price < b.price) {
+        } else if (a['stock'] === b['stock'] && a.price < b.price) {
             return 1;
         }
         return -1;
@@ -30,37 +52,49 @@ function AnalogListDialog(props) {
                     Список аналогів артикула
                 </DialogTitle>
                 <Box display="flex" justifyContent="center">
-                    { (analogs.length === 0 && calls > 0) ?
-                        <CircularProgress /> :
+                    {(analogs.length === 0 && calls > 0) ?
+                        <CircularProgress/> :
                         <DialogContent>
-                            <Table aria-label="simple table"  size="small">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="right">Пост.</TableCell>
-                                        <TableCell align="right">Бренд</TableCell>
-                                        <TableCell align="right">Номер</TableCell>
-                                        <TableCell align="right">Оптова</TableCell>
-                                        <TableCell align="right">Роздрібна</TableCell>
-                                        <TableCell align="right">Знижка</TableCell>
-                                        <TableCell align="right">Залишок</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {sorted.map((row, index) => {
-                                        return (
-                                            <TableRow key={index}>
-                                                <TableCell align="right">{row.vendor}</TableCell>
-                                                <TableCell align="right">{row.brand}</TableCell>
-                                                <TableCell align="right">{row.number}</TableCell>
-                                                <TableCell align="right">{row.price}</TableCell>
-                                                <TableCell align="right">{row.retail}</TableCell>
-                                                <TableCell align="right">{row.discount}</TableCell>
-                                                <TableCell align="right">{row['stock']}</TableCell>
-                                            </TableRow>
-                                        )
-                                    } )}
-                                </TableBody>
-                            </Table>
+                            <TableContainer style={fixedHeight}>
+                                <Table stickyHeader aria-label="simple table" size="small">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align="left">Пост.</TableCell>
+                                            <TableCell align="left">Бренд</TableCell>
+                                            <TableCell align="left">Номер</TableCell>
+                                            <TableCell align="right">Оптова</TableCell>
+                                            <TableCell align="right">Роздрібна</TableCell>
+                                            <TableCell align="right">Знижка</TableCell>
+                                            <TableCell align="right">Залишок</TableCell>
+                                            <TableCell align="right">Обнулити</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {sorted.map((row) => {
+                                            return (
+                                                <TableRow key={row.productId}
+                                                          onClick={event => handleClick(event, row.productId)}
+                                                          style={pointer}>
+                                                    <TableCell align="left" command="update">{row.vendor}</TableCell>
+                                                    <TableCell align="left" command="update">{row.brand}</TableCell>
+                                                    <TableCell align="left" command="update">{row.number}</TableCell>
+                                                    <TableCell align="right" command="update">{row.price}</TableCell>
+                                                    <TableCell align="right" command="update">{row.retail}</TableCell>
+                                                    <TableCell align="right" command="update">{row.discount}</TableCell>
+                                                    <TableCell align="right" command="update">{row['stock']}</TableCell>
+                                                    <TableCell align="center">
+                                                        <IconButton onClick={() => resetPrice(row.productId)}
+                                                                    style={iconStyle}>
+                                                            <ClearIcon/>
+                                                        </IconButton>
+
+                                                    </TableCell>
+                                                </TableRow>
+                                            )
+                                        })}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
 
                         </DialogContent>
                     }
@@ -78,9 +112,7 @@ function AnalogListDialog(props) {
 }
 
 // noinspection JSUnusedGlobalSymbols
-const mapDispatchToProps = {
-
-};
+const mapDispatchToProps = {};
 
 function mapStateToProps(state) {
     return {
