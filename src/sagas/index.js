@@ -27,6 +27,7 @@ import {
     createOrder,
     createReserve,
     getByAnalog,
+    getAnalogs,
     searchByBrandAndNumber,
     searchByNumber,
     updatePrice
@@ -56,6 +57,8 @@ function* mySaga() {
     yield takeLatest(types.CREATE_RESERVE_REQUEST, createReserve);
     yield takeLatest(types.LOAD_BY_ANALOG_REQUEST, getByAnalog);
     yield takeLatest(types.LOAD_CURRENCY_RATE_REQUEST, getCurrencyRate);
+    yield takeLatest(types.LOAD_ANALOGS_REQUEST, getAnalogs);
+
 }
 
 export default mySaga;
