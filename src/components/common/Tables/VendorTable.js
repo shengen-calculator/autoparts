@@ -19,6 +19,8 @@ export default function VendorTable(props) {
                 selected: props.rows.find(x => x.id === name),
                 inOrder: props.inOrder
             });
+        } else if (event.target.getAttribute("name") === "price") {
+            props.onOpenAnalogDialog();
         }
     };
 

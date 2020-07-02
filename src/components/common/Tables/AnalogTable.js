@@ -22,6 +22,8 @@ export default function AnalogTable(props) {
                 isOpened: true,
                 selected: props.rows.find(x => x.id === name)
             });
+        }  else if (event.target.getAttribute("name") === "price") {
+            props.onOpenAnalogDialog();
         }
     };
 
