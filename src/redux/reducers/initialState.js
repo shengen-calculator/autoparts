@@ -47,6 +47,7 @@ export default {
             brand: '',
             numb: ''
         },
-        inOrder: []
+        inOrder: [],
+        analogs: []
     }
 };
