@@ -12,7 +12,7 @@ import Copyright from '../../common/Copyright';
 import {connect} from "react-redux";
 import {Helmet} from "react-helmet";
 import GroupedTable from "../../common/Tables/GroupedTable";
-import {getByNumber, getByBrand} from "../../../redux/actions/searchActions";
+import {getByNumber, getByBrand, getAnalogs} from "../../../redux/actions/searchActions";
 import Typography from "@material-ui/core/Typography";
 import {
     getTables, htmlDecode,
@@ -26,7 +26,7 @@ import AnalogListDialog from "./dialog/AnalogListDialog";
 
 const styles = theme => SearchContentStyle(theme);
 
-function Content({auth, calls, client, product, getByBrand, getByNumber, ...props}) {
+function Content({auth, calls, client, product, getByBrand, getAnalogs, getByNumber, ...props}) {
     const {classes, handleDrawerToggle} = props;
     const history = useHistory();
     const {vip, numb, brand} = useParams();
@@ -55,6 +55,11 @@ function Content({auth, calls, client, product, getByBrand, getByNumber, ...prop
         product.criteria.numb, client.id, product.productsGrouped]);
 
     const openAnalogListDialog = (selected) => {
+        getAnalogs({
+            analogId: selected.analogId,
+            brand: selected.brand,
+            number: selected.number
+        });
         setIsAnalogListDialogOpened(true);
     };
     const handleCancelAnalogDialog = () => {
@@ -116,8 +121,8 @@ Content.propTypes = {
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
     getByNumber,
-    getByBrand
-
+    getByBrand,
+    getAnalogs
 };
 
 function mapStateToProps(state) {
