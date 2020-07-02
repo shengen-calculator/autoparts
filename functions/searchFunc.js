@@ -22,7 +22,7 @@ exports.createReserve = functions.region('europe-west1').https.onCall(async (dat
     return createReserve(data, context);
 });
 
-exports.getByAnalog = functions.region('europe-west1').https.onCall(async (data, context) => {
+exports.getAnalogs = functions.region('europe-west1').https.onCall(async (data, context) => {
     return getAnalogs(data, context);
 });
 

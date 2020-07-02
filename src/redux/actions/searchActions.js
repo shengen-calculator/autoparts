@@ -1,9 +1,5 @@
 import * as types from './actionTypes';
 
-export function getByAnalog(analogId) {
-    return {type: types.LOAD_BY_ANALOG_REQUEST, analogId};
-}
-
 export function getAnalogs(params) {
     return {type: types.LOAD_ANALOGS_REQUEST, params};
 }

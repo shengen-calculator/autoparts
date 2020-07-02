@@ -57,18 +57,6 @@ export function* createReserve(action) {
     }
 }
 
-export function* getByAnalog(action) {
-    try {
-        yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(SearchFunctionsApi.getByAnalog, action.analogId);
-        yield put({type: types.LOAD_BY_ANALOG_SUCCESS, products: data});
-    } catch (e) {
-        yield put({type: types.API_CALL_ERROR});
-        yield put({type: types.LOAD_BY_ANALOG_FAILURE, text: e.message});
-    }
-}
-
-
 export function* getAnalogs(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
