@@ -7,14 +7,14 @@ import EditPriceDialog from "./EditPriceDialog";
 import EnhancedTable from "../../../common/EnhancedTable";
 
 const headCells = [
-    {id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
+    {id: 'vendor', numeric: false, disablePadding: false, label: 'Пост'},
     {id: 'brand', numeric: false, disablePadding: false, label: 'Бренд'},
     {id: 'number', numeric: false, disablePadding: false, label: 'Номер'},
     {id: 'price', numeric: true, disablePadding: false, label: 'Onт'},
-    {id: 'retail', numeric: true, disablePadding: false, label: 'Роздріб'},
-    {id: 'discount', numeric: true, disablePadding: false, label: 'Знижка'},
-    {id: 'stock', numeric: true, disablePadding: false, label: 'Залишок'},
-    {id: 'reset', numeric: false, disablePadding: false, label: 'Обнулити', align: 'center'}
+    {id: 'retail', numeric: true, disablePadding: false, label: 'Роздр'},
+    {id: 'discount', numeric: true, disablePadding: false, label: 'Знижк'},
+    {id: 'stock', numeric: true, disablePadding: false, label: 'Залиш'},
+    {id: 'reset', numeric: false, disablePadding: false, label: 'Обнул', align: 'center'}
 ];
 
 function tableRow(row, index, isSelected, handleClick) {
@@ -25,8 +25,7 @@ function tableRow(row, index, isSelected, handleClick) {
             hover
             onClick={event => handleClick(event, row, 'update')}
             key={row.productId}
-            style={pointer}
-        >
+            style={pointer}>
             <TableCell align="left" command="update">{row.vendor}</TableCell>
             <TableCell align="left" command="update">{row.brand}</TableCell>
             <TableCell align="left" command="update">{row.number}</TableCell>
@@ -37,7 +36,7 @@ function tableRow(row, index, isSelected, handleClick) {
             <TableCell align="center">
                 <IconButton onClick={event => handleClick(event, row, 'reset')}
                             style={iconStyle}>
-                    <ClearIcon />
+                    <ClearIcon/>
                 </IconButton>
             </TableCell>
         </TableRow>
@@ -64,7 +63,7 @@ export default function PriceEditTable(props) {
     const handleClick = (event, row, command) => {
         if (event.target.getAttribute("command") === 'update' && command === 'update') {
             openSetPriceDialog(row);
-        } else if(command === 'reset') {
+        } else if (command === 'reset') {
             resetPrice(row.productId);
         }
     };
@@ -89,6 +88,8 @@ export default function PriceEditTable(props) {
                 isPaginationDisabled={true}
                 isStickyHeader={true}
                 maxTableHeight={440}
+                initialOrderBy="stock"
+                initialOrder="desc"
             />
             <EditPriceDialog isOpened={editPriceDialog.isOpened}
                              row={editPriceDialog.row}

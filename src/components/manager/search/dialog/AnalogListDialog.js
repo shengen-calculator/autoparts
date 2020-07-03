@@ -9,7 +9,8 @@ import Box from '@material-ui/core/Box';
 import DialogContent from "@material-ui/core/DialogContent";
 import EditPriceDialog from "./EditPriceDialog";
 import PriceEditTable from "./PriceEditTable";
-
+import StableSort from "../../../../util/StableSort";
+import GetComparator from "../../../../util/GetComparator";
 
 
 function AnalogListDialog(props) {
@@ -25,14 +26,6 @@ function AnalogListDialog(props) {
         });
     };
 
-    const sorted = analogs.concat().sort((a, b) => {
-        if (a['stock'] < b['stock']) {
-            return 1;
-        } else if (a['stock'] === b['stock'] && a.price < b.price) {
-            return 1;
-        }
-        return -1;
-    });
     return (
         <div>
             <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose} maxWidth="xl">
@@ -44,7 +37,7 @@ function AnalogListDialog(props) {
                     {(analogs.length === 0 && calls > 0) ?
                         <CircularProgress/> :
                         <DialogContent>
-                                <PriceEditTable rows={sorted}/>
+                            <PriceEditTable rows={StableSort(analogs, GetComparator('desc', 'retail'))}/>
                         </DialogContent>
                     }
 
