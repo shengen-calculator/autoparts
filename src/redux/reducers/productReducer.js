@@ -67,7 +67,7 @@ export default function productReducer(state = initialState.product, action) {
         case types.DELETE_RESERVES_REQUEST:
             return {
                 ...state,
-                products: state.products.map((item, index) => {
+                products: state.products.map((item) => {
                     if (action.params.reserves.some(x => item.id === x.productId)) {
                         const reserves = action.params.reserves.filter(x => x.productId === item.id);
                         const quantity = reserves.reduce((a, b) => a + b.quantity, 0);
