@@ -14,7 +14,7 @@ const headCells = [
     {id: 'retail', numeric: true, disablePadding: false, label: 'Роздріб'},
     {id: 'discount', numeric: true, disablePadding: false, label: 'Знижка'},
     {id: 'stock', numeric: true, disablePadding: false, label: 'Залишок'},
-    {id: 'reset', numeric: false, disablePadding: false, label: '', align: 'center'}
+    {id: 'reset', numeric: false, disablePadding: false, label: 'Обнулити', align: 'center'}
 ];
 
 function tableRow(row, index, isSelected, handleClick) {
