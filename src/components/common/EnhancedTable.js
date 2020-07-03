@@ -59,7 +59,9 @@ export default function EnhancedTable(props) {
         handleSelectAllClick,
         selected = [],
         onDelete,
-        isRowSelectorShown
+        isRowSelectorShown,
+        isStickyHeader,
+        maxTableHeight
     } = props;
 
     const classes = useStyles();
@@ -100,12 +102,13 @@ export default function EnhancedTable(props) {
                     isRowSelectorShown={isRowSelectorShown}
                 />
                 {rows.length > 0 ?
-                    <TableContainer>
+                    <TableContainer style={{maxHeight: maxTableHeight}}>
                         <Table
                             className={classes.table}
                             aria-labelledby="tableTitle"
                             size='small'
                             aria-label="enhanced table"
+                            stickyHeader={isStickyHeader}
                         >
                             <EnhancedTableHead
                                 classes={classes}
