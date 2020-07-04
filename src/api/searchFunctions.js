@@ -38,9 +38,9 @@ class SearchFunctionsApi {
         return func(number);
     }
 
-    static updatePrice({productId, price, discount, retail}) {
+    static updatePrice(params) {
         const func = functions.httpsCallable('search-updatePrice');
-        return func({productId, price, discount, retail});
+        return func(params);
     }
 }
 
