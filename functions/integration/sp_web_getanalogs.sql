@@ -14,14 +14,16 @@ BEGIN
 
         END
 
-    SELECT TOP (100) dbo.[Каталог запчастей].ID_Запчасти             AS productId,
-                     RTRIM(dbo.Поставщики.[Сокращенное название])    AS vendor,
-                     RTRIM(dbo.Брэнды.Брэнд)                         AS brand,
-                     RTRIM(dbo.[Каталог запчастей].[Номер запчасти]) AS number,
-                     dbo.[Каталог запчастей].Цена7                   AS price,
-                     dbo.[Каталог запчастей].Цена                    AS retail,
-                     dbo.[Каталог запчастей].Скидка                  AS discount,
-                     ISNULL(dbo.Остаток_.Остаток, 0)                 AS stock
+    SELECT TOP (100) dbo.[Каталог запчастей].ID_Запчасти                       AS productId,
+                     RTRIM(dbo.Поставщики.[Сокращенное название])              AS vendor,
+                     RTRIM(dbo.Брэнды.Брэнд)                                   AS brand,
+                     RTRIM(dbo.[Каталог запчастей].[Номер запчасти])           AS number,
+                     dbo.[Каталог запчастей].Цена7                             AS price,
+                     dbo.[Каталог запчастей].Цена                              AS retail,
+                     dbo.[Каталог запчастей].Скидка                            AS discount,
+                     ISNULL(dbo.Остаток_.Остаток, 0)                           AS stock,
+                     dbo.GetVendorPrice(dbo.[Каталог запчастей].ID_Запчасти)   AS vendorPrice,
+                     dbo.GetPurchasePrice(dbo.[Каталог запчастей].ID_Запчасти) AS purchasePrice
     FROM dbo.[Каталог запчастей]
              INNER JOIN
          dbo.Брэнды ON dbo.[Каталог запчастей].ID_Брэнда = dbo.Брэнды.ID_Брэнда
