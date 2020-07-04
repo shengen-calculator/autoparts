@@ -68,7 +68,7 @@ export default function EnhancedTable(props) {
 
     const classes = useStyles();
     const [order, setOrder] = React.useState(initialOrder === 'desc' ? 'desc' : 'asc');
-    const [orderBy, setOrderBy] = React.useState(initialOrderBy);
+    const [orderBy, setOrderBy] = React.useState(initialOrderBy ? initialOrderBy : 'status');
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(rowsPerPageOptions[0]);
     const handleRequestSort = (event, property) => {
