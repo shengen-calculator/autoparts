@@ -52,6 +52,10 @@ export default function PriceEditTable(props) {
     const resetPrice = (id) => {
         alert("clean ->" + id);
     };
+    const updatePrice = (event) => {
+        event.preventDefault();
+        alert("hello world");
+    };
 
     const openSetPriceDialog = (row) => {
         setEditPriceDialog({
@@ -93,6 +97,7 @@ export default function PriceEditTable(props) {
             />
             <EditPriceDialog isOpened={editPriceDialog.isOpened}
                              row={editPriceDialog.row}
+                             updatePrice={updatePrice}
                              onClose={handleCancelEditDialog}/>
         </React.Fragment>
 
