@@ -20,6 +20,15 @@ function AnalogListDialog(props) {
         row: {}
     });
 
+    const resetPrice = (id) => {
+        alert("clean ->" + id);
+    };
+    const updatePrice = (event) => {
+        event.preventDefault();
+        alert("hello world");
+    };
+
+
     const handleCancelEditDialog = () => {
         setEditPriceDialog({
             isOpened: false, row: {}
@@ -37,7 +46,7 @@ function AnalogListDialog(props) {
                     {(analogs.length === 0 && calls > 0) ?
                         <CircularProgress/> :
                         <DialogContent>
-                            <PriceEditTable rows={StableSort(analogs, GetComparator('desc', 'retail'))}/>
+                            <PriceEditTable resetPrice={resetPrice} updatePrice={updatePrice} rows={StableSort(analogs, GetComparator('desc', 'retail'))}/>
                         </DialogContent>
                     }
 
