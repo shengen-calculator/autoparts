@@ -7,13 +7,10 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 
-const handleReserveClick = (event) => {
-    event.preventDefault();
-    alert("hello world")
-};
+
 
 function EditPriceDialog(props) {
-    const {isOpened, onClose, row} = props;
+    const {isOpened, onClose, row, updatePrice} = props;
     const [prices, setPrices] = useState({});
 
     useEffect(() => {
@@ -23,6 +20,11 @@ function EditPriceDialog(props) {
             retail: row.retail ? row.retail : ''
         })
     }, [row]);
+
+    function handleUpdatePriceClick(event) {
+        event.preventDefault();
+        updatePrice(event);
+    }
 
     function handleChange(event) {
         const {name, value} = event.target;
@@ -35,7 +37,7 @@ function EditPriceDialog(props) {
     return (
         <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose}>
             <DialogTitle id="form-dialog-title">{row.vendor} - {row.brand} - {row.number}</DialogTitle>
-            <form onSubmit={handleReserveClick}>
+            <form onSubmit={handleUpdatePriceClick}>
                 <DialogContent>
                     <DialogContentText>
                         {row['purchasePrice'] && <span>Вхідна ціна: {row['purchasePrice']}</span>}
