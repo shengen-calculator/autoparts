@@ -7,9 +7,9 @@ const updatePrice = async (data, context) => {
 
     util.checkForManagerRole(context);
 
-    if (!data || !data.productId || !data.price || !data.discount) {
+    if (!data || !data.productId || typeof data.price === 'undefined' || typeof data.discount === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with the next arguments "ProductId, Price, Discount, Retail"');
+            'The function must be called with the next arguments "ProductId, Price, Discount"');
     }
 
     try {
