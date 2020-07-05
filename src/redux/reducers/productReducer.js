@@ -113,6 +113,22 @@ export default function productReducer(state = initialState.product, action) {
                     }
                 })
             };
+        case types.UPDATE_PRICE_REQUEST:
+            return {
+                ...state,
+                analogs: state.analogs.map((item) => {
+                    if (item.productId !== action.params.productId) {
+                        return item
+                    }
+                    return {
+                        ...item,
+                        price: action.params.price ? action.params.price : '',
+                        retail: action.params.discount && action.params.discount ?
+                            (action.params.price / (100 - action.params.discount) * 100).toFixed(2) : '',
+                        discount: action.params.discount ? action.params.discount : ''
+                    }
+                })
+            };
 
         default:
             return state;
