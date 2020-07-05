@@ -166,6 +166,12 @@ export default function messageReducer(state = initialState.message, action) {
                 type: 'error',
                 text: 'Виникла помилка під час отримання актуальних курсів валют. Повторіть спробу'
             };
+        case types.UPDATE_PRICE_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Не вдалось встановити нові ціни для артикула. Повторіть спробу'
+            };
         case types.CREATE_RESERVE_SUCCESS:
             return {
                 ...state,
