@@ -44,18 +44,12 @@ function tableRow(row, index, isSelected, handleClick) {
 }
 
 export default function PriceEditTable(props) {
+    const {resetPrice, updatePrice} = props;
     const [editPriceDialog, setEditPriceDialog] = React.useState({
         isOpened: false,
         row: {}
     });
 
-    const resetPrice = (id) => {
-        alert("clean ->" + id);
-    };
-    const updatePrice = (event) => {
-        event.preventDefault();
-        alert("hello world");
-    };
 
     const openSetPriceDialog = (row) => {
         setEditPriceDialog({
