@@ -61,8 +61,8 @@ function EditPriceDialog(props) {
                         type="text"
                     />
                     <br/>
-                    {(row.price && row['purchasePrice']) && <br/>}
-                    {(row.price && row['purchasePrice']) && <DialogContentText>
+                    {(prices.price && row['purchasePrice']) && <br/>}
+                    {(prices.price && row['purchasePrice']) && <DialogContentText>
                         Націнка: {(prices.price && row['purchasePrice']) ? (prices.price/row['purchasePrice']).toFixed(2) : ''} <br/>
                     </DialogContentText>}
                     <TextField
