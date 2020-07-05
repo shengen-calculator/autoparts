@@ -16,6 +16,7 @@ BEGIN
         Цена2           = IIF(@price = 0, NULL, @retail * 0.9),
         Цена3           = IIF(@price = 0, NULL, @retail * 0.85),
         Цена7           = IIF(@price = 0, NULL, @price),
+        Цена13          = IIF(@price = 0, NULL, @price),
         Цена_обработана = IIF(@price = 0, 0, 1)
     WHERE ID_Запчасти = @productId
 END
