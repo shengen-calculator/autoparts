@@ -23,7 +23,11 @@ function EditPriceDialog(props) {
 
     function handleUpdatePriceClick(event) {
         event.preventDefault();
-        updatePrice(event);
+        updatePrice({
+            productId: row.productId,
+            price: prices.price,
+            discount: prices.discount
+        });
     }
 
     function handleChange(event) {

@@ -11,23 +11,27 @@ import EditPriceDialog from "./EditPriceDialog";
 import PriceEditTable from "./PriceEditTable";
 import StableSort from "../../../../util/StableSort";
 import GetComparator from "../../../../util/GetComparator";
+import {updatePrice} from "../../../../redux/actions/searchActions";
 
 
 function AnalogListDialog(props) {
-    const {isOpened, onClose, analogs, calls} = props;
+    const {isOpened, onClose, analogs, calls, updateProductPrice} = props;
     const [editPriceDialog, setEditPriceDialog] = React.useState({
         isOpened: false,
         row: {}
     });
 
     const resetPrice = (id) => {
-        alert("clean ->" + id);
-    };
-    const updatePrice = (event) => {
-        event.preventDefault();
-        alert("hello world");
+        updateProductPrice({
+            productId: id,
+            price: 0,
+            discount: 0
+        });
     };
 
+    const updatePrice = (params) => {
+        updateProductPrice(params);
+    };
 
     const handleCancelEditDialog = () => {
         setEditPriceDialog({
@@ -66,7 +70,9 @@ function AnalogListDialog(props) {
 }
 
 // noinspection JSUnusedGlobalSymbols
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    updateProductPrice: updatePrice
+};
 
 function mapStateToProps(state) {
     return {
