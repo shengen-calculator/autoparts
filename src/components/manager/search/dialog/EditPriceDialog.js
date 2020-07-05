@@ -28,6 +28,7 @@ function EditPriceDialog(props) {
             price: prices.price,
             discount: prices.discount
         });
+        onClose();
     }
 
     function handleChange(event) {
