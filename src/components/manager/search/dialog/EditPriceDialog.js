@@ -18,9 +18,9 @@ function EditPriceDialog(props) {
 
     useEffect(() => {
         setPrices({
-            price: row.price,
-            discount: row.discount,
-            retail: row.retail
+            price: row.price ? row.price : '',
+            discount: row.discount ? row.discount : '',
+            retail: row.retail ? row.retail : ''
         })
     }, [row]);
 
@@ -34,15 +34,14 @@ function EditPriceDialog(props) {
 
     return (
         <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose}>
-            <DialogTitle id="form-dialog-title">Оновлення ціни артикула</DialogTitle>
+            <DialogTitle id="form-dialog-title">{row.vendor} - {row.brand} - {row.number}</DialogTitle>
             <form onSubmit={handleReserveClick}>
                 <DialogContent>
                     <DialogContentText>
-                        Постачальник: {row.vendor} <br/>
-                        Бренд: {row.brand} <br/>
-                        Номер: {row.number} <br/>
-                        Вхідна ціна: {row.number} <br/>
-                        Ціна постачальника: {row.number} <br/>
+                        {row['purchasePrice'] && <span>Вхідна ціна: {row['purchasePrice']}</span>}
+                        {row['purchasePrice'] && <br/>}
+                        {row['vendorPrice'] && <span>Ціна постачальника: {row['vendorPrice']}</span>}
+                        {row['vendorPrice'] && <br/>}
                     </DialogContentText>
                     <TextField
                         name="price"
@@ -55,10 +54,10 @@ function EditPriceDialog(props) {
                         type="text"
                     />
                     <br/>
-                    <br/>
-                    <DialogContentText>
-                        Націнка: {row.number} <br/>
-                    </DialogContentText>
+                    {(row.price && row['purchasePrice']) && <br/>}
+                    {(row.price && row['purchasePrice']) && <DialogContentText>
+                        Націнка: {(prices.price && row['purchasePrice']) ? (prices.price/row['purchasePrice']).toFixed(2) : ''} <br/>
+                    </DialogContentText>}
                     <TextField
                         name="discount"
                         margin="dense"
@@ -75,7 +74,7 @@ function EditPriceDialog(props) {
                         id="retail"
                         label="Роздріб"
                         onChange={handleChange}
-                        value={prices.retail}
+                        value={(prices.price / (100 - prices.discount) * 100).toFixed(2)}
                         type="text"
                     />
                 </DialogContent>
