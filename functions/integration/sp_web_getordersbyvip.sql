@@ -31,7 +31,7 @@ BEGIN
 				ELSE 1
 			END as status
 	FROM   dbo.Запросы
-	WHERE  VIP like ''' + @vip + N''' AND [Обработано] = 0 AND [ID_Клиента] <> 378'
+	WHERE  VIP like ''' + @vip + N''' AND [Обработано] = 0 AND [ID_Клиента] <> 378 AND ([Нет] = 0 OR DATEDIFF(hour, [Дата], SYSDATETIME()) < 48)'
 
     exec sp_executesql @query
 END
