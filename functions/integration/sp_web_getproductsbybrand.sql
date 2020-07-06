@@ -1,5 +1,5 @@
-CREATE PROCEDURE [dbo].[sp_web_getproductsbybrand] @number varchar(25), @brand varchar(25), @clientId int,
-                                                   @isVendorShown bit
+CREATE PROCEDURE [dbo].[sp_web_getproductsbybrand] @number VARCHAR(25), @brand VARCHAR(25), @clientId INT,
+                                                   @isVendorShown BIT, @isPartsFromAllVendorShown BIT
 AS
 BEGIN
     DECLARE @analogId INT, @productId INT,
@@ -50,6 +50,10 @@ BEGIN
         ELSE
             SET @query = @query + N' FROM GetPartsByBrand(''' + @firstBrand + N''', ''' + @name + N''', ' +
                          STR(@clientId) + N')'
+
+    IF (@isPartsFromAllVendorShown = 0)
+        SET @query = @query + N' WHERE [Виден только менеджерам] = 0'
+
     exec sp_executesql @query
 
 END

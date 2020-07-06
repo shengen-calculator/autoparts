@@ -27,6 +27,7 @@ const searchByBrandAndNumber = async (data, context) => {
                 .input('brand', sql.VarChar(18), data.brand)
                 .input('clientId', sql.Int, data.clientId ? data.clientId : context.auth.token.clientId)
                 .input('isVendorShown', sql.Bit, data.clientId ? 1 : 0)
+                .input('isPartsFromAllVendorShown', sql.Bit, data.clientId ? 1 : 0)
                 .execute('sp_web_getproductsbybrand'),
 
         ];
