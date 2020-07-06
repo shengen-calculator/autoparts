@@ -14,7 +14,7 @@ BEGIN
 
         END
 
-    SELECT TOP (100) dbo.[Каталог запчастей].ID_Запчасти                       AS productId,
+    SELECT TOP (300) dbo.[Каталог запчастей].ID_Запчасти                       AS productId,
                      RTRIM(dbo.Поставщики.[Сокращенное название])              AS vendor,
                      RTRIM(dbo.Брэнды.Брэнд)                                   AS brand,
                      RTRIM(dbo.[Каталог запчастей].[Номер запчасти])           AS number,
