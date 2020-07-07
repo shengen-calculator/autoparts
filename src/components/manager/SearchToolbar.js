@@ -13,10 +13,13 @@ import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import {removeSpecialCharacters} from "../../util/Search";
 import {getCurrencyRate} from "../../redux/actions/clientActions";
+import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import {updateApplicationState} from "../../redux/actions/applicationActions";
 
 const styles = theme => ContentStyle(theme);
 
-function SearchToolbar({client, getCurrencyRate, ...props}) {
+function SearchToolbar({client, appState, getCurrencyRate, updateApplicationState, ...props}) {
     const {classes} = props;
 
     const [criteria, setCriteria] = useState({
@@ -114,6 +117,31 @@ function SearchToolbar({client, getCurrencyRate, ...props}) {
                         </IconButton>
                     </Tooltip>
                 </Grid>
+                <Grid item xs>
+                </Grid>
+                {
+                    appState.isSearchPaused ?
+                        <Grid item>
+                            <Tooltip title="Відновити роботу пошукових модулів">
+                                <IconButton color="inherit" onClick={() => {
+                                    updateApplicationState({isSearchPaused: false});
+                                }}>
+                                    <LocalCafeIcon/>
+                                </IconButton>
+                            </Tooltip>
+                        </Grid> :
+                        <Grid item>
+                            <Tooltip title="Призупинити роботу пошукових модулів">
+                                <IconButton color="inherit" onClick={() => {
+                                    updateApplicationState({
+                                        isSearchPaused: true
+                                    });
+                                }}>
+                                    <PowerSettingsNewIcon/>
+                                </IconButton>
+                            </Tooltip>
+                        </Grid>
+                }
                 <Grid item>
                     <Tooltip title="Актуальні курси основних валют">
                         <IconButton color="inherit" onClick={() => {
@@ -130,12 +158,14 @@ function SearchToolbar({client, getCurrencyRate, ...props}) {
 
 function mapStateToProps(state) {
     return {
-        client: state.client
+        client: state.client,
+        appState: state.appState
     }
 }
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    getCurrencyRate
+    getCurrencyRate,
+    updateApplicationState
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SearchToolbar));
