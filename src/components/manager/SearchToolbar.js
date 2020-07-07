@@ -124,7 +124,10 @@ function SearchToolbar({client, appState, getCurrencyRate, updateApplicationStat
                         <Grid item>
                             <Tooltip title="Відновити роботу пошукових модулів">
                                 <IconButton color="inherit" onClick={() => {
-                                    updateApplicationState({isSearchPaused: false});
+                                    updateApplicationState({
+                                        ...appState,
+                                        isSearchPaused: false
+                                    });
                                 }}>
                                     <LocalCafeIcon/>
                                 </IconButton>
@@ -134,6 +137,7 @@ function SearchToolbar({client, appState, getCurrencyRate, updateApplicationStat
                             <Tooltip title="Призупинити роботу пошукових модулів">
                                 <IconButton color="inherit" onClick={() => {
                                     updateApplicationState({
+                                        ...appState,
                                         isSearchPaused: true
                                     });
                                 }}>
