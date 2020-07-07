@@ -4,6 +4,7 @@ const getClientByVip = require('./main/getClientByVip');
 const getPaymentsByVip = require('./main/getPaymentsByVip');
 const getReconciliationData = require('./main/getReconciliationData');
 const getCurrencyRate = require('./main/getCurrencyRate');
+const updateAppState = require('./main/updateAppState');
 
 exports.processSignUp = functions.region('europe-west1').auth.user().onCreate((user) => {
     return processSignUp(user);
@@ -24,4 +25,9 @@ exports.getReconciliationData = functions.region('europe-west1').https.onCall(as
 
 exports.getCurrencyRate = functions.region('europe-west1').https.onCall(async (data, context) => {
     return getCurrencyRate(data, context);
+});
+
+
+exports.updateAppState = functions.region('europe-west1').https.onCall(async (data, context) => {
+    return updateAppState(data, context);
 });
