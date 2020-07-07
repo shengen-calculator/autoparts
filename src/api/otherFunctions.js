@@ -6,3 +6,5 @@ class OtherFunctionsApi {
         return func(state);
     }
 }
+
+export default OtherFunctionsApi;
