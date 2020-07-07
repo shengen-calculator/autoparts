@@ -49,5 +49,8 @@ export default {
         },
         inOrder: [],
         analogs: []
+    },
+    appState: {
+        isSearchPaused: false
     }
 };

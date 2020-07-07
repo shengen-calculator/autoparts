@@ -6,6 +6,7 @@ import message from './messageReducer';
 import client from './clientReducer';
 import product from './productReducer';
 import statistic from './statisticReducer';
+import appState from './appStateReducer';
 import storage from 'redux-persist/lib/storage';
 
 export const persistConfig = {
@@ -45,7 +46,8 @@ const rootReducer = combineReducers({
     product,
     apiCallsInProgress,
     statistic,
-    message
+    message,
+    appState
 });
 
 export default rootReducer;
