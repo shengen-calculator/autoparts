@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
 
-export function updateApplicationState(params) {
-    return {type: types.UPDATE_APP_STATE_REQUEST, params};
+export function updateApplicationState(state) {
+    return {type: types.UPDATE_APP_STATE_REQUEST, state};
 }
