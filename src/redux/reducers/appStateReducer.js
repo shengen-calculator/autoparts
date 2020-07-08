@@ -6,7 +6,7 @@ export default function appStateReducer(
     action
 ) {
     if (action.type === types.APP_STATE_UPDATED) {
-        return {...state, [action.snapshot.key]: action.snapshot.val()}
+        return {...state, [action.snapshot.key] : action.snapshot.value}
     } else {
         return state;
     }
