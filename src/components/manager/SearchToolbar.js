@@ -6,7 +6,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from "@material-ui/icons/Send";
 import EuroIcon from "@material-ui/icons/Euro";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {withStyles} from "@material-ui/core/styles";
 import ContentStyle from "../common/ContentStyle";
 import {useHistory} from "react-router-dom";
@@ -15,11 +15,23 @@ import {removeSpecialCharacters} from "../../util/Search";
 import {getCurrencyRate} from "../../redux/actions/clientActions";
 import LocalCafeIcon from '@material-ui/icons/LocalCafe';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
-import {updateApplicationState} from "../../redux/actions/applicationActions";
+import {
+    updateApplicationState,
+    subscribeToApplicationStateUpdate,
+    appStateUpdated
+} from "../../redux/actions/applicationActions";
 
 const styles = theme => ContentStyle(theme);
 
-function SearchToolbar({client, appState, getCurrencyRate, updateApplicationState, ...props}) {
+function SearchToolbar({
+                           client,
+                           appState,
+                           getCurrencyRate,
+                           updateApplicationState,
+                           subscribeToApplicationStateUpdate,
+                           appStateUpdated,
+                           ...props
+                       }) {
     const {classes} = props;
 
     const [criteria, setCriteria] = useState({
@@ -27,29 +39,33 @@ function SearchToolbar({client, appState, getCurrencyRate, updateApplicationStat
         number: ''
     });
 
+    useEffect(() => {
+        subscribeToApplicationStateUpdate(appStateUpdated);
+    }, [subscribeToApplicationStateUpdate, appStateUpdated]);
+
     let history = useHistory();
 
     function loadClientKeyPress(target) {
-        if(target.charCode === 13 || target.type === 'click') {
-            const { vip } = criteria;
+        if (target.charCode === 13 || target.type === 'click') {
+            const {vip} = criteria;
             setCriteria(prev => ({
                 ...prev,
                 vip: ''
             }));
-            if(vip) {
+            if (vip) {
                 history.push(`/manager/search/${vip}`);
             }
         }
     }
 
     function searchKeyPress(target) {
-        if(target.charCode === 13 || target.type === 'click') {
-            const { number } = criteria;
+        if (target.charCode === 13 || target.type === 'click') {
+            const {number} = criteria;
             setCriteria(prev => ({
                 ...prev,
                 number: ''
             }));
-            if(number) {
+            if (number) {
                 const shortNumber = removeSpecialCharacters(number);
                 history.push(`/manager/search/${client.vip}/${shortNumber}`);
             }
@@ -57,7 +73,7 @@ function SearchToolbar({client, appState, getCurrencyRate, updateApplicationStat
     }
 
     function handleChange(event) {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setCriteria(prev => ({
             ...prev,
             [name]: value
@@ -117,8 +133,6 @@ function SearchToolbar({client, appState, getCurrencyRate, updateApplicationStat
                         </IconButton>
                     </Tooltip>
                 </Grid>
-                <Grid item xs>
-                </Grid>
                 {
                     appState.isSearchPaused ?
                         <Grid item>
@@ -166,10 +180,13 @@ function mapStateToProps(state) {
         appState: state.appState
     }
 }
+
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
     getCurrencyRate,
-    updateApplicationState
+    updateApplicationState,
+    subscribeToApplicationStateUpdate,
+    appStateUpdated
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SearchToolbar));
