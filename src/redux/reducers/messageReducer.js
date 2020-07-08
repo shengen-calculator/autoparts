@@ -172,6 +172,12 @@ export default function messageReducer(state = initialState.message, action) {
                 type: 'error',
                 text: 'Не вдалось встановити нові ціни для артикула. Повторіть спробу'
             };
+        case types.UPDATE_APP_STATE_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: action.text
+            };
         case types.CREATE_RESERVE_SUCCESS:
             return {
                 ...state,
