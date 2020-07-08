@@ -15,6 +15,7 @@ export function* updateAppState(action) {
 
 export function* subscribeToAppState(action) {
     try {
+        yield call(AppStateApi.getInitialState, action.callback);
         yield call(AppStateApi.subscribeToAppStateUpdate, action.callback);
     } catch (error) {
         yield put({type: types.SUBSCRIBE_TO_APP_STATE_UPDATE_FAILURE, text: error.message})
