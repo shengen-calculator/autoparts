@@ -1,10 +1,9 @@
-import {functions} from "./database";
+import {database} from "./database";
 
-class OtherFunctionsApi {
+class AppStateApi {
     static updateApplicationState(state) {
-        const func = functions.httpsCallable('main-updateAppState');
-        return func(state);
+        database.ref('app-settings').set(state);
     }
 }
 
-export default OtherFunctionsApi;
+export default AppStateApi;

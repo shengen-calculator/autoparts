@@ -1,11 +1,11 @@
 import {call, put} from "redux-saga/effects";
 import * as types from "../redux/actions/actionTypes";
-import OtherFunctionsApi from "../api/otherFunctions";
+import AppStateApi from "../api/appState";
 
 export function* updateAppState(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
-        const {data} = yield call(OtherFunctionsApi.updateApplicationState, action.state);
+        const {data} = yield call(AppStateApi.updateApplicationState, action.state);
         yield put({type: types.UPDATE_APP_STATE_SUCCESS, state: data});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
