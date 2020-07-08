@@ -6,7 +6,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from "@material-ui/icons/Send";
 import EuroIcon from "@material-ui/icons/Euro";
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {withStyles} from "@material-ui/core/styles";
 import ContentStyle from "../common/ContentStyle";
 import {useHistory} from "react-router-dom";
@@ -15,11 +15,7 @@ import {removeSpecialCharacters} from "../../util/Search";
 import {getCurrencyRate} from "../../redux/actions/clientActions";
 import LocalCafeIcon from '@material-ui/icons/LocalCafe';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
-import {
-    updateApplicationState,
-    subscribeToApplicationStateUpdate,
-    appStateUpdated
-} from "../../redux/actions/applicationActions";
+import {updateApplicationState} from "../../redux/actions/applicationActions";
 
 const styles = theme => ContentStyle(theme);
 
@@ -28,8 +24,6 @@ function SearchToolbar({
                            appState,
                            getCurrencyRate,
                            updateApplicationState,
-                           subscribeToApplicationStateUpdate,
-                           appStateUpdated,
                            ...props
                        }) {
     const {classes} = props;
@@ -38,10 +32,6 @@ function SearchToolbar({
         vip: '',
         number: ''
     });
-
-    useEffect(() => {
-        subscribeToApplicationStateUpdate(appStateUpdated);
-    }, [subscribeToApplicationStateUpdate, appStateUpdated]);
 
     let history = useHistory();
 
@@ -185,8 +175,6 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     getCurrencyRate,
     updateApplicationState,
-    subscribeToApplicationStateUpdate,
-    appStateUpdated
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SearchToolbar));
