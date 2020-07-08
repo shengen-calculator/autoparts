@@ -16,6 +16,7 @@ export const persistConfig = {
         'authentication',
         'client',
         'apiCallsInProgress',
+        'appState',
         'statistic',
         'product'
     ]
