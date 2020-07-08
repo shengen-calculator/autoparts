@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Route, Switch } from "react-router-dom";
 import ClientPage from "./client/App";
 import ManagerPage from "./manager/App";
@@ -8,6 +8,10 @@ import { ukUA } from '@material-ui/core/locale';
 import PrivateRoute from "./common/PrivateRoute";
 import {connect} from "react-redux";
 import {RoleEnum} from "../util/Enums";
+import {
+    appStateUpdated,
+    subscribeToApplicationStateUpdate,
+} from "../redux/actions/applicationActions";
 
 
 let theme = createMuiTheme({
@@ -120,7 +124,12 @@ theme = {
     },
 };
 
-function App({auth}) {
+function App({auth, subscribeToApplicationStateUpdate, appStateUpdated}) {
+
+    useEffect(() => {
+        subscribeToApplicationStateUpdate(appStateUpdated);
+    }, [subscribeToApplicationStateUpdate, appStateUpdated]);
+
     return (
         <ThemeProvider theme={theme}>
             <div>
@@ -140,6 +149,13 @@ function mapStateToProps(state) {
     }
 }
 
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    subscribeToApplicationStateUpdate,
+    appStateUpdated
+};
+
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(App);
