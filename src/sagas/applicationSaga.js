@@ -12,3 +12,11 @@ export function* updateAppState(action) {
         yield put({type: types.UPDATE_APP_STATE_FAILURE, text: error.message})
     }
 }
+
+export function* subscribeToAppState(action) {
+    try {
+        yield call(AppStateApi.subscribeToAppStateUpdate, action.callback);
+    } catch (error) {
+        yield put({type: types.SUBSCRIBE_TO_APP_STATE_UPDATE_FAILURE, text: error.message})
+    }
+}

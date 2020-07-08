@@ -178,6 +178,12 @@ export default function messageReducer(state = initialState.message, action) {
                 type: 'error',
                 text: action.text
             };
+        case types.SUBSCRIBE_TO_APP_STATE_UPDATE_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: action.text
+            };
         case types.CREATE_RESERVE_SUCCESS:
             return {
                 ...state,

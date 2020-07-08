@@ -31,7 +31,7 @@ import {
     searchByNumber,
     updatePrice
 } from "./searchSaga";
-import {updateAppState} from "./applicationSaga";
+import {updateAppState, subscribeToAppState} from "./applicationSaga";
 
 function* mySaga() {
     yield takeLatest(types.LOG_OUT_REQUEST, logOut);
@@ -58,6 +58,7 @@ function* mySaga() {
     yield takeLatest(types.LOAD_CURRENCY_RATE_REQUEST, getCurrencyRate);
     yield takeLatest(types.LOAD_ANALOGS_REQUEST, getAnalogs);
     yield takeLatest(types.UPDATE_APP_STATE_REQUEST, updateAppState);
+    yield takeLatest(types.SUBSCRIBE_TO_APP_STATE_UPDATE_REQUEST, subscribeToAppState);
 
 }
 
