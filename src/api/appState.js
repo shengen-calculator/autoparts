@@ -23,6 +23,12 @@ class AppStateApi {
         });
     };
 
+    static unSubscribeToAppStateUpdate = () => {
+        return new Promise(() => {
+            database.ref('app-settings').off();
+        });
+    };
+
     static getInitialState = (handler) => {
         return new Promise((resolve, reject) => {
             database.ref('app-settings').once('value')

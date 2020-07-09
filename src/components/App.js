@@ -127,8 +127,10 @@ theme = {
 function App({auth, subscribeToApplicationStateUpdate, appStateUpdated}) {
 
     useEffect(() => {
-        subscribeToApplicationStateUpdate(appStateUpdated);
-    }, [subscribeToApplicationStateUpdate, appStateUpdated]);
+        if(auth.vip) {
+            subscribeToApplicationStateUpdate(appStateUpdated);
+        }
+    }, [subscribeToApplicationStateUpdate, appStateUpdated, auth.vip]);
 
     return (
         <ThemeProvider theme={theme}>
