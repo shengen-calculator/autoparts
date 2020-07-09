@@ -11,10 +11,13 @@ import {withStyles} from "@material-ui/core/styles";
 import {logoutRequest} from "../../redux/actions/authenticationActions";
 import ContentStyle from "./ContentStyle";
 import {RoleEnum} from "../../util/Enums";
+import {
+    unSubscribe
+} from "../../redux/actions/applicationActions";
 
 const styles = theme => ContentStyle(theme);
 
-function LoginToolbar({logoutRequest, auth, ...props}) {
+function LoginToolbar({logoutRequest, unSubscribe, auth, ...props}) {
     const {classes, onDrawerToggle} = props;
     return (
         <Toolbar>
@@ -38,6 +41,7 @@ function LoginToolbar({logoutRequest, auth, ...props}) {
                 <Grid item>
                     <Tooltip title="Вийти">
                         <IconButton color="inherit" onClick={() => {
+                            unSubscribe();
                             logoutRequest();
                         }}>
                             <ExitToAppIcon/>
@@ -59,7 +63,8 @@ function mapStateToProps(state) {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    logoutRequest
+    logoutRequest,
+    unSubscribe
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LoginToolbar));

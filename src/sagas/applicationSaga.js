@@ -21,3 +21,7 @@ export function* subscribeToAppState(action) {
         yield put({type: types.SUBSCRIBE_TO_APP_STATE_UPDATE_FAILURE, text: error.message})
     }
 }
+
+export function* unSubscribe() {
+    yield call(AppStateApi.unSubscribeToAppStateUpdate);
+}
