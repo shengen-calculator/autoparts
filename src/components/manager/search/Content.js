@@ -23,10 +23,11 @@ import GetComparator from "../../../util/GetComparator";
 import StableSort from "../../../util/StableSort";
 import SearchContentStyle from "../../common/SearchContentStyle";
 import AnalogListDialog from "./dialog/AnalogListDialog";
+import {showToastrMessage} from "../../../redux/actions/messageActions";
 
 const styles = theme => SearchContentStyle(theme);
 
-function Content({auth, calls, client, product, getByBrand, getAnalogs, getByNumber, ...props}) {
+function Content({auth, calls, client, product, appState, getByBrand, getAnalogs, getByNumber, showToastrMessage, ...props}) {
     const {classes, handleDrawerToggle} = props;
     const history = useHistory();
     const {vip, numb, brand} = useParams();
@@ -43,16 +44,21 @@ function Content({auth, calls, client, product, getByBrand, getAnalogs, getByNum
     }, [vip, client.vip, auth.vip, history]);
 
     useEffect(() => {
-        if (brand && brand !== product.criteria.brand) {
-            const record = product.productsGrouped.find(x => x.brand === brand && x.number === numb);
-            getByBrand({brand, numb, clientId: client.id, analogId: record ? record.analogId : null});
-        } else if ((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand && numb)) {
-            getByNumber(numb);
-        } else if (product.productsGrouped.length === 1 && !brand) {
-            history.push(`/manager/search/${client.vip}/${removeSpecialCharacters(product.productsGrouped[0].number)}/${htmlEncode(product.productsGrouped[0].brand)}`)
+        if(numb && appState.isSearchPaused) {
+            showToastrMessage({type: 'warning', message: 'Проводиться планове обслуговування. Повторіть спробу через 15 хвилин'})
+        } else {
+            if (brand && brand !== product.criteria.brand) {
+                const record = product.productsGrouped.find(x => x.brand === brand && x.number === numb);
+                getByBrand({brand, numb, clientId: client.id, analogId: record ? record.analogId : null});
+            } else if ((numb && numb !== product.criteria.numb) || (!brand && product.criteria.brand && numb)) {
+                getByNumber(numb);
+            } else if (product.productsGrouped.length === 1 && !brand) {
+                history.push(`/manager/search/${client.vip}/${removeSpecialCharacters(product.productsGrouped[0].number)}/${htmlEncode(product.productsGrouped[0].brand)}`)
+            }
         }
+
     }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, client.vip, history,
-        product.criteria.numb, client.id, product.productsGrouped]);
+        product.criteria.numb, client.id, product.productsGrouped, appState.isSearchPaused, showToastrMessage]);
 
     const openAnalogListDialog = (selected) => {
         getAnalogs({
@@ -122,7 +128,8 @@ Content.propTypes = {
 const mapDispatchToProps = {
     getByNumber,
     getByBrand,
-    getAnalogs
+    getAnalogs,
+    showToastrMessage
 };
 
 function mapStateToProps(state) {
@@ -130,7 +137,8 @@ function mapStateToProps(state) {
         auth: state.authentication,
         client: state.client,
         product: state.product,
-        calls: state.apiCallsInProgress
+        calls: state.apiCallsInProgress,
+        appState: state.appState
     }
 }
 
