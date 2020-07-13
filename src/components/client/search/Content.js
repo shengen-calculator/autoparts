@@ -22,29 +22,37 @@ import VendorTable from "../../common/Tables/VendorTable";
 import AnalogTable from "../../common/Tables/AnalogTable";
 import GroupedTable from "../../common/Tables/GroupedTable";
 import SearchContentStyle from "../../common/SearchContentStyle";
+import {showToastrMessage} from "../../../redux/actions/messageActions";
 
 const styles = theme => SearchContentStyle(theme);
 
-function Content({auth, calls, client, product, getByBrand, getByNumber, ...props}) {
+function Content({auth, calls, client, product, appState, getByBrand, getByNumber, showToastrMessage, ...props}) {
     const {classes, handleDrawerToggle} = props;
     const history = useHistory();
     const {numb, brand} = useParams();
 
 
     useEffect(() => {
-        if (brand && brand !== product.criteria.brand) {
-            getByBrand({
-                brand,
-                numb,
-                queryId: product.productsGrouped.length > 0 ? product.productsGrouped[0].queryId : null
-            });
-        } else if (numb && ((numb !== product.criteria.numb) || (!brand && product.criteria.brand && numb))) {
-            getByNumber(numb);
-        } else if (product.productsGrouped.length === 1 && !brand) {
-            history.push(`/search/${removeSpecialCharacters(product.productsGrouped[0].number)}/${htmlEncode(product.productsGrouped[0].brand)}`)
+        if (numb && appState.isSearchPaused) {
+            showToastrMessage({
+                type: 'warning',
+                message: 'Проводиться планове обслуговування. Повторіть спробу через 15 хвилин'
+            })
+        } else {
+            if (brand && brand !== product.criteria.brand) {
+                getByBrand({
+                    brand,
+                    numb,
+                    queryId: product.productsGrouped.length > 0 ? product.productsGrouped[0].queryId : null
+                });
+            } else if (numb && ((numb !== product.criteria.numb) || (!brand && product.criteria.brand && numb))) {
+                getByNumber(numb);
+            } else if (product.productsGrouped.length === 1 && !brand) {
+                history.push(`/search/${removeSpecialCharacters(product.productsGrouped[0].number)}/${htmlEncode(product.productsGrouped[0].brand)}`)
+            }
         }
     }, [numb, brand, getByNumber, getByBrand, product.criteria.brand, history,
-        product.criteria.numb, product.productsGrouped]);
+        product.criteria.numb, product.productsGrouped, appState.isSearchPaused, showToastrMessage]);
 
     const tables = getTables(brand, numb, `Fenix - Клієнт`, product.products);
     const {generalRows, vendorRows, analogRows, title} = tables;
@@ -95,8 +103,8 @@ Content.propTypes = {
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
     getByNumber,
-    getByBrand
-
+    getByBrand,
+    showToastrMessage
 };
 
 function mapStateToProps(state) {
@@ -104,7 +112,8 @@ function mapStateToProps(state) {
         auth: state.authentication,
         client: state.client,
         product: state.product,
-        calls: state.apiCallsInProgress
+        calls: state.apiCallsInProgress,
+        appState: state.appState
     }
 }
 
