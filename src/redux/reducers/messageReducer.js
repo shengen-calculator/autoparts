@@ -124,6 +124,13 @@ export default function messageReducer(state = initialState.message, action) {
             };
 
         case types.UPDATE_RESERVE_QUANTITY_FAILURE:
+            if(action.params.error && action.params.error === 'QUANTITY_NOT_ENOUGH') {
+                return {
+                    ...state,
+                    type: 'error',
+                    text: 'Недостатня кількість'
+                };
+            }
             return {
                 ...state,
                 type: 'error',

@@ -94,7 +94,7 @@ export function* updateReserveQuantity(action) {
         yield put({type: types.UPDATE_RESERVE_QUANTITY_SUCCESS, params: action.params});
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
-        yield put({type: types.UPDATE_RESERVE_QUANTITY_FAILURE, params: action.params});
+        yield put({type: types.UPDATE_RESERVE_QUANTITY_FAILURE, params: {...action.params, error: e.message}});
     }
 }
 
