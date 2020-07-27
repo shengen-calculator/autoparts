@@ -21,7 +21,7 @@ BEGIN
         IF(@balance - @reserved + @oldQuantity >= @quantity)
             UPDATE dbo.[Подчиненная накладные] SET Количество = @quantity  WHERE ID = @reserveId
         ELSE
-            RAISERROR ('Quantity update operation error. Quantity is not enough', 16, 1)
+            RAISERROR ('QUANTITY_NOT_ENOUGH', 16, 1)
 
     COMMIT;
 
