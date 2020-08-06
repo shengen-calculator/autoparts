@@ -48,7 +48,7 @@ export default function VendorTable(props) {
                 isEur={props.isEur}
                 role={props.role}
                 isPriceShown={props.isPriceShown}
-                title="Знайдено за артикулом"
+                title="Знайдено за артикулом під замовлення"
                 titleIcon={TitleIconEnum.track}
                 columns={10}
                 isFilterShown={false}

@@ -59,7 +59,7 @@ export default function ReserveTable(props) {
                 rows={props.reserves}
                 headCells={headCells}
                 tableRow={tableRow}
-                title="Виконано"
+                title="Готове до відвантаження"
                 titleIcon={TitleIconEnum.mall}
                 columns={12}
                 total={props.isEuroClient ? `${totalEur} / ${totalUah}` : `${totalUah} / ${totalEur}`}
