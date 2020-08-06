@@ -44,7 +44,7 @@ export default function AnalogTable(props) {
                 isPriceShown={props.isPriceShown}
                 tableRow={SearchTableRow}
                 isEur={props.isEur}
-                title={`Аналоги артикула ${props.criteria}`}
+                title={`Аналоги артикула ${props.criteria} під замовлення`}
                 columns={10}
                 isFilterShown={false}
                 rowsPerPageOptions={rowsPerPageOptions}

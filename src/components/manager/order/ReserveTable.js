@@ -123,7 +123,7 @@ export default function ReserveTable(props) {
                 onDelete={openDeleteConfirmation}
                 headCells={headCells}
                 tableRow={tableRow}
-                title="Виконано"
+                title="Готове до відвантаження"
                 columns={12}
                 total={props.isEuroClient ? `${totalEur} / ${totalUah}` : `${totalUah} / ${totalEur}`}
                 isFilterShown={false}
