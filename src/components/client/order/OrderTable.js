@@ -30,7 +30,7 @@ const headCells = [
     {id: 'approved', numeric: true, disablePadding: false, label: 'Підтв'},
     {id: 'price', numeric: true, disablePadding: false, label: 'Ціна'},
     {id: 'orderDate', numeric: false, disablePadding: false, label: 'Замовл.'},
-    {id: 'shipmentDate', numeric: false, disablePadding: false, label: 'Доставка'},
+    {id: 'shipmentDate', numeric: false, disablePadding: false, label: 'Очікуємо'},
     {id: 'status', numeric: false, disablePadding: false, label: 'Статус'},
 ];
 
