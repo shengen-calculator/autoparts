@@ -23,7 +23,7 @@ const headCells = [
 function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown) {
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
-    const pointer = {cursor: 'pointer'};
+    const pointer = {cursor: 'pointer', fontWeight: 700};
     const stockColor = lightBlue[50];
     const StyledTableRow = withStyles(() => ({
         root: {
