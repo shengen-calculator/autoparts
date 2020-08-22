@@ -7,12 +7,13 @@ CREATE FUNCTION [dbo].[GetPartsByBrand](@brend char(25),
             (
 
                 SELECT ISNULL([Каталоги поставщиков_1].ID_Запчасти, [Каталоги поставщиков].ID_Запчасти) AS ID_Запчасти,
-                       0 AS ID_аналога,
+                       0                                                                                AS ID_аналога,
                        ISNULL([Каталоги поставщиков_1].Брэнд, [Каталоги поставщиков].Брэнд)             AS Брэнд,
                        ISNULL(Поставщики_1.[Сокращенное название],
-                              Поставщики.[Сокращенное название])                                        AS [Сокращенное название],
-                       ISNULL(Поставщики_1.[Время заказа], Поставщики.[Время заказа])                   AS [Время заказа],
-                       ISNULL(Поставщики_1.[Время прихода], Поставщики.[Время прихода])                 AS [Время прихода],
+                              SupplierWarehouseView.[Сокращенное название])                             AS [Сокращенное название],
+                       ISNULL(Поставщики_1.OrderTimeText,
+                              SupplierWarehouseView.OrderTimeText)                                      AS [Время заказа],
+                       ISNULL(Поставщики_1.ArrivalTime, SupplierWarehouseView.ArrivalTime)              AS [Время прихода],
                        ISNULL([Каталоги поставщиков_1].[Номер запчасти],
                               [Каталоги поставщиков].[Номер запчасти])                                  AS [Номер запчасти],
                        ISNULL(ISNULL([Каталоги поставщиков_1].[Цена], [Каталоги поставщиков].[Цена]),
@@ -60,24 +61,27 @@ CREATE FUNCTION [dbo].[GetPartsByBrand](@brend char(25),
                        ISNULL(ISNULL([Каталоги поставщиков_1].[Цена17], [Каталоги поставщиков].[Цена17]),
                               0)                                                                        AS Цена17,
                        ISNULL([Каталоги поставщиков_1].Дата, [Каталоги поставщиков].Дата)               AS Дата,
-                       ISNULL(Поставщики_1.[Не возвратный], Поставщики.[Не возвратный])                 AS [Не возвратный],
+                       ISNULL(Поставщики_1.[Не возвратный],
+                              SupplierWarehouseView.[Не возвратный])                                    AS [Не возвратный],
                        ISNULL(Поставщики_1.[Виден только менеджерам],
-                              Поставщики.[Виден только менеджерам])                                     AS [Виден только менеджерам],
+                              SupplierWarehouseView.[Виден только менеджерам])                          AS [Виден только менеджерам],
                        ISNULL(Поставщики_1.[IsEnsureDeliveryTerm],
-                              Поставщики.[IsEnsureDeliveryTerm])                                        AS [IsEnsureDeliveryTerm],
+                              SupplierWarehouseView.[IsEnsureDeliveryTerm])                             AS [IsEnsureDeliveryTerm],
                        ISNULL(Поставщики_1.[IsQualityGuaranteed],
-                              Поставщики.[IsQualityGuaranteed])                                         AS [IsQualityGuaranteed],
+                              SupplierWarehouseView.[IsQualityGuaranteed])                              AS [IsQualityGuaranteed],
                        CASE
-                           WHEN ISNULL(Поставщики_1.[IsEnsureDeliveryTerm], Поставщики.[IsEnsureDeliveryTerm]) = 1
+                           WHEN ISNULL(Поставщики_1.[IsEnsureDeliveryTerm],
+                                       SupplierWarehouseView.[IsEnsureDeliveryTerm]) = 1
                                THEN 'Гарантированный срок поставки'
                            ELSE Null END                                                                AS IsEnsureDeliveryTermTitle,
                        CASE
-                           WHEN ISNULL(Поставщики_1.[IsQualityGuaranteed], Поставщики.[IsQualityGuaranteed]) = 1
+                           WHEN ISNULL(Поставщики_1.[IsQualityGuaranteed],
+                                       SupplierWarehouseView.[IsQualityGuaranteed]) = 1
                                THEN 'Гарантия качества и соответсвия производителю'
                            ELSE Null END                                                                AS IsQualityGuaranteedTitle
                 FROM [Каталоги поставщиков] AS [Каталоги поставщиков_1]
                          INNER JOIN
-                     Поставщики AS Поставщики_1 ON [Каталоги поставщиков_1].ID_Поставщика = Поставщики_1.ID_Поставщика
+                     SupplierWarehouseView AS Поставщики_1 ON [Каталоги поставщиков_1].WarehouseId = Поставщики_1.Id
                          RIGHT OUTER JOIN (SELECT Брэнд_, Name_, Брэнд, [Name]
                                            FROM [Таблица аналогов]
                                            UNION
@@ -86,7 +90,7 @@ CREATE FUNCTION [dbo].[GetPartsByBrand](@brend char(25),
                      [Каталоги поставщиков] ON ANALOGI.Брэнд_ = [Каталоги поставщиков].Брэнд AND
                                                ANALOGI.Name_ = [Каталоги поставщиков].Name
                          INNER JOIN
-                     Поставщики ON [Каталоги поставщиков].ID_Поставщика = Поставщики.ID_Поставщика ON
+                     SupplierWarehouseView ON [Каталоги поставщиков].WarehouseId = SupplierWarehouseView.Id ON
                              [Каталоги поставщиков_1].ID_Аналога = [Каталоги поставщиков].ID_Аналога AND
                              [Каталоги поставщиков_1].ID_Поставщика = [Каталоги поставщиков].ID_Поставщика
 
@@ -198,7 +202,8 @@ CREATE FUNCTION [dbo].[GetPartsByBrand](@brend char(25),
                       (ISNULL(dbo.Поисковая.Количество, 0) <> 0)
 
 
-                GROUP BY Поисковая.ID_Запчасти, Поисковая.ID_аналога, Поисковая.Цена, Поисковая.Брэнд, Поисковая.[Номер поставщика],
+                GROUP BY Поисковая.ID_Запчасти, Поисковая.ID_аналога, Поисковая.Цена, Поисковая.Брэнд,
+                         Поисковая.[Номер поставщика],
                          Поисковая.[Сокращенное название],
                          Поисковая.[Время заказа], Поисковая.[Время прихода],
                          Поисковая.Описание, Поисковая.ID_аналога, Поисковая.Остаток, Поисковая.Количество,
@@ -220,12 +225,13 @@ CREATE FUNCTION [dbo].[GetPartsByBrand](@brend char(25),
                 UNION
 
                 SELECT ISNULL([Каталоги поставщиков_1].ID_Запчасти, [Каталоги поставщиков].ID_Запчасти) AS ID_Запчасти,
-                       0 AS ID_аналога,
+                       0                                                                                AS ID_аналога,
                        ISNULL([Каталоги поставщиков_1].Брэнд, [Каталоги поставщиков].Брэнд)             AS Брэнд,
                        ISNULL(Поставщики_1.[Сокращенное название],
-                              Поставщики.[Сокращенное название])                                        AS [Сокращенное название],
-                       ISNULL(Поставщики_1.[Время заказа], Поставщики.[Время заказа])                   AS [Время заказа],
-                       ISNULL(Поставщики_1.[Время прихода], Поставщики.[Время прихода])                 AS [Время прихода],
+                              SupplierWarehouseView.[Сокращенное название])                             AS [Сокращенное название],
+                       ISNULL(Поставщики_1.OrderTimeText,
+                              SupplierWarehouseView.OrderTimeText)                                      AS [Время заказа],
+                       ISNULL(Поставщики_1.ArrivalTime, SupplierWarehouseView.ArrivalTime)              AS [Время прихода],
                        ISNULL([Каталоги поставщиков_1].[Номер запчасти],
                               [Каталоги поставщиков].[Номер запчасти])                                  AS [Номер запчасти],
                        ISNULL(ISNULL([Каталоги поставщиков_1].[Цена], [Каталоги поставщиков].[Цена]),
@@ -273,24 +279,26 @@ CREATE FUNCTION [dbo].[GetPartsByBrand](@brend char(25),
                        ISNULL(ISNULL([Каталоги поставщиков_1].[Цена17], [Каталоги поставщиков].[Цена17]),
                               0)                                                                        AS Цена17,
                        ISNULL([Каталоги поставщиков_1].Дата, [Каталоги поставщиков].Дата)               AS Дата,
-                       ISNULL(Поставщики_1.[Не возвратный], Поставщики.[Не возвратный])                 AS [Не возвратный],
+                       ISNULL(Поставщики_1.[Не возвратный],
+                              SupplierWarehouseView.[Не возвратный])                                    AS [Не возвратный],
                        ISNULL(Поставщики_1.[Виден только менеджерам],
-                              Поставщики.[Виден только менеджерам])                                     AS [Виден только менеджерам],
+                              SupplierWarehouseView.[Виден только менеджерам])                          AS [Виден только менеджерам],
                        ISNULL(Поставщики_1.IsEnsureDeliveryTerm,
-                              Поставщики.IsEnsureDeliveryTerm)                                          AS IsEnsureDeliveryTerm,
+                              SupplierWarehouseView.IsEnsureDeliveryTerm)                               AS IsEnsureDeliveryTerm,
                        ISNULL(Поставщики_1.IsQualityGuaranteed,
-                              Поставщики.IsQualityGuaranteed)                                           AS IsQualityGuaranteed,
+                              SupplierWarehouseView.IsQualityGuaranteed)                                AS IsQualityGuaranteed,
                        CASE
-                           WHEN ISNULL(Поставщики_1.IsEnsureDeliveryTerm, Поставщики.IsEnsureDeliveryTerm) = 1
+                           WHEN ISNULL(Поставщики_1.IsEnsureDeliveryTerm, SupplierWarehouseView.IsEnsureDeliveryTerm) =
+                                1
                                THEN 'Гарантированный срок поставки'
                            ELSE Null END                                                                AS IsEnsureDeliveryTermTitle,
                        CASE
-                           WHEN ISNULL(Поставщики_1.IsQualityGuaranteed, Поставщики.IsQualityGuaranteed) = 1
+                           WHEN ISNULL(Поставщики_1.IsQualityGuaranteed, SupplierWarehouseView.IsQualityGuaranteed) = 1
                                THEN 'Гарантия качества и соответсвия производителю'
                            ELSE Null END                                                                AS IsQualityGuaranteedTitle
                 FROM [Каталоги поставщиков] AS [Каталоги поставщиков_1]
                          INNER JOIN
-                     Поставщики AS Поставщики_1 ON [Каталоги поставщиков_1].ID_Поставщика = Поставщики_1.ID_Поставщика
+                     SupplierWarehouseView AS Поставщики_1 ON [Каталоги поставщиков_1].WarehouseId = Поставщики_1.Id
                          RIGHT OUTER JOIN (SELECT Брэнд_, Name_, Брэнд, [Name]
                                            FROM [Таблица аналогов]
                                            UNION
@@ -299,7 +307,7 @@ CREATE FUNCTION [dbo].[GetPartsByBrand](@brend char(25),
                      [Каталоги поставщиков] ON [ANALOGI].Брэнд = [Каталоги поставщиков].Брэнд AND
                                                [ANALOGI].Name = [Каталоги поставщиков].Name
                          INNER JOIN
-                     Поставщики ON [Каталоги поставщиков].ID_Поставщика = Поставщики.ID_Поставщика ON
+                     SupplierWarehouseView ON [Каталоги поставщиков].WarehouseId = SupplierWarehouseView.Id ON
                              [Каталоги поставщиков_1].ID_Аналога = [Каталоги поставщиков].ID_Аналога AND
                              [Каталоги поставщиков_1].ID_Поставщика = [Каталоги поставщиков].ID_Поставщика
 
@@ -411,7 +419,8 @@ CREATE FUNCTION [dbo].[GetPartsByBrand](@brend char(25),
                       (ISNULL(dbo.Поисковая.Количество, 0) <> 0)
 
 
-                GROUP BY Поисковая.ID_Запчасти, Поисковая.ID_аналога, Поисковая.Цена, Поисковая.Брэнд, Поисковая.[Номер поставщика],
+                GROUP BY Поисковая.ID_Запчасти, Поисковая.ID_аналога, Поисковая.Цена, Поисковая.Брэнд,
+                         Поисковая.[Номер поставщика],
                          Поисковая.[Сокращенное название],
                          Поисковая.[Время заказа], Поисковая.[Время прихода],
                          Поисковая.Описание, Поисковая.ID_аналога, Поисковая.Остаток, Поисковая.Количество,
