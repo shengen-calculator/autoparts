@@ -34,11 +34,12 @@ BEGIN
 END
 
 DECLARE
-    @brandName varchar(50), @brandId int, @vendorId int, @shortNumber varchar(26), @term decimal(9, 1),
+    @brandName varchar(50), @brandId int, @vendorId int, @warehouseId int, @shortNumber varchar(26), @term decimal(9, 1),
     @number    varchar(26), @vendorNumber varchar(26), @analogId int, @description varchar(80), @carId int, @groupId int
 
 SELECT @brandName = dbo.[Каталоги поставщиков].Брэнд,
        @vendorId = dbo.[Каталоги поставщиков].ID_Поставщика,
+       @warehouseId = dbo.[Каталоги поставщиков].WarehouseId,
        @shortNumber = dbo.[Каталоги поставщиков].Name,
        @number = dbo.[Каталоги поставщиков].[Номер поставщика],
        @vendorNumber = dbo.[Каталоги поставщиков].[Номер запчасти],
@@ -105,7 +106,7 @@ DECLARE @arrivalDate datetime
 INSERT INTO [Запросы клиентов]
 (ID_Клиента, ID_Запчасти, Заказано, Цена, грн, Без_замен, Интернет, Работник, Дата_прихода)
 VALUES (@clientId, @productId, @quantity, @price, @priceUah, @onlyOrderedQuantity, 1,
-        @currentUser, dbo.GetArrivalDate(@vendorId, @term))
+        @currentUser, dbo.GetArrivalDate(@warehouseId, @term))
 
 
 SELECT TOP (1) TRIM(VIP)                                                        as vip
@@ -135,3 +136,4 @@ SELECT TOP (1) TRIM(VIP)                                                        
 FROM dbo.Запросы
 WHERE [ID_Запроса] = @@IDENTITY
 go
+
