@@ -115,7 +115,7 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
                 <Copyright/>
             </footer>
             <AnalogListDialog isOpened={isAnalogListDialogOpened}
-                              onClose={handleCancelAnalogDialog}/>/>
+                              onClose={handleCancelAnalogDialog}/>
         </div>
     );
 }
