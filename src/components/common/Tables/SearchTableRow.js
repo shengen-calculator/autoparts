@@ -27,6 +27,7 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
     const bold = {fontWeight: row['term'] < 1 ? 800 : 500, cursor: 'pointer'};
+    const bolder = {fontWeight: 800 };
     const HtmlTooltip = withStyles((theme) => ({
         tooltip: {
             backgroundColor: '#f5f5f9',
@@ -90,18 +91,18 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
             <TableCell width="5%" align="center" name="info" style={pointer}>
                 <HtmlTooltip placement="top-start" title={
                     <React.Fragment>
+                        {row['supplierName'] && <div>Постачальник:
+                            <Typography color="inherit" style={bolder}>{row['supplierName']}</Typography>
+                        </div>}
+                        {row['warehouseName'] && <div>Склад:
+                            <Typography color="inherit" style={bolder}>{row['warehouseName']}</Typography>
+                        </div>}
                         Час формування замовлення:
                         <Typography color="inherit">{row['orderTime']}</Typography>
                         Час прийому товару:
                         <Typography color="inherit">{row['arrivalTime']}</Typography>
                         Дата оновлення:
                         <Typography color="inherit">{row.date}</Typography>
-                        {row['supplierName'] && <div>Постачальник:
-                        <Typography color="inherit">{row['supplierName']}</Typography>
-                        </div>}
-                        {row['warehouseName'] && <div>Склад:
-                        <Typography color="inherit">{row['warehouseName']}</Typography>
-                        </div>}
                     </React.Fragment>
                 }>
                     <InfoIcon/>
