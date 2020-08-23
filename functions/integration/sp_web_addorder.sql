@@ -38,7 +38,6 @@ DECLARE
     @number    varchar(26), @vendorNumber varchar(26), @analogId int, @description varchar(80), @carId int, @groupId int
 
 SELECT @brandName = dbo.[Каталоги поставщиков].Брэнд,
-       @vendorId = dbo.[Каталоги поставщиков].ID_Поставщика,
        @warehouseId = dbo.[Каталоги поставщиков].WarehouseId,
        @shortNumber = dbo.[Каталоги поставщиков].Name,
        @number = dbo.[Каталоги поставщиков].[Номер поставщика],
@@ -47,6 +46,10 @@ SELECT @brandName = dbo.[Каталоги поставщиков].Брэнд,
        @term = dbo.[Каталоги поставщиков].[Срок доставки]
 FROM dbo.[Каталоги поставщиков]
 WHERE (ID_Запчасти = @productId)
+
+SELECT @vendorId = SupplierId
+FROM SupplierWarehouse
+WHERE Id = @warehouseId
 
 SELECT @brandId = ID_Брэнда
 FROM Брэнды
