@@ -1,14 +1,14 @@
-ALTER FUNCTION [dbo].[GetArrivalDate] 
+CREATE FUNCTION [dbo].[GetArrivalDate] 
 (
-	@vendorId int, @term decimal(9,1)
+	@warehouseId int, @term decimal(9,1)
 )
 RETURNS DATE
 AS
 BEGIN
     DECLARE @days varchar(15), @time time(7), @diff int, @weekday int, @orderday int
     SELECT  @days = OrderDays, @time = OrderTime
-    FROM    dbo.Поставщики
-    WHERE   ID_Поставщика = @vendorId  
+    FROM    dbo.SupplierWarehouse
+    WHERE   Id = @warehouseId  
 	
     
     IF(@days IS NULL OR @time IS NULL) RETURN NULL
@@ -24,7 +24,8 @@ BEGIN
            SELECT @orderday = MIN(Name) FROM dbo.SplitString (@days)
            RETURN DATEADD(hour, (7 - DATEPART(weekday, GETDATE()) + @orderday + @term)*24, DATEADD(day, DATEDIFF(day, 0, GETDATE()),0))
         END
-
+    
     RETURN DATEADD(hour, (@orderday - DATEPART(weekday, GETDATE()) + @term)*24, DATEADD(day, DATEDIFF(day, 0, GETDATE()),0))
             
 END
+go
