@@ -116,7 +116,7 @@ CREATE FUNCTION [dbo].[GetPartsByAnalog](@brend char(18),
                                       ELSE ISnull(Остаток, 0) - isnull(Количество, 0) End <> 0))
                              or (isnull(Количество, 0) <> 0))
                          GROUP BY ID_Запчасти, Цена, Брэнд, [Номер поставщика], [Сокращенное название],
-                                Описание, ID_аналога, Остаток, Количество, ID_Клиента,
+                                  Описание, ID_аналога, Остаток, Количество, ID_Клиента,
                                   Цена1, Цена2, Цена3, Цена4, Цена5, Цена6, Цена7, Цена8, Цена9, Цена10, Цена11, Цена12,
                                   Цена13, Цена14, Цена15, Цена16, Цена17, [Не возвратный], [Виден только менеджерам],
                                   IsEnsureDeliveryTerm, IsQualityGuaranteed,
@@ -125,294 +125,240 @@ CREATE FUNCTION [dbo].[GetPartsByAnalog](@brend char(18),
                                       WHEN IsQualityGuaranteed = 1 THEN 'Гарантия качества и соответсвия производителю'
                                       ELSE Null END
                          union
-                         SELECT ISNULL([Каталоги поставщиков_1].ID_Запчасти,
-                                       [Каталоги поставщиков].ID_Запчасти)                              AS ID_Запчасти,
-                                0                                                                       AS ID_аналога,
-                                ISNULL([Каталоги поставщиков_1].Брэнд, [Каталоги поставщиков].Брэнд)    AS Брэнд,
-                                ISNULL(Поставщики_1.[Сокращенное название],
-                                       SupplierWarehouseView.[Сокращенное название])                    AS [Сокращенное название],
-                                ISNULL(Поставщики_1.OrderTimeText,
-                                       SupplierWarehouseView.OrderTimeText)                             AS [Время заказа],
-                                ISNULL(Поставщики_1.ArrivalTime, SupplierWarehouseView.ArrivalTime)     AS [Время прихода],
-                                ISNULL(Поставщики_1.SupplierName, SupplierWarehouseView.SupplierName)   AS SupplierName,
-                                ISNULL(Поставщики_1.WarehouseName,
-                                       SupplierWarehouseView.WarehouseName)                             AS WarehouseName,
-                                ISNULL([Каталоги поставщиков_1].[Номер запчасти],
-                                       [Каталоги поставщиков].[Номер запчасти])                         AS [Номер запчасти],
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена], [Каталоги поставщиков].[Цена]),
-                                       0)                                                               AS Цена,
-                                0                                                                       AS Доступно,
-                                0                                                                       AS Резерв,
-                                ISNULL([Каталоги поставщиков_1].Описание,
-                                       [Каталоги поставщиков].Описание)                                 AS Описание,
-                                ISNULL([Каталоги поставщиков_1].Наличие,
-                                       [Каталоги поставщиков].Наличие)                                  AS Заказ,
-                                ISNULL([Каталоги поставщиков_1].[Срок доставки],
-                                       [Каталоги поставщиков].[Срок доставки])                          AS Срок,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена1], [Каталоги поставщиков].[Цена1]),
-                                       0)                                                               AS Цена1,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена2], [Каталоги поставщиков].[Цена2]),
-                                       0)                                                               AS Цена2,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена3], [Каталоги поставщиков].[Цена3]),
-                                       0)                                                               AS Цена3,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена4], [Каталоги поставщиков].[Цена4]),
-                                       0)                                                               AS Цена4,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена5], [Каталоги поставщиков].[Цена5]),
-                                       0)                                                               AS Цена5,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена6], [Каталоги поставщиков].[Цена6]),
-                                       0)                                                               AS Цена6,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена7], [Каталоги поставщиков].[Цена7]),
-                                       0)                                                               AS Цена7,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена8], [Каталоги поставщиков].[Цена8]),
-                                       0)                                                               AS Цена8,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена9], [Каталоги поставщиков].[Цена9]),
-                                       0)                                                               AS Цена9,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена10], [Каталоги поставщиков].[Цена10]),
-                                       0)                                                               AS Цена10,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена11], [Каталоги поставщиков].[Цена11]),
-                                       0)                                                               AS Цена11,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена12], [Каталоги поставщиков].[Цена12]),
-                                       0)                                                               AS Цена12,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена13], [Каталоги поставщиков].[Цена13]),
-                                       0)                                                               AS Цена13,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена14], [Каталоги поставщиков].[Цена14]),
-                                       0)                                                               AS Цена14,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена15], [Каталоги поставщиков].[Цена15]),
-                                       0)                                                               AS Цена15,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена16], [Каталоги поставщиков].[Цена16]),
-                                       0)                                                               AS Цена16,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена17], [Каталоги поставщиков].[Цена17]),
-                                       0)                                                               AS Цена17,
-                                ISNULL([Каталоги поставщиков_1].Дата, [Каталоги поставщиков].Дата)      AS Дата,
-                                ISNULL(Поставщики_1.[Не возвратный],
-                                       SupplierWarehouseView.[Не возвратный])                           AS [Не возвратный],
-                                ISNULL(Поставщики_1.[Виден только менеджерам],
-                                       SupplierWarehouseView.[Виден только менеджерам])                 AS [Виден только менеджерам],
-                                ISNULL(Поставщики_1.[IsEnsureDeliveryTerm],
-                                       SupplierWarehouseView.[IsEnsureDeliveryTerm])                    AS IsEnsureDeliveryTerm,
-                                ISNULL(Поставщики_1.[IsQualityGuaranteed],
-                                       SupplierWarehouseView.[IsQualityGuaranteed])                     AS IsQualityGuaranteed,
+                         SELECT [Каталоги поставщиков].ID_Запчасти              AS ID_Запчасти,
+                                0                                               AS ID_аналога,
+                                [Каталоги поставщиков].Брэнд                    AS Брэнд,
+                                SupplierWarehouseView.[Сокращенное название]    AS [Сокращенное название],
+                                SupplierWarehouseView.OrderTimeText             AS [Время заказа],
+                                SupplierWarehouseView.ArrivalTime               AS [Время прихода],
+                                SupplierWarehouseView.SupplierName              AS SupplierName,
+                                SupplierWarehouseView.WarehouseName             AS WarehouseName,
+                                [Каталоги поставщиков].[Номер запчасти]         AS [Номер запчасти],
+                                ISNULL([Каталоги поставщиков].[Цена],
+                                       0)                                       AS Цена,
+                                0                                               AS Доступно,
+                                0                                               AS Резерв,
+                                [Каталоги поставщиков].Описание                 AS Описание,
+                                [Каталоги поставщиков].Наличие                  AS Заказ,
+                                [Каталоги поставщиков].[Срок доставки]          AS Срок,
+                                ISNULL([Каталоги поставщиков].[Цена1],
+                                       0)                                       AS Цена1,
+                                ISNULL([Каталоги поставщиков].[Цена2],
+                                       0)                                       AS Цена2,
+                                ISNULL([Каталоги поставщиков].[Цена3],
+                                       0)                                       AS Цена3,
+                                ISNULL([Каталоги поставщиков].[Цена4],
+                                       0)                                       AS Цена4,
+                                ISNULL([Каталоги поставщиков].[Цена5],
+                                       0)                                       AS Цена5,
+                                ISNULL([Каталоги поставщиков].[Цена6],
+                                       0)                                       AS Цена6,
+                                ISNULL([Каталоги поставщиков].[Цена7],
+                                       0)                                       AS Цена7,
+                                ISNULL([Каталоги поставщиков].[Цена8],
+                                       0)                                       AS Цена8,
+                                ISNULL([Каталоги поставщиков].[Цена9],
+                                       0)                                       AS Цена9,
+                                ISNULL([Каталоги поставщиков].[Цена10],
+                                       0)                                       AS Цена10,
+                                ISNULL([Каталоги поставщиков].[Цена11],
+                                       0)                                       AS Цена11,
+                                ISNULL([Каталоги поставщиков].[Цена12],
+                                       0)                                       AS Цена12,
+                                ISNULL([Каталоги поставщиков].[Цена13],
+                                       0)                                       AS Цена13,
+                                ISNULL([Каталоги поставщиков].[Цена14],
+                                       0)                                       AS Цена14,
+                                ISNULL([Каталоги поставщиков].[Цена15],
+                                       0)                                       AS Цена15,
+                                ISNULL([Каталоги поставщиков].[Цена16],
+                                       0)                                       AS Цена16,
+                                ISNULL([Каталоги поставщиков].[Цена17],
+                                       0)                                       AS Цена17,
+                                [Каталоги поставщиков].Дата                     AS Дата,
+                                SupplierWarehouseView.[Не возвратный]           AS [Не возвратный],
+                                SupplierWarehouseView.[Виден только менеджерам] AS [Виден только менеджерам],
+                                SupplierWarehouseView.[IsEnsureDeliveryTerm]    AS IsEnsureDeliveryTerm,
+                                SupplierWarehouseView.[IsQualityGuaranteed]     AS IsQualityGuaranteed,
                                 CASE
-                                    WHEN ISNULL(Поставщики_1.[IsEnsureDeliveryTerm],
-                                                SupplierWarehouseView.[IsEnsureDeliveryTerm]) = 1
+                                    WHEN
+                                        SupplierWarehouseView.IsEnsureDeliveryTerm = 1
                                         THEN 'Гарантированный срок поставки'
-                                    ELSE Null END                                                       AS IsEnsureDeliveryTermTitle,
+                                    ELSE Null END                               AS IsEnsureDeliveryTermTitle,
                                 CASE
-                                    WHEN ISNULL(Поставщики_1.[IsQualityGuaranteed],
-                                                SupplierWarehouseView.[IsQualityGuaranteed]) =
-                                         1 THEN 'Гарантия качества и соответсвия производителю'
-                                    ELSE Null END                                                       AS IsQualityGuaranteedTitle
-                         FROM [Каталоги поставщиков] AS [Каталоги поставщиков_1]
+                                    WHEN
+                                        SupplierWarehouseView.IsQualityGuaranteed = 1
+                                        THEN 'Гарантия качества и соответсвия производителю'
+                                    ELSE Null END                               AS IsQualityGuaranteedTitle
+
+                         FROM (SELECT Брэнд_, Name_, Брэнд, Name
+                               FROM dbo.[Таблица Аналогов]
+                               UNION
+                               SELECT @brend, @name, @brend, @name) AS ANALOGI
                                   INNER JOIN
-                              SupplierWarehouseView AS Поставщики_1
-                              ON [Каталоги поставщиков_1].WarehouseId = Поставщики_1.Id
-                                  RIGHT OUTER JOIN (SELECT Брэнд_, Name_, Брэнд, [Name]
-                                                    FROM [Таблица аналогов]
-                                                    UNION
-                                                    SELECT @brend, @name, @brend, @name) as ANALOGI
+                              dbo.[Каталоги поставщиков] ON ANALOGI.Брэнд_ = dbo.[Каталоги поставщиков].Брэнд AND
+                                                            ANALOGI.Name_ = dbo.[Каталоги поставщиков].Name
                                   INNER JOIN
-                              [Каталоги поставщиков] ON ANALOGI.Брэнд_ = [Каталоги поставщиков].Брэнд AND
-                                                        ANALOGI.Name_ = [Каталоги поставщиков].Name
-                                  INNER JOIN
-                              SupplierWarehouseView ON [Каталоги поставщиков].WarehouseId = SupplierWarehouseView.Id ON
-                                      [Каталоги поставщиков_1].ID_Аналога = [Каталоги поставщиков].ID_Аналога AND
-                                      [Каталоги поставщиков_1].ID_Поставщика = [Каталоги поставщиков].ID_Поставщика
+                              dbo.SupplierWarehouseView
+                              ON dbo.[Каталоги поставщиков].WarehouseId = dbo.SupplierWarehouseView.Id
+
 
                          WHERE (ANALOGI.[Name] = @name)
                            AND (ANALOGI.Брэнд = @brend)
 
 
                          UNION
-                         SELECT ISNULL([Каталоги поставщиков_1].ID_Запчасти,
-                                       [Каталоги поставщиков].ID_Запчасти)                              AS ID_Запчасти,
-                                0                                                                       AS ID_аналога,
-                                ISNULL([Каталоги поставщиков_1].Брэнд, [Каталоги поставщиков].Брэнд)    AS Брэнд,
-                                ISNULL(Поставщики_1.[Сокращенное название],
-                                       SupplierWarehouseView.[Сокращенное название])                    AS [Сокращенное название],
-                                ISNULL(Поставщики_1.OrderTimeText,
-                                       SupplierWarehouseView.OrderTimeText)                             AS [Время заказа],
-                                ISNULL(Поставщики_1.ArrivalTime, SupplierWarehouseView.ArrivalTime)     AS [Время прихода],
-                                ISNULL(Поставщики_1.SupplierName, SupplierWarehouseView.SupplierName)   AS SupplierName,
-                                ISNULL(Поставщики_1.WarehouseName,
-                                       SupplierWarehouseView.WarehouseName)                             AS WarehouseName,
-                                ISNULL([Каталоги поставщиков_1].[Номер запчасти],
-                                       [Каталоги поставщиков].[Номер запчасти])                         AS [Номер запчасти],
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена], [Каталоги поставщиков].[Цена]),
-                                       0)                                                               AS Цена,
-                                0                                                                       AS Доступно,
-                                0                                                                       AS Резерв,
-                                ISNULL([Каталоги поставщиков_1].Описание,
-                                       [Каталоги поставщиков].Описание)                                 AS Описание,
-                                ISNULL([Каталоги поставщиков_1].Наличие,
-                                       [Каталоги поставщиков].Наличие)                                  AS Заказ,
-                                ISNULL([Каталоги поставщиков_1].[Срок доставки],
-                                       [Каталоги поставщиков].[Срок доставки])                          AS Срок,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена1], [Каталоги поставщиков].[Цена1]),
-                                       0)                                                               AS Цена1,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена2], [Каталоги поставщиков].[Цена2]),
-                                       0)                                                               AS Цена2,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена3], [Каталоги поставщиков].[Цена3]),
-                                       0)                                                               AS Цена3,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена4], [Каталоги поставщиков].[Цена4]),
-                                       0)                                                               AS Цена4,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена5], [Каталоги поставщиков].[Цена5]),
-                                       0)                                                               AS Цена5,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена6], [Каталоги поставщиков].[Цена6]),
-                                       0)                                                               AS Цена6,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена7], [Каталоги поставщиков].[Цена7]),
-                                       0)                                                               AS Цена7,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена8], [Каталоги поставщиков].[Цена8]),
-                                       0)                                                               AS Цена8,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена9], [Каталоги поставщиков].[Цена9]),
-                                       0)                                                               AS Цена9,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена10], [Каталоги поставщиков].[Цена10]),
-                                       0)                                                               AS Цена10,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена11], [Каталоги поставщиков].[Цена11]),
-                                       0)                                                               AS Цена11,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена12], [Каталоги поставщиков].[Цена12]),
-                                       0)                                                               AS Цена12,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена13], [Каталоги поставщиков].[Цена13]),
-                                       0)                                                               AS Цена13,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена14], [Каталоги поставщиков].[Цена14]),
-                                       0)                                                               AS Цена14,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена15], [Каталоги поставщиков].[Цена15]),
-                                       0)                                                               AS Цена15,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена16], [Каталоги поставщиков].[Цена16]),
-                                       0)                                                               AS Цена16,
-                                ISNULL(ISNULL([Каталоги поставщиков_1].[Цена17], [Каталоги поставщиков].[Цена17]),
-                                       0)                                                               AS Цена17,
-                                ISNULL([Каталоги поставщиков_1].Дата, [Каталоги поставщиков].Дата)      AS Дата,
-                                ISNULL(Поставщики_1.[Не возвратный],
-                                       SupplierWarehouseView.[Не возвратный])                           AS [Не возвратный],
-                                ISNULL(Поставщики_1.[Виден только менеджерам],
-                                       SupplierWarehouseView.[Виден только менеджерам])                 AS [Виден только менеджерам],
-                                ISNULL(Поставщики_1.[IsEnsureDeliveryTerm],
-                                       SupplierWarehouseView.[IsEnsureDeliveryTerm])                    AS IsEnsureDeliveryTerm,
-                                ISNULL(Поставщики_1.[IsQualityGuaranteed],
-                                       SupplierWarehouseView.[IsQualityGuaranteed])                     AS IsQualityGuaranteed,
+                         SELECT [Каталоги поставщиков].ID_Запчасти              AS ID_Запчасти,
+                                0                                               AS ID_аналога,
+                                [Каталоги поставщиков].Брэнд                    AS Брэнд,
+                                SupplierWarehouseView.[Сокращенное название]    AS [Сокращенное название],
+                                SupplierWarehouseView.OrderTimeText             AS [Время заказа],
+                                SupplierWarehouseView.ArrivalTime               AS [Время прихода],
+                                SupplierWarehouseView.SupplierName              AS SupplierName,
+                                SupplierWarehouseView.WarehouseName             AS WarehouseName,
+                                [Каталоги поставщиков].[Номер запчасти]         AS [Номер запчасти],
+                                ISNULL([Каталоги поставщиков].[Цена],
+                                       0)                                       AS Цена,
+                                0                                               AS Доступно,
+                                0                                               AS Резерв,
+                                [Каталоги поставщиков].Описание                 AS Описание,
+                                [Каталоги поставщиков].Наличие                  AS Заказ,
+                                [Каталоги поставщиков].[Срок доставки]          AS Срок,
+                                ISNULL([Каталоги поставщиков].[Цена1],
+                                       0)                                       AS Цена1,
+                                ISNULL([Каталоги поставщиков].[Цена2],
+                                       0)                                       AS Цена2,
+                                ISNULL([Каталоги поставщиков].[Цена3],
+                                       0)                                       AS Цена3,
+                                ISNULL([Каталоги поставщиков].[Цена4],
+                                       0)                                       AS Цена4,
+                                ISNULL([Каталоги поставщиков].[Цена5],
+                                       0)                                       AS Цена5,
+                                ISNULL([Каталоги поставщиков].[Цена6],
+                                       0)                                       AS Цена6,
+                                ISNULL([Каталоги поставщиков].[Цена7],
+                                       0)                                       AS Цена7,
+                                ISNULL([Каталоги поставщиков].[Цена8],
+                                       0)                                       AS Цена8,
+                                ISNULL([Каталоги поставщиков].[Цена9],
+                                       0)                                       AS Цена9,
+                                ISNULL([Каталоги поставщиков].[Цена10],
+                                       0)                                       AS Цена10,
+                                ISNULL([Каталоги поставщиков].[Цена11],
+                                       0)                                       AS Цена11,
+                                ISNULL([Каталоги поставщиков].[Цена12],
+                                       0)                                       AS Цена12,
+                                ISNULL([Каталоги поставщиков].[Цена13],
+                                       0)                                       AS Цена13,
+                                ISNULL([Каталоги поставщиков].[Цена14],
+                                       0)                                       AS Цена14,
+                                ISNULL([Каталоги поставщиков].[Цена15],
+                                       0)                                       AS Цена15,
+                                ISNULL([Каталоги поставщиков].[Цена16],
+                                       0)                                       AS Цена16,
+                                ISNULL([Каталоги поставщиков].[Цена17],
+                                       0)                                       AS Цена17,
+                                [Каталоги поставщиков].Дата                     AS Дата,
+                                SupplierWarehouseView.[Не возвратный]           AS [Не возвратный],
+                                SupplierWarehouseView.[Виден только менеджерам] AS [Виден только менеджерам],
+                                SupplierWarehouseView.[IsEnsureDeliveryTerm]    AS IsEnsureDeliveryTerm,
+                                SupplierWarehouseView.[IsQualityGuaranteed]     AS IsQualityGuaranteed,
                                 CASE
-                                    WHEN ISNULL(Поставщики_1.IsEnsureDeliveryTerm,
-                                                SupplierWarehouseView.IsEnsureDeliveryTerm) = 1
+                                    WHEN
+                                        SupplierWarehouseView.IsEnsureDeliveryTerm = 1
                                         THEN 'Гарантированный срок поставки'
-                                    ELSE Null END                                                       AS IsEnsureDeliveryTermTitle,
+                                    ELSE Null END                               AS IsEnsureDeliveryTermTitle,
                                 CASE
-                                    WHEN ISNULL(Поставщики_1.IsQualityGuaranteed,
-                                                SupplierWarehouseView.IsQualityGuaranteed) = 1
+                                    WHEN
+                                        SupplierWarehouseView.IsQualityGuaranteed = 1
                                         THEN 'Гарантия качества и соответсвия производителю'
-                                    ELSE Null END                                                       AS IsQualityGuaranteedTitle
-                         FROM [Каталоги поставщиков] AS [Каталоги поставщиков_1]
+                                    ELSE Null END                               AS IsQualityGuaranteedTitle
+                         FROM (SELECT Брэнд_, Name_, Брэнд, Name
+                               FROM dbo.[Таблица Аналогов]
+                               UNION
+                               SELECT @brend, @name, @brend, @name) AS ANALOGI
                                   INNER JOIN
-                              SupplierWarehouseView AS Поставщики_1
-                              ON [Каталоги поставщиков_1].WarehouseId = Поставщики_1.Id
-                                  RIGHT OUTER JOIN (SELECT Брэнд_, Name_, Брэнд, [Name]
-                                                    FROM [Таблица аналогов]
-                                                    UNION
-                                                    SELECT @brend, @name, @brend, @name) as ANALOGI
+                              dbo.[Каталоги поставщиков] ON ANALOGI.Брэнд = dbo.[Каталоги поставщиков].Брэнд AND
+                                                            ANALOGI.Name = dbo.[Каталоги поставщиков].Name
                                   INNER JOIN
-                              [Каталоги поставщиков] ON [ANALOGI].Брэнд = [Каталоги поставщиков].Брэнд AND
-                                                        [ANALOGI].Name = [Каталоги поставщиков].Name
-                                  INNER JOIN
-                              SupplierWarehouseView ON [Каталоги поставщиков].WarehouseId = SupplierWarehouseView.Id ON
-                                      [Каталоги поставщиков_1].ID_Аналога = [Каталоги поставщиков].ID_Аналога AND
-                                      [Каталоги поставщиков_1].ID_Поставщика = [Каталоги поставщиков].ID_Поставщика
-
+                              dbo.SupplierWarehouseView
+                              ON dbo.[Каталоги поставщиков].WarehouseId = dbo.SupplierWarehouseView.Id
                          WHERE ([ANALOGI].[Name_] = @name)
                            AND ([ANALOGI].Брэнд_ = @brend)
 
-
                          UNION
 
-
-                         SELECT isnull([Каталоги поставщиков_1].Id_Запчасти,
-                                       [Каталоги_поставщиков].Id_Запчасти)                           as Id_Запчасти,
-                                dbo.[Каталог запчастей].ID_аналога                                   as ID_аналога,
-                                isnull([Каталоги поставщиков_1].Брэнд, [Каталоги_поставщиков].Брэнд) as Брэнд,
-                                isnull([Каталоги поставщиков_1].[Сокращенное название],
-                                       [Каталоги_поставщиков].[Сокращенное название])                as [Сокращенное название],
-                                isnull([Каталоги поставщиков_1].OrderTimeText,
-                                       [Каталоги_поставщиков].OrderTimeText)                         as [Время заказа],
-                                isnull([Каталоги поставщиков_1].ArrivalTime,
-                                       [Каталоги_поставщиков].ArrivalTime)                           as [Время прихода],
-                                isnull([Каталоги поставщиков_1].SupplierName,
-                                       [Каталоги_поставщиков].SupplierName)                          as SupplierName,
-                                isnull([Каталоги поставщиков_1].WarehouseName,
-                                       [Каталоги_поставщиков].WarehouseName)                         as WarehouseName,
-                                isnull([Каталоги поставщиков_1].[Номер запчасти],
-                                       [Каталоги_поставщиков].[Номер запчасти])                      as [Номер запчасти],
-                                isnull(isnull([Каталоги поставщиков_1].Цена, [Каталоги_поставщиков].Цена),
-                                       0)                                                            as Цена,
-                                0                                                                    AS Доступно,
-                                0                                                                    AS Резерв,
-                                isnull([Каталоги поставщиков_1].Описание,
-                                       [Каталоги_поставщиков].Описание)                              as Описание,
-                                isnull([Каталоги поставщиков_1].Наличие,
-                                       [Каталоги_поставщиков].Наличие)                               as Заказ,
-                                isnull(isnull([Каталоги поставщиков_1].[Срок доставки],
-                                              [Каталоги_поставщиков].[Срок доставки]),
-                                       0)                                                            as Срок,
-                                isnull(isnull([Каталоги поставщиков_1].Цена1, [Каталоги_поставщиков].Цена1),
-                                       0)                                                            as Цена1,
-                                isnull(isnull([Каталоги поставщиков_1].Цена2, [Каталоги_поставщиков].Цена2),
-                                       0)                                                            as Цена2,
-                                isnull(isnull([Каталоги поставщиков_1].Цена3, [Каталоги_поставщиков].Цена3),
-                                       0)                                                            as Цена3,
-                                isnull(isnull([Каталоги поставщиков_1].Цена4, [Каталоги_поставщиков].Цена4),
-                                       0)                                                            as Цена4,
-                                isnull(isnull([Каталоги поставщиков_1].Цена5, [Каталоги_поставщиков].Цена5),
-                                       0)                                                            as Цена5,
-                                isnull(isnull([Каталоги поставщиков_1].Цена6, [Каталоги_поставщиков].Цена6),
-                                       0)                                                            as Цена6,
-                                isnull(isnull([Каталоги поставщиков_1].Цена7, [Каталоги_поставщиков].Цена7),
-                                       0)                                                            as Цена7,
-                                isnull(isnull([Каталоги поставщиков_1].Цена8, [Каталоги_поставщиков].Цена8),
-                                       0)                                                            as Цена8,
-                                isnull(isnull([Каталоги поставщиков_1].Цена9, [Каталоги_поставщиков].Цена9),
-                                       0)                                                            as Цена9,
-                                isnull(isnull([Каталоги поставщиков_1].Цена10, [Каталоги_поставщиков].Цена10),
-                                       0)                                                            as Цена10,
-                                isnull(isnull([Каталоги поставщиков_1].Цена11, [Каталоги_поставщиков].Цена11),
-                                       0)                                                            as Цена11,
-                                isnull(isnull([Каталоги поставщиков_1].Цена12, [Каталоги_поставщиков].Цена12),
-                                       0)                                                            as Цена12,
-                                isnull(isnull([Каталоги поставщиков_1].Цена13, [Каталоги_поставщиков].Цена13),
-                                       0)                                                            as Цена13,
-                                isnull(isnull([Каталоги поставщиков_1].Цена14, [Каталоги_поставщиков].Цена14),
-                                       0)                                                            as Цена14,
-                                isnull(isnull([Каталоги поставщиков_1].Цена15, [Каталоги_поставщиков].Цена15),
-                                       0)                                                            as Цена15,
-                                isnull(isnull([Каталоги поставщиков_1].Цена16, [Каталоги_поставщиков].Цена16),
-                                       0)                                                            as Цена16,
-                                isnull(isnull([Каталоги поставщиков_1].Цена17, [Каталоги_поставщиков].Цена17),
-                                       0)                                                            as Цена17,
-                                ISNULL([Каталоги поставщиков_1].Дата, [Каталоги_поставщиков].Дата)   AS Дата,
-                                ISNULL([Каталоги поставщиков_1].[Не возвратный],
-                                       [Каталоги_поставщиков].[Не возвратный])                       AS [Не возвратный],
-                                ISNULL([Каталоги поставщиков_1].[Виден только менеджерам],
-                                       [Каталоги_поставщиков].[Виден только менеджерам])             AS [Виден только менеджерам],
-                                ISNULL([Каталоги поставщиков_1].[IsEnsureDeliveryTerm],
-                                       [Каталоги_поставщиков].[IsEnsureDeliveryTerm])                AS IsEnsureDeliveryTerm,
-                                ISNULL([Каталоги поставщиков_1].[IsQualityGuaranteed],
-                                       [Каталоги_поставщиков].[IsQualityGuaranteed])                 AS IsQualityGuaranteed,
+                         SELECT dbo.[Каталоги_поставщиков].Id_Запчасти           as Id_Запчасти,
+                                dbo.[Каталог запчастей].ID_аналога               as ID_аналога,
+                                [Каталоги_поставщиков].Брэнд                     as Брэнд,
+                                [Каталоги_поставщиков].[Сокращенное название]    as [Сокращенное название],
+                                [Каталоги_поставщиков].OrderTimeText             as [Время заказа],
+                                [Каталоги_поставщиков].ArrivalTime               as [Время прихода],
+                                [Каталоги_поставщиков].SupplierName              as SupplierName,
+                                [Каталоги_поставщиков].WarehouseName             as WarehouseName,
+                                [Каталоги_поставщиков].[Номер запчасти]          as [Номер запчасти],
+                                isnull([Каталоги_поставщиков].Цена,
+                                       0)                                        as Цена,
+                                0                                                AS Доступно,
+                                0                                                AS Резерв,
+                                [Каталоги_поставщиков].Описание                  as Описание,
+                                [Каталоги_поставщиков].Наличие                   as Заказ,
+                                isnull(
+                                        [Каталоги_поставщиков].[Срок доставки],
+                                        0)                                       as Срок,
+                                isnull([Каталоги_поставщиков].Цена1,
+                                       0)                                        as Цена1,
+                                isnull([Каталоги_поставщиков].Цена2,
+                                       0)                                        as Цена2,
+                                isnull([Каталоги_поставщиков].Цена3,
+                                       0)                                        as Цена3,
+                                isnull([Каталоги_поставщиков].Цена4,
+                                       0)                                        as Цена4,
+                                isnull([Каталоги_поставщиков].Цена5,
+                                       0)                                        as Цена5,
+                                isnull([Каталоги_поставщиков].Цена6,
+                                       0)                                        as Цена6,
+                                isnull([Каталоги_поставщиков].Цена7,
+                                       0)                                        as Цена7,
+                                isnull([Каталоги_поставщиков].Цена8,
+                                       0)                                        as Цена8,
+                                isnull([Каталоги_поставщиков].Цена9,
+                                       0)                                        as Цена9,
+                                isnull([Каталоги_поставщиков].Цена10,
+                                       0)                                        as Цена10,
+                                isnull([Каталоги_поставщиков].Цена11,
+                                       0)                                        as Цена11,
+                                isnull([Каталоги_поставщиков].Цена12,
+                                       0)                                        as Цена12,
+                                isnull([Каталоги_поставщиков].Цена13,
+                                       0)                                        as Цена13,
+                                isnull([Каталоги_поставщиков].Цена14,
+                                       0)                                        as Цена14,
+                                isnull([Каталоги_поставщиков].Цена15,
+                                       0)                                        as Цена15,
+                                isnull([Каталоги_поставщиков].Цена16,
+                                       0)                                        as Цена16,
+                                isnull([Каталоги_поставщиков].Цена17,
+                                       0)                                        as Цена17,
+                                [Каталоги_поставщиков].Дата                      AS Дата,
+                                [Каталоги_поставщиков].[Не возвратный]           AS [Не возвратный],
+                                [Каталоги_поставщиков].[Виден только менеджерам] AS [Виден только менеджерам],
+                                [Каталоги_поставщиков].[IsEnsureDeliveryTerm]    AS IsEnsureDeliveryTerm,
+                                [Каталоги_поставщиков].[IsQualityGuaranteed]     AS IsQualityGuaranteed,
                                 CASE
-                                    WHEN ISNULL([Каталоги поставщиков_1].[IsEnsureDeliveryTerm],
-                                                [Каталоги_поставщиков].[IsEnsureDeliveryTerm]) = 1
+                                    WHEN [Каталоги_поставщиков].[IsEnsureDeliveryTerm] = 1
                                         THEN 'Гарантированный срок поставки'
-                                    ELSE Null END                                                    AS IsEnsureDeliveryTermTitle,
+                                    ELSE Null END                                AS IsEnsureDeliveryTermTitle,
                                 CASE
-                                    WHEN ISNULL([Каталоги поставщиков_1].[IsQualityGuaranteed],
-                                                [Каталоги_поставщиков].[IsQualityGuaranteed]) = 1
+                                    WHEN [Каталоги_поставщиков].[IsQualityGuaranteed] = 1
                                         THEN 'Гарантия качества и соответсвия производителю'
-                                    ELSE Null END                                                    AS IsQualityGuaranteedTitle
-                         FROM [Каталог запчастей]
+                                    ELSE Null END                                AS IsQualityGuaranteedTitle
+                         FROM dbo.[Каталог запчастей]
                                   INNER JOIN
-                              Брэнды ON [Каталог запчастей].ID_Брэнда = Брэнды.ID_Брэнда
+                              dbo.Брэнды ON dbo.[Каталог запчастей].ID_Брэнда = dbo.Брэнды.ID_Брэнда
                                   INNER JOIN
-                              [Каталоги_поставщиков] ON Брэнды.Брэнд = [Каталоги_поставщиков].Брэнд AND
-                                                        [Каталог запчастей].namepost = [Каталоги_поставщиков].Name
-                                  LEFT OUTER JOIN
-                              [Каталоги_поставщиков] AS [Каталоги поставщиков_1]
-                              ON [Каталоги_поставщиков].ID_Аналога = [Каталоги поставщиков_1].ID_Аналога AND
-                                 [Каталоги_поставщиков].ID_Поставщика = [Каталоги поставщиков_1].ID_Поставщика
+                              dbo.Каталоги_поставщиков ON dbo.Брэнды.Брэнд = dbo.Каталоги_поставщиков.Брэнд AND
+                                                          dbo.[Каталог запчастей].namepost = dbo.Каталоги_поставщиков.Name
                          WHERE ([Каталог запчастей].ID_аналога = @analog)
                      ) AS ManinTable
                 GROUP BY Id_Запчасти,
