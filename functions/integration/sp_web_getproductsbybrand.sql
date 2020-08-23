@@ -22,8 +22,8 @@ BEGIN
         ,TRIM(Брэнд) AS brand
 	    ,TRIM([Время прихода]) as arrivalTime
 		,TRIM([Номер запчасти]) AS number
-        ,SupplierName
-        ,WarehouseName
+        ,SupplierName AS supplierName
+        ,WarehouseName AS warehouseName
 		,Цена * ' + STR(dbo.GetUahRate(), 9, 2) + N' AS retail
 		,Цена AS retailEur
 		,' + dbo.GetClientPriceColumn(@clientId) + N' AS costEur

@@ -96,6 +96,12 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                         <Typography color="inherit">{row['arrivalTime']}</Typography>
                         Дата оновлення:
                         <Typography color="inherit">{row.date}</Typography>
+                        {row['supplierName'] && <div>Постачальник:
+                        <Typography color="inherit">{row['supplierName']}</Typography>
+                        </div>}
+                        {row['warehouseName'] && <div>Склад:
+                        <Typography color="inherit">{row['warehouseName']}</Typography>
+                        </div>}
                     </React.Fragment>
                 }>
                     <InfoIcon/>
