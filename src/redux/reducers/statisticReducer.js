@@ -9,18 +9,41 @@ export default function statisticReducer(state = initialState.statistic, action)
                 clientStatistic: []
             };
         case types.LOAD_CLIENT_STATISTIC_SUCCESS:
-            const totals = action.result.totals.map(x => {
-                return {
-                    vip: x['VIP'],
-                    reserves: x['Reserves'],
-                    orders: x['Orders'],
-                    requests: action.result.statistic.filter(el => el.vip === x['VIP']).length,
-                    succeeded: action.result.statistic.filter(el => el.vip === x['VIP'] && el.success).length,
+            const totals = new Map();
+            action.result.totals.forEach((el) => {
+                totals.set(el['VIP'], {
+                    vip: el['VIP'],
+                    reserves: el['Reserves'],
+                    orders: el['Orders'],
+                    requests: 0,
+                    succeeded: 0,
+                })
+            });
+
+            action.result.statistic.forEach((el) => {
+                if (totals.has(el.vip)) {
+                    const old = totals.get(el.vip);
+                    totals.set(el.vip, {
+                        vip: el.vip,
+                        reserves: old.reserves,
+                        orders: old.orders,
+                        requests: old.requests + 1,
+                        succeeded: el.success ? old.succeeded + 1 : old.succeeded
+                    })
+                } else {
+                    totals.set(el.vip, {
+                        vip: el.vip,
+                        reserves: 0,
+                        orders: 0,
+                        requests: 1,
+                        succeeded: el.success ? 1 : 0
+                    })
                 }
             });
+
             return {
                 ...state,
-                clientStatistic: totals.filter(el => el.requests > 0),
+                clientStatistic: [...totals.values()],
                 statisticByClient: action.result.statistic,
                 queryStatistic: {
                     orderTotal: action.result.totals.reduce((a, b) => a + b['Orders'], 0),
