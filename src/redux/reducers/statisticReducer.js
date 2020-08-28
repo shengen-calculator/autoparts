@@ -43,7 +43,7 @@ export default function statisticReducer(state = initialState.statistic, action)
 
             return {
                 ...state,
-                clientStatistic: [...totals.values()],
+                clientStatistic: [...totals.values()].filter(el => el.requests > 0),
                 statisticByClient: action.result.statistic,
                 queryStatistic: {
                     orderTotal: action.result.totals.reduce((a, b) => a + b['Orders'], 0),
