@@ -41,6 +41,7 @@ const getClientStatistic = async (data, context) => {
                     number: x.number,
                     query: x.query,
                     available: x.available,
+                    success: x.success,
                     date: `${day}-${month}-${year }`
                 }
             }),
