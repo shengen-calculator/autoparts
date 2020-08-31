@@ -36,7 +36,7 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
                     <div className={classes.contentWrapper}>
                         {isTableShown ?
                             (debtAmount > 0) ?
-                                <PaymentTable payments={client.payments} debt={debtAmount}/> :
+                                <PaymentTable payments={client.payments} debt={debtAmount} isEuroClient={client.isEuroClient}/> :
                                 <Typography className={classes.advance} align="center">
                                     {`На Вашому рахунку: ${formatCurrency(Math.abs(debtAmount), client.isEuroClient ? 'EUR' : 'UAH')}`}
                                 </Typography>
