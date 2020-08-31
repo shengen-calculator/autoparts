@@ -2,6 +2,7 @@ import EnhancedTable from "../EnhancedTable";
 import React from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import {formatCurrency} from "../../../util/Formatter";
 
 const headCells = [
     { id: 'date', numeric: false, disablePadding: false, label: 'Дата' },
@@ -43,7 +44,7 @@ function PaymentTable(props) {
             rows={payments}
             headCells={headCells}
             tableRow={tableRow}
-            title={`Загальний борг: ${props.debt}`}
+            title={`Загальний борг: ${formatCurrency(props.debt, props.isEuroClient ? 'EUR' : 'UAH')}`}
             columns={2}
             isFilterShown={false}
             rowsPerPageOptions={[10, 15, 25]}
