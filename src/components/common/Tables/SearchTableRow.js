@@ -91,17 +91,17 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
             <TableCell width="5%" align="center" name="info" style={pointer}>
                 <HtmlTooltip placement="top-start" title={
                     <React.Fragment>
-                        {row['supplierName'] && <div>Постачальник:
+                        {row['supplierName'] && <div>Дистриб'ютор:
                             <Typography color="inherit" style={bolder}>{row['supplierName']}</Typography>
                         </div>}
-                        {row['warehouseName'] && <div>Склад:
+                        {row['warehouseName'] && <div>Місцезнаходження товару:
                             <Typography color="inherit" style={bolder}>{row['warehouseName']}</Typography>
                         </div>}
                         Час формування замовлення:
                         <Typography color="inherit">{row['orderTime']}</Typography>
-                        Час прийому товару:
+                        Час прийому товару у нас:
                         <Typography color="inherit">{row['arrivalTime']}</Typography>
-                        Дата оновлення:
+                        Дата оновлення прайсу:
                         <Typography color="inherit">{row.date}</Typography>
                     </React.Fragment>
                 }>
