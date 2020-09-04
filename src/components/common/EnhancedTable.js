@@ -63,7 +63,8 @@ export default function EnhancedTable(props) {
         isStickyHeader,
         maxTableHeight,
         initialOrder,
-        initialOrderBy
+        initialOrderBy,
+        noRecordsMessage
     } = props;
 
     const classes = useStyles();
@@ -142,7 +143,7 @@ export default function EnhancedTable(props) {
                         </Table>
                     </TableContainer> :
                     <Typography color="textSecondary" align="center">
-                        Інформація відсутня
+                        {noRecordsMessage ? noRecordsMessage : "Інформація відсутня"}
                     </Typography>
                 }
                 {!isPaginationDisabled && <TablePagination

@@ -167,6 +167,7 @@ export default function OrderTable(props) {
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={true}
                 isPaginationDisabled={true}
+                noRecordsMessage="Замовлення відсутні"
             />
             <DeleteOrdersDialog isOpened={isDeleteConfirmationOpened}
                                 onDelete={handleDeleteClick}

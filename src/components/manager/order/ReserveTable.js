@@ -130,6 +130,7 @@ export default function ReserveTable(props) {
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={true}
                 isPaginationDisabled={true}
+                noRecordsMessage="Позиції готові до відвантаження відсутні"
             />
             <DeleteReservesDialog isOpened={isDeleteConfirmationOpened}
                                   onDelete={handleDeleteClick}
