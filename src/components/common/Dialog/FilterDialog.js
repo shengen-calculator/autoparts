@@ -6,29 +6,38 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Select from 'react-select';
 import {makeStyles} from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     dialog: {
-        minHeight: 240
+        minHeight: 340
     }
 }));
 
 function FilterDialog(props) {
-    const {isOpened, onClose, onFilter, brands} = props;
+    const {isOpened, onClose, onFilter, brands, cities} = props;
     const classes = useStyles();
     const [filter, setFilter] = React.useState({
-        selectedBrands: []
+        selectedBrands: [],
+        selectedCities: []
     });
 
     const handleChangeBrandFilter = selectedOption => {
-        setFilter({selectedBrands: selectedOption});
+        setFilter({...filter, selectedBrands: selectedOption});
+    };
+    const handleChangeCityFilter = selectedOption => {
+        setFilter({...filter, selectedCities: selectedOption});
     };
     const handleReset = () => {
-        setFilter({selectedBrands: []});
+        setFilter({ selectedBrands: [], selectedCities: []});
     };
     const onSubmit = (event) => {
         event.preventDefault();
-        onFilter({brands: filter.selectedBrands});
+        onFilter({
+            brands: filter.selectedBrands ? filter.selectedBrands : [],
+            cities: filter.selectedCities ? filter.selectedCities : []
+        });
     };
 
     return (
@@ -37,16 +46,36 @@ function FilterDialog(props) {
                 <DialogTitle id="form-dialog-title">Фільтрувати аналоги артикула за параметрами</DialogTitle>
                 <form onSubmit={onSubmit}>
                     <DialogContent className={classes.dialog}>
-                        <Select
-                            value={filter.selectedBrands}
-                            onChange={handleChangeBrandFilter}
-                            maxMenuHeight={150}
-                            options={brands ? brands.map(x => {
-                                return {value: x, label: x}
-                            }) : []}
-                            isMulti
-                        />
-                        <br/>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <Typography color="secondary">
+                                    Бренд
+                                </Typography>
+                                <Select
+                                    value={filter.selectedBrands}
+                                    onChange={handleChangeBrandFilter}
+                                    maxMenuHeight={130}
+                                    options={brands ? brands.map(x => {
+                                        return {value: x, label: x}
+                                    }) : []}
+                                    isMulti
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography color="secondary">
+                                    Місто
+                                </Typography>
+                                <Select
+                                    value={filter.selectedCities}
+                                    onChange={handleChangeCityFilter}
+                                    maxMenuHeight={130}
+                                    options={cities ? cities.map(x => {
+                                        return {value: x, label: x}
+                                    }) : []}
+                                    isMulti
+                                />
+                            </Grid>
+                        </Grid>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={onClose} color="primary">
