@@ -3,7 +3,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import React from "react";
 
 function FilterDialog(props) {
-    const {isOpened, onClose} = props;
+    const {isOpened, onClose, brands} = props;
 
     return (
         <div>

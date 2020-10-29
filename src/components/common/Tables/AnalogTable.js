@@ -13,7 +13,8 @@ export default function AnalogTable(props) {
         selected: {}
     });
     const [filterDialog, setFilterDialog] = React.useState({
-        isOpened: false
+        isOpened: false,
+        brands: []
     });
 
     const handleCancelOrderClick = () => {
@@ -35,8 +36,10 @@ export default function AnalogTable(props) {
     };
 
     const handleFilterClick = () => {
+
         setFilterDialog({
-            isOpened: true
+            isOpened: true,
+            brands: [...new Set(props.rows.map(item => item.brand))].sort()
         });
     };
     const handleCancelFilterClick = () => {
@@ -73,6 +76,7 @@ export default function AnalogTable(props) {
                          onClose={handleCancelOrderClick}
             />
             <FilterDialog isOpened={filterDialog.isOpened}
+                          brands={filterDialog.brands}
                           onClose={handleCancelFilterClick}
             />
         </React.Fragment>
