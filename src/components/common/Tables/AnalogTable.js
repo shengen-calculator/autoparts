@@ -14,6 +14,7 @@ export default function AnalogTable(props) {
     });
     const [filterDialog, setFilterDialog] = React.useState({
         isOpened: false,
+        selectedBrands: [],
         brands: []
     });
 
@@ -23,10 +24,19 @@ export default function AnalogTable(props) {
         });
     };
 
-    const handleFilterApplyClick = () => {
+    const handleFilterApplyClick = (selected) => {
         setFilterDialog({
-            isOpened: false
+            ...filterDialog,
+            isOpened: false,
+            selectedBrands: selected.brands.map(x => x.value)
         });
+    };
+
+    const getFilteredRows = () => {
+        if(filterDialog.selectedBrands.length > 0) {
+            return props.rows.filter(f => filterDialog.selectedBrands.includes(f.brand));
+        }
+        return props.rows;
     };
 
     const handleClick = (event, name) => {
@@ -43,13 +53,14 @@ export default function AnalogTable(props) {
 
     const handleFilterClick = () => {
         setFilterDialog({
+            ...filterDialog,
             isOpened: true,
             brands: [...new Set(props.rows.map(item => item.brand))].sort()
         });
     };
     const handleCancelFilterClick = () => {
         setFilterDialog({
-            isOpened: false
+            ...filterDialog, isOpened: false
         });
     };
 
@@ -61,7 +72,7 @@ export default function AnalogTable(props) {
     return(
         <React.Fragment>
             <EnhancedTable
-                rows={props.rows}
+                rows={getFilteredRows()}
                 handleClick={handleClick}
                 headCells={headCells}
                 role={props.role}

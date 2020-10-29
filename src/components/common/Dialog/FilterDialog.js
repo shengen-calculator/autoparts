@@ -28,7 +28,7 @@ function FilterDialog(props) {
     };
     const onSubmit = (event) => {
         event.preventDefault();
-        onFilter(filter.selectedBrands);
+        onFilter({brands: filter.selectedBrands});
     };
 
     return (
