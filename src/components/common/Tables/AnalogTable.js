@@ -23,6 +23,12 @@ export default function AnalogTable(props) {
         });
     };
 
+    const handleFilterApplyClick = () => {
+        setFilterDialog({
+            isOpened: false
+        });
+    };
+
     const handleClick = (event, name) => {
         if (event.target.getAttribute("name") === "order" ||
             (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Client)) {
@@ -36,7 +42,6 @@ export default function AnalogTable(props) {
     };
 
     const handleFilterClick = () => {
-
         setFilterDialog({
             isOpened: true,
             brands: [...new Set(props.rows.map(item => item.brand))].sort()
@@ -77,6 +82,7 @@ export default function AnalogTable(props) {
             />
             <FilterDialog isOpened={filterDialog.isOpened}
                           brands={filterDialog.brands}
+                          onFilter={handleFilterApplyClick}
                           onClose={handleCancelFilterClick}
             />
         </React.Fragment>

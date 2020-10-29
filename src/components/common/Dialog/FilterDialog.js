@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function FilterDialog(props) {
-    const {isOpened, onClose, brands} = props;
+    const {isOpened, onClose, onFilter, brands} = props;
     const classes = useStyles();
     const [filter, setFilter] = React.useState({
         selectedBrands: []
@@ -23,29 +23,43 @@ function FilterDialog(props) {
     const handleChangeBrandFilter = selectedOption => {
         setFilter({selectedBrands: selectedOption});
     };
+    const handleReset = () => {
+        setFilter({selectedBrands: []});
+    };
+    const onSubmit = (event) => {
+        event.preventDefault();
+        onFilter(filter.selectedBrands);
+    };
 
     return (
         <div>
             <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose} maxWidth="xl">
                 <DialogTitle id="form-dialog-title">Фільтрувати аналоги артикула за параметрами</DialogTitle>
-                <DialogContent className={classes.dialog}>
-                    <Select
-                        value={filter.selectedBrands}
-                        onChange={handleChangeBrandFilter}
-                        maxMenuHeight={150}
-                        options={brands ? brands.map(x => {return{value: x, label: x}}) : []}
-                        isMulti
-                    />
-                    <br/>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onClose} color="primary">
-                        Відміна
-                    </Button>
-                    <Button type="submit" color="primary">
-                        Фільтрувати
-                    </Button>
-                </DialogActions>
+                <form onSubmit={onSubmit}>
+                    <DialogContent className={classes.dialog}>
+                        <Select
+                            value={filter.selectedBrands}
+                            onChange={handleChangeBrandFilter}
+                            maxMenuHeight={150}
+                            options={brands ? brands.map(x => {
+                                return {value: x, label: x}
+                            }) : []}
+                            isMulti
+                        />
+                        <br/>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={onClose} color="primary">
+                            Відміна
+                        </Button>
+                        <Button onClick={handleReset} color="primary">
+                            Скинути
+                        </Button>
+                        <Button type="submit" color="primary">
+                            Застосувати
+                        </Button>
+                    </DialogActions>
+                </form>
             </Dialog>
         </div>
     );
