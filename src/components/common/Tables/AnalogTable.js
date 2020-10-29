@@ -2,13 +2,18 @@ import React from 'react';
 import EnhancedTable from '../EnhancedTable';
 import SearchTableRow, {headCells} from './SearchTableRow';
 import OrderDialog from "../Dialog/OrderDialog";
+import FilterDialog from "../Dialog/FilterDialog";
 import {RoleEnum} from "../../../util/Enums";
+
 
 
 export default function AnalogTable(props) {
     const [orderDialog, setOrderDialog] = React.useState({
         isOpened: false,
         selected: {}
+    });
+    const [filterDialog, setFilterDialog] = React.useState({
+        isOpened: false
     });
 
     const handleCancelOrderClick = () => {
@@ -29,6 +34,17 @@ export default function AnalogTable(props) {
         }
     };
 
+    const handleFilterClick = () => {
+        setFilterDialog({
+            isOpened: true
+        });
+    };
+    const handleCancelFilterClick = () => {
+        setFilterDialog({
+            isOpened: false
+        });
+    };
+
     const rowsPerPageOptions = [15, 25, 50];
     if(props.rows.length < rowsPerPageOptions[0]) {
         rowsPerPageOptions.splice(0, 1, props.rows.length)
@@ -46,7 +62,8 @@ export default function AnalogTable(props) {
                 isEur={props.isEur}
                 title={`Аналоги артикула ${props.criteria} під замовлення`}
                 columns={10}
-                isFilterShown={false}
+                isFilterShown={true}
+                handleFilterClick={handleFilterClick}
                 rowsPerPageOptions={rowsPerPageOptions}
                 isRowSelectorShown={false}
             />
@@ -54,6 +71,9 @@ export default function AnalogTable(props) {
                          selected={orderDialog.selected}
                          inOrder={props.inOrder}
                          onClose={handleCancelOrderClick}
+            />
+            <FilterDialog isOpened={filterDialog.isOpened}
+                          onClose={handleCancelFilterClick}
             />
         </React.Fragment>
 

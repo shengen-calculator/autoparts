@@ -51,7 +51,7 @@ const useToolbarStyles = makeStyles(theme => ({
 
 export const EnhancedTableToolbar = props => {
     const classes = useToolbarStyles();
-    const { numSelected, title, titleIcon, total, isFilterShown, isRowSelectorShown, onDelete } = props;
+    const { numSelected, title, titleIcon, total, isFilterShown, isRowSelectorShown, onDelete, onFilter } = props;
 
     return (
         <Toolbar
@@ -95,9 +95,9 @@ export const EnhancedTableToolbar = props => {
             {
                 numSelected === 0 && isFilterShown &&
                 <Tooltip title="Filter list">
-                <IconButton aria-label="filter list">
-                <FilterListIcon />
-                </IconButton>
+                    <IconButton aria-label="filter list" onClick={onFilter}>
+                        <FilterListIcon/>
+                    </IconButton>
                 </Tooltip>
             }
         </Toolbar>
