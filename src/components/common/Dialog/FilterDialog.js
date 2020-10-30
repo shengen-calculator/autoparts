@@ -8,6 +8,7 @@ import Select from 'react-select';
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import {QualityEnum} from "../../../util/Enums";
 
 const useStyles = makeStyles(() => ({
     dialog: {
@@ -73,14 +74,14 @@ function FilterDialog(props) {
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography color="secondary">
-                                    Місто
+                                    Якість
                                 </Typography>
                                 <Select
-                                    value={filter.selectedCities}
-                                    onChange={handleChangeCityFilter}
+                                    value={filter.selectedQualities}
+                                    onChange={handleChangeQualityFilter}
                                     maxMenuHeight={130}
-                                    options={cities ? cities.map(x => {
-                                        return {value: x, label: x}
+                                    options={qualities ? qualities.map(x => {
+                                        return {value: x, label: QualityEnum[x]}
                                     }) : []}
                                     isMulti
                                 />
@@ -101,13 +102,13 @@ function FilterDialog(props) {
                             </Grid>
                             <Grid item xs={6}>
                                 <Typography color="secondary">
-                                    Якість
+                                    Міcце знаходження
                                 </Typography>
                                 <Select
-                                    value={filter.selectedQualities}
-                                    onChange={handleChangeQualityFilter}
+                                    value={filter.selectedCities}
+                                    onChange={handleChangeCityFilter}
                                     maxMenuHeight={75}
-                                    options={qualities ? qualities.map(x => {
+                                    options={cities ? cities.map(x => {
                                         return {value: x, label: x}
                                     }) : []}
                                     isMulti
