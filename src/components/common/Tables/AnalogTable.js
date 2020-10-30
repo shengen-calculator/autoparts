@@ -16,8 +16,10 @@ export default function AnalogTable(props) {
         isOpened: false,
         selectedBrands: [],
         selectedCities: [],
+        selectedTerms: [],
         brands: [],
-        cities: []
+        cities: [],
+        terms: []
     });
 
     const handleCancelOrderClick = () => {
@@ -31,7 +33,8 @@ export default function AnalogTable(props) {
             ...filterDialog,
             isOpened: false,
             selectedBrands: selected.brands.map(x => x.value),
-            selectedCities: selected.cities.map(x => x.value)
+            selectedCities: selected.cities.map(x => x.value),
+            selectedTerms: selected.terms.map(x => x.value)
         });
     };
 
@@ -42,6 +45,9 @@ export default function AnalogTable(props) {
         }
         if(filterDialog.selectedCities.length > 0) {
             rows = rows.filter(f => filterDialog.selectedCities.includes(f['warehouseName']));
+        }
+        if(filterDialog.selectedTerms.length > 0) {
+            rows = rows.filter(f => filterDialog.selectedTerms.includes(f['term']));
         }
         return rows;
     };
@@ -63,7 +69,8 @@ export default function AnalogTable(props) {
             ...filterDialog,
             isOpened: true,
             brands: [...new Set(props.rows.map(item => item.brand))].sort(),
-            cities: [...new Set(props.rows.map(item => item['warehouseName']))].sort()
+            cities: [...new Set(props.rows.map(item => item['warehouseName']))].sort(),
+            terms: [...new Set(props.rows.map(item => item['term']))].sort()
         });
     };
     const handleCancelFilterClick = () => {
@@ -102,6 +109,7 @@ export default function AnalogTable(props) {
             <FilterDialog isOpened={filterDialog.isOpened}
                           brands={filterDialog.brands}
                           cities={filterDialog.cities}
+                          terms={filterDialog.terms}
                           onFilter={handleFilterApplyClick}
                           onClose={handleCancelFilterClick}
             />

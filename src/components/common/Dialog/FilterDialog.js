@@ -16,11 +16,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 function FilterDialog(props) {
-    const {isOpened, onClose, onFilter, brands, cities} = props;
+    const {isOpened, onClose, onFilter, brands, cities, terms} = props;
     const classes = useStyles();
     const [filter, setFilter] = React.useState({
         selectedBrands: [],
-        selectedCities: []
+        selectedCities: [],
+        selectedTerms: []
     });
 
     const handleChangeBrandFilter = selectedOption => {
@@ -29,14 +30,18 @@ function FilterDialog(props) {
     const handleChangeCityFilter = selectedOption => {
         setFilter({...filter, selectedCities: selectedOption});
     };
+    const handleChangeTermFilter = selectedOption => {
+        setFilter({...filter, selectedTerms: selectedOption});
+    };
     const handleReset = () => {
-        setFilter({ selectedBrands: [], selectedCities: []});
+        setFilter({ selectedBrands: [], selectedCities: [], selectedTerms: []});
     };
     const onSubmit = (event) => {
         event.preventDefault();
         onFilter({
             brands: filter.selectedBrands ? filter.selectedBrands : [],
-            cities: filter.selectedCities ? filter.selectedCities : []
+            cities: filter.selectedCities ? filter.selectedCities : [],
+            terms: filter.selectedTerms ? filter.selectedTerms : []
         });
     };
 
@@ -70,6 +75,20 @@ function FilterDialog(props) {
                                     onChange={handleChangeCityFilter}
                                     maxMenuHeight={130}
                                     options={cities ? cities.map(x => {
+                                        return {value: x, label: x}
+                                    }) : []}
+                                    isMulti
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography color="secondary">
+                                    Термін
+                                </Typography>
+                                <Select
+                                    value={filter.selectedTerms}
+                                    onChange={handleChangeTermFilter}
+                                    maxMenuHeight={75}
+                                    options={terms ? terms.map(x => {
                                         return {value: x, label: x}
                                     }) : []}
                                     isMulti
