@@ -17,6 +17,8 @@ export default function AnalogTable(props) {
         selectedBrands: [],
         selectedCities: [],
         selectedTerms: [],
+        selectedQualities: [],
+        qualities: [],
         brands: [],
         cities: [],
         terms: []
@@ -34,7 +36,8 @@ export default function AnalogTable(props) {
             isOpened: false,
             selectedBrands: selected.brands.map(x => x.value),
             selectedCities: selected.cities.map(x => x.value),
-            selectedTerms: selected.terms.map(x => x.value)
+            selectedTerms: selected.terms.map(x => x.value),
+            selectedQualities: selected.qualities.map(x => x.value)
         });
     };
 
@@ -48,6 +51,9 @@ export default function AnalogTable(props) {
         }
         if(filterDialog.selectedTerms.length > 0) {
             rows = rows.filter(f => filterDialog.selectedTerms.includes(f['term']));
+        }
+        if(filterDialog.selectedQualities.length > 0) {
+            rows = rows.filter(f => filterDialog.selectedQualities.includes(f.quality));
         }
         return rows;
     };
@@ -70,7 +76,8 @@ export default function AnalogTable(props) {
             isOpened: true,
             brands: [...new Set(props.rows.map(item => item.brand))].sort(),
             cities: [...new Set(props.rows.map(item => item['warehouseName']))].sort(),
-            terms: [...new Set(props.rows.map(item => item['term']))].sort()
+            terms: [...new Set(props.rows.map(item => item['term']))].sort(),
+            qualities: [...new Set(props.rows.map(item => item.quality))].sort()
         });
     };
     const handleCancelFilterClick = () => {
@@ -110,6 +117,7 @@ export default function AnalogTable(props) {
                           brands={filterDialog.brands}
                           cities={filterDialog.cities}
                           terms={filterDialog.terms}
+                          qualities={filterDialog.qualities}
                           onFilter={handleFilterApplyClick}
                           onClose={handleCancelFilterClick}
             />

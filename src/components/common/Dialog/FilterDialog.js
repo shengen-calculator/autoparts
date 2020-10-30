@@ -16,12 +16,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 function FilterDialog(props) {
-    const {isOpened, onClose, onFilter, brands, cities, terms} = props;
+    const {isOpened, onClose, onFilter, brands, cities, terms, qualities} = props;
     const classes = useStyles();
     const [filter, setFilter] = React.useState({
         selectedBrands: [],
         selectedCities: [],
-        selectedTerms: []
+        selectedTerms: [],
+        selectedQualities: []
     });
 
     const handleChangeBrandFilter = selectedOption => {
@@ -33,15 +34,19 @@ function FilterDialog(props) {
     const handleChangeTermFilter = selectedOption => {
         setFilter({...filter, selectedTerms: selectedOption});
     };
+    const handleChangeQualityFilter = selectedOption => {
+        setFilter({...filter, selectedQualities: selectedOption});
+    };
     const handleReset = () => {
-        setFilter({ selectedBrands: [], selectedCities: [], selectedTerms: []});
+        setFilter({ selectedBrands: [], selectedCities: [], selectedTerms: [], selectedQualities: []});
     };
     const onSubmit = (event) => {
         event.preventDefault();
         onFilter({
             brands: filter.selectedBrands ? filter.selectedBrands : [],
             cities: filter.selectedCities ? filter.selectedCities : [],
-            terms: filter.selectedTerms ? filter.selectedTerms : []
+            terms: filter.selectedTerms ? filter.selectedTerms : [],
+            qualities: filter.selectedQualities ? filter.selectedQualities: []
         });
     };
 
@@ -80,7 +85,7 @@ function FilterDialog(props) {
                                     isMulti
                                 />
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={6}>
                                 <Typography color="secondary">
                                     Термін
                                 </Typography>
@@ -89,6 +94,20 @@ function FilterDialog(props) {
                                     onChange={handleChangeTermFilter}
                                     maxMenuHeight={75}
                                     options={terms ? terms.map(x => {
+                                        return {value: x, label: x}
+                                    }) : []}
+                                    isMulti
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Typography color="secondary">
+                                    Якість
+                                </Typography>
+                                <Select
+                                    value={filter.selectedQualities}
+                                    onChange={handleChangeQualityFilter}
+                                    maxMenuHeight={75}
+                                    options={qualities ? qualities.map(x => {
                                         return {value: x, label: x}
                                     }) : []}
                                     isMulti
