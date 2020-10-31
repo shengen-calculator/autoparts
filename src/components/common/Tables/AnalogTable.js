@@ -120,6 +120,7 @@ export default function AnalogTable(props) {
                           qualities={filterDialog.qualities}
                           onFilter={handleFilterApplyClick}
                           onClose={handleCancelFilterClick}
+                          role={props.role}
             />
         </React.Fragment>
 

@@ -8,16 +8,19 @@ import Select from 'react-select';
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {QualityEnum} from "../../../util/Enums";
+import {QualityEnum, RoleEnum} from "../../../util/Enums";
 
 const useStyles = makeStyles(() => ({
     dialog: {
         minHeight: 340
+    },
+    managerDialog: {
+        minHeight: 425
     }
 }));
 
 function FilterDialog(props) {
-    const {isOpened, onClose, onFilter, brands, cities, terms, qualities} = props;
+    const {isOpened, onClose, role, onFilter, brands, cities, terms, qualities} = props;
     const classes = useStyles();
     const [filter, setFilter] = React.useState({
         selectedBrands: [],
@@ -39,7 +42,7 @@ function FilterDialog(props) {
         setFilter({...filter, selectedQualities: selectedOption});
     };
     const handleReset = () => {
-        setFilter({ selectedBrands: [], selectedCities: [], selectedTerms: [], selectedQualities: []});
+        setFilter({selectedBrands: [], selectedCities: [], selectedTerms: [], selectedQualities: []});
     };
     const onSubmit = (event) => {
         event.preventDefault();
@@ -47,7 +50,7 @@ function FilterDialog(props) {
             brands: filter.selectedBrands ? filter.selectedBrands : [],
             cities: filter.selectedCities ? filter.selectedCities : [],
             terms: filter.selectedTerms ? filter.selectedTerms : [],
-            qualities: filter.selectedQualities ? filter.selectedQualities: []
+            qualities: filter.selectedQualities ? filter.selectedQualities : []
         });
     };
 
@@ -56,8 +59,23 @@ function FilterDialog(props) {
             <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose} maxWidth="xl">
                 <DialogTitle id="form-dialog-title">Фільтрувати аналоги артикула за параметрами</DialogTitle>
                 <form onSubmit={onSubmit}>
-                    <DialogContent className={classes.dialog}>
+                    <DialogContent className={role === RoleEnum.Manager ? classes.managerDialog : classes.dialog}>
                         <Grid container spacing={3}>
+                            {role === RoleEnum.Manager &&
+                            <Grid item xs={12}>
+                                <Typography color="secondary">
+                                    Постачальник
+                                </Typography>
+                                <Select
+                                    value={filter.selectedBrands}
+                                    onChange={handleChangeBrandFilter}
+                                    maxMenuHeight={130}
+                                    options={brands ? brands.map(x => {
+                                        return {value: x, label: x}
+                                    }) : []}
+                                    isMulti
+                                />
+                            </Grid>}
                             <Grid item xs={12}>
                                 <Typography color="secondary">
                                     Бренд
