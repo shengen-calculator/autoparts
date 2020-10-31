@@ -20,12 +20,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 function FilterDialog(props) {
-    const {isOpened, onClose, role, onFilter, brands, cities, terms, qualities} = props;
+    const {isOpened, onClose, role, onFilter, brands, cities, terms, qualities, vendors} = props;
     const classes = useStyles();
     const [filter, setFilter] = React.useState({
         selectedBrands: [],
         selectedCities: [],
         selectedTerms: [],
+        selectedVendors: [],
         selectedQualities: []
     });
 
@@ -41,8 +42,11 @@ function FilterDialog(props) {
     const handleChangeQualityFilter = selectedOption => {
         setFilter({...filter, selectedQualities: selectedOption});
     };
+    const handleChangeVendorFilter = selectedOption => {
+        setFilter({...filter, selectedVendors: selectedOption});
+    };
     const handleReset = () => {
-        setFilter({selectedBrands: [], selectedCities: [], selectedTerms: [], selectedQualities: []});
+        setFilter({selectedBrands: [], selectedCities: [], selectedTerms: [], selectedQualities: [], selectedVendors: []});
     };
     const onSubmit = (event) => {
         event.preventDefault();
@@ -50,6 +54,7 @@ function FilterDialog(props) {
             brands: filter.selectedBrands ? filter.selectedBrands : [],
             cities: filter.selectedCities ? filter.selectedCities : [],
             terms: filter.selectedTerms ? filter.selectedTerms : [],
+            vendors: filter.selectedVendors ? filter.selectedVendors : [],
             qualities: filter.selectedQualities ? filter.selectedQualities : []
         });
     };
@@ -67,10 +72,10 @@ function FilterDialog(props) {
                                     Постачальник
                                 </Typography>
                                 <Select
-                                    value={filter.selectedBrands}
-                                    onChange={handleChangeBrandFilter}
+                                    value={filter.selectedVendors}
+                                    onChange={handleChangeVendorFilter}
                                     maxMenuHeight={130}
-                                    options={brands ? brands.map(x => {
+                                    options={vendors ? vendors.map(x => {
                                         return {value: x, label: x}
                                     }) : []}
                                     isMulti

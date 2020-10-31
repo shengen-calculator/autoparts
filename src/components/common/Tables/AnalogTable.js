@@ -15,10 +15,12 @@ export default function AnalogTable(props) {
     const [filterDialog, setFilterDialog] = React.useState({
         isOpened: false,
         selectedBrands: [],
+        selectedVendors: [],
         selectedCities: [],
         selectedTerms: [],
         selectedQualities: [],
         qualities: [],
+        vendors:[],
         brands: [],
         cities: [],
         terms: []
@@ -37,6 +39,7 @@ export default function AnalogTable(props) {
             selectedBrands: selected.brands.map(x => x.value),
             selectedCities: selected.cities.map(x => x.value),
             selectedTerms: selected.terms.map(x => x.value),
+            selectedVendors: selected.vendors.map(x => x.value),
             selectedQualities: selected.qualities.map(x => x.value)
         });
     };
@@ -54,6 +57,9 @@ export default function AnalogTable(props) {
         }
         if(filterDialog.selectedQualities.length > 0) {
             rows = rows.filter(f => filterDialog.selectedQualities.includes(f.quality));
+        }
+        if(filterDialog.selectedVendors.length > 0) {
+            rows = rows.filter(f => filterDialog.selectedVendors.includes(f.vendor));
         }
         return rows;
     };
@@ -77,6 +83,7 @@ export default function AnalogTable(props) {
             brands: [...new Set(props.rows.map(item => item.brand))].sort(),
             cities: [...new Set(props.rows.map(item => item['warehouseName']))].sort(),
             terms: [...new Set(props.rows.map(item => item['term']))].sort(),
+            vendors: [...new Set(props.rows.map(item => item.vendor))].sort(),
             qualities: [...new Set(props.rows.map(item => item.quality))].sort()
         });
     };
@@ -114,6 +121,7 @@ export default function AnalogTable(props) {
                          onClose={handleCancelOrderClick}
             />
             <FilterDialog isOpened={filterDialog.isOpened}
+                          vendors={filterDialog.vendors}
                           brands={filterDialog.brands}
                           cities={filterDialog.cities}
                           terms={filterDialog.terms}
