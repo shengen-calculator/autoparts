@@ -10,3 +10,11 @@ export const RoleEnum = Object.freeze({
     "Client": 1,
     "Manager": 2
 });
+
+export const QualityEnum = Object.freeze({
+    0: "оригінал",
+    1: "відмінна",
+    2: "середня",
+    3: "сумнівна",
+    4: "не відомо"
+});

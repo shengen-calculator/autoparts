@@ -24,6 +24,7 @@ BEGIN
 		,TRIM([Номер запчасти]) AS number
         ,SupplierName AS supplierName
         ,WarehouseName AS warehouseName
+        ,Quality AS quality
 		,Цена * ' + STR(dbo.GetUahRate(), 9, 2) + N' AS retail
 		,Цена AS retailEur
 		,' + dbo.GetClientPriceColumn(@clientId) + N' AS costEur

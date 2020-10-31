@@ -53,6 +53,7 @@ export default function EnhancedTable(props) {
         role,
         isPriceShown,
         isFilterShown,
+        handleFilterClick,
         isPaginationDisabled,
         rowsPerPageOptions,
         handleClick,
@@ -99,6 +100,7 @@ export default function EnhancedTable(props) {
                     numSelected={selected.length}
                     title={title}
                     onDelete={onDelete}
+                    onFilter={handleFilterClick}
                     titleIcon={titleIcon}
                     total={total}
                     isFilterShown={isFilterShown}
