@@ -1,4 +1,4 @@
-export default {
+const initialState = {
     authentication: {
         role: '',
         vip: '',
@@ -54,3 +54,4 @@ export default {
         isSearchPaused: false
     }
 };
+export default initialState;
