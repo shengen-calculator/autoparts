@@ -5,9 +5,9 @@ import OrderDialog from "../Dialog/OrderDialog";
 import FilterDialog from "../Dialog/FilterDialog";
 import {RoleEnum} from "../../../util/Enums";
 
-
-
 export default function AnalogTable(props) {
+
+
     const [orderDialog, setOrderDialog] = React.useState({
         isOpened: false,
         selected: {}
@@ -18,11 +18,11 @@ export default function AnalogTable(props) {
         selectedCities: [],
         selectedTerms: [],
         selectedQualities: [],
-        qualities: [],
-        vendors:[],
-        brands: [],
-        cities: [],
-        terms: []
+        brands: [...new Set(props.rows.map(item => item.brand))].sort(),
+        cities: [...new Set(props.rows.map(item => item['warehouseName']))].sort(),
+        terms: [...new Set(props.rows.map(item => item['term']))].sort(),
+        vendors: [...new Set(props.rows.map(item => item.vendor))].sort(),
+        qualities: [...new Set(props.rows.map(item => item.quality))].sort()
     });
 
     const handleCancelOrderClick = () => {
@@ -75,17 +75,6 @@ export default function AnalogTable(props) {
         }
     };
 
-    const handleFilterClick = () => {
-        setFilterDialog({
-            ...filterDialog,
-            brands: [...new Set(props.rows.map(item => item.brand))].sort(),
-            cities: [...new Set(props.rows.map(item => item['warehouseName']))].sort(),
-            terms: [...new Set(props.rows.map(item => item['term']))].sort(),
-            vendors: [...new Set(props.rows.map(item => item.vendor))].sort(),
-            qualities: [...new Set(props.rows.map(item => item.quality))].sort()
-        });
-        props.onOpenFilterClick();
-    };
     const handleCancelFilterClick = () => {
         props.closeDialog();
     };
@@ -108,7 +97,7 @@ export default function AnalogTable(props) {
                 title={`Аналоги артикула ${props.criteria} під замовлення`}
                 columns={10}
                 isFilterShown={true}
-                handleFilterClick={handleFilterClick}
+                handleFilterClick={props.onOpenFilterClick}
                 rowsPerPageOptions={rowsPerPageOptions}
                 isRowSelectorShown={false}
             />

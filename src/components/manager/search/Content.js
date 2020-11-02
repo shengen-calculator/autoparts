@@ -24,6 +24,7 @@ import StableSort from "../../../util/StableSort";
 import SearchContentStyle from "../../common/SearchContentStyle";
 import AnalogListDialog from "./dialog/AnalogListDialog";
 import {showToastrMessage} from "../../../redux/actions/messageActions";
+import {HotKeys} from "react-hotkeys";
 
 const styles = theme => SearchContentStyle(theme);
 
@@ -84,9 +85,12 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
     const closeFilterDialog = () => {
         setFilterDialog({isOpened: false});
     };
+    const handlers = {
+        OPEN_FILTER_DIALOG: onOpenFilterClick
+    };
 
     return (
-        <div className={classes.app}>
+        <HotKeys className={classes.app} handlers={handlers}>
             <Header onDrawerToggle={handleDrawerToggle}/>
             <Helmet>
                 <title>{title}</title>
@@ -129,7 +133,7 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
             </footer>
             <AnalogListDialog isOpened={isAnalogListDialogOpened}
                               onClose={handleCancelAnalogDialog}/>
-        </div>
+        </HotKeys>
     );
 }
 

@@ -23,6 +23,7 @@ import AnalogTable from "../../common/Tables/AnalogTable";
 import GroupedTable from "../../common/Tables/GroupedTable";
 import SearchContentStyle from "../../common/SearchContentStyle";
 import {showToastrMessage} from "../../../redux/actions/messageActions";
+import {HotKeys} from "react-hotkeys";
 
 const styles = theme => SearchContentStyle(theme);
 
@@ -61,52 +62,56 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
         isOpened: false
     });
     const onOpenFilterClick = () => {
-      setFilterDialog({isOpened: true});
+        setFilterDialog({isOpened: true});
     };
     const closeFilterDialog = () => {
         setFilterDialog({isOpened: false});
     };
+    const handlers = {
+        OPEN_FILTER_DIALOG: onOpenFilterClick
+    };
 
-    return (<div className={classes.app}>
-        <Header onDrawerToggle={handleDrawerToggle}/>
-        <Helmet>
-            <title>{title}</title>
-        </Helmet>
-        <main className={classes.main}>
-            {(product.products.length > 0 || product.productsGrouped.length || calls === 0) &&
-            <Paper className={classes.paper}>
-                <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
-                <div className={classes.contentWrapper}>
-                    {(product.productsGrouped.length === 0 && product.products.length === 0) ?
-                        <Typography color="textSecondary" align="center">
-                            Інформація відсутня
-                        </Typography> :
-                        <React.Fragment>
-                            {product.productsGrouped.length > 1 &&
-                            <GroupedTable rows={product.productsGrouped} role={auth.role}/>}
-                            {generalRows.length > 0 && <GeneralTable rows={StableSort(generalRows,
-                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
-                                                                     isPriceShown={client.isPriceShown}/>}
-                            {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
-                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
-                                                                   isPriceShown={client.isPriceShown}/>}
-                            {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
-                                (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
-                                                                   role={auth.role}
-                                                                   criteria={`${htmlDecode(brand)} ${numb}`}
-                                                                   isFilterOpened={filterDialog.isOpened}
-                                                                   onOpenFilterClick={onOpenFilterClick}
-                                                                   closeDialog={closeFilterDialog}
-                                                                   isPriceShown={client.isPriceShown}/>}
-                        </React.Fragment>
-                    }
-                </div>
-            </Paper>}
-        </main>
-        <footer className={classes.footer}>
-            <Copyright/>
-        </footer>
-    </div>);
+    return (
+        <HotKeys className={classes.app} handlers={handlers}>
+            <Header onDrawerToggle={handleDrawerToggle}/>
+            <Helmet>
+                <title>{title}</title>
+            </Helmet>
+            <main className={classes.main}>
+                {(product.products.length > 0 || product.productsGrouped.length || calls === 0) &&
+                <Paper className={classes.paper}>
+                    <AppBar className={classes.searchBar} position="static" color="default" elevation={0}/>
+                    <div className={classes.contentWrapper}>
+                        {(product.productsGrouped.length === 0 && product.products.length === 0) ?
+                            <Typography color="textSecondary" align="center">
+                                Інформація відсутня
+                            </Typography> :
+                            <React.Fragment>
+                                {product.productsGrouped.length > 1 &&
+                                <GroupedTable rows={product.productsGrouped} role={auth.role}/>}
+                                {generalRows.length > 0 && <GeneralTable rows={StableSort(generalRows,
+                                    (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
+                                                                         isPriceShown={client.isPriceShown}/>}
+                                {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
+                                    (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
+                                                                       isPriceShown={client.isPriceShown}/>}
+                                {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
+                                    (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
+                                                                       role={auth.role}
+                                                                       criteria={`${htmlDecode(brand)} ${numb}`}
+                                                                       isFilterOpened={filterDialog.isOpened}
+                                                                       onOpenFilterClick={onOpenFilterClick}
+                                                                       closeDialog={closeFilterDialog}
+                                                                       isPriceShown={client.isPriceShown}/>}
+                            </React.Fragment>
+                        }
+                    </div>
+                </Paper>}
+            </main>
+            <footer className={classes.footer}>
+                <Copyright/>
+            </footer>
+        </HotKeys>);
 }
 
 Content.propTypes = {
