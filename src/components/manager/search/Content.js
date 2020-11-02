@@ -75,6 +75,16 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
     const tables = getTables(brand, numb, `Fenix - Клієнт - ${client.vip}`, product.products);
     const {generalRows, vendorRows, analogRows, title} = tables;
 
+    const [filterDialog, setFilterDialog] = React.useState({
+        isOpened: false
+    });
+    const onOpenFilterClick = () => {
+        setFilterDialog({isOpened: true});
+    };
+    const closeFilterDialog = () => {
+        setFilterDialog({isOpened: false});
+    };
+
     return (
         <div className={classes.app}>
             <Header onDrawerToggle={handleDrawerToggle}/>
@@ -105,6 +115,9 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
                                                                        role={auth.role}
                                                                        criteria={`${htmlDecode(brand)} ${numb}`}
                                                                        isPriceShown={true} inOrder={product.inOrder}
+                                                                       isFilterOpened={filterDialog.isOpened}
+                                                                       onOpenFilterClick={onOpenFilterClick}
+                                                                       closeDialog={closeFilterDialog}
                                                                        onOpenAnalogDialog={openAnalogListDialog}/>}
                             </React.Fragment>
                         }

@@ -57,6 +57,16 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
     const tables = getTables(brand, numb, `Fenix - Клієнт`, product.products);
     const {generalRows, vendorRows, analogRows, title} = tables;
 
+    const [filterDialog, setFilterDialog] = React.useState({
+        isOpened: false
+    });
+    const onOpenFilterClick = () => {
+      setFilterDialog({isOpened: true});
+    };
+    const closeFilterDialog = () => {
+        setFilterDialog({isOpened: false});
+    };
+
     return (<div className={classes.app}>
         <Header onDrawerToggle={handleDrawerToggle}/>
         <Helmet>
@@ -84,6 +94,9 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
                                 (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
                                                                    role={auth.role}
                                                                    criteria={`${htmlDecode(brand)} ${numb}`}
+                                                                   isFilterOpened={filterDialog.isOpened}
+                                                                   onOpenFilterClick={onOpenFilterClick}
+                                                                   closeDialog={closeFilterDialog}
                                                                    isPriceShown={client.isPriceShown}/>}
                         </React.Fragment>
                     }

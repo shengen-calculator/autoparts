@@ -8,19 +8,25 @@ import {PersistGate} from 'redux-persist/integration/react'
 import configureStore from "./redux/configureStore";
 import { SnackbarProvider } from 'notistack';
 import ToastrMessage from "./components/common/ToastrMessage";
+import {HotKeys} from "react-hotkeys";
 
 
 const {store, persistent} = configureStore();
+const keyMap = {
+    OPEN_FILTER_DIALOG: "l"
+};
 ReactDOM.render(
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistent}>
-            <Router>
-                <SnackbarProvider maxSnack={3}>
-                    <App/>
-                    <ToastrMessage/>
-                </SnackbarProvider>
-            </Router>
-        </PersistGate>
+        <HotKeys keyMap={keyMap}>
+            <PersistGate loading={null} persistor={persistent}>
+                <Router>
+                    <SnackbarProvider maxSnack={3}>
+                        <App/>
+                        <ToastrMessage/>
+                    </SnackbarProvider>
+                </Router>
+            </PersistGate>
+        </HotKeys>
     </Provider>,
     document.getElementById('root'));
 

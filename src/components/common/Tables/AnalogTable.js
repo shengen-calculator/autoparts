@@ -13,7 +13,6 @@ export default function AnalogTable(props) {
         selected: {}
     });
     const [filterDialog, setFilterDialog] = React.useState({
-        isOpened: false,
         selectedBrands: [],
         selectedVendors: [],
         selectedCities: [],
@@ -35,13 +34,13 @@ export default function AnalogTable(props) {
     const handleFilterApplyClick = (selected) => {
         setFilterDialog({
             ...filterDialog,
-            isOpened: false,
             selectedBrands: selected.brands.map(x => x.value),
             selectedCities: selected.cities.map(x => x.value),
             selectedTerms: selected.terms.map(x => x.value),
             selectedVendors: selected.vendors.map(x => x.value),
             selectedQualities: selected.qualities.map(x => x.value)
         });
+        props.closeDialog()
     };
 
     const getFilteredRows = () => {
@@ -79,18 +78,16 @@ export default function AnalogTable(props) {
     const handleFilterClick = () => {
         setFilterDialog({
             ...filterDialog,
-            isOpened: true,
             brands: [...new Set(props.rows.map(item => item.brand))].sort(),
             cities: [...new Set(props.rows.map(item => item['warehouseName']))].sort(),
             terms: [...new Set(props.rows.map(item => item['term']))].sort(),
             vendors: [...new Set(props.rows.map(item => item.vendor))].sort(),
             qualities: [...new Set(props.rows.map(item => item.quality))].sort()
         });
+        props.onOpenFilterClick();
     };
     const handleCancelFilterClick = () => {
-        setFilterDialog({
-            ...filterDialog, isOpened: false
-        });
+        props.closeDialog();
     };
 
     const rowsPerPageOptions = [15, 25, 50];
@@ -120,7 +117,9 @@ export default function AnalogTable(props) {
                          inOrder={props.inOrder}
                          onClose={handleCancelOrderClick}
             />
-            <FilterDialog isOpened={filterDialog.isOpened}
+            <FilterDialog isOpened={props.isFilterOpened}
+                          onOpenFilter={props.onOpenFilterClick}
+                          closeDialog={props.closeDialog}
                           vendors={filterDialog.vendors}
                           brands={filterDialog.brands}
                           cities={filterDialog.cities}
