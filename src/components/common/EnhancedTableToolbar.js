@@ -94,7 +94,7 @@ export const EnhancedTableToolbar = props => {
             }
             {
                 numSelected === 0 && isFilterShown &&
-                <Tooltip title="Filter list">
+                <Tooltip title="Фільтр, можна також відкрити натиснувши клавішу - L" placement="top">
                     <IconButton aria-label="filter list" onClick={onFilter}>
                         <FilterListIcon/>
                     </IconButton>

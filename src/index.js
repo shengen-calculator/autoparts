@@ -13,7 +13,7 @@ import {HotKeys} from "react-hotkeys";
 
 const {store, persistent} = configureStore();
 const keyMap = {
-    OPEN_FILTER_DIALOG: "l"
+    OPEN_FILTER_DIALOG: ["l", "д"]
 };
 ReactDOM.render(
     <Provider store={store}>
