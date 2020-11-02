@@ -6,8 +6,6 @@ import FilterDialog from "../Dialog/FilterDialog";
 import {RoleEnum} from "../../../util/Enums";
 
 export default function AnalogTable(props) {
-
-
     const [orderDialog, setOrderDialog] = React.useState({
         isOpened: false,
         selected: {}
@@ -17,12 +15,7 @@ export default function AnalogTable(props) {
         selectedVendors: [],
         selectedCities: [],
         selectedTerms: [],
-        selectedQualities: [],
-        brands: [...new Set(props.rows.map(item => item.brand))].sort(),
-        cities: [...new Set(props.rows.map(item => item['warehouseName']))].sort(),
-        terms: [...new Set(props.rows.map(item => item['term']))].sort(),
-        vendors: [...new Set(props.rows.map(item => item.vendor))].sort(),
-        qualities: [...new Set(props.rows.map(item => item.quality))].sort()
+        selectedQualities: []
     });
 
     const handleCancelOrderClick = () => {
@@ -45,19 +38,19 @@ export default function AnalogTable(props) {
 
     const getFilteredRows = () => {
         let rows = props.rows;
-        if(filterDialog.selectedBrands.length > 0) {
+        if (filterDialog.selectedBrands.length > 0) {
             rows = rows.filter(f => filterDialog.selectedBrands.includes(f.brand));
         }
-        if(filterDialog.selectedCities.length > 0) {
+        if (filterDialog.selectedCities.length > 0) {
             rows = rows.filter(f => filterDialog.selectedCities.includes(f['warehouseName']));
         }
-        if(filterDialog.selectedTerms.length > 0) {
+        if (filterDialog.selectedTerms.length > 0) {
             rows = rows.filter(f => filterDialog.selectedTerms.includes(f['term']));
         }
-        if(filterDialog.selectedQualities.length > 0) {
+        if (filterDialog.selectedQualities.length > 0) {
             rows = rows.filter(f => filterDialog.selectedQualities.includes(f.quality));
         }
-        if(filterDialog.selectedVendors.length > 0) {
+        if (filterDialog.selectedVendors.length > 0) {
             rows = rows.filter(f => filterDialog.selectedVendors.includes(f.vendor));
         }
         return rows;
@@ -70,7 +63,7 @@ export default function AnalogTable(props) {
                 isOpened: true,
                 selected: props.rows.find(x => x.id === name)
             });
-        }  else if (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Manager) {
+        } else if (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Manager) {
             props.onOpenAnalogDialog(props.rows.find(x => x.id === name));
         }
     };
@@ -80,11 +73,11 @@ export default function AnalogTable(props) {
     };
 
     const rowsPerPageOptions = [15, 25, 50];
-    if(props.rows.length < rowsPerPageOptions[0]) {
+    if (props.rows.length < rowsPerPageOptions[0]) {
         rowsPerPageOptions.splice(0, 1, props.rows.length)
     }
 
-    return(
+    return (
         <React.Fragment>
             <EnhancedTable
                 rows={getFilteredRows()}
@@ -109,16 +102,15 @@ export default function AnalogTable(props) {
             <FilterDialog isOpened={props.isFilterOpened}
                           onOpenFilter={props.onOpenFilterClick}
                           closeDialog={props.closeDialog}
-                          vendors={filterDialog.vendors}
-                          brands={filterDialog.brands}
-                          cities={filterDialog.cities}
-                          terms={filterDialog.terms}
-                          qualities={filterDialog.qualities}
+                          vendors={[...new Set(props.rows.map(item => item.vendor))].sort()}
+                          brands={[...new Set(props.rows.map(item => item.brand))].sort()}
+                          cities={[...new Set(props.rows.map(item => item['warehouseName']))].sort()}
+                          terms={[...new Set(props.rows.map(item => item['term']))].sort()}
+                          qualities={[...new Set(props.rows.map(item => item.quality))].sort()}
                           onFilter={handleFilterApplyClick}
                           onClose={handleCancelFilterClick}
                           role={props.role}
             />
         </React.Fragment>
-
     );
 }
