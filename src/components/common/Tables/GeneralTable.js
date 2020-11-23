@@ -7,6 +7,7 @@ import ReserveDialog from "../Dialog/ReserveDialog";
 import lightBlue from '@material-ui/core/colors/lightBlue';
 import {withStyles} from '@material-ui/core/styles';
 import {handleHeadCells} from "../../../util/HeadCellsHandler";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
 const headCells = [
     {id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
@@ -17,7 +18,8 @@ const headCells = [
     {id: 'cost', numeric: true, disablePadding: false, label: 'Ціна'},
     {id: 'available', numeric: true, disablePadding: false, label: 'Доступно'},
     {id: 'reserve', numeric: true, disablePadding: false, label: 'Резерв', align: 'left'},
-    {id: 'empty', numeric: false, disablePadding: false, label: '', align: 'center'}
+    {id: 'empty', numeric: false, disablePadding: false, label: '', align: 'center'},
+    {id: 'photo', numeric: false, disablePadding: false, label: 'Фото', align: 'center'}
 ];
 
 function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown) {
@@ -54,9 +56,12 @@ function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown
                        style={pointer}>{isEur ? row['retailEur'].toFixed(2) : row.retail.toFixed(2)}</TableCell>
             {isPriceShown && <TableCell width="10%" align="right" name="price"
                                         style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>}
-            <TableCell width="5%" align="right" name="reserve" style={pointer}>{row.available}</TableCell>
+            <TableCell width="5%" align="center" name="reserve" style={pointer}>{row.available}</TableCell>
             <TableCell width="5%" align="left" name="reserve" style={pointer}>{row.reserve}</TableCell>
             <TableCell width="5%" align="left" name="reserve" style={pointer}/>
+            <TableCell width="5%" align="center" name="photo" style={pointer}>
+                <PhotoCameraIcon/>
+            </TableCell>
         </StyledTableRow>
     );
 }

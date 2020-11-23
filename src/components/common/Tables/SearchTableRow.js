@@ -1,6 +1,7 @@
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import InfoIcon from "@material-ui/icons/Info";
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import React from "react";
 import Grid from '@material-ui/core/Grid';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -19,7 +20,8 @@ export const headCells = [
     {id: 'cost', numeric: true, disablePadding: false, label: 'Ціна'},
     {id: 'order', numeric: true, disablePadding: false, label: 'Доступно', align: 'center'},
     {id: 'term', numeric: true, disablePadding: false, label: 'Термін', align: 'left'},
-    {id: 'info', numeric: false, disablePadding: false, label: 'Інфо', align: 'center'}
+    {id: 'info', numeric: false, disablePadding: false, label: 'Інфо', align: 'center'},
+    {id: 'photo', numeric: false, disablePadding: false, label: 'Фото', align: 'center'}
 ];
 
 export default function SearchTableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown) {
@@ -107,6 +109,9 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                 }>
                     <InfoIcon/>
                 </HtmlTooltip>
+            </TableCell>
+            <TableCell width="5%" align="center" name="photo" style={pointer}>
+                <PhotoCameraIcon/>
             </TableCell>
         </TableRow>
     );
