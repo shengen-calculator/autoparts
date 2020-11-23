@@ -18,8 +18,8 @@ const headCells = [
     {id: 'cost', numeric: true, disablePadding: false, label: 'Ціна'},
     {id: 'available', numeric: true, disablePadding: false, label: 'Доступно'},
     {id: 'reserve', numeric: true, disablePadding: false, label: 'Резерв', align: 'left'},
-    {id: 'empty', numeric: false, disablePadding: false, label: '', align: 'center'},
-    {id: 'photo', numeric: false, disablePadding: false, label: 'Фото', align: 'center'}
+    {id: 'photo', numeric: false, disablePadding: false, label: 'Фото', align: 'center'},
+    {id: 'empty', numeric: false, disablePadding: false, label: '', align: 'center'}
 ];
 
 function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown) {
@@ -58,10 +58,10 @@ function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown
                                         style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>}
             <TableCell width="5%" align="center" name="reserve" style={pointer}>{row.available}</TableCell>
             <TableCell width="5%" align="left" name="reserve" style={pointer}>{row.reserve}</TableCell>
-            <TableCell width="5%" align="left" name="reserve" style={pointer}/>
             <TableCell width="5%" align="center" name="photo" style={pointer}>
                 <PhotoCameraIcon/>
             </TableCell>
+            <TableCell width="5%" align="left" name="reserve" style={pointer}/>
         </StyledTableRow>
     );
 }
