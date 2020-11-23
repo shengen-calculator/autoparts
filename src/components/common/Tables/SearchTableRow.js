@@ -21,7 +21,6 @@ export const headCells = [
     {id: 'order', numeric: true, disablePadding: false, label: 'Доступно', align: 'center'},
     {id: 'term', numeric: true, disablePadding: false, label: 'Термін', align: 'left'},
     {id: 'info', numeric: false, disablePadding: false, label: 'Інфо', align: 'center'},
-    {id: 'photo', numeric: false, disablePadding: false, label: 'Фото', align: 'center'}
 ];
 
 export default function SearchTableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown) {
@@ -90,6 +89,9 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                         </Grid> : `${row['term']} дн.`
                 }
             </TableCell>
+            <TableCell width="5%" align="center" name="photo" style={pointer}>
+                <PhotoCameraIcon/>
+            </TableCell>
             <TableCell width="5%" align="center" name="info" style={pointer}>
                 <HtmlTooltip placement="top-start" title={
                     <React.Fragment>
@@ -109,9 +111,6 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                 }>
                     <InfoIcon/>
                 </HtmlTooltip>
-            </TableCell>
-            <TableCell width="5%" align="center" name="photo" style={pointer}>
-                <PhotoCameraIcon/>
             </TableCell>
         </TableRow>
     );
