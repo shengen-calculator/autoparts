@@ -67,6 +67,13 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Виникла помилка під час завантаження аналогів для редагування цін'
             };
 
+        case types.LOAD_PHOTOS_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Виникла помилка під час завантаження зображень'
+            };
+
         case types.LOAD_CLIENT_STATISTIC_FAILURE:
             return {
                 ...state,

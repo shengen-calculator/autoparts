@@ -27,6 +27,7 @@ import {
     createOrder,
     createReserve,
     getAnalogs,
+    getPhotos,
     searchByBrandAndNumber,
     searchByNumber,
     updatePrice
@@ -60,6 +61,7 @@ function* mySaga() {
     yield takeLatest(types.CREATE_RESERVE_REQUEST, createReserve);
     yield takeLatest(types.LOAD_CURRENCY_RATE_REQUEST, getCurrencyRate);
     yield takeLatest(types.LOAD_ANALOGS_REQUEST, getAnalogs);
+    yield takeLatest(types.LOAD_PHOTOS_REQUEST, getPhotos);
     yield takeLatest(types.UPDATE_APP_STATE_REQUEST, updateAppState);
     yield takeLatest(types.SUBSCRIBE_TO_APP_STATE_UPDATE_REQUEST, subscribeToAppState);
     yield takeLatest(types.UNSUBSCRIBE_TO_APP_STATE_UPDATE_REQUEST, unSubscribe);

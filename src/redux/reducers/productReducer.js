@@ -43,6 +43,24 @@ export default function productReducer(state = initialState.product, action) {
                 analogs: action.analogs ? action.analogs : []
             };
 
+        case types.LOAD_PHOTOS_REQUEST:
+            return {
+                ...state,
+                photos: {
+                    searchUrl: '',
+                    urls: []
+                }
+            };
+
+        case types.LOAD_PHOTOS_SUCCESS:
+            return {
+                ...state,
+                photos: {
+                    searchUrl: '',
+                    urls: []
+                }
+            };
+
         case types.LOAD_BY_NUMBER_REQUEST:
             return {
                 ...state,
