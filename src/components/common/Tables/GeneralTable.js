@@ -58,8 +58,8 @@ function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown
                                         style={pointer}>{isEur ? row['costEur'].toFixed(2) : row['cost'].toFixed(2)}</TableCell>}
             <TableCell width="5%" align="center" name="reserve" style={pointer}>{row.available}</TableCell>
             <TableCell width="5%" align="left" name="reserve" style={pointer}>{row.reserve}</TableCell>
-            <TableCell width="5%" align="center" name="photo" style={pointer}>
-                <PhotoCameraIcon/>
+            <TableCell width="5%" align="center" >
+                <PhotoCameraIcon onClick={(e) => {handleClick(e, row.id, 'photo')}} style={pointer} />
             </TableCell>
             <TableCell width="5%" align="left" name="reserve" style={pointer}/>
         </StyledTableRow>
@@ -72,7 +72,7 @@ export default function GeneralTable(props) {
         selected: {}
     });
 
-    const handleClick = (event, name) => {
+    const handleClick = (event, name, el) => {
         if (event.target.getAttribute("name") === "reserve" ||
             (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Client)) {
             const selected = props.rows.find(x => x.id === name);
@@ -84,6 +84,8 @@ export default function GeneralTable(props) {
             }
         } else if (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Manager) {
             props.onOpenAnalogDialog(props.rows.find(x => x.id === name));
+        } else if (el === "photo") {
+            props.onOpenPhotoDialog(props.rows.find(x => x.id === name));
         }
     };
     const handleCancelReserveClick = () => {
