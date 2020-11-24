@@ -21,6 +21,7 @@ const styles = () => ({
 function PhotoDialog(props) {
     const {isOpened, onClose, photos, calls, classes} = props;
     const [isPhotoHidden, setIsPhotoHidden] = useState(true);
+
     useEffect(() => {
         if (!calls) {
             if (!photos.length) {
@@ -30,6 +31,13 @@ function PhotoDialog(props) {
             }
         }
     }, [calls, onClose, photos]);
+
+    useEffect(() => {
+        if (isOpened) {
+            setIsPhotoHidden(true);
+        }
+    }, [isOpened]);
+
     return (
         <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose} maxWidth="xl">
             {isPhotoHidden && <DialogTitle id="form-photo-dialog-title">Завантаження зображень...</DialogTitle>}

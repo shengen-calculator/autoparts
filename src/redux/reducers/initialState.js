@@ -50,7 +50,6 @@ const initialState = {
         inOrder: [],
         analogs: [],
         photos: {
-            searchUrl: '',
             urls: []
         }
     },
