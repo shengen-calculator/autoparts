@@ -48,14 +48,14 @@ const initialState = {
             numb: ''
         },
         inOrder: [],
-        analogs: []
+        analogs: [],
+        photos: {
+            searchUrl: '',
+            urls: []
+        }
     },
     appState: {
         isSearchPaused: false
-    },
-    photos: {
-        searchUrl: '',
-        urls: []
     }
 };
 export default initialState;
