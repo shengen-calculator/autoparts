@@ -12,7 +12,7 @@ import Copyright from '../../common/Copyright';
 import {connect} from "react-redux";
 import {Helmet} from "react-helmet";
 import GroupedTable from "../../common/Tables/GroupedTable";
-import {getByNumber, getByBrand, getAnalogs} from "../../../redux/actions/searchActions";
+import {getByNumber, getByBrand, getAnalogs, getPhotos} from "../../../redux/actions/searchActions";
 import Typography from "@material-ui/core/Typography";
 import {
     getTables, htmlDecode,
@@ -25,14 +25,16 @@ import SearchContentStyle from "../../common/SearchContentStyle";
 import AnalogListDialog from "./dialog/AnalogListDialog";
 import {showToastrMessage} from "../../../redux/actions/messageActions";
 import {HotKeys} from "react-hotkeys";
+import PhotoDialog from "../../common/Dialog/PhotoDialog";
 
 const styles = theme => SearchContentStyle(theme);
 
-function Content({auth, calls, client, product, appState, getByBrand, getAnalogs, getByNumber, showToastrMessage, ...props}) {
+function Content({auth, calls, client, product, appState, getByBrand, getAnalogs, getPhotos, getByNumber, showToastrMessage, ...props}) {
     const {classes, handleDrawerToggle} = props;
     const history = useHistory();
     const {vip, numb, brand} = useParams();
     const [isAnalogListDialogOpened, setIsAnalogListDialogOpened] = React.useState(false);
+    const [isPhotoDialogOpened, setIsPhotoDialogOpened] = React.useState(false);
 
     useEffect(() => {
         if (!vip) {
@@ -71,11 +73,19 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
     };
 
     const openPhotoDialog = (selected) => {
-        alert(`${selected.brand} - ${selected.number}`);
+        getPhotos({
+            brand: selected.brand,
+            number: selected.number
+        });
+        setIsPhotoDialogOpened(true);
     };
 
     const handleCancelAnalogDialog = () => {
         setIsAnalogListDialogOpened(false);
+    };
+
+    const handleCancelPhotoDialog = () => {
+        setIsPhotoDialogOpened(false);
     };
 
     const tables = getTables(brand, numb, `Fenix - Клієнт - ${client.vip}`, product.products);
@@ -142,6 +152,8 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
             </footer>
             <AnalogListDialog isOpened={isAnalogListDialogOpened}
                               onClose={handleCancelAnalogDialog}/>
+            <PhotoDialog isOpened={isPhotoDialogOpened}
+                              onClose={handleCancelPhotoDialog}/>
         </HotKeys>
     );
 }
@@ -155,6 +167,7 @@ const mapDispatchToProps = {
     getByNumber,
     getByBrand,
     getAnalogs,
+    getPhotos,
     showToastrMessage
 };
 
