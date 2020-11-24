@@ -51,7 +51,7 @@ export default function productReducer(state = initialState.product, action) {
                     urls: []
                 }
             };
-
+        //todo need to be implemented
         case types.LOAD_PHOTOS_SUCCESS:
             return {
                 ...state,
