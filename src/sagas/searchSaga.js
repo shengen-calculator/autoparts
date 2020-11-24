@@ -62,6 +62,9 @@ export function* getPhotos(action) {
         yield put({type: types.BEGIN_API_CALL});
         const {data} = yield call(SearchFunctionsApi.getPhotos, action.params);
         yield put({type: types.LOAD_PHOTOS_SUCCESS, photos: data});
+        if(!data.isPhotoFound) {
+            window.open(data.urls[0], '_blank'); //better for Chrome browser
+        }
     } catch (e) {
         yield put({type: types.API_CALL_ERROR});
         yield put({type: types.LOAD_PHOTOS_FAILURE, text: e.message});
