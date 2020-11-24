@@ -69,6 +69,11 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
         });
         setIsAnalogListDialogOpened(true);
     };
+
+    const openPhotoDialog = (selected) => {
+        alert(`${selected.brand} - ${selected.number}`);
+    };
+
     const handleCancelAnalogDialog = () => {
         setIsAnalogListDialogOpened(false);
     };
@@ -109,10 +114,13 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
                                 <GroupedTable rows={product.productsGrouped} vip={vip} role={auth.role}/>}
                                 {generalRows.length > 0 && <GeneralTable rows={StableSort(generalRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
-                                                                         isPriceShown={true} onOpenAnalogDialog={openAnalogListDialog}/>}
+                                                                         isPriceShown={true}
+                                                                         onOpenPhotoDialog={openPhotoDialog}
+                                                                         onOpenAnalogDialog={openAnalogListDialog}/>}
                                 {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
                                                                        isPriceShown={true} inOrder={product.inOrder}
+                                                                       onOpenPhotoDialog={openPhotoDialog}
                                                                        onOpenAnalogDialog={openAnalogListDialog}/>}
                                 {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
@@ -122,6 +130,7 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
                                                                        isFilterOpened={filterDialog.isOpened}
                                                                        onOpenFilterClick={onOpenFilterClick}
                                                                        closeDialog={closeFilterDialog}
+                                                                       onOpenPhotoDialog={openPhotoDialog}
                                                                        onOpenAnalogDialog={openAnalogListDialog}/>}
                             </React.Fragment>
                         }

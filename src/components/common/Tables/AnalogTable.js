@@ -56,7 +56,7 @@ export default function AnalogTable(props) {
         return rows;
     };
 
-    const handleClick = (event, name) => {
+    const handleClick = (event, name, el) => {
         if (event.target.getAttribute("name") === "order" ||
             (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Client)) {
             setOrderDialog({
@@ -65,6 +65,8 @@ export default function AnalogTable(props) {
             });
         } else if (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Manager) {
             props.onOpenAnalogDialog(props.rows.find(x => x.id === name));
+        } else if (el === "photo") {
+            props.onOpenPhotoDialog(props.rows.find(x => x.id === name));
         }
     };
 

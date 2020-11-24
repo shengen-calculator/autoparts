@@ -20,6 +20,7 @@ export const headCells = [
     {id: 'cost', numeric: true, disablePadding: false, label: 'Ціна'},
     {id: 'order', numeric: true, disablePadding: false, label: 'Доступно', align: 'center'},
     {id: 'term', numeric: true, disablePadding: false, label: 'Термін', align: 'left'},
+    {id: 'photo', numeric: false, disablePadding: false, label: 'Фото', align: 'center'},
     {id: 'info', numeric: false, disablePadding: false, label: 'Інфо', align: 'center'},
 ];
 
@@ -89,8 +90,8 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                         </Grid> : `${row['term']} дн.`
                 }
             </TableCell>
-            <TableCell width="5%" align="center" name="photo" style={pointer}>
-                <PhotoCameraIcon/>
+            <TableCell width="5%" align="center" >
+                <PhotoCameraIcon onClick={(e) => {handleClick(e, row.id, 'photo')}} style={pointer} />
             </TableCell>
             <TableCell width="5%" align="center" name="info" style={pointer}>
                 <HtmlTooltip placement="top-start" title={
