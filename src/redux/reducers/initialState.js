@@ -52,6 +52,10 @@ const initialState = {
     },
     appState: {
         isSearchPaused: false
+    },
+    photos: {
+        searchUrl: '',
+        urls: []
     }
 };
 export default initialState;

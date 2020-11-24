@@ -57,6 +57,17 @@ export function* createReserve(action) {
     }
 }
 
+export function* getPhotos(action) {
+    try {
+        yield put({type: types.BEGIN_API_CALL});
+        const {data} = yield call(SearchFunctionsApi.getPhotos, action.params);
+        yield put({type: types.LOAD_PHOTOS_SUCCESS, photos: data});
+    } catch (e) {
+        yield put({type: types.API_CALL_ERROR});
+        yield put({type: types.LOAD_PHOTOS_FAILURE, text: e.message});
+    }
+}
+
 export function* getAnalogs(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
