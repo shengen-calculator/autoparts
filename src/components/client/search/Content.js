@@ -8,7 +8,7 @@ import Header from '../Header';
 import Copyright from '../../common/Copyright';
 import {connect} from "react-redux";
 import {Helmet} from "react-helmet";
-import {getByNumber, getByBrand} from "../../../redux/actions/searchActions";
+import {getByNumber, getByBrand, getPhotos} from "../../../redux/actions/searchActions";
 import Typography from "@material-ui/core/Typography";
 import {
     getTables, htmlDecode,
@@ -24,14 +24,28 @@ import GroupedTable from "../../common/Tables/GroupedTable";
 import SearchContentStyle from "../../common/SearchContentStyle";
 import {showToastrMessage} from "../../../redux/actions/messageActions";
 import {HotKeys} from "react-hotkeys";
+import PhotoDialog from "../../common/Dialog/PhotoDialog";
 
 const styles = theme => SearchContentStyle(theme);
 
-function Content({auth, calls, client, product, appState, getByBrand, getByNumber, showToastrMessage, ...props}) {
+function Content({auth, calls, client, product, appState, getByBrand, getByNumber, getPhotos, showToastrMessage, ...props}) {
     const {classes, handleDrawerToggle} = props;
     const history = useHistory();
     const {numb, brand} = useParams();
+    const [isPhotoDialogOpened, setIsPhotoDialogOpened] = React.useState(false);
 
+
+    const openPhotoDialog = (selected) => {
+        getPhotos({
+            brand: selected.brand,
+            number: selected.number
+        });
+        setIsPhotoDialogOpened(true);
+    };
+
+    const handleCancelPhotoDialog = () => {
+        setIsPhotoDialogOpened(false);
+    };
 
     useEffect(() => {
         if (numb && appState.isSearchPaused) {
@@ -91,9 +105,11 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
                                 <GroupedTable rows={product.productsGrouped} role={auth.role}/>}
                                 {generalRows.length > 0 && <GeneralTable rows={StableSort(generalRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
+                                                                         onOpenPhotoDialog={openPhotoDialog}
                                                                          isPriceShown={client.isPriceShown}/>}
                                 {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
+                                                                       onOpenPhotoDialog={openPhotoDialog}
                                                                        isPriceShown={client.isPriceShown}/>}
                                 {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
@@ -102,6 +118,7 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
                                                                        isFilterOpened={filterDialog.isOpened}
                                                                        onOpenFilterClick={onOpenFilterClick}
                                                                        closeDialog={closeFilterDialog}
+                                                                       onOpenPhotoDialog={openPhotoDialog}
                                                                        isPriceShown={client.isPriceShown}/>}
                             </React.Fragment>
                         }
@@ -111,6 +128,8 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
             <footer className={classes.footer}>
                 <Copyright/>
             </footer>
+            <PhotoDialog isOpened={isPhotoDialogOpened}
+                         onClose={handleCancelPhotoDialog}/>
         </HotKeys>);
 }
 
@@ -122,6 +141,7 @@ Content.propTypes = {
 const mapDispatchToProps = {
     getByNumber,
     getByBrand,
+    getPhotos,
     showToastrMessage
 };
 
