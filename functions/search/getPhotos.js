@@ -1,12 +1,39 @@
+const util = require('../util');
+const admin = require('firebase-admin');
+const configuration = require('../settings');
+
 const getPhotos = async (data, context) => {
 
-    if (data.number === '5413') {
+    util.checkForClientRole(context);
+
+    const bucket =
+        admin.storage().bucket(`${configuration.photos}`);
+
+    const options = {
+        prefix: `${data.brand}/${data.number}/`,
+        delimiter:'/'
+    };
+
+    const [files] = await bucket.getFiles(options);
+
+    const config = {
+        action: 'read',
+        expires: '01-01-2021',
+    };
+
+    if (files.length) {
+        const result = [];
+        for (const file of files) {
+            if(file.name !== `${data.brand}/${data.number}/`) {
+                const resultFile = bucket.file(file.name);
+                // eslint-disable-next-line no-await-in-loop
+                const url = await resultFile.getSignedUrl(config);
+                result.push(url);
+            }
+        }
         return {
             isPhotoFound: true,
-            urls: ['f30b788d-43fe-4dd1-933f-76521d545ae6.jpg',
-                '2424b2f4-5306-486b-a8a7-84c8d8ab7b04.jpg',
-                'f161f38c-6901-4ea1-8858-c3ced090412b.jpg',
-                '11d8fe54-60f9-4e1c-9747-0d03f4b4485e.jpg']
+            urls: result
         }
 
     } else {
@@ -15,7 +42,6 @@ const getPhotos = async (data, context) => {
             urls: [`https://www.google.com/search?q=${data.brand}+${data.number}&client=safari&source=lnms&tbm=isch`]
         };
     }
-
 };
 
 module.exports = getPhotos;
