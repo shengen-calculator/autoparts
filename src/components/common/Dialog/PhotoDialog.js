@@ -5,22 +5,37 @@ import {connect} from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import DialogContent from "@material-ui/core/DialogContent";
 import Box from "@material-ui/core/Box";
+import Slider from "react-slick";
 import {withStyles} from "@material-ui/core/styles";
 
 const styles = () => ({
     box: {
         display: 'flex',
-        minHeight: '15vh'
+        justifyContent: 'center'
     },
     progress: {
         margin: 40,
 
+    },
+    photos: {
+        margin: 40,
+        minWidth: '100px',
+        minHeight: '320px'
     }
 });
 
 function PhotoDialog(props) {
     const {isOpened, onClose, photos, calls, classes} = props;
     const [isPhotoHidden, setIsPhotoHidden] = useState(true);
+
+    const settings = {
+        dots: true,
+        infinite: true,
+        adaptiveHeight: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    };
 
     useEffect(() => {
         if (!calls) {
@@ -39,17 +54,25 @@ function PhotoDialog(props) {
     }, [isOpened]);
 
     return (
-        <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose} maxWidth="xl">
+        <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose} maxWidth="sm">
             {isPhotoHidden && <DialogTitle id="form-photo-dialog-title">Завантаження зображень...</DialogTitle>}
-
-            <Box display="flex" justifyContent="center" className={classes.box}>
+            <DialogContent>
                 {isPhotoHidden ?
-                    <CircularProgress className={classes.progress}/> :
-                    <DialogContent>
-                        <h2>Тут мають бути фото запчастин</h2>
-                    </DialogContent>
+                    <Box className={classes.box}>
+                        <CircularProgress className={classes.progress}/>
+                    </Box>
+                    :
+                    <Slider {...settings} className={classes.photos}>
+                        {
+                            photos.map((src, index) => (
+                                <div>
+                                    <img src={src} alt={`img-${index}`}/>
+                                </div>
+                            ))
+                        }
+                    </Slider>
                 }
-            </Box>
+            </DialogContent>
         </Dialog>
     )
 }
