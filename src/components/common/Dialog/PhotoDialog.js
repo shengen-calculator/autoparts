@@ -34,6 +34,7 @@ function PhotoDialog(props) {
         adaptiveHeight: true,
         speed: 500,
         slidesToShow: 1,
+        arrows: false,
         slidesToScroll: 1
     };
 
