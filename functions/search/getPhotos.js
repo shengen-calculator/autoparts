@@ -10,7 +10,7 @@ const getPhotos = async (data, context) => {
         admin.storage().bucket(`${configuration.photos}`);
 
     const options = {
-        prefix: `${data.brand}/${data.number}/`,
+        prefix: `${data.brand}/${data.number.toUpperCase()}/`,
         delimiter:'/'
     };
 

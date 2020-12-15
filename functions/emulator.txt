@@ -18,4 +18,11 @@ main.getReconciliationData({startDate:'2020-05-12', clientId: '5005', endDate: '
 
 statistic.getClientStatistic({startDate: '2020-06-19', endDate: '2020-06-19'})
 
+search.getPhotos({brand:"A.B.S.",number:"sl5771"})
+
 search.searchByBrandAndNumber({brand:'SACHS', number:'900122', clientId: '5005'})
+
+
+for Windows
+
+set GOOGLE_APPLICATION_CREDENTIALS=key.json
