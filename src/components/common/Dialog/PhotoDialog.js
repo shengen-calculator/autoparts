@@ -19,7 +19,7 @@ const styles = () => ({
     },
     photos: {
         margin: 40,
-        minWidth: '100px',
+        minWidth: '440px',
         minHeight: '320px'
     }
 });
