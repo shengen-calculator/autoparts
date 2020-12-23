@@ -16,9 +16,11 @@ const getPhotos = async (data, context) => {
 
     const [files] = await bucket.getFiles(options);
 
+    const expDate = new Date();
+
     const config = {
         action: 'read',
-        expires: '01-01-2021',
+        expires: `${expDate.getMonth() + 1}-${expDate.getDate() + 2}-${expDate.getFullYear()}`,
     };
 
     if (files.length) {

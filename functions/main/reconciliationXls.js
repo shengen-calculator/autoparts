@@ -136,9 +136,11 @@ const getReconciliationXlsLink = async (data, balance, fileName, startDate, endD
 
     fs.unlinkSync(tempLocalResultFile);
 
+    const expDate = new Date();
+
     const config = {
         action: 'read',
-        expires: '03-01-2500',
+        expires: `${expDate.getMonth() + 1}-${expDate.getDate() + 2}-${expDate.getFullYear()}`,
     };
     const resultFile = getBucket().file(resultFilePath);
 
