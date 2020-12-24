@@ -55,7 +55,7 @@ BEGIN
                          STR(@clientId) + N')'
 
     IF (@isPartsFromAllVendorShown = 0)
-        SET @query = @query + N' WHERE [Виден только менеджерам] = 0'
+        SET @query = @query + N' WHERE [Виден только менеджерам] = 0  OR Доступно > 0'
 
     exec sp_executesql @query
 
