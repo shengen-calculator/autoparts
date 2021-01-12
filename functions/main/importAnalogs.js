@@ -16,6 +16,7 @@ const importAnalogs = async (data, context) => {
 
         for (let i = 0; i < list.recordset.length; i++) {
 
+            // eslint-disable-next-line no-await-in-loop
             const analogs = await pool.query`SELECT * FROM [Таблица Аналогов] WHERE Брэнд = ${list.recordset[i]['Brand']} AND [Name] = ${list.recordset[i].Number}`;
 
             for(let j = 0; j < analogs.recordset.length; j++) {
@@ -46,6 +47,7 @@ const importAnalogs = async (data, context) => {
                     brand_: grouped[i]['Брэнд_'].trim()
                 },
             };
+            // eslint-disable-next-line no-await-in-loop
             await datastore.insert(entity);
             console.log(i);
             console.log(entity);

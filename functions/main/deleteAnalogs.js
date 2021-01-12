@@ -13,6 +13,7 @@ const deleteAnalogs = async (data, context) => {
 
         for (const a of analogs) {
             const aKey = a[datastore.KEY];
+            // eslint-disable-next-line no-await-in-loop
             await datastore.delete(aKey);
             console.log(i);
             i++;
