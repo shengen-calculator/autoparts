@@ -114,7 +114,7 @@ const getProductsTest = async (data, context) => {
         const dateTimeFormat = new Intl.DateTimeFormat('en', {year: 'numeric', month: '2-digit', day: '2-digit'});
 
         return {
-            search: {}, //groupedRes,
+            search: groupedRes,
             inOrder: inOrder.recordset.map(x => {
                 const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(x.preliminaryDate);
                 return {

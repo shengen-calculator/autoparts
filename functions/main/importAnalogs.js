@@ -11,7 +11,7 @@ const importAnalogs = async (data, context) => {
     try {
         const all = [];
         const pool = await sql.connect(config);
-        const list = await pool.query`SELECT TRIM(Брэнд) as Brand, TRIM([NAME]) as Number FROM Поисковая WHERE ID_аналога = 3675 GROUP BY Брэнд, [NAME]`;
+        const list = await pool.query`SELECT TRIM(Брэнд) as Brand, TRIM([NAME]) as Number FROM Поисковая WHERE ID_аналога = 82808 GROUP BY Брэнд, [NAME]`;
         const datastore = new Datastore();
 
         for (let i = 0; i < list.recordset.length; i++) {
