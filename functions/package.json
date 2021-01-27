@@ -9,6 +9,7 @@
     "deploy:main": "firebase deploy --only functions:main",
     "deploy:order": "firebase deploy --only functions:order",
     "deploy:search": "firebase deploy --only functions:search",
+    "deploy:dataImport": "firebase deploy --only functions:dataImport",
     "deploy:statistic": "firebase deploy --only functions:statistic",
     "logs": "firebase functions:log"
   },
