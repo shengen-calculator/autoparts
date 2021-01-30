@@ -1,5 +1,8 @@
 const Imap = require('imap');
 const fs = require('fs');
+const os = require('os');
+const admin = require('firebase-admin');
+const path = require('path');
 const {Base64Decode} = require('base64-stream');
 const configuration = require('../settings');
 
@@ -14,6 +17,8 @@ const getAttachment = async (data, context) => {
     });
 
     const toUpper = (thing) => thing && thing.toUpperCase ? thing.toUpperCase() : thing;
+
+    const getBucket = () => admin.storage().bucket(configuration.importBucket);
 
     const findAttachmentParts = (struct, attachments) => {
         attachments = attachments ||  [];
@@ -30,17 +35,24 @@ const getAttachment = async (data, context) => {
     };
 
     const buildAttMessageFunction = (attachment) => {
-        const filename = attachment.params.name;
+        //const filename = attachment.params.name;
+        const filename = "file.xlsx";
+        const contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        const metadata = {
+            contentType: contentType,
+            contentDisposition: `attachment; filename="${filename}"`
+        };
+        const tempLocalResultFile = path.join(os.tmpdir(), filename);
         const encoding = attachment.encoding;
 
         return function (msg, seqno) {
             const prefix = '(#' + seqno + ') ';
             msg.on('body', (stream, info) => {
                 //Create a write stream so that we can stream the attachment to file;
-                console.log(prefix + 'Streaming this attachment to file', filename, info);
-                const writeStream = fs.createWriteStream(filename);
+                console.log(prefix + 'Streaming this attachment to file', tempLocalResultFile, info);
+                const writeStream = fs.createWriteStream(tempLocalResultFile);
                 writeStream.on('finish', () =>  {
-                    console.log(prefix + 'Done writing to file %s', filename);
+                    console.log(prefix + 'Done writing to file %s', tempLocalResultFile);
                 });
 
                 //stream.pipe(writeStream); this would write base64 data to the file.
@@ -54,7 +66,10 @@ const getAttachment = async (data, context) => {
                 }
             });
             msg.once('end', () => {
-                console.log(prefix + 'Finished attachment %s', filename);
+                getBucket().upload(tempLocalResultFile, {destination: filename, metadata: metadata}, () => {
+                    fs.unlinkSync(tempLocalResultFile);
+                    console.log(prefix + 'Finished attachment %s', tempLocalResultFile);
+                });
             });
         };
     };
