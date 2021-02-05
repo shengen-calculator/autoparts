@@ -1,7 +1,16 @@
 const functions = require('firebase-functions');
+const getImportModel = require('./dataImport/getImportModel');
+const importVendorPrice = require('./dataImport/importVendorPrice');
+const getLogInfo = require('./dataImport/getLogInfo');
 
-const getAttachment = require('./dataImport/getAttachment');
+exports.getImportModel = functions.https.onRequest((req, res) => {
+    getImportModel(req, res);
+});
 
-exports.getAttachment = functions.region('europe-west1').https.onCall(async (data, context) => {
-    return getAttachment(data, context);
+exports.importVendorPrice = functions.https.onRequest((req, res) => {
+    importVendorPrice(req, res);
+});
+
+exports.getLogInfo = functions.https.onRequest((req, res) => {
+    getLogInfo(req, res);
 });
