@@ -46,7 +46,7 @@ function SearchToolbar({client, getCurrencyRate, showClientPrice, hideClientPric
         const {name, value} = event.target;
         setCriteria(prev => ({
             ...prev,
-            [name]: value
+            [name]: value.trim()
         }));
 
     }

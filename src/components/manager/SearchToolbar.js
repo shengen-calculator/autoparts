@@ -66,7 +66,7 @@ function SearchToolbar({
         const {name, value} = event.target;
         setCriteria(prev => ({
             ...prev,
-            [name]: value
+            [name]: value.trim()
         }));
 
     }
