@@ -1,6 +1,6 @@
 class Import {
-    start() {
-
+    start(vendor) {
+        return 1000;
     }
-
 }
+module.exports = Import;
