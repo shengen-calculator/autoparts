@@ -1,11 +1,11 @@
 const functions = require('firebase-functions');
 const vendorPrice = require('./dataImport/vendorPrice');
-const getLogInfo = require('./dataImport/getLogInfo');
+const getLogs = require('./dataImport/getLogs');
 
-exports.vendorPrice = functions.https.onRequest(async (req, res) => {
-    await vendorPrice(req, res);
+exports.vendorPrice = functions.region('europe-west1').https.onRequest(async (req, res) => {
+    return  vendorPrice(req, res);
 });
 
-exports.getLogInfo = functions.https.onRequest( async (data, context) => {
-    await getLogInfo(data, context);
+exports.getLogs = functions.region('europe-west1').https.onCall( async (data, context) => {
+    return getLogs(data, context);
 });

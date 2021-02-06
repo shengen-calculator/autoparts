@@ -27,5 +27,6 @@ for Windows
 
 set GOOGLE_APPLICATION_CREDENTIALS=key.json
 
+dataImport.getLogs({limit: 3})
 
 To allow imap get email from gmail account -> https://accounts.google.com/DisplayUnlockCaptcha
