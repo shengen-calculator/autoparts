@@ -74,7 +74,7 @@ export default function AnalogTable(props) {
         props.closeDialog();
     };
 
-    const rowsPerPageOptions = [15, 25, 50];
+    const rowsPerPageOptions = [50, 100, 150];
     if (props.rows.length < rowsPerPageOptions[0]) {
         rowsPerPageOptions.splice(0, 1, props.rows.length)
     }

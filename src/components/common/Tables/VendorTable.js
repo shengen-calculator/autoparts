@@ -33,7 +33,7 @@ export default function VendorTable(props) {
         });
     };
 
-    const rowsPerPageOptions = [5, 10, 25];
+    const rowsPerPageOptions = [10, 25, 50];
     if (props.rows.length < rowsPerPageOptions[0]) {
         rowsPerPageOptions.splice(0, 1, props.rows.length)
     }
