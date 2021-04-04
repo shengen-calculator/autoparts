@@ -11,6 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import BuildIcon from '@material-ui/icons/Build';
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import PaymentIcon from '@material-ui/icons/Payment';
+import EventIcon from '@material-ui/icons/Event';
 import {NavLink} from "react-router-dom";
 import logo from "../../logo.png";
 
@@ -21,7 +22,7 @@ const categories = [
             { id: 'Пошук', icon: <BuildIcon />, path: 'search', isSearchCriteriaSpecified: true },
             { id: 'Замовлення', icon: <DnsRoundedIcon />, path: 'order' },
             { id: 'Фінанси', icon: <PaymentIcon />, path: 'payment'},
-            /*{ id: 'Звірка', icon: <HistoryIcon />, path: 'statistic'},*/
+            { id: 'Історія', icon: <EventIcon />, path: 'history'},
         ],
     }
 ];

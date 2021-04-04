@@ -7,7 +7,7 @@ import Navigator from './Navigator';
 import SearchContent from './search/Content';
 import OrderContent from './order/Content';
 import PaymentContent from './payment/Content';
-import StatisticContent from './statistic/Content';
+import HistoryContent from './history/Content';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../PageNotFound";
 import {connect} from "react-redux";
@@ -70,8 +70,8 @@ function App({client, product, getClient, ...props}) {
           <Route path={`/order`}>
             <OrderContent handleDrawerToggle={handleDrawerToggle}/>
           </Route>
-          <Route path={`/statistic`}>
-            <StatisticContent match={match} handleDrawerToggle={handleDrawerToggle}/>
+          <Route path={`/history`}>
+            <HistoryContent handleDrawerToggle={handleDrawerToggle}/>
           </Route>
           <Route path={`/payment`}>
             <PaymentContent handleDrawerToggle={handleDrawerToggle}/>
