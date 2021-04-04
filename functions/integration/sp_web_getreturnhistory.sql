@@ -9,7 +9,8 @@ BEGIN
            dbo.[Подчиненная накладные].Дата_закрытия  AS invoiceDate,
            dbo.Брэнды.Брэнд                           AS brand,
            dbo.[Каталог запчастей].[Номер поставщика] AS number,
-           dbo.[Каталог запчастей].Описание           AS description
+           dbo.[Каталог запчастей].Описание           AS description,
+           COUNT(*) OVER ()                           as totalCount
     FROM dbo.[Подчиненная накладные]
              INNER JOIN
          dbo.[Каталог запчастей] ON dbo.[Подчиненная накладные].ID_Запчасти = dbo.[Каталог запчастей].ID_Запчасти

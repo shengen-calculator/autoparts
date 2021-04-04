@@ -9,7 +9,8 @@ BEGIN
            CONVERT(date, Дата) AS invoiceDate,
            ''                  as brand,
            ''                  as number,
-           Примечание          as description
+           Примечание          as description,
+           COUNT(*) OVER ()    as totalCount
     FROM dbo.Касса
     WHERE (ID_Клиента = @clientId)
     ORDER BY InvoiceDate, invoiceNumber OFFSET @page * @rowsPerPage ROWS FETCH NEXT @rowsPerPage ROWS ONLY
