@@ -10,6 +10,7 @@
     "deploy:order": "firebase deploy --only functions:order",
     "deploy:search": "firebase deploy --only functions:search",
     "deploy:statistic": "firebase deploy --only functions:statistic",
+    "deploy:history": "firebase deploy --only functions:history",
     "logs": "firebase functions:log"
   },
   "engines": {
