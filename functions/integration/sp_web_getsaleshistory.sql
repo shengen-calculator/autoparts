@@ -1,4 +1,4 @@
-CREATE PROCEDURE [dbo].[sp_web_getsaleshistory] @clientId INT, @page INT, @rowsPerPage INT
+CREATE PROCEDURE [dbo].[sp_web_getsaleshistory] @vip VARCHAR(10), @offset INT, @rows INT
 AS
 BEGIN
     SELECT dbo.[Подчиненная накладные].ID                               AS id,
@@ -16,13 +16,15 @@ BEGIN
          dbo.[Каталог запчастей] ON dbo.[Подчиненная накладные].ID_Запчасти = dbo.[Каталог запчастей].ID_Запчасти
              INNER JOIN
          dbo.Брэнды ON dbo.[Каталог запчастей].ID_Брэнда = dbo.Брэнды.ID_Брэнда
+             INNER JOIN
+        dbo.Клиенты ON dbo.[Подчиненная накладные].ID_Клиента = dbo.Клиенты.ID_Клиента
     WHERE (dbo.[Подчиненная накладные].ID_Накладной IS NOT NULL)
       AND (dbo.[Подчиненная накладные].Дата_закрытия IS NOT NULL)
-      AND (dbo.[Подчиненная накладные].ID_Клиента = @clientId)
+      AND (dbo.Клиенты.VIP LIKE @vip)
       AND (dbo.[Подчиненная накладные].Нету = 0)
       AND (dbo.[Подчиненная накладные].Обработано = 1)
       AND (dbo.[Подчиненная накладные].Количество > 0)
-    ORDER BY dbo.[Подчиненная накладные].ID DESC OFFSET @page * @rowsPerPage ROWS FETCH NEXT @rowsPerPage ROWS ONLY
+    ORDER BY dbo.[Подчиненная накладные].ID DESC OFFSET @offset ROWS FETCH NEXT @rows ROWS ONLY
 
 END
 go
