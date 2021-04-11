@@ -1,4 +1,4 @@
-CREATE PROCEDURE [dbo].[sp_web_getsaleshistory] @vip VARCHAR(10), @offset INT, @rows INT
+CREATE PROCEDURE [dbo].[sp_web_getsalehistory] @vip VARCHAR(10), @offset INT, @rows INT
 AS
 BEGIN
     SELECT dbo.[Подчиненная накладные].ID                               AS id,
