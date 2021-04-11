@@ -53,6 +53,18 @@ class FunctionsApi {
         const func = functions.httpsCallable('main-getCurrencyRate');
         return func();
     }
+    static getPaymentHistory(params){
+        const func = functions.httpsCallable('history-getPayments');
+        return func(params);
+    }
+    static getReturnHistory(params){
+        const func = functions.httpsCallable('history-getReturns');
+        return func(params);
+    }
+    static getSaleHistory(params){
+        const func = functions.httpsCallable('history-getSales');
+        return func(params);
+    }
 }
 
 export default FunctionsApi;

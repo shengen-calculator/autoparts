@@ -36,6 +36,11 @@ import {updateAppState,
     subscribeToAppState,
     unSubscribe
 } from "./applicationSaga";
+import {
+    getPaymentHistory,
+    getReturnHistory,
+    getSaleHistory
+} from "./historySaga";
 
 function* mySaga() {
     yield takeLatest(types.LOG_OUT_REQUEST, logOut);
@@ -47,6 +52,9 @@ function* mySaga() {
     yield takeLatest(types.LOAD_ORDERS_REQUEST, getOrders);
     yield takeLatest(types.LOAD_RESERVES_REQUEST, getReserves);
     yield takeLatest(types.LOAD_RECONCILIATION_REQUEST, getReconciliationData);
+    yield takeLatest(types.LOAD_PAYMENT_HISTORY_REQUEST, getPaymentHistory);
+    yield takeLatest(types.LOAD_RETURN_HISTORY_REQUEST, getReturnHistory);
+    yield takeLatest(types.LOAD_SALE_HISTORY_REQUEST, getSaleHistory);
     yield takeLatest(types.DELETE_RESERVES_REQUEST, deleteReserves);
     yield takeLatest(types.DELETE_ORDERS_REQUEST, deleteOrders);
     yield takeLatest(types.UPDATE_ORDER_QUANTITY_REQUEST, updateOrderQuantity);
