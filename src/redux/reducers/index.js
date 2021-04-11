@@ -31,13 +31,15 @@ const clientPersistConfig = {
     key: 'client',
     storage: storage,
     blacklist: [
-        'orders',
         'isOrdersLoaded',
-        'payments',
         'isPaymentsLoaded',
         'isClientNotExists',
         'isReservesLoaded',
-        'reserves'
+        'orderLoadingTime',
+        'reserveLoadingTime',
+        'paymentHistoryLoadingTime',
+        'returnHistoryLoadingTime',
+        'saleHistoryLoadingTime'
     ]
 };
 

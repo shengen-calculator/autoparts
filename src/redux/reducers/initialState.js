@@ -23,7 +23,13 @@ const initialState = {
         payments: [],
         isPaymentsLoaded: false,
         isClientNotExists: false,
-        isPriceShown: true
+        isPriceShown: true,
+        paymentHistoryLoadingTime: {},
+        paymentHistory: [],
+        returnHistoryLoadingTime: {},
+        returnHistory: [],
+        saleHistoryLoadingTime: {},
+        saleHistory: [],
     },
     apiCallsInProgress: 0,
     statistic: {

@@ -1,1 +1,1 @@
-export const refreshPeriod = 10000;
+export const refreshPeriod = 300000;
