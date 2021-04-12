@@ -8,16 +8,16 @@ import {
 } from '@material-ui/pickers';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-import Copyright from '../../common/Copyright';
+import Copyright from '../Copyright';
 import PaymentContent from './payment/Content';
 import ReturnContent from './return/Content';
 import SalesContent from './sales/Content';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../../PageNotFound";
 import { Link as RouterLink } from 'react-router-dom';
-import SearchToolbar from "../SearchToolbar";
-import Progress from "../../common/Progress";
-import LoginToolbar from "../../common/LoginToolbar";
+import SearchToolbar from "../../client/SearchToolbar";
+import Progress from "../Progress";
+import LoginToolbar from "../LoginToolbar";
 
 const styles = theme => ({
     root: {

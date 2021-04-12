@@ -7,7 +7,7 @@ import Navigator from './Navigator';
 import SearchContent from './search/Content';
 import OrderContent from './order/Content';
 import PaymentContent from './payment/Content';
-import HistoryContent from './history/Content';
+import HistoryContent from '../common/history/Content';
 import {Route, Switch} from "react-router-dom";
 import PageNotFound from "../PageNotFound";
 import {connect} from "react-redux";

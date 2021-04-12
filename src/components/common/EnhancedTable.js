@@ -88,6 +88,13 @@ export default function EnhancedTable(props) {
         setPage(0);
     };
 
+    const getData = () => {
+        return isPaginationDisabled ?
+            StableSort(rows, GetComparator(order, orderBy)) :
+            StableSort(rows, GetComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    };
+
     const isSelected = name => selected.indexOf(name) !== -1;
 
     const emptyRows = isPaginationDisabled ? 0 :
@@ -127,20 +134,18 @@ export default function EnhancedTable(props) {
                                 isRowSelectorShown={isRowSelectorShown}
                             />
                             <TableBody>
-                                {isPaginationDisabled ? StableSort(rows, GetComparator(order, orderBy))
-                                    .map((row, index) => {
-                                        return tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown)
-                                    }) : StableSort(rows, GetComparator(order, orderBy))
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row, index) => {
-                                        return tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown)
-                                    })
+                                {
+                                    getData()
+                                        .map((row, index) => {
+                                            return tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown)
+                                        })
                                 }
-                                {emptyRows > 0 && (
-                                    <TableRow style={{height: 33 * emptyRows}}>
-                                        <TableCell colSpan={columns}/>
-                                    </TableRow>
-                                )}
+                                {
+                                    emptyRows > 0 && (
+                                        <TableRow style={{height: 33 * emptyRows}}>
+                                            <TableCell colSpan={columns}/>
+                                        </TableRow>
+                                    )}
                             </TableBody>
                         </Table>
                     </TableContainer> :
