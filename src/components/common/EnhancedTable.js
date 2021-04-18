@@ -44,6 +44,7 @@ export default function EnhancedTable(props) {
     const {
         tableRow,
         rows,
+        getRowsFunc,
         headCells,
         title,
         titleIcon,
@@ -89,6 +90,9 @@ export default function EnhancedTable(props) {
     };
 
     const getData = () => {
+        if(getRowsFunc) {
+            return getRowsFunc(page, rowsPerPage);
+        }
         return isPaginationDisabled ?
             StableSort(rows, GetComparator(order, orderBy)) :
             StableSort(rows, GetComparator(order, orderBy))
