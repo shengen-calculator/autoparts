@@ -47,6 +47,7 @@ export default function EnhancedTable(props) {
         rows,
         getRowsFunc,
         rowLoadingTime,
+        rowsTotal,
         headCells,
         title,
         titleIcon,
@@ -84,21 +85,29 @@ export default function EnhancedTable(props) {
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
+        if (getRowsFunc) {
+            getRowsFunc({offset: newPage * rowsPerPage, rows: rowsPerPage});
+        }
     };
 
     const handleChangeRowsPerPage = event => {
-        setRowsPerPage(parseInt(event.target.value, 10));
+        const newRowsPerPage = parseInt(event.target.value);
+        setRowsPerPage(newRowsPerPage);
         setPage(0);
+        if (getRowsFunc) {
+            getRowsFunc({offset: page * newRowsPerPage, rows: newRowsPerPage});
+        }
     };
 
     useEffect(() => {
         if(getRowsFunc) {
             if (!rowLoadingTime || (new Date() - rowLoadingTime > refreshPeriod)) {
-                getRowsFunc({page: page, rowsPerPage: rowsPerPage});
+                getRowsFunc({offset: 0, rows: rowsPerPageOptions[0]});
             }
         }
 
-    }, [page, rowsPerPage, getRowsFunc, rowLoadingTime]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const getData = () => {
         if(getRowsFunc) {
@@ -113,7 +122,9 @@ export default function EnhancedTable(props) {
     const isSelected = name => selected.indexOf(name) !== -1;
 
     const emptyRows = isPaginationDisabled ? 0 :
-        rowsPerPage - Math.min(Number(rowsPerPage), rows.length - page * rowsPerPage);
+        getRowsFunc ?
+            rowsPerPage - rows.length :
+            rowsPerPage - Math.min(Number(rowsPerPage), rows.length - page * rowsPerPage);
 
     return (
         <div className={classes.root}>
@@ -171,7 +182,7 @@ export default function EnhancedTable(props) {
                 {!isPaginationDisabled && <TablePagination
                     rowsPerPageOptions={rowsPerPageOptions}
                     component="div"
-                    count={rows.length}
+                    count={getRowsFunc ? rowsTotal : rows.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}

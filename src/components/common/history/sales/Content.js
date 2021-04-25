@@ -26,6 +26,7 @@ function Content({client, getSaleHistory, classes}) {
                         {isTablesShown && <SalesTable
                             getSaleHistory={getSaleHistory}
                             rowLoadingTime={client.saleHistoryLoadingTime}
+                            rowsTotal={client.saleHistory[0]['totalCount']}
                             sales={client.saleHistory.map(el => {
                                 return {
                                     id: el.id,
