@@ -1,22 +1,16 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import {withStyles} from '@material-ui/core/styles';
 import ContentStyle from "../../ContentStyle";
 import {Helmet} from "react-helmet";
 import SalesTable from "../../../common/history/sales/SalesTable";
-import {refreshPeriod} from "../../../../util/RefreshPeriod";
 import {getSaleHistory} from "../../../../redux/actions/historyActions";
 import {connect} from "react-redux";
 
 const styles = theme => ContentStyle(theme);
 
 function Content({client, getSaleHistory, classes}) {
-    useEffect(() => {
-        if (!client.saleHistoryLoadingTime || (new Date() - client.saleHistoryLoadingTime > refreshPeriod)) {
-            getSaleHistory({});
-        }
-    }, [client.saleHistoryLoadingTime, getSaleHistory]);
 
     const isTablesShown = client && client.saleHistory;
 
@@ -30,6 +24,8 @@ function Content({client, getSaleHistory, classes}) {
                 {isTablesShown ?
                     <div>
                         {isTablesShown && <SalesTable
+                            getSaleHistory={getSaleHistory}
+                            rowLoadingTime={client.saleHistoryLoadingTime}
                             sales={client.saleHistory.map(el => {
                                 return {
                                     id: el.id,

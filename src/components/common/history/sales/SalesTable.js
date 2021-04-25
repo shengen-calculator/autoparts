@@ -1,7 +1,6 @@
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-
 import EnhancedTable from '../../EnhancedTable';
 
 
@@ -44,6 +43,8 @@ export default function SalesTable(props) {
 
             <EnhancedTable
                 rows={props.sales}
+                getRowsFunc={props.getSaleHistory}
+                rowLoadingTime={props.rowLoadingTime}
                 headCells={headCells}
                 tableRow={tableRow}
                 title="Відвантажене"
@@ -51,7 +52,6 @@ export default function SalesTable(props) {
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
                 isRowSelectorShown={false}
-                isPaginationDisabled={true}
                 noRecordsMessage="Відвантажені позиції відсутні"
             />
 
