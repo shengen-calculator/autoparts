@@ -47,10 +47,11 @@ export default function SalesTable(props) {
                 rowLoadingTime={props.rowLoadingTime}
                 headCells={headCells}
                 tableRow={tableRow}
+                rowsTotal={props.rowsTotal}
                 title="Відвантажене"
                 columns={7}
                 isFilterShown={false}
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[10, 25, 50]}
                 isRowSelectorShown={false}
                 noRecordsMessage="Відвантажені позиції відсутні"
             />

@@ -66,8 +66,16 @@ export default function clientReducer(state = initialState.client, action) {
         case types.LOAD_SALE_HISTORY_SUCCESS:
             return {
                 ...state,
-                saleHistory: action.sales,
-                saleHistoryLoadingTime: new Date()
+                saleHistory: action.sales
+            };
+
+        case types.LOAD_SALE_HISTORY_REQUEST:
+            return {
+                ...state,
+                saleHistoryLoadingTime:
+                    action.params.offset > 0 || action.params.rows > 10 ?
+                        null :
+                        new Date()
             };
 
         case types.DELETE_ORDERS_REQUEST:
