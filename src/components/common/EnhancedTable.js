@@ -1,5 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
-import React from "react";
+import React, {useEffect} from "react";
 import Paper from "@material-ui/core/Paper";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -13,6 +13,7 @@ import {EnhancedTableToolbar} from "./EnhancedTableToolbar";
 import StableSort from "../../util/StableSort";
 import GetComparator from "../../util/GetComparator";
 import Typography from "@material-ui/core/Typography";
+import {refreshPeriod} from "../../util/RefreshPeriod";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -45,6 +46,7 @@ export default function EnhancedTable(props) {
         tableRow,
         rows,
         getRowsFunc,
+        rowLoadingTime,
         headCells,
         title,
         titleIcon,
@@ -89,9 +91,18 @@ export default function EnhancedTable(props) {
         setPage(0);
     };
 
+    useEffect(() => {
+        if(getRowsFunc) {
+            if (!rowLoadingTime || (new Date() - rowLoadingTime > refreshPeriod)) {
+                getRowsFunc({page: page, rowsPerPage: rowsPerPage});
+            }
+        }
+
+    }, [page, rowsPerPage, getRowsFunc, rowLoadingTime]);
+
     const getData = () => {
         if(getRowsFunc) {
-            return getRowsFunc(page, rowsPerPage);
+            return rows;
         }
         return isPaginationDisabled ?
             StableSort(rows, GetComparator(order, orderBy)) :
