@@ -72,6 +72,7 @@ export default function clientReducer(state = initialState.client, action) {
         case types.LOAD_SALE_HISTORY_REQUEST:
             return {
                 ...state,
+                saleHistory: [],
                 saleHistoryLoadingTime:
                     action.params.offset > 0 || action.params.rows > 10 ?
                         null :

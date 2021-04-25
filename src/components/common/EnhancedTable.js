@@ -179,7 +179,7 @@ export default function EnhancedTable(props) {
                         {noRecordsMessage ? noRecordsMessage : "Інформація відсутня"}
                     </Typography>
                 }
-                {!isPaginationDisabled && <TablePagination
+                {(!isPaginationDisabled && rows.length !== 0 ) && <TablePagination
                     rowsPerPageOptions={rowsPerPageOptions}
                     component="div"
                     count={getRowsFunc ? rowsTotal : rows.length}
