@@ -45,6 +45,7 @@ export default function SalesTable(props) {
                 rows={props.sales}
                 getRowsFunc={props.getSaleHistory}
                 rowLoadingTime={props.rowLoadingTime}
+                isMinimalTableHeadUse={true}
                 headCells={headCells}
                 tableRow={tableRow}
                 rowsTotal={props.rowsTotal}

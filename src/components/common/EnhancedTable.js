@@ -14,6 +14,7 @@ import StableSort from "../../util/StableSort";
 import GetComparator from "../../util/GetComparator";
 import Typography from "@material-ui/core/Typography";
 import {refreshPeriod} from "../../util/RefreshPeriod";
+import MinimalTableHead from "./MinimalTableHead";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -47,6 +48,7 @@ export default function EnhancedTable(props) {
         rows,
         getRowsFunc,
         rowLoadingTime,
+        isMinimalTableHeadUse,
         rowsTotal,
         headCells,
         title,
@@ -148,17 +150,21 @@ export default function EnhancedTable(props) {
                             aria-label="enhanced table"
                             stickyHeader={isStickyHeader}
                         >
-                            <EnhancedTableHead
-                                classes={classes}
-                                numSelected={selected.length}
-                                order={order}
-                                orderBy={orderBy}
-                                onSelectAllClick={handleSelectAllClick}
-                                onRequestSort={handleRequestSort}
-                                rowCount={rows.length}
-                                headCells={headCells}
-                                isRowSelectorShown={isRowSelectorShown}
-                            />
+                            {
+                                isMinimalTableHeadUse ?
+                                    <MinimalTableHead headCells={headCells} classes={classes}/> :
+                                    <EnhancedTableHead
+                                        classes={classes}
+                                        numSelected={selected.length}
+                                        order={order}
+                                        orderBy={orderBy}
+                                        onSelectAllClick={handleSelectAllClick}
+                                        onRequestSort={handleRequestSort}
+                                        rowCount={rows.length}
+                                        headCells={headCells}
+                                        isRowSelectorShown={isRowSelectorShown}
+                                    />
+                            }
                             <TableBody>
                                 {
                                     getData()
