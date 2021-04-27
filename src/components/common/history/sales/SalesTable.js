@@ -52,7 +52,7 @@ export default function SalesTable(props) {
                 title="Відвантажене"
                 columns={7}
                 isFilterShown={false}
-                rowsPerPageOptions={[10, 25, 50]}
+                rowsPerPageOptions={[20, 50, 100]}
                 isRowSelectorShown={false}
                 noRecordsMessage="Відвантажені позиції відсутні"
             />

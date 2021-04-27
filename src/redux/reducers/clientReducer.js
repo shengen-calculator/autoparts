@@ -74,7 +74,7 @@ export default function clientReducer(state = initialState.client, action) {
                 ...state,
                 saleHistory: [],
                 saleHistoryLoadingTime:
-                    action.params.offset > 0 || action.params.rows > 10 ?
+                    action.params.offset > 0 || action.params.rows > 20 ?
                         null :
                         new Date()
             };
