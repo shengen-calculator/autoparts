@@ -15,7 +15,7 @@ BEGIN
              INNER JOIN
          dbo.Клиенты ON dbo.Касса.ID_Клиента = dbo.Клиенты.ID_Клиента
     WHERE dbo.Клиенты.VIP LIKE @vip
-    ORDER BY InvoiceDate, invoiceNumber OFFSET @offset ROWS FETCH NEXT @rows ROWS ONLY
+    ORDER BY dbo.[Касса].ID DESC OFFSET @offset ROWS FETCH NEXT @rows ROWS ONLY
 
 END
 go
