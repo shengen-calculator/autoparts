@@ -1,16 +1,17 @@
 CREATE PROCEDURE [dbo].[sp_web_getreturnhistory] @vip VARCHAR(10), @offset INT, @rows INT
 AS
 BEGIN
-    SELECT dbo.[Подчиненная накладные].ID             AS id,
-           dbo.[Подчиненная накладные].ID_Накладной   AS invoiceNumber,
-           dbo.[Подчиненная накладные].Количество     AS quantity,
-           dbo.[Подчиненная накладные].Цена           AS priceEur,
-           dbo.[Подчиненная накладные].Грн            AS priceUah,
-           dbo.[Подчиненная накладные].Дата_закрытия  AS invoiceDate,
-           dbo.Брэнды.Брэнд                           AS brand,
-           dbo.[Каталог запчастей].[Номер поставщика] AS number,
-           dbo.[Каталог запчастей].Описание           AS description,
-           COUNT(*) OVER ()                           AS totalCount
+    SELECT dbo.[Подчиненная накладные].ID                                          AS id,
+           dbo.[Подчиненная накладные].ID_Накладной                                AS invoiceNumber,
+           dbo.[Подчиненная накладные].Количество                                  AS quantity,
+           dbo.[Подчиненная накладные].Цена                                        AS priceEur,
+           dbo.[Подчиненная накладные].Грн                                         AS priceUah,
+           FORMAT(dbo.GetInvoiceDate(
+                          dbo.[Подчиненная накладные].ID_Накладной), 'dd.MM.yyyy') AS invoiceDate,
+           TRIM(dbo.Брэнды.Брэнд)                                                  AS brand,
+           TRIM(dbo.[Каталог запчастей].[Номер поставщика])                        AS number,
+           TRIM(dbo.[Каталог запчастей].Описание)                                  AS description,
+           COUNT(*) OVER ()                                                        AS totalCount
     FROM dbo.[Подчиненная накладные]
              INNER JOIN
          dbo.[Каталог запчастей] ON dbo.[Подчиненная накладные].ID_Запчасти = dbo.[Каталог запчастей].ID_Запчасти

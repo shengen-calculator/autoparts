@@ -52,21 +52,29 @@ export default function clientReducer(state = initialState.client, action) {
         case types.LOAD_PAYMENT_HISTORY_SUCCESS:
             return {
                 ...state,
-                paymentHistory: action.payments,
-                paymentHistoryLoadingTime: new Date()
+                paymentHistory: action.payments
             };
 
         case types.LOAD_RETURN_HISTORY_SUCCESS:
             return {
                 ...state,
-                returnHistory: action.returns,
-                returnHistoryLoadingTime: new Date()
+                returnHistory: action.returns
             };
 
         case types.LOAD_SALE_HISTORY_SUCCESS:
             return {
                 ...state,
                 saleHistory: action.sales
+            };
+
+        case types.LOAD_RETURN_HISTORY_REQUEST:
+            return {
+                ...state,
+                returnHistory: [],
+                returnHistoryLoadingTime:
+                    action.params.offset > 0 || action.params.rows > 20 ?
+                        null :
+                        new Date()
             };
 
         case types.LOAD_SALE_HISTORY_REQUEST:
