@@ -18,6 +18,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import SearchToolbar from "../../client/SearchToolbar";
 import Progress from "../Progress";
 import LoginToolbar from "../LoginToolbar";
+import Toolbar from "@material-ui/core/Toolbar";
 
 const styles = theme => ({
     root: {
@@ -51,9 +52,6 @@ const styles = theme => ({
     },
     block: {
         display: 'block'
-    },
-    addUser: {
-        marginRight: theme.spacing(1)
     },
     contentWrapper: {
         margin: '40px 16px'
@@ -93,6 +91,7 @@ function Content({setStatisticPeriod, ...props}) {
                     position="sticky"
                     elevation={0}
                 >
+                    <Toolbar />
                     <Tabs value={index > 0 ? index : 0} textColor="inherit">
                         {tabs.map(({id, name }) => (
                             <Tab key={id}
