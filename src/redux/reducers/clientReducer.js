@@ -87,6 +87,16 @@ export default function clientReducer(state = initialState.client, action) {
                         new Date()
             };
 
+        case types.LOAD_PAYMENT_HISTORY_REQUEST:
+            return {
+                ...state,
+                paymentHistory: [],
+                paymentHistoryLoadingTime:
+                    action.params.offset > 0 || action.params.rows > 20 ?
+                        null :
+                        new Date()
+            };
+
         case types.DELETE_ORDERS_REQUEST:
             return {
                 ...state,
