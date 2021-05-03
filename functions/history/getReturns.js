@@ -17,7 +17,7 @@ const getReturns = async (data, context) => {
         const result = await pool.request()
             .input('vip', sql.VarChar(10), data.vip ? data.vip : context.auth.token.vip)
             .input('offset', sql.Int, data.offset ? data.offset : 0)
-            .input('rows', sql.Int, (data.rows && data.rows < 100) ? data.rows : 10)
+            .input('rows', sql.Int, (data.rows && data.rows < 101) ? data.rows : 10)
             .execute('sp_web_getreturnhistory');
         return result.recordset;
     } catch (err) {
