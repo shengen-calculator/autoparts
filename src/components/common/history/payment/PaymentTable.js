@@ -6,8 +6,8 @@ import EnhancedTable from '../../EnhancedTable';
 
 const headCells = [
     {id: 'date', numeric: false, disablePadding: false, label: 'Дата'},
-    {id: 'description', numeric: false, disablePadding: false, label: 'Опис'},
     {id: 'amount', numeric: true, disablePadding: false, label: 'Сума'},
+    {id: 'description', numeric: false, disablePadding: false, label: 'Примітка'},
 ];
 
 function tableRow(row, index, isSelected) {
@@ -22,8 +22,8 @@ function tableRow(row, index, isSelected) {
             selected={isItemSelected}
         >
             <TableCell align="left">{row.date}</TableCell>
-            <TableCell align="left">{row.description}</TableCell>
             <TableCell align="right">{row.amount.toFixed(2)}</TableCell>
+            <TableCell align="left">{row.description}</TableCell>
         </TableRow>
     );
 }
