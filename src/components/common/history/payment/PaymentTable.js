@@ -41,12 +41,12 @@ export default function PaymentTable(props) {
                 headCells={headCells}
                 tableRow={tableRow}
                 rowsTotal={props.rowsTotal}
-                title="Платежі"
+                title="Оплати"
                 columns={7}
                 isFilterShown={false}
                 rowsPerPageOptions={[20, 50, 100]}
                 isRowSelectorShown={false}
-                noRecordsMessage="Платежі відсутні"
+                noRecordsMessage="Оплати відсутні"
             />
 
         </React.Fragment>
