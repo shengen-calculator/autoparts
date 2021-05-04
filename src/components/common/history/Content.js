@@ -72,7 +72,7 @@ function Content({setStatisticPeriod, ...props}) {
         },
         {
             id: 'payment',
-            name: 'Платежі'
+            name: 'Оплати'
         }
     ];
     const index = tabs.findIndex(tab => window.location.href.includes(tab.id));

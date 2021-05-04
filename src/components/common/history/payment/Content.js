@@ -17,7 +17,7 @@ function Content({client, getPaymentHistory, classes}) {
     return (
         <Paper className={classes.paper}>
             <Helmet>
-                <title>Fenix - Історія платежів</title>
+                <title>Fenix - Історія оплат</title>
             </Helmet>
 
             <div className={classes.contentWrapper}>
