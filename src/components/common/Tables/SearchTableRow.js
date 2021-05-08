@@ -11,6 +11,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Typography from '@material-ui/core/Typography';
 import {RoleEnum} from "../../../util/Enums";
 import teal from "@material-ui/core/colors/teal";
+import red from "@material-ui/core/colors/red";
 
 export const headCells = [
     {id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
@@ -49,7 +50,7 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
             aria-checked={isItemSelected}
             tabIndex={-1}
             key={row.id}
-            style={row['term'] === 0 ? {backgroundColor: teal[50]} : {}}
+            style={row['OnlyForManagers'] ? {backgroundColor: red[50]} : (row['term'] === 0 ? {backgroundColor: teal[50]} : {})}
             selected={isItemSelected}
         >
             {RoleEnum.Manager === role &&  <TableCell width="10%" align="left" name="order" style={pointer}>{row.vendor}</TableCell>}
