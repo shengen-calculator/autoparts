@@ -4,7 +4,7 @@ import TableRow from '@material-ui/core/TableRow';
 import EnhancedTable from '../EnhancedTable';
 import {RoleEnum, TitleIconEnum} from '../../../util/Enums';
 import ReserveDialog from "../Dialog/ReserveDialog";
-import lightBlue from '@material-ui/core/colors/lightBlue';
+import lightGreen from '@material-ui/core/colors/lightGreen';
 import {withStyles} from '@material-ui/core/styles';
 import {handleHeadCells} from "../../../util/HeadCellsHandler";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
@@ -26,7 +26,7 @@ function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown
     const isItemSelected = isSelected(row.name);
     const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer', fontWeight: 700};
-    const stockColor = lightBlue[50];
+    const stockColor = lightGreen['A400'];
     const StyledTableRow = withStyles(() => ({
         root: {
             backgroundColor: stockColor,
