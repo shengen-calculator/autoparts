@@ -15,6 +15,7 @@ export default function authenticationReducer(state = initialState.authenticatio
                 ...state,
                 role: action.data.claims.role,
                 vip: action.data.claims.vip,
+                isCityDeliveryUsed: action.data.claims.isCityDeliveryUsed,
                 logging: false
             };
 
@@ -23,6 +24,7 @@ export default function authenticationReducer(state = initialState.authenticatio
                 ...state,
                 role: '',
                 vip: '',
+                isCityDeliveryUsed: false,
                 logging: false
             };
 
@@ -48,7 +50,8 @@ export default function authenticationReducer(state = initialState.authenticatio
             return {
                 ...state,
                 role:'',
-                vip:''
+                vip:'',
+                isCityDeliveryUsed: false
             };
 
         default:

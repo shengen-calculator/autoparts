@@ -26,14 +26,16 @@ const processSignUp = async (user) => {
             customClaims = {
                 role: RoleEnum.Manager,
                 vip: client.vip,
-                clientId: client.id
+                clientId: client.id,
+                isCityDeliveryUsed: false
             }
         } else if (client && client.isWebUser) {
             emailVerified = true;
             customClaims = {
                 role: RoleEnum.Client,
                 vip: client.vip,
-                clientId: client.id
+                clientId: client.id,
+                isCityDeliveryUsed: client.isCityDeliveryUsed
             }
         }
         console.log(client);

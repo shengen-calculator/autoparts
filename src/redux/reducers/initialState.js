@@ -3,6 +3,7 @@ const initialState = {
         role: '',
         vip: '',
         logging: false,
+        isCityDeliveryUsed: false,
         registrating: false
     },
     message: {
