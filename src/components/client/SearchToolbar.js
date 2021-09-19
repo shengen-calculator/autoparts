@@ -6,6 +6,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from "@material-ui/icons/Send";
 import EuroIcon from "@material-ui/icons/Euro";
+import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import React, {useState} from "react";
@@ -18,7 +19,7 @@ import {getCurrencyRate, hideClientPrice, showClientPrice} from "../../redux/act
 
 const styles = theme => ContentStyle(theme);
 
-function SearchToolbar({client, getCurrencyRate, showClientPrice, hideClientPrice, ...props}) {
+function SearchToolbar({client, auth, getCurrencyRate, showClientPrice, hideClientPrice, ...props}) {
     const {classes} = props;
 
     const [criteria, setCriteria] = useState({
@@ -113,6 +114,18 @@ function SearchToolbar({client, getCurrencyRate, showClientPrice, hideClientPric
                         </IconButton>
                     </Tooltip>
                 </Grid>
+                {
+                    auth.isCityDeliveryUsed &&
+                    <Grid item>
+                        <Tooltip title="Час наступної доставки">
+                            <IconButton color="inherit" onClick={() => {
+                                getCurrencyRate();
+                            }}>
+                                <AirportShuttleIcon/>
+                            </IconButton>
+                        </Tooltip>
+                    </Grid>
+                }
             </Grid>
         </Toolbar>
     )
@@ -120,7 +133,8 @@ function SearchToolbar({client, getCurrencyRate, showClientPrice, hideClientPric
 
 function mapStateToProps(state) {
     return {
-        client: state.client
+        client: state.client,
+        auth: state.authentication
     }
 }
 
