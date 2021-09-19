@@ -19,7 +19,7 @@ import {getCurrencyRate, hideClientPrice, showClientPrice} from "../../redux/act
 
 const styles = theme => ContentStyle(theme);
 
-function SearchToolbar({client, auth, getCurrencyRate, showClientPrice, hideClientPrice, ...props}) {
+function SearchToolbar({client, getCurrencyRate, showClientPrice, hideClientPrice, ...props}) {
     const {classes} = props;
 
     const [criteria, setCriteria] = useState({
@@ -115,7 +115,7 @@ function SearchToolbar({client, auth, getCurrencyRate, showClientPrice, hideClie
                     </Tooltip>
                 </Grid>
                 {
-                    auth.isCityDeliveryUsed &&
+                    client.isCityDeliveryUsed &&
                     <Grid item>
                         <Tooltip title="Час наступної доставки">
                             <IconButton color="inherit" onClick={() => {
@@ -133,8 +133,7 @@ function SearchToolbar({client, auth, getCurrencyRate, showClientPrice, hideClie
 
 function mapStateToProps(state) {
     return {
-        client: state.client,
-        auth: state.authentication
+        client: state.client
     }
 }
 
