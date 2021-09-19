@@ -3,7 +3,6 @@ const initialState = {
         role: '',
         vip: '',
         logging: false,
-        isCityDeliveryUsed: false,
         registrating: false
     },
     message: {
@@ -15,6 +14,7 @@ const initialState = {
         vip: '',
         fullName: '',
         isEuroClient: false,
+        isCityDeliveryUsed: false,
         orders: [],
         isOrdersLoaded: false,
         orderLoadingTime: {},
