@@ -36,7 +36,7 @@ function CityDelivery() {
         let text = "";
         const current = (date - startOfToday()) / 1000 / 60;
         let dispatchTime;
-        if ([1, 2, 3, 4, 5].includes(getDay(date))) {
+        if ([1, 2, 2, 4, 5].includes(getDay(date))) {
             dispatchTime = [630, 750, 870, 990, 1110];
         } else if ([6].includes(getDay(date))) {
             dispatchTime = [630, 750, 870];
@@ -50,7 +50,7 @@ function CityDelivery() {
             }
         }
         if (!text) {
-            text = "-";
+            text = "--.--";
         }
 
         setTimer(prev => ({
