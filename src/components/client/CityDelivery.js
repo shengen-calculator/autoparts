@@ -8,6 +8,7 @@ import {getDay, startOfToday, addMinutes, format} from 'date-fns'
 
 function CityDelivery() {
     const bolder = {fontWeight: 800};
+    const bolderTop = {paddingTop: 4, fontWeight: 800};
     const bigger = {fontWeight: 800, fontSize: 32};
 
     const [timer, setTimer] = useState({
@@ -18,7 +19,7 @@ function CityDelivery() {
         tooltip: {
             backgroundColor: '#f5f5f9',
             color: 'rgba(0, 0, 0, 0.87)',
-            maxWidth: 340,
+            maxWidth: 350,
             fontSize: theme.typography.pxToRem(12),
             border: '1px solid #dadde9',
 
@@ -26,7 +27,7 @@ function CityDelivery() {
     }))(Tooltip);
 
     const formattedTime = (minutes) => {
-        const helperDate = addMinutes(new Date(0), minutes - 180);
+        const helperDate = addMinutes(new Date(0), minutes - 120);
         return format(helperDate, 'hh:mm');
     };
 
@@ -73,7 +74,7 @@ function CityDelivery() {
                     <Typography color="inherit" style={bigger}>{timer.text}</Typography>
                     Графік виїздів:
                     <Typography color="inherit" style={bolder}>Пон-Пят: 10.30 12.30 14.30 16.30 18.30</Typography>
-                    <Typography color="inherit" style={bolder}>Суб: 10.30 12.30 14.30</Typography>
+                    <Typography color="inherit" style={bolderTop}>Суб: 10.30 12.30 14.30</Typography>
                 </React.Fragment>
             }>
             <IconButton color="inherit">
