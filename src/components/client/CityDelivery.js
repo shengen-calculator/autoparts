@@ -4,7 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AirportShuttleIcon from "@material-ui/icons/AirportShuttle";
 import {withStyles} from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
-import {getDay, startOfToday, addMinutes, format, formatDuration} from 'date-fns'
+import {getDay, startOfToday, addMinutes, format} from 'date-fns'
 
 function CityDelivery() {
     const bolder = {fontWeight: 800};
