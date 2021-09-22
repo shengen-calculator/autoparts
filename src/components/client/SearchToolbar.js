@@ -6,7 +6,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from "@material-ui/icons/Send";
 import EuroIcon from "@material-ui/icons/Euro";
-import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import React, {useState} from "react";
@@ -16,6 +15,7 @@ import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import {removeSpecialCharacters} from "../../util/Search";
 import {getCurrencyRate, hideClientPrice, showClientPrice} from "../../redux/actions/clientActions";
+import CityDelivery from "./CityDelivery";
 
 const styles = theme => ContentStyle(theme);
 
@@ -117,13 +117,7 @@ function SearchToolbar({client, getCurrencyRate, showClientPrice, hideClientPric
                 {
                     client.isCityDeliveryUsed &&
                     <Grid item>
-                        <Tooltip title="Час наступної доставки">
-                            <IconButton color="inherit" onClick={() => {
-                                getCurrencyRate();
-                            }}>
-                                <AirportShuttleIcon/>
-                            </IconButton>
-                        </Tooltip>
+                        <CityDelivery/>
                     </Grid>
                 }
             </Grid>
