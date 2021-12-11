@@ -43,6 +43,16 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
         setIsPhotoDialogOpened(true);
     };
 
+    const copyToBuffer = (selected) => {
+        navigator.clipboard.writeText(selected.number).then(() => {
+            console.log('Async: Copying to clipboard was successful!');
+            showToastrMessage({type: 'success', message: 'Номер успішно скопійовано в буфер'});
+
+        }, () => {
+            showToastrMessage({type: 'error', message: 'Під час копіювання номеру в буфер виникла помилка'});
+        });
+    };
+
     const handleCancelPhotoDialog = () => {
         setIsPhotoDialogOpened(false);
     };
@@ -106,10 +116,12 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
                                 {generalRows.length > 0 && <GeneralTable rows={StableSort(generalRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
                                                                          onOpenPhotoDialog={openPhotoDialog}
+                                                                         onCopyToBuffer={copyToBuffer}
                                                                          isPriceShown={client.isPriceShown}/>}
                                 {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
                                                                        onOpenPhotoDialog={openPhotoDialog}
+                                                                       onCopyToBuffer={copyToBuffer}
                                                                        isPriceShown={client.isPriceShown}/>}
                                 {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
@@ -119,6 +131,7 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
                                                                        onOpenFilterClick={onOpenFilterClick}
                                                                        closeDialog={closeFilterDialog}
                                                                        onOpenPhotoDialog={openPhotoDialog}
+                                                                       onCopyToBuffer={copyToBuffer}
                                                                        isPriceShown={client.isPriceShown}/>}
                             </React.Fragment>
                         }
