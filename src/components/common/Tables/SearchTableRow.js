@@ -78,7 +78,7 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                     </Grid>
                     <Grid item>
                         <Tooltip title="Скопіювати номер в буфер обміну">
-                            <FileCopyIcon onClick={(e) => {handleClick(e, row.id, 'copy')}} style={{fontSize: 16, marginTop: 2, marginLeft: 5}}/>
+                            <FileCopyIcon onClick={(e) => {handleClick(e, row.id, 'copy')}} style={{fontSize: 13, marginTop: 3, marginLeft: 5}}/>
                         </Tooltip>
                     </Grid>
                 </Grid>
