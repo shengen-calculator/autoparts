@@ -4,6 +4,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import React from "react";
 import Grid from '@material-ui/core/Grid';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import {withStyles} from '@material-ui/core/styles';
@@ -55,22 +56,32 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
         >
             {RoleEnum.Manager === role &&  <TableCell width="10%" align="left" name="order" style={pointer}>{row.vendor}</TableCell>}
             <TableCell width="10%" padding="default" component="th" id={labelId} scope="row" style={pointer} name="order">
-                {row.brand}
-            </TableCell>
-            <TableCell width="10%" align="left" name="order" style={pointer}>
                 {
                     row['isGoodQuality'] ?
                         <Grid container name="order">
                             <Grid item name="order">
-                                {row.number}
+                                {row.brand}
                             </Grid>
                             <Grid item>
                                 <Tooltip title="Гарантія відповідності виробнику">
                                     <ThumbUpIcon style={{fontSize: 10, marginBottom: 5, marginLeft: 3}}/>
                                 </Tooltip>
                             </Grid>
-                        </Grid> : row.number
+                        </Grid> : row.brand
+
                 }
+            </TableCell>
+            <TableCell width="10%" align="left" name="order" style={pointer}>
+                <Grid container name="order">
+                    <Grid item name="order">
+                        {row.number}
+                    </Grid>
+                    <Grid item>
+                        <Tooltip title="Скопіювати номер в буфер обміну">
+                            <FileCopyIcon onClick={(e) => {handleClick(e, row.id, 'copy')}} style={{fontSize: 16, marginTop: 2, marginLeft: 5}}/>
+                        </Tooltip>
+                    </Grid>
+                </Grid>
             </TableCell>
             <TableCell width="30%" align="left" name="order" style={pointer}>{row.description}</TableCell>
             <TableCell width="10%" align="right" name="price"
