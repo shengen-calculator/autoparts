@@ -24,6 +24,8 @@ export default function VendorTable(props) {
             props.onOpenAnalogDialog(props.rows.find(x => x.id === name));
         } else if (el === "photo") {
             props.onOpenPhotoDialog(props.rows.find(x => x.id === name));
+        } else if (el === "copy") {
+            props.onCopyToBuffer(props.rows.find(x => x.id === name));
         }
     };
 
