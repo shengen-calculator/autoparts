@@ -80,6 +80,14 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
         setIsPhotoDialogOpened(true);
     };
 
+    const copyToBuffer = (selected) => {
+        navigator.clipboard.writeText(selected.number).then(() => {
+            console.log('Async: Copying to clipboard was successful!');
+        }, function(err) {
+            console.error('Async: Could not copy text: ', err);
+        });
+    };
+
     const handleCancelAnalogDialog = () => {
         setIsAnalogListDialogOpened(false);
     };
@@ -126,11 +134,13 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
                                                                          isPriceShown={true}
                                                                          onOpenPhotoDialog={openPhotoDialog}
+                                                                         onCopyToBuffer={copyToBuffer}
                                                                          onOpenAnalogDialog={openAnalogListDialog}/>}
                                 {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
                                                                        isPriceShown={true} inOrder={product.inOrder}
                                                                        onOpenPhotoDialog={openPhotoDialog}
+                                                                       onCopyToBuffer={copyToBuffer}
                                                                        onOpenAnalogDialog={openAnalogListDialog}/>}
                                 {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
@@ -141,6 +151,7 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
                                                                        onOpenFilterClick={onOpenFilterClick}
                                                                        closeDialog={closeFilterDialog}
                                                                        onOpenPhotoDialog={openPhotoDialog}
+                                                                       onCopyToBuffer={copyToBuffer}
                                                                        onOpenAnalogDialog={openAnalogListDialog}/>}
                             </React.Fragment>
                         }
