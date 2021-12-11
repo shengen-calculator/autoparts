@@ -83,8 +83,10 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
     const copyToBuffer = (selected) => {
         navigator.clipboard.writeText(selected.number).then(() => {
             console.log('Async: Copying to clipboard was successful!');
-        }, function(err) {
-            console.error('Async: Could not copy text: ', err);
+            showToastrMessage({type: 'success', message: 'Номер успішно скопійовано в буфер'});
+
+        }, () => {
+            showToastrMessage({type: 'error', message: 'Під час копіювання номеру в буфер виникла помилка'});
         });
     };
 
