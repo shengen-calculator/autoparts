@@ -8,6 +8,9 @@ import lightGreen from '@material-ui/core/colors/lightGreen';
 import {withStyles} from '@material-ui/core/styles';
 import {handleHeadCells} from "../../../util/HeadCellsHandler";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+import Grid from "@material-ui/core/Grid";
+import Tooltip from "@material-ui/core/Tooltip";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
 
 const headCells = [
     {id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
@@ -50,7 +53,18 @@ function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown
                        style={pointer}>
                 {row.brand}
             </TableCell>
-            <TableCell width="10%" align="left" name="reserve" style={pointer}>{row.number}</TableCell>
+            <TableCell width="10%" align="left" name="reserve" style={pointer}>
+                <Grid container>
+                    <Grid item>
+                        {row.number}
+                    </Grid>
+                    <Grid item>
+                        <Tooltip title="Скопіювати номер в буфер обміну">
+                            <FileCopyIcon onClick={(e) => {handleClick(e, row.id, 'copy')}} style={{fontSize: 16, marginTop: 2, marginLeft: 5}}/>
+                        </Tooltip>
+                    </Grid>
+                </Grid>
+            </TableCell>
             <TableCell width="30%" align="left" name="reserve" style={pointer}>{row.description}</TableCell>
             <TableCell width="10%" align="right" name="price"
                        style={pointer}>{isEur ? row['retailEur'].toFixed(2) : row.retail.toFixed(2)}</TableCell>
@@ -86,6 +100,8 @@ export default function GeneralTable(props) {
             props.onOpenAnalogDialog(props.rows.find(x => x.id === name));
         } else if (el === "photo") {
             props.onOpenPhotoDialog(props.rows.find(x => x.id === name));
+        } else if (el === "copy") {
+            props.onCopyToBuffer(props.rows.find(x => x.id === name));
         }
     };
     const handleCancelReserveClick = () => {
