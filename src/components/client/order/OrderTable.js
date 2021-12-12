@@ -1,7 +1,6 @@
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import Checkbox from '@material-ui/core/Checkbox';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
