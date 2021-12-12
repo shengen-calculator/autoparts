@@ -10,7 +10,6 @@ import SnoozeIcon from '@material-ui/icons/Snooze';
 
 import EnhancedTable from '../../common/EnhancedTable';
 import {TitleIconEnum} from "../../../util/Enums";
-import {handleTableClick, handleTableSelectAllClick} from "../../common/EnhancedTableClickHandler";
 import {formatCurrency} from "../../../util/Formatter";
 import Tooltip from "@material-ui/core/Tooltip";
 import {getOrderRowClass} from "../../common/OrderRowStyle";
@@ -50,13 +49,6 @@ function tableRow(row, index, isSelected, handleClick) {
             style={getOrderRowClass(row)}
             selected={isItemSelected}
         >
-            <TableCell padding="checkbox">
-                <Checkbox
-                    onClick={event => handleClick(event, row.id)}
-                    checked={isItemSelected}
-                    inputProps={{'aria-labelledby': labelId}}
-                />
-            </TableCell>
             <TableCell align="left">{row.brand}</TableCell>
             <TableCell align="left">{row.number}</TableCell>
             <TableCell align="left">{row.description}</TableCell>
@@ -95,41 +87,22 @@ function tableRow(row, index, isSelected, handleClick) {
 }
 
 export default function OrderTable(props) {
-    const [selected, setSelected] = React.useState([]);
-
-    const handleClick = (event, name) => {
-        if(event.target.getAttribute("name") === "ordered") {
-
-        } else {
-            handleTableClick(event, name, selected, setSelected);
-        }
-    };
-
-
-    const handleSelectAllClick = (event) => {
-        handleTableSelectAllClick(event, props.orders, setSelected);
-    };
-
 
     const totalEur = formatCurrency(props.orders.reduce((a, b) => a + b.euro * b.ordered, 0), 'EUR');
     const totalUah = formatCurrency(props.orders.reduce((a, b) => a + b.uah * b.ordered, 0), 'UAH');
-
     return (
         <React.Fragment>
             <EnhancedTable
-                handleClick={handleClick}
-                handleSelectAllClick={handleSelectAllClick}
-                selected={selected}
                 rows={props.orders}
                 headCells={headCells}
                 tableRow={tableRow}
                 title="Замовлення"
                 titleIcon={TitleIconEnum.flight}
                 total={props.isEuroClient ? `${totalEur} / ${totalUah}` : `${totalUah} / ${totalEur}`}
-                columns={13}
+                columns={12}
                 isFilterShown={false}
                 rowsPerPageOptions={[5, 10, 25]}
-                isRowSelectorShown={true}
+                isRowSelectorShown={false}
                 isPaginationDisabled={true}
                 noRecordsMessage="Замовлення відсутні"
             />
