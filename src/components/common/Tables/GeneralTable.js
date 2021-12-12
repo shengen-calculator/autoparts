@@ -54,8 +54,8 @@ function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown
                 {row.brand}
             </TableCell>
             <TableCell width="10%" align="left" name="reserve" style={pointer}>
-                <Grid container>
-                    <Grid item>
+                <Grid container name="reserve">
+                    <Grid item name="reserve">
                         {row.number}
                     </Grid>
                     <Grid item>
