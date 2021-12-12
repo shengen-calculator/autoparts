@@ -34,7 +34,6 @@ const headCells = [
 
 function tableRow(row, index, isSelected, handleClick) {
     const isItemSelected = isSelected(row.id);
-    const labelId = `enhanced-table-checkbox-${index}`;
     const pointer = {cursor: 'pointer'};
 
 
