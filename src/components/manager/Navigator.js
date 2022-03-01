@@ -14,7 +14,7 @@ import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import PaymentIcon from '@material-ui/icons/Payment';
 import {NavLink} from "react-router-dom";
-import logo from "../../logo.png";
+import logo from "../../korabel.png";
 
 const categories = [
     {
@@ -40,6 +40,10 @@ const styles = theme => ({
     },
     categoryHeaderPrimary: {
         color: theme.palette.common.white,
+    },
+    logo: {
+        padding: 0,
+        margin: 0
     },
     item: {
         paddingTop: 1,
@@ -80,8 +84,8 @@ function Navigator(props) {
     return (
         <Drawer variant="permanent" {...other}>
             <List disablePadding>
-                <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
-                    <img src={logo} width={143} alt='logo'/>
+                <ListItem className={clsx(classes.logo)}>
+                    <img src={logo} alt='logo'/>
                 </ListItem>
                 <ListItem className={clsx(classes.item, classes.itemCategory)}>
                     <ListItemIcon className={classes.itemIcon}>
