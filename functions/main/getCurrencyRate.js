@@ -8,10 +8,14 @@ const getCurrencyRate = async (data, context) => {
     util.checkForClientRole(context);
 
     try {
-        const pool = await sql.connect(config);
+        await sql.connect(config);
+        const query =`
+            SELECT TOP (1) Дата, Доллар AS USD, Евро AS EUR 
+            FROM dbo.[Внутренний курс валют] 
+            ORDER BY Дата DESC
+        `;
 
-        const result = await pool.request()
-            .execute('sp_web_getcurrencyrate');
+        const result = await sql.query(query);
         return result.recordset;
     } catch (err) {
         if(err) {
