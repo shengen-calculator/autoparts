@@ -32,14 +32,82 @@ const searchByBrandAndNumber = async (data, context) => {
 
         ];
         if(data.analogId) {
-            requests.push(pool.request()
-                .input('analogId', sql.Int, data.analogId)
-                .execute('sp_web_checkifpresentinorderlistbyanalog'))
+            //check if present in order list by analog
+            const query = `
+                    SELECT RTRIM(dbo.Клиенты.VIP)                        AS vip,
+                           RTRIM(dbo.Поставщики.[Сокращенное название])  AS vendor,
+                           RTRIM(Брэнды_1.Брэнд)                         AS brand,
+                           RTRIM([Каталог запчастей_1].[Номер запчасти]) AS number,
+                           dbo.[Запросы клиентов].Заказано               AS quantity,
+                           RTRIM(dbo.[Запросы клиентов].Примечание)      AS note,
+                           dbo.[Запросы клиентов].Дата_заказа            AS date,
+                           dbo.[Запросы клиентов].Срочно                 AS isUrgent,
+                           dbo.[Заказы поставщикам].Предварительная_дата AS preliminaryDate,
+                           AnalogTable.analogId                          AS analogId
+                    FROM (SELECT MAX(dbo.[Каталог запчастей].ID_аналога) AS analogId
+                          FROM dbo.[Каталоги поставщиков]
+                                   INNER JOIN
+                               dbo.Брэнды ON dbo.[Каталоги поставщиков].Брэнд = dbo.Брэнды.Брэнд
+                                   INNER JOIN
+                               dbo.[Каталог запчастей] ON dbo.Брэнды.ID_Брэнда = dbo.[Каталог запчастей].ID_Брэнда AND
+                                                          dbo.[Каталоги поставщиков].Name = dbo.[Каталог запчастей].namepost
+                          WHERE (dbo.[Каталог запчастей].ID_аналога = ${data.analogId})) AS AnalogTable
+                             INNER JOIN
+                         dbo.[Каталог запчастей] AS [Каталог запчастей_1] ON AnalogTable.analogId = [Каталог запчастей_1].ID_аналога
+                             INNER JOIN
+                         dbo.[Запросы клиентов] ON [Каталог запчастей_1].ID_Запчасти = dbo.[Запросы клиентов].ID_Запчасти
+                             INNER JOIN
+                         dbo.Клиенты ON dbo.[Запросы клиентов].ID_Клиента = dbo.Клиенты.ID_Клиента
+                             INNER JOIN
+                         dbo.Брэнды AS Брэнды_1 ON [Каталог запчастей_1].ID_Брэнда = Брэнды_1.ID_Брэнда
+                             INNER JOIN
+                         dbo.Поставщики ON [Каталог запчастей_1].ID_Поставщика = dbo.Поставщики.ID_Поставщика
+                             LEFT OUTER JOIN
+                         dbo.[Заказы поставщикам] ON dbo.[Запросы клиентов].ID_Заказа = dbo.[Заказы поставщикам].ID_Заказа
+                    WHERE (dbo.[Запросы клиентов].Заказано <> 0)
+                      AND (dbo.[Запросы клиентов].Доставлено = 0)
+                      AND (dbo.[Запросы клиентов].Обработано = 0)
+            `;
+            requests.push(sql.query(query));
         } else {
-            requests.push(pool.request()
-                .input('number', sql.VarChar(25), data.number)
-                .input('brand', sql.VarChar(18), data.brand)
-                .execute('sp_web_checkifpresentinorderlist'))
+            //check if present in order list by brand and number
+            const query = `
+                    SELECT RTRIM(dbo.Клиенты.VIP)                        AS vip,
+                           RTRIM(dbo.Поставщики.[Сокращенное название])  AS vendor,
+                           RTRIM(Брэнды_1.Брэнд)                         AS brand,
+                           RTRIM([Каталог запчастей_1].[Номер запчасти]) AS number,
+                           dbo.[Запросы клиентов].Заказано               AS quantity,
+                           RTRIM(dbo.[Запросы клиентов].Примечание)      AS note,
+                           dbo.[Запросы клиентов].Дата_заказа            AS date,
+                           dbo.[Запросы клиентов].Срочно                 AS isUrgent,
+                           dbo.[Заказы поставщикам].Предварительная_дата AS preliminaryDate,
+                           AnalogTable.analogId                          AS analogId
+                    FROM (SELECT MAX(dbo.[Каталог запчастей].ID_аналога) AS analogId
+                          FROM dbo.[Каталоги поставщиков]
+                                   INNER JOIN
+                               dbo.Брэнды ON dbo.[Каталоги поставщиков].Брэнд = dbo.Брэнды.Брэнд
+                                   INNER JOIN
+                               dbo.[Каталог запчастей] ON dbo.Брэнды.ID_Брэнда = dbo.[Каталог запчастей].ID_Брэнда AND
+                                                          dbo.[Каталоги поставщиков].Name = dbo.[Каталог запчастей].namepost
+                          WHERE (dbo.Брэнды.Брэнд = '${data.brand}')
+                            AND (dbo.[Каталоги поставщиков].Name = '${data.number}')) AS AnalogTable
+                             INNER JOIN
+                         dbo.[Каталог запчастей] AS [Каталог запчастей_1] ON AnalogTable.analogId = [Каталог запчастей_1].ID_аналога
+                             INNER JOIN
+                         dbo.[Запросы клиентов] ON [Каталог запчастей_1].ID_Запчасти = dbo.[Запросы клиентов].ID_Запчасти
+                             INNER JOIN
+                         dbo.Клиенты ON dbo.[Запросы клиентов].ID_Клиента = dbo.Клиенты.ID_Клиента
+                             INNER JOIN
+                         dbo.Брэнды AS Брэнды_1 ON [Каталог запчастей_1].ID_Брэнда = Брэнды_1.ID_Брэнда
+                             INNER JOIN
+                         dbo.Поставщики ON [Каталог запчастей_1].ID_Поставщика = dbo.Поставщики.ID_Поставщика
+                             LEFT OUTER JOIN
+                         dbo.[Заказы поставщикам] ON dbo.[Запросы клиентов].ID_Заказа = dbo.[Заказы поставщикам].ID_Заказа
+                    WHERE (dbo.[Запросы клиентов].Заказано <> 0)
+                      AND (dbo.[Запросы клиентов].Доставлено = 0)
+                      AND (dbo.[Запросы клиентов].Обработано = 0)
+            `;
+            requests.push(sql.query(query));
         }
 
         const [search, inOrder] = await Promise.all(requests);

@@ -21,11 +21,20 @@ const searchByNumber = async (data, context) => {
     });
 
     try {
-        const pool = await sql.connect(config);
+        await sql.connect(config);
 
-        const result = await pool.request()
-            .input('number', sql.VarChar(25), data)
-            .execute('sp_web_getproductsbynumber');
+        const query = `
+                SELECT brand
+                    ,number
+                    ,shortNumber
+                    ,description
+                    ,productId
+                    ,analogId
+                    ,firstBrend
+                FROM getPartsByNumber('${data}')
+        `;
+
+        const result = await sql.query(query);
 
         if(context.auth.token.role === RoleEnum.Client) {
             const datastore = new Datastore();
