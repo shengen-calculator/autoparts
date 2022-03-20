@@ -13,11 +13,17 @@ const deleteReservesByIds = async (data, context) => {
     }
 
     try {
-        const pool = await sql.connect(config);
 
-        await pool.request()
-            .input('ids', sql.VarChar(300), data)
-            .execute('sp_web_deletereserves');
+        await sql.connect(config);
+
+        const query = `
+                DELETE FROM dbo.[Подчиненная накладные] 
+                WHERE ID IN (
+                    SELECT Name FROM dbo.SplitString('${data}')
+                )
+        `;
+
+        await sql.query(query);
 
     } catch (err) {
         if(err) {

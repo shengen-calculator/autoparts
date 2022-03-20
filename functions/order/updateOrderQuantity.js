@@ -13,12 +13,15 @@ const updateOrderQuantity = async (data, context) => {
     }
 
     try {
-        const pool = await sql.connect(config);
 
-        await pool.request()
-            .input('orderId', sql.Int, data.orderId)
-            .input('quantity', sql.Int, data.quantity)
-            .execute('sp_web_updateorderqty');
+        await sql.connect(config);
+        const query = `
+                  UPDATE dbo.[Запросы клиентов] 
+                  SET Заказано = ${data.quantity} 
+                  WHERE ID_Запроса = ${data.orderId}
+        `;
+        await sql.query(query);
+
     } catch (err) {
         if(err) {
             throw new functions.https.HttpsError('internal',

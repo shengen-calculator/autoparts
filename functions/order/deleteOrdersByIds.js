@@ -13,11 +13,16 @@ const deleteOrdersByIds = async (data, context) => {
     }
 
     try {
-        const pool = await sql.connect(config);
+        await sql.connect(config);
 
-        await pool.request()
-            .input('ids', sql.VarChar(300), data)
-            .execute('sp_web_deleteorders');
+        const query = `
+                UPDATE dbo.[Запросы клиентов] SET Заказано = 0, Обработано = 1 
+                WHERE ID_Запроса IN (
+                    SELECT Name FROM dbo.SplitString ('${data}')
+                )
+        `;
+
+        await sql.query(query);
     } catch (err) {
         if(err) {
             throw new functions.https.HttpsError('internal',
