@@ -13,22 +13,52 @@ const getClientStatistic = async (data, context) => {
     }
 
     try {
-        const pool = await sql.connect(config);
+        await sql.connect(config);
 
         const datastore = new Datastore();
 
-        const query = datastore
+        const storeQuery = datastore
             .createQuery('queries','')
             .filter('date', '>=', new Date(`${data.startDate} 00:00:00:000`))
             .filter('date', '<=', new Date(`${data.endDate} 23:59:59:999`))
             .limit(2000);
 
+        const sqlQuery = `
+                SELECT ISNULL(RES.ID_Клиента, ORD.ID_Клиента) AS ClientId,
+                       RTRIM(ISNULL(RES.VIP, ORD.VIP))        AS VIP,
+                       RTRIM(ISNULL(RES.EMail, ORD.EMail))    AS Email,
+                       ISNULL(RES.Reserves, 0)                AS Reserves,
+                       ISNULL(ORD.Orders, 0)                  AS Orders
+                FROM (SELECT dbo.Клиенты.ID_Клиента,
+                             dbo.Клиенты.VIP,
+                             dbo.Клиенты.EMail,
+                             COUNT(dbo.[Подчиненная накладные].ID) AS Reserves
+                      FROM dbo.Клиенты
+                               LEFT OUTER JOIN
+                           dbo.[Подчиненная накладные] ON dbo.Клиенты.ID_Клиента = dbo.[Подчиненная накладные].ID_Клиента
+                      WHERE (CONVERT(date, dbo.[Подчиненная накладные].Дата) >= '${data.startDate}')
+                        AND (CONVERT(date, dbo.[Подчиненная накладные].Дата) <= '${data.endDate}')
+                        AND dbo.[Подчиненная накладные].Заказ IS NULL
+                      GROUP BY dbo.Клиенты.ID_Клиента, dbo.Клиенты.VIP, dbo.Клиенты.EMail
+                      HAVING (dbo.Клиенты.ID_Клиента <> 378)) AS RES
+                         FULL OUTER JOIN (SELECT dbo.Клиенты.ID_Клиента,
+                                                 dbo.Клиенты.VIP,
+                                                 dbo.Клиенты.EMail,
+                                                 COUNT(dbo.[Запросы клиентов].ID_Запроса) AS Orders
+                                          FROM dbo.Клиенты
+                                                   INNER JOIN
+                                               dbo.[Запросы клиентов] ON dbo.Клиенты.ID_Клиента = dbo.[Запросы клиентов].ID_Клиента
+                                          WHERE (dbo.[Запросы клиентов].Заказано > 0)
+                                            AND (dbo.[Запросы клиентов].Интернет = 1)
+                                            AND (CONVERT(date, dbo.[Запросы клиентов].Дата) <= '${data.endDate}')
+                                            AND (CONVERT(date, dbo.[Запросы клиентов].Дата) >= '${data.startDate}')
+                                          GROUP BY dbo.Клиенты.ID_Клиента, dbo.Клиенты.VIP, dbo.Клиенты.EMail
+                                          HAVING (dbo.Клиенты.ID_Клиента <> 378)) AS ORD ON RES.ID_Клиента = ORD.ID_Клиента
+        `;
+
         const [stat, totals] = await Promise.all([
-            datastore.runQuery(query),
-            pool.request()
-                .input('startDate', sql.Date, data.startDate)
-                .input('endDate', sql.Date, data.endDate)
-                .execute('sp_web_getclientstatistic')
+            datastore.runQuery(storeQuery),
+            sql.query(sqlQuery)
         ]);
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' });
 
