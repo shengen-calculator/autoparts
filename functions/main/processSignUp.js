@@ -10,11 +10,20 @@ const processSignUp = async (user) => {
     let customClaims = {};
 
     try {
-        const pool = await sql.connect(config);
+        await sql.connect(config);
 
-        const result = await pool.request()
-            .input('email', sql.VarChar(40), user.email)
-            .execute('sp_web_getclientbyemail');
+        const query = `
+                  SELECT TOP (3)
+                       ID_Клиента as id
+                      ,TRIM([VIP]) as vip
+                      ,TRIM([Фамилия]) + ' ' + TRIM([Имя]) as fullName     
+                      ,[Расчет_в_евро] as isEuroClient      
+                      ,[Интернет_заказы] as isWebUser
+                  FROM [FenixParts].[dbo].[Клиенты]
+                  WHERE EMail like '${user.email}'
+        `;
+
+        const result = await sql.query(query);
         let client = {};
 
         if (result.recordset.length > 0) {
