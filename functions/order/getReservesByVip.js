@@ -17,12 +17,38 @@ const getReservesByVip = async (data, context) => {
 // заказ = 1
 
     try {
-        const pool = await sql.connect(config);
+        await sql.connect(config);
 
-        const result = await pool.request()
-            .input('vip', sql.VarChar(10), data ? data : context.auth.token.vip)
-            .input('isVendorShown', sql.Bit, data ? 1 : 0)
-            .execute('sp_web_getreservesbyvip');
+        let query = `
+                  SELECT TOP (100) [ID] as id
+        `;
+
+        if(data) {
+                query += `
+                  ,TRIM([Поставщик]) as vendor, TRIM([Статус]) as note
+            `;
+        }
+        query += `
+                  ,[ID_Накладной] as invoiceId
+                      ,TRIM([VIP]) as vip
+                      ,TRIM([Брэнд]) as brand
+                      ,[Количество] as quantity
+                      ,[Цена] as euro
+                      ,[Грн] as uah
+                      ,[ID_Клиента] as clientId
+                      ,[ID_Запчасти] as productId
+                      ,TRIM([Описание]) as description      
+                      ,FORMAT([Дата резерва], 'dd.MM.yy HH:mm') as 'date'
+                      ,FORMAT([Дата запроса], 'dd.MM.yy') as orderDate
+                      ,[Интернет] as source
+                      ,TRIM([Номер поставщика]) as number
+                  FROM [dbo].[Накладные]
+                  WHERE  VIP like '${data ? data : context.auth.token.vip}' AND [Обработано] = 0 AND [ID_Клиента] <> 378
+
+        `;
+
+        const result = await sql.query(query);
+
         return result.recordset;
     } catch (err) {
         if(err) {
