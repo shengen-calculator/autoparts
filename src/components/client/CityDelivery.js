@@ -38,9 +38,9 @@ function CityDelivery() {
         const current = (date - startOfToday()) / 1000 / 60;
         let dispatchTime;
         if ([1, 2, 3, 4, 5].includes(getDay(date))) {
-            dispatchTime = [630, 750, 870, 990, 1110];
+            dispatchTime = [660, 840, 990];
         } else if ([6].includes(getDay(date))) {
-            dispatchTime = [630, 750, 870];
+            dispatchTime = [660, 840];
         } else {
             dispatchTime = [];
         }
@@ -73,8 +73,8 @@ function CityDelivery() {
                     До наступного виїзду авто залишилось:
                     <Typography color="inherit" style={bigger}>{timer.text}</Typography>
                     Графік виїздів:
-                    <Typography color="inherit" style={bolder}>Пон-Пят: 10.30 12.30 14.30 16.30 18.30</Typography>
-                    <Typography color="inherit" style={bolderTop}>Суб: 10.30 12.30 14.30</Typography>
+                    <Typography color="inherit" style={bolder}>Пон-Пят: 11.00 14.00 16.30</Typography>
+                    <Typography color="inherit" style={bolderTop}>Суб: 11.00 14.00</Typography>
                 </React.Fragment>
             }>
             <IconButton color="inherit">
