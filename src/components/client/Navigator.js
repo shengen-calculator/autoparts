@@ -13,7 +13,7 @@ import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import PaymentIcon from '@material-ui/icons/Payment';
 import EventIcon from '@material-ui/icons/Event';
 import {NavLink} from "react-router-dom";
-import logo from "../../korabel.png";
+import logo from "../../prapor.png";
 
 const categories = [
     {
