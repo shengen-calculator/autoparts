@@ -23,7 +23,7 @@ const getPayments = async (data, context) => {
                 FROM dbo.Касса
                          INNER JOIN
                      dbo.Клиенты ON dbo.Касса.ID_Клиента = dbo.Клиенты.ID_Клиента
-                WHERE dbo.Клиенты.VIP LIKE ${data.vip ? data.vip : context.auth.token.vip}
+                WHERE dbo.Клиенты.VIP LIKE '${data.vip ? data.vip : context.auth.token.vip}'
                 ORDER BY dbo.[Касса].ID_Касса DESC OFFSET ${data.offset ? data.offset : 0} ROWS FETCH NEXT ${(data.rows && data.rows < 101) ? data.rows : 10} ROWS ONLY
         `;
 

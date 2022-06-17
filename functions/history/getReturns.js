@@ -20,8 +20,7 @@ const getReturns = async (data, context) => {
                    dbo.[Подчиненная накладные].Количество                                  AS quantity,
                    dbo.[Подчиненная накладные].Цена                                        AS priceEur,
                    dbo.[Подчиненная накладные].Грн                                         AS priceUah,
-                   FORMAT(dbo.GetInvoiceDate(
-                                  dbo.[Подчиненная накладные].ID_Накладной), 'dd.MM.yyyy') AS invoiceDate,
+                   FORMAT(dbo.[Подчиненная накладные].Дата_закрытия, 'dd.MM.yyyy')         AS invoiceDate,
                    TRIM(dbo.Брэнды.Брэнд)                                                  AS brand,
                    TRIM(dbo.[Каталог запчастей].[Номер поставщика])                        AS number,
                    TRIM(dbo.[Каталог запчастей].Описание)                                  AS description,
@@ -35,7 +34,7 @@ const getReturns = async (data, context) => {
                  dbo.Клиенты ON dbo.[Подчиненная накладные].ID_Клиента = dbo.Клиенты.ID_Клиента
             WHERE (dbo.[Подчиненная накладные].ID_Накладной IS NOT NULL)
               AND (dbo.[Подчиненная накладные].Дата_закрытия IS NOT NULL)
-              AND (dbo.Клиенты.VIP LIKE ${data.vip ? data.vip : context.auth.token.vip})
+              AND (dbo.Клиенты.VIP LIKE '${data.vip ? data.vip : context.auth.token.vip}')
               AND (dbo.[Подчиненная накладные].Нету = 0)
               AND (dbo.[Подчиненная накладные].Обработано = 1)
               AND (dbo.[Подчиненная накладные].Количество < 0)

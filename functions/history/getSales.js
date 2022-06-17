@@ -34,7 +34,7 @@ const getSales = async (data, context) => {
                  dbo.Клиенты ON dbo.[Подчиненная накладные].ID_Клиента = dbo.Клиенты.ID_Клиента
             WHERE (dbo.[Подчиненная накладные].ID_Накладной IS NOT NULL)
               AND (dbo.[Подчиненная накладные].Дата_закрытия IS NOT NULL)
-              AND (dbo.Клиенты.VIP LIKE ${data.vip ? data.vip : context.auth.token.vip})
+              AND (dbo.Клиенты.VIP LIKE '${data.vip ? data.vip : context.auth.token.vip}')
               AND (dbo.[Подчиненная накладные].Нету = 0)
               AND (dbo.[Подчиненная накладные].Обработано = 1)
               AND (dbo.[Подчиненная накладные].Количество > 0)
