@@ -6,6 +6,7 @@ const createReserve = require('./search/createReserve');
 const getAnalogs = require('./search/getAnalogs');
 const updatePrice = require('./search/updatePrice');
 const getPhotos = require('./search/getPhotos');
+const getDeliveryDate = require('./search/getDeliveryDate');
 
 exports.searchByNumber = functions.region('europe-west1').https.onCall(async (data, context) => {
     return searchByNumber(data, context);
@@ -29,6 +30,10 @@ exports.getAnalogs = functions.region('europe-west1').https.onCall(async (data, 
 
 exports.getPhotos = functions.region('europe-west1').https.onCall(async (data, context) => {
     return getPhotos(data, context);
+});
+
+exports.getDeilveryDate = functions.region('europe-west1').https.onCall(async (data, context) => {
+    return getDeliveryDate(data, context);
 });
 
 exports.updatePrice = functions.region('europe-west1').https.onCall(async (data, context) => {
