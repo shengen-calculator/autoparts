@@ -32,7 +32,7 @@ exports.getPhotos = functions.region('europe-west1').https.onCall(async (data, c
     return getPhotos(data, context);
 });
 
-exports.getDeilveryDate = functions.region('europe-west1').https.onCall(async (data, context) => {
+exports.getDeliveryDate = functions.region('europe-west1').https.onCall(async (data, context) => {
     return getDeliveryDate(data, context);
 });
 
