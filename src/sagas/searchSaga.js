@@ -71,6 +71,17 @@ export function* getPhotos(action) {
     }
 }
 
+export function* getDeliveryDate(action) {
+    try {
+        yield put({type: types.BEGIN_API_CALL});
+        const {data} = yield call(SearchFunctionsApi.getDeliveryDate, action.params);
+        yield put({type: types.LOAD_DELIVERY_DATE_SUCCESS, dates: data});
+    } catch (e) {
+        yield put({type: types.API_CALL_ERROR});
+        yield put({type: types.LOAD_DELIVERY_DATE_FAILURE, text: e.message});
+    }
+}
+
 export function* getAnalogs(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
