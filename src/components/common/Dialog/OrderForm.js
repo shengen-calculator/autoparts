@@ -19,6 +19,7 @@ export default function OrderForm(props) {
             <DialogContentText>
                 Бренд: {selected.brand} <br/>
                 Номер: {selected.number} <br/>
+                Очікуємо: 02.07.2022
             </DialogContentText>
             <TextField
                 name="quantity"
