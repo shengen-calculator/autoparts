@@ -29,6 +29,14 @@ class SearchFunctionsApi {
         });
     }
 
+    static getDeliveryDate({partId, term}) {
+        const func = functions.httpsCallable('search-getDeliveryDate');
+        return func({
+            partId,
+            term
+        });
+    }
+
     static searchByBrandAndNumber({brand, numb, clientId, queryId, analogId}) {
         const func = functions.httpsCallable('search-searchByBrandAndNumber');
         return func({
