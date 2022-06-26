@@ -8,6 +8,10 @@ export function getPhotos(params) {
     return {type: types.LOAD_PHOTOS_REQUEST, params};
 }
 
+export function getDeliveryDate(params) {
+    return {type: types.LOAD_DELIVERY_DATE_REQUEST, params};
+}
+
 export function getByNumber(number) {
     return {type: types.LOAD_BY_NUMBER_REQUEST, number};
 }
