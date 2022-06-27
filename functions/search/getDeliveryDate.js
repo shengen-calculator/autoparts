@@ -15,9 +15,9 @@ const getDeliveryDate = async (data, context) => {
     try {
         await sql.connect(config);
         const query =`
-            SELECT dbo.GetArrivalDate((
+            SELECT FORMAT(dbo.GetArrivalDate((
                 SELECT WarehouseId FROM [Каталоги поставщиков] WHERE ID_Запчасти = ${data.productId}
-            ), ${data.term}) as ArrivalDate, ArrivalTime 
+            ), ${data.term}), 'dd.MM.yyyy') as ArrivalDate, ArrivalTime 
             FROM SupplierWarehouse 
             WHERE Id = (
                 SELECT WarehouseId FROM [Каталоги поставщиков] WHERE ID_Запчасти = ${data.productId}
@@ -25,7 +25,7 @@ const getDeliveryDate = async (data, context) => {
         `;
 
         const result = await sql.query(query);
-        return result.recordset;
+        return result.recordset[0];
     } catch (err) {
         if(err) {
             throw new functions.https.HttpsError('internal',
