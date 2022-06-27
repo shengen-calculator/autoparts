@@ -29,10 +29,10 @@ class SearchFunctionsApi {
         });
     }
 
-    static getDeliveryDate({partId, term}) {
+    static getDeliveryDate({productId, term}) {
         const func = functions.httpsCallable('search-getDeliveryDate');
         return func({
-            partId,
+            productId,
             term
         });
     }

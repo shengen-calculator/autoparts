@@ -8,7 +8,7 @@ import OrderForm from "./OrderForm";
 import OrderConfirmation from "./OrderConfirmation";
 
 function OrderDialog(props) {
-    const {isOpened, selected, onClose, createOrder, getDeliveryDate, client, auth, inOrder} = props;
+    const {isOpened, selected, onClose, createOrder, getDeliveryDate, client, product, auth, inOrder} = props;
     const [order, setOrder] = useState({
         isConfirmed: false
     });
@@ -23,7 +23,7 @@ function OrderDialog(props) {
             })
         }
         if(selected.id && selected.term) {
-            getDeliveryDate({partId: selected.id, term: selected.term});
+            getDeliveryDate({productId: selected.id, term: selected.term});
         }
 
     }, [selected, client.isEuroClient, getDeliveryDate]);
@@ -96,6 +96,7 @@ function OrderDialog(props) {
                             handleChange={handleChange}
                             order={order}
                             auth={auth}
+                            deliveryDate={product.deliveryDate}
                             handleOrderClick={handleOrderClick}/>
                 }
 
@@ -113,7 +114,8 @@ const mapDispatchToProps = {
 function mapStateToProps(state) {
     return {
         client: state.client,
-        auth: state.authentication
+        auth: state.authentication,
+        product: state.product
     }
 }
 
