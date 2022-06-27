@@ -7,7 +7,7 @@ const getDeliveryDate = async (data, context) => {
 
     util.checkForClientRole(context);
 
-    if (!data || typeof data.partId === 'undefined' || typeof data.term === 'undefined') {
+    if (!data || typeof data.productId === 'undefined' || typeof data.term === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
             'The function must be called with the next arguments "partId, term"');
     }
@@ -16,11 +16,11 @@ const getDeliveryDate = async (data, context) => {
         await sql.connect(config);
         const query =`
             SELECT dbo.GetArrivalDate((
-                SELECT WarehouseId FROM [Каталоги поставщиков] WHERE ID_Запчасти = ${data.partId}
+                SELECT WarehouseId FROM [Каталоги поставщиков] WHERE ID_Запчасти = ${data.productId}
             ), ${data.term}) as ArrivalDate, ArrivalTime 
             FROM SupplierWarehouse 
             WHERE Id = (
-                SELECT WarehouseId FROM [Каталоги поставщиков] WHERE ID_Запчасти = ${data.partId}
+                SELECT WarehouseId FROM [Каталоги поставщиков] WHERE ID_Запчасти = ${data.productId}
             )
         `;
 
