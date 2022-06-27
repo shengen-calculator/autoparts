@@ -26,7 +26,8 @@ import {
 import {
     createOrder,
     createReserve,
-    getAnalogs, getDeliveryDate,
+    getAnalogs,
+    getDeliveryDate,
     getPhotos,
     searchByBrandAndNumber,
     searchByNumber,

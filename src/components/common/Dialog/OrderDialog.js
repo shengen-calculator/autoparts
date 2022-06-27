@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import {createOrder} from "../../../redux/actions/searchActions";
+import {createOrder, getDeliveryDate} from "../../../redux/actions/searchActions";
 import {RoleEnum} from "../../../util/Enums";
 import OrderForm from "./OrderForm";
 import OrderConfirmation from "./OrderConfirmation";
 
 function OrderDialog(props) {
-    const {isOpened, selected, onClose, createOrder, client, auth, inOrder} = props;
+    const {isOpened, selected, onClose, createOrder, getDeliveryDate, client, auth, inOrder} = props;
     const [order, setOrder] = useState({
         isConfirmed: false
     });
@@ -22,7 +22,11 @@ function OrderDialog(props) {
                 isConfirmed: false
             })
         }
-    }, [selected, client.isEuroClient]);
+        if(selected.id && selected.term) {
+            getDeliveryDate({partId: selected.id, term: selected.term});
+        }
+
+    }, [selected, client.isEuroClient, getDeliveryDate]);
 
     function handleChange(event) {
         const { name, value, checked, type } = event.target;
@@ -102,7 +106,8 @@ function OrderDialog(props) {
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    createOrder
+    createOrder,
+    getDeliveryDate
 };
 
 function mapStateToProps(state) {
