@@ -19,7 +19,9 @@ export default function OrderForm(props) {
             <DialogContentText>
                 Бренд: {selected.brand} <br/>
                 Номер: {selected.number} <br/>
-                Очікуємо{deliveryDate ? `: ${deliveryDate}` : '...'}
+                Очікуємо{(deliveryDate && Object.keys(deliveryDate).length) ?
+                `: ${deliveryDate.ArrivalDate} -> ${deliveryDate.ArrivalTime}` :
+                '...'}
             </DialogContentText>
             <TextField
                 name="quantity"

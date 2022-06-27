@@ -60,6 +60,19 @@ export default function productReducer(state = initialState.product, action) {
                 }
             };
 
+        case types.LOAD_DELIVERY_DATE_REQUEST:
+            return {
+                ...state,
+                deliveryDate: {}
+            };
+
+        case types.LOAD_DELIVERY_DATE_SUCCESS:
+            return {
+                ...state,
+                deliveryDate: action.date
+            };
+
+
         case types.LOAD_BY_NUMBER_REQUEST:
             return {
                 ...state,
