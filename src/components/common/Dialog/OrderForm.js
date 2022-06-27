@@ -8,7 +8,7 @@ import React from "react";
 import {red} from "@material-ui/core/colors";
 
 export default function OrderForm(props) {
-    const {handleOrderClick, selected, onClose, handleChange, order, auth} = props;
+    const {handleOrderClick, selected, onClose, handleChange, order, deliveryDate, auth} = props;
     const redStyle = {
         color: red[500],
         marginTop: 30
@@ -19,7 +19,7 @@ export default function OrderForm(props) {
             <DialogContentText>
                 Бренд: {selected.brand} <br/>
                 Номер: {selected.number} <br/>
-                Очікуємо: 02.07.2022
+                Очікуємо{deliveryDate ? `: ${deliveryDate}` : '...'}
             </DialogContentText>
             <TextField
                 name="quantity"

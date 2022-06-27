@@ -58,7 +58,8 @@ const initialState = {
         analogs: [],
         photos: {
             urls: []
-        }
+        },
+        deliveryDate: {}
     },
     appState: {
         isSearchPaused: false
