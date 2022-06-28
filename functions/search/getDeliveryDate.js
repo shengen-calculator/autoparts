@@ -9,7 +9,7 @@ const getDeliveryDate = async (data, context) => {
 
     if (!data || typeof data.productId === 'undefined' || typeof data.term === 'undefined') {
         throw new functions.https.HttpsError('invalid-argument',
-            'The function must be called with the next arguments "partId, term"');
+            'The function must be called with the next arguments "productId, term"');
     }
 
     try {

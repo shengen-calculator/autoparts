@@ -22,7 +22,7 @@ function OrderDialog(props) {
                 isConfirmed: false
             })
         }
-        if(selected.id && selected.term) {
+        if(selected.id && typeof selected.term !== 'undefined') {
             getDeliveryDate({productId: selected.id, term: selected.term});
         }
 

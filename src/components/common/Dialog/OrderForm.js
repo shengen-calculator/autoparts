@@ -5,7 +5,7 @@ import {RoleEnum} from "../../../util/Enums";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import React from "react";
-import {red} from "@material-ui/core/colors";
+import {red, teal} from "@material-ui/core/colors";
 
 export default function OrderForm(props) {
     const {handleOrderClick, selected, onClose, handleChange, order, deliveryDate, auth} = props;
@@ -13,15 +13,18 @@ export default function OrderForm(props) {
         color: red[500],
         marginTop: 30
     };
+    const greenStyle = {
+        color: teal[400]
+    };
     return (
         <form onSubmit={handleOrderClick}>
         <DialogContent>
             <DialogContentText>
                 Бренд: {selected.brand} <br/>
                 Номер: {selected.number} <br/>
-                Очікуємо{(deliveryDate && Object.keys(deliveryDate).length) ?
+                <b style={greenStyle}>Очікуємо{(deliveryDate && Object.keys(deliveryDate).length) ?
                 `: ${deliveryDate.ArrivalDate} -> ${deliveryDate.ArrivalTime}` :
-                '...'}
+                    '...'}</b>
             </DialogContentText>
             <TextField
                 name="quantity"
