@@ -15,6 +15,7 @@ const getDeliveryDate = async (data, context) => {
     try {
         await sql.connect(config);
         const query =`
+            SET DATEFIRST 1
             SELECT FORMAT(dbo.GetArrivalDate((
                 SELECT WarehouseId FROM [Каталоги поставщиков] WHERE ID_Запчасти = ${data.productId}
             ), ${data.term}), 'dd.MM.yyyy') as ArrivalDate, ArrivalTime 
