@@ -5,30 +5,27 @@ CREATE FUNCTION [dbo].[GetArrivalDate]
 RETURNS DATE
 AS
 BEGIN
-    DECLARE @days varchar(15), @time time(7), @diff int, @weekday int, @orderday int, @dayofweek int
+    DECLARE @days varchar(15), @time time(7), @diff int, @weekday int, @orderday int
     SELECT  @days = OrderDays, @time = OrderTime
     FROM    dbo.SupplierWarehouse
-    WHERE   Id = @warehouseId
-
-
+    WHERE   Id = @warehouseId  
+	
+    
     IF(@days IS NULL OR @time IS NULL) RETURN NULL
-
---     SET @weekday = DATEPART(weekday, GETDATE())
-
-    SET @weekday = (DATEPART(weekday, GETDATE()) + @@DATEFIRST - 2) % 7 + 1
-    SET @dayofweek = (DATEPART(weekday, GETDATE()) + @@DATEFIRST - 2) % 7 + 1
-
+    
+    SET @weekday = DATEPART(weekday, GETDATE())
+    
     IF(CAST(GETDATE() AS time) > @time) SET @weekday = @weekday + 1
 
     SELECT @orderday = MIN(IIF(Name < @weekday, 8, Name)) FROM dbo.SplitString (@days)
-
-    IF(@orderday = 8)
-        BEGIN
+    
+    IF(@orderday = 8) 
+        BEGIN 
            SELECT @orderday = MIN(Name) FROM dbo.SplitString (@days)
-           RETURN DATEADD(hour, (7 - @dayofweek + @orderday + @term)*24, DATEADD(day, DATEDIFF(day, 0, GETDATE()),0))
+           RETURN DATEADD(hour, (7 - DATEPART(weekday, GETDATE()) + @orderday + @term)*24, DATEADD(day, DATEDIFF(day, 0, GETDATE()),0))
         END
-
-    RETURN DATEADD(hour, (@orderday - @dayofweek + @term)*24, DATEADD(day, DATEDIFF(day, 0, GETDATE()),0))
-
+    
+    RETURN DATEADD(hour, (@orderday - DATEPART(weekday, GETDATE()) + @term)*24, DATEADD(day, DATEDIFF(day, 0, GETDATE()),0))
+            
 END
 go
