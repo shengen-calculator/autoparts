@@ -91,7 +91,7 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
     };
 
     const forward = (selected) => {
-        showToastrMessage({type: 'success', message: 'Вперед на новий номер'});
+        history.push(`/manager/search/${client.vip}/${selected.number}/${htmlEncode(selected.brand)}`)
     };
 
     const handleCancelAnalogDialog = () => {

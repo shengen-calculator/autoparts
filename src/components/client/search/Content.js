@@ -53,7 +53,7 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
     };
 
     const forward = (selected) => {
-        showToastrMessage({type: 'success', message: 'Вперед на новий номер'});
+        history.push(`/search/${selected.number}/${htmlEncode(selected.brand)}`)
     };
 
     const handleCancelPhotoDialog = () => {
