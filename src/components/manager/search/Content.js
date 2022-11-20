@@ -91,7 +91,9 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
     };
 
     const forward = (selected) => {
-        history.push(`/manager/search/${client.vip}/${selected.number}/${htmlEncode(selected.brand)}`)
+        history.push(`/manager/search/${client.vip}/${selected.number}/${htmlEncode(selected.brand)}`);
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     };
 
     const handleCancelAnalogDialog = () => {
