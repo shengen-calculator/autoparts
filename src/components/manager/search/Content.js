@@ -90,6 +90,10 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
         });
     };
 
+    const forward = (selected) => {
+        showToastrMessage({type: 'success', message: 'Вперед на новий номер'});
+    };
+
     const handleCancelAnalogDialog = () => {
         setIsAnalogListDialogOpened(false);
     };
@@ -137,12 +141,14 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
                                                                          isPriceShown={true}
                                                                          onOpenPhotoDialog={openPhotoDialog}
                                                                          onCopyToBuffer={copyToBuffer}
+                                                                         onForward={forward}
                                                                          onOpenAnalogDialog={openAnalogListDialog}/>}
                                 {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
                                                                        isPriceShown={true} inOrder={product.inOrder}
                                                                        onOpenPhotoDialog={openPhotoDialog}
                                                                        onCopyToBuffer={copyToBuffer}
+                                                                       onForward={forward}
                                                                        onOpenAnalogDialog={openAnalogListDialog}/>}
                                 {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
@@ -154,6 +160,7 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
                                                                        closeDialog={closeFilterDialog}
                                                                        onOpenPhotoDialog={openPhotoDialog}
                                                                        onCopyToBuffer={copyToBuffer}
+                                                                       onForward={forward}
                                                                        onOpenAnalogDialog={openAnalogListDialog}/>}
                             </React.Fragment>
                         }

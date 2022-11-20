@@ -69,6 +69,8 @@ export default function AnalogTable(props) {
             props.onOpenPhotoDialog(props.rows.find(x => x.id === name));
         } else if (el === "copy") {
             props.onCopyToBuffer(props.rows.find(x => x.id === name));
+        } else if (el === "forward") {
+            props.onForward(props.rows.find(x => x.id === name));
         }
     };
 

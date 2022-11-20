@@ -11,6 +11,7 @@ import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import Grid from "@material-ui/core/Grid";
 import Tooltip from "@material-ui/core/Tooltip";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 
 const headCells = [
     {id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
@@ -62,6 +63,9 @@ function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown
                         <Tooltip title="Скопіювати номер в буфер обміну">
                             <FileCopyIcon onClick={(e) => {handleClick(e, row.id, 'copy')}} style={{fontSize: 13, marginTop: 3, marginLeft: 5}}/>
                         </Tooltip>
+                        <Tooltip title="Пошук за брендом та номером">
+                            <DoubleArrowIcon onClick={(e) => {handleClick(e, row.id, 'forward')}} style={{fontSize: 13, marginTop: 3, marginLeft: 8}}/>
+                        </Tooltip>
                     </Grid>
                 </Grid>
             </TableCell>
@@ -102,6 +106,8 @@ export default function GeneralTable(props) {
             props.onOpenPhotoDialog(props.rows.find(x => x.id === name));
         } else if (el === "copy") {
             props.onCopyToBuffer(props.rows.find(x => x.id === name));
+        } else if (el === "forward") {
+            props.onForward(props.rows.find(x => x.id === name));
         }
     };
     const handleCancelReserveClick = () => {

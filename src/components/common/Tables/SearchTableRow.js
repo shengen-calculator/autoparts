@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import {RoleEnum} from "../../../util/Enums";
 import teal from "@material-ui/core/colors/teal";
 import red from "@material-ui/core/colors/red";
+import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 
 export const headCells = [
     {id: 'vendor', numeric: false, disablePadding: false, label: 'Пост.'},
@@ -79,6 +80,9 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
                     <Grid item>
                         <Tooltip title="Скопіювати номер в буфер обміну">
                             <FileCopyIcon onClick={(e) => {handleClick(e, row.id, 'copy')}} style={{fontSize: 13, marginTop: 3, marginLeft: 5}}/>
+                        </Tooltip>
+                        <Tooltip title="Пошук за брендом та номером">
+                            <DoubleArrowIcon onClick={(e) => {handleClick(e, row.id, 'forward')}} style={{fontSize: 13, marginTop: 3, marginLeft: 8}}/>
                         </Tooltip>
                     </Grid>
                 </Grid>
