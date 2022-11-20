@@ -45,12 +45,15 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
 
     const copyToBuffer = (selected) => {
         navigator.clipboard.writeText(selected.number).then(() => {
-            console.log('Async: Copying to clipboard was successful!');
             showToastrMessage({type: 'success', message: 'Номер успішно скопійовано в буфер'});
 
         }, () => {
             showToastrMessage({type: 'error', message: 'Під час копіювання номеру в буфер виникла помилка'});
         });
+    };
+
+    const forward = (selected) => {
+        showToastrMessage({type: 'success', message: 'Вперед на новий номер'});
     };
 
     const handleCancelPhotoDialog = () => {
@@ -117,11 +120,13 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
                                                                          onOpenPhotoDialog={openPhotoDialog}
                                                                          onCopyToBuffer={copyToBuffer}
+                                                                         onForward={forward}
                                                                          isPriceShown={client.isPriceShown}/>}
                                 {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
                                                                        onOpenPhotoDialog={openPhotoDialog}
                                                                        onCopyToBuffer={copyToBuffer}
+                                                                       onForward={forward}
                                                                        isPriceShown={client.isPriceShown}/>}
                                 {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
                                     (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
@@ -132,6 +137,7 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
                                                                        closeDialog={closeFilterDialog}
                                                                        onOpenPhotoDialog={openPhotoDialog}
                                                                        onCopyToBuffer={copyToBuffer}
+                                                                       onForward={forward}
                                                                        isPriceShown={client.isPriceShown}/>}
                             </React.Fragment>
                         }
