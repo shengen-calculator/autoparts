@@ -111,6 +111,10 @@ export default function EnhancedTable(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        setRowsPerPage(rowsPerPageOptions[0]);
+    }, [rowsPerPageOptions, setRowsPerPage]);
+
     const getData = () => {
         if(getRowsFunc) {
             return rows;
