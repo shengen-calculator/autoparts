@@ -51,7 +51,7 @@ class SearchFunctionsApi {
 
     static searchByNumber(number) {
         const func = functions.httpsCallable('search-searchByNumber');
-        return func(number);
+        return func(removeAllSpecialCharacters(number));
     }
 
     static updatePrice(params) {
