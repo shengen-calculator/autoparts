@@ -28,6 +28,7 @@ const updatePrice = async (data, context) => {
                     Цена1           = ${data.price === 0 ? null : (1 - (1 - 0.95) * data.discount / 35) * retail},
                     Цена2           = ${data.price === 0 ? null : (1 - (1 - 0.9) * data.discount / 35) * retail},
                     Цена3           = ${data.price === 0 ? null : (1 - (1 - 0.85) * data.discount / 35) * retail},
+                    Цена10          = ${data.price === 0 ? null : (1 - (1 - 0.55) * data.discount / 40) * retail},
                     Цена7           = ${data.price === 0 ? null : data.price},
                     Цена13          = ${data.price === 0 ? null : data.price},
                     Цена_обработана = ${data.price === 0 ? 0 : 1}
