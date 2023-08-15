@@ -52,7 +52,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "redux-immutable-state-invariant": "^2.1.0"
   }
 }
