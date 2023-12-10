@@ -29,8 +29,12 @@ export default function PaymentStyle(theme) {
           color: '#009688'
       },
       centered: {
+          flex: 'auto',
           margin: '40px auto',
-          width: '226px',
+          width: '416px',
+      },
+      unblockBtn: {
+          marginLeft: theme.spacing(2)
       }
 
   };

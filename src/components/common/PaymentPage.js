@@ -8,6 +8,7 @@ import PaymentStyle from "./Tables/PaymentStyle";
 import {withStyles} from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import ReconciliationDialog from "./Dialog/ReconciliationDialog";
 
 const styles = theme => PaymentStyle(theme);
@@ -56,6 +57,14 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
                                 onClick={handleClick}
                                 endIcon={<SaveAltIcon/>}>
                                 Завантажити акт звірки
+                            </Button>
+                            <Button
+                                className={classes.unblockBtn}
+                                variant="outlined"
+                                color="primary"
+                                onClick={handleClick}
+                                endIcon={<RemoveCircleIcon/>}>
+                                Розблокування
                             </Button>
                         </div>
                     </div>
