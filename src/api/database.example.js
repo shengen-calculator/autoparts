@@ -1,7 +1,7 @@
-import firebase from 'firebase/app';
-import 'firebase';
-import 'firebase/auth';
-import 'firebase/functions';
+import firebase from 'firebase/comapt/app';
+import 'firebase/compat/database';
+import 'firebase/compat/auth';
+import 'firebase/compat/functions';
 
 const config = {
     apiKey: "XXXXXXX",
