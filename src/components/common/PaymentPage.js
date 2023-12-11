@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import ReconciliationDialog from "./Dialog/ReconciliationDialog";
+import UnblockDialog from "./Dialog/UnblockDialog";
 
 const styles = theme => PaymentStyle(theme);
 
@@ -18,12 +19,25 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
     const [reconciliationDialog, setReconciliationDialog] = React.useState({
         isOpened: false
     });
-    const handleClick = (event, name) => {
+    const [unblockDialog, setUnblockDialog] = React.useState({
+        isOpened: false
+    });
+    const handleUnblockClick = (event, name) => {
+        setUnblockDialog({
+            isOpened: true
+        });
+    };
+    const handleUnblockCancelClick = () => {
+        setUnblockDialog({
+            isOpened: false
+        });
+    };
+    const handleReconciliationClick = (event, name) => {
         setReconciliationDialog({
             isOpened: true
         });
     };
-    const handleCancelClick = () => {
+    const handleReconciliationCancelClick = () => {
         setReconciliationDialog({
             isOpened: false
         });
@@ -54,7 +68,7 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
                             <Button
                                 variant="outlined"
                                 color="primary"
-                                onClick={handleClick}
+                                onClick={handleReconciliationClick}
                                 endIcon={<SaveAltIcon/>}>
                                 Завантажити акт звірки
                             </Button>
@@ -62,7 +76,7 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
                                 className={classes.unblockBtn}
                                 variant="outlined"
                                 color="primary"
-                                onClick={handleClick}
+                                onClick={handleUnblockClick}
                                 endIcon={<RemoveCircleIcon/>}>
                                 Розблокування
                             </Button>
@@ -70,7 +84,8 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
                     </div>
                 </Paper>}
             </main>
-            <ReconciliationDialog isOpened={reconciliationDialog.isOpened} onClose={handleCancelClick} />
+            <ReconciliationDialog isOpened={reconciliationDialog.isOpened} onClose={handleReconciliationCancelClick} />
+            <UnblockDialog isOpened={unblockDialog.isOpened} onClose={handleUnblockCancelClick} />
         </React.Fragment>
     )
 }
