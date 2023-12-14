@@ -64,7 +64,7 @@ function FilterDialog(props) {
             <Dialog open={isOpened} aria-labelledby="form-dialog-title" onClose={onClose} maxWidth="xl">
                 <DialogTitle id="form-dialog-title">Фільтрувати аналоги артикула за параметрами</DialogTitle>
                 <form onSubmit={onSubmit}>
-                    <DialogContent className={role === RoleEnum.Manager ? classes.managerDialog : classes.dialog}>
+                    <DialogContent className={(role === RoleEnum.Manager || role === RoleEnum.Admin) ? classes.managerDialog : classes.dialog}>
                         <Grid container spacing={3}>
                             {role === RoleEnum.Manager &&
                             <Grid item xs={12}>

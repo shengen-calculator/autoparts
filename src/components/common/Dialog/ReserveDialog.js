@@ -46,7 +46,7 @@ function ReserveDialog(props) {
             if(Number(reserve.quantity) > reserve.available) {
                 showToastrMessage({type: 'warning', message: 'Кількість не може бути більшою ніж доступно'})
             } else {
-                if(auth.role === RoleEnum.Manager) {
+                if(auth.role === RoleEnum.Manager || auth.role === RoleEnum.Admin) {
                     createReserve({
                         productId: selected.id,
                         quantity: Number(reserve.quantity),

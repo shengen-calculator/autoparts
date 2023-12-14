@@ -38,7 +38,7 @@ function GroupedTable(props) {
     let history = useHistory();
 
     const handleClick = (event, {brand, number}) => {
-        if(RoleEnum.Manager === props.role) {
+        if(RoleEnum.Manager === props.role || RoleEnum.Admin === props.role) {
             history.push(`/manager/search/${props.vip}/${number}/${htmlEncode(brand)}`)
         } else {
             history.push(`/search/${number}/${htmlEncode(brand)}`)

@@ -36,7 +36,7 @@ function LoginToolbar({logoutRequest, unSubscribe, auth, ...props}) {
                 </Hidden>
                 <Grid item xs/>
                 <Grid item>
-                    { auth.role === RoleEnum.Manager ? auth.vip : `K0000${auth.vip}`}
+                    { (auth.role === RoleEnum.Manager || auth.role === RoleEnum.Admin)? auth.vip : `K0000${auth.vip}`}
                 </Grid>
                 <Grid item>
                     <Tooltip title="Вийти">

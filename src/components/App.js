@@ -136,9 +136,9 @@ function App({auth, subscribeToApplicationStateUpdate, appStateUpdated}) {
         <ThemeProvider theme={theme}>
             <div>
                 <Switch>
-                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager]}  path="/manager" component={ManagerPage}/>
+                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager, RoleEnum.Admin]}  path="/manager" component={ManagerPage}/>
                     <Route path="/auth" component={Auth}/>
-                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager, RoleEnum.Client]} path="/" component={ClientPage}/>
+                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager, RoleEnum.Client, RoleEnum.Admin]} path="/" component={ClientPage}/>
                 </Switch>
             </div>
         </ThemeProvider>

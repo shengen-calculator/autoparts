@@ -52,7 +52,7 @@ function OrderDialog(props) {
             && order.price > 0
             && Number(order.quantity) > -1
         ) {
-            if(auth.role === RoleEnum.Manager) {
+            if(auth.role === RoleEnum.Manager || auth.role === RoleEnum.Admin) {
                 createOrder({
                     productId: selected.id,
                     quantity: Number(order.quantity),
