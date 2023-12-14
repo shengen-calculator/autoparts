@@ -73,7 +73,6 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
                                 Завантажити акт звірки
                             </Button>
                             <Button
-                                className={classes.unblockBtn}
                                 variant="outlined"
                                 color="primary"
                                 onClick={handleUnblockClick}

@@ -29,13 +29,9 @@ export default function PaymentStyle(theme) {
           color: '#009688'
       },
       centered: {
-          flex: 'auto',
-          margin: '40px auto',
-          width: '416px',
-      },
-      unblockBtn: {
-          marginLeft: theme.spacing(2)
+          display: 'flex',
+          margin: '40px',
+          justifyContent: 'space-around'
       }
-
   };
 }
