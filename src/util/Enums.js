@@ -8,7 +8,8 @@ export const TitleIconEnum = Object.freeze({
 
 export const RoleEnum = Object.freeze({
     "Client": 1,
-    "Manager": 2
+    "Manager": 2,
+    "Admin": 3
 });
 
 export const QualityEnum = Object.freeze({

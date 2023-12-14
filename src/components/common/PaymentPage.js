@@ -11,10 +11,11 @@ import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import ReconciliationDialog from "./Dialog/ReconciliationDialog";
 import UnblockDialog from "./Dialog/UnblockDialog";
+import {RoleEnum} from "../../util/Enums";
 
 const styles = theme => PaymentStyle(theme);
 
-function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
+function PaymentPage({debtAmount, client, role, calls, isTableShown, ...props}) {
     const {classes} = props;
     const [reconciliationDialog, setReconciliationDialog] = React.useState({
         isOpened: false
@@ -72,13 +73,16 @@ function PaymentPage({debtAmount, client, calls, isTableShown, ...props}) {
                                 endIcon={<SaveAltIcon/>}>
                                 Завантажити акт звірки
                             </Button>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                onClick={handleUnblockClick}
-                                endIcon={<RemoveCircleIcon/>}>
-                                Розблокування
-                            </Button>
+                            {
+                                role === RoleEnum.Admin &&
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        onClick={handleUnblockClick}
+                                        endIcon={<RemoveCircleIcon/>}>
+                                        Розблокування
+                                    </Button>
+                            }
                         </div>
                     </div>
                 </Paper>}
