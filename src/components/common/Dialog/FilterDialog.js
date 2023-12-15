@@ -66,7 +66,7 @@ function FilterDialog(props) {
                 <form onSubmit={onSubmit}>
                     <DialogContent className={(role === RoleEnum.Manager || role === RoleEnum.Admin) ? classes.managerDialog : classes.dialog}>
                         <Grid container spacing={3}>
-                            {role === RoleEnum.Manager &&
+                            {(role === RoleEnum.Manager || role === RoleEnum.Admin) &&
                             <Grid item xs={12}>
                                 <Typography color="secondary">
                                     Постачальник
