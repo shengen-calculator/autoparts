@@ -15,6 +15,7 @@ const initialState = {
         fullName: '',
         isEuroClient: false,
         isCityDeliveryUsed: false,
+        isShowDebtRecords: false,
         orders: [],
         isOrdersLoaded: false,
         orderLoadingTime: {},

@@ -74,7 +74,7 @@ function PaymentPage({debtAmount, client, role, calls, isTableShown, ...props}) 
                                 Завантажити акт звірки
                             </Button>
                             {
-                                (role === RoleEnum.Admin && isTableShown && debtAmount > 0) &&
+                                (role === RoleEnum.Admin && isTableShown && debtAmount > 0 && client.isShowDebtRecords) &&
                                     <Button
                                         variant="outlined"
                                         color="primary"

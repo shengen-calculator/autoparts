@@ -17,6 +17,7 @@ export default function clientReducer(state = initialState.client, action) {
                 fullName: action.client.fullName,
                 isEuroClient: action.client.isEuroClient,
                 isCityDeliveryUsed: action.client.isCityDeliveryUsed,
+                isShowDebtRecords: action.client.isShowDebtRecords,
                 orders: [],
                 isOrdersLoaded: false,
                 orderLoadingTime: {},
