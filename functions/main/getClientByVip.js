@@ -22,6 +22,7 @@ const getClientByVip = async (data, context) => {
                     ,[Расчет_в_евро] as isEuroClient      
                     ,[Интернет_заказы] as isWebUser
                     ,IsCityDeliveryUsed as isCityDeliveryUsed
+                    ,[Выводить_просрочку] as isShowDebtRecords
                 FROM [FenixParts].[dbo].[Клиенты]
                 WHERE VIP like '${data ? data : context.auth.token.vip}'
         `;
