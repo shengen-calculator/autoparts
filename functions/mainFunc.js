@@ -1,6 +1,8 @@
 const functions = require('firebase-functions');
 const processSignUp = require('./main/processSignUp');
 const getClientByVip = require('./main/getClientByVip');
+const unblockClient = require('./main/unblockClient');
+const getUnblockRecords = require('./main/getUnblockRecords');
 const getPaymentsByVip = require('./main/getPaymentsByVip');
 const getReconciliationData = require('./main/getReconciliationData');
 const getCurrencyRate = require('./main/getCurrencyRate');
@@ -24,4 +26,12 @@ exports.getReconciliationData = functions.region('europe-west1').https.onCall(as
 
 exports.getCurrencyRate = functions.region('europe-west1').https.onCall(async (data, context) => {
     return getCurrencyRate(data, context);
+});
+
+exports.unblockClient = functions.region('europe-west1').https.onCall(async (data, context) => {
+    return unblockClient(data, context);
+});
+
+exports.getUnblockRecords = functions.region('europe-west1').https.onCall(async (data, context) => {
+    return getUnblockRecords(data, context);
 });
