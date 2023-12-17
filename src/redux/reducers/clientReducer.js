@@ -28,6 +28,20 @@ export default function clientReducer(state = initialState.client, action) {
                 isPaymentsLoaded: false,
             };
 
+        case types.LOAD_UNBLOCK_RECORDS_REQUEST:
+            return {
+                ...state,
+                unblockRecords: [],
+                isUnblockRecordsLoaded: false
+            };
+
+        case types.LOAD_UNBLOCK_RECORDS_SUCCESS:
+            return {
+                ...state,
+                unblockRecords: action.records,
+                isUnblockRecordsLoaded: true
+            };
+
         case types.LOAD_PAYMENTS_SUCCESS:
             return {
                 ...state,
