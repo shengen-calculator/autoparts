@@ -19,6 +19,28 @@ export function* getClient(action) {
     }
 }
 
+export function* unblockClient(action) {
+    try {
+        yield put({type: types.BEGIN_API_CALL});
+        yield call(FunctionsApi.unblockClient, action.vip);
+        yield put({type: types.UNBLOCK_CLIENT_SUCCESS});
+    } catch (e) {
+        yield put({type: types.API_CALL_ERROR});
+        yield put({type: types.UNBLOCK_CLIENT_FAILURE, text: e.message});
+    }
+}
+
+export function* getUnblockRecords(action) {
+    try {
+        yield put({type: types.BEGIN_API_CALL});
+        const {data} = yield call(FunctionsApi.getUnblockRecords, action.vip);
+        yield put({type: types.LOAD_UNBLOCK_RECORDS_SUCCESS, records: data});
+    } catch (e) {
+        yield put({type: types.API_CALL_ERROR});
+        yield put({type: types.LOAD_UNBLOCK_RECORDS_FAILURE, text: e.message});
+    }
+}
+
 export function* getOrders(action) {
     try {
         yield put({type: types.BEGIN_API_CALL});
