@@ -13,14 +13,26 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import Paper from '@material-ui/core/Paper';
+import {
+    unblockClient,
+    getUnblockRecords
+} from "../../../redux/actions/clientActions";
+import {connect} from "react-redux";
+import {RoleEnum} from "../../../util/Enums";
 
 function UnblockDialog(props) {
-    const {isOpened, onClose} = props;
+    const {isOpened, onClose, unblockClient, getUnblockRecords, client, auth} = props;
     const useStyles = makeStyles({
         table: {
             minWidth: 550,
         },
     });
+
+    function handleUnblockClick(event) {
+        event.preventDefault();
+        unblockClient(client.vip);
+        onClose();
+    }
 
     function createData(name, calories) {
         return {name, calories};
@@ -47,40 +59,56 @@ function UnblockDialog(props) {
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title">{"Історія розблокувань"}</DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    <TableContainer component={Paper}>
-                        <Table className={classes.table} aria-label="simple table" size="small">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Дата</TableCell>
-                                    <TableCell align="right">Менеджер</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows.map((row) => (
-                                    <TableRow key={row.name}>
-                                        <TableCell component="th" scope="row">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="right">{row.calories}</TableCell>
+            <form onSubmit={handleUnblockClick}>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <TableContainer component={Paper}>
+                            <Table className={classes.table} aria-label="simple table" size="small">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Дата</TableCell>
+                                        <TableCell align="right">Менеджер</TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={onClose} color="primary">
-                    Відмінити
-                </Button>
-                <Button onClick={onClose} color="primary" autoFocus>
-                    Розблокувати
-                </Button>
-            </DialogActions>
+                                </TableHead>
+                                <TableBody>
+                                    {rows.map((row) => (
+                                        <TableRow key={row.name}>
+                                            <TableCell component="th" scope="row">
+                                                {row.name}
+                                            </TableCell>
+                                            <TableCell align="right">{row.calories}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={onClose} color="primary">
+                        Відмінити
+                    </Button>
+                    <Button type="submit" color="primary"
+                            disabled={auth.role !== RoleEnum.Admin} autoFocus>
+                        Розблокувати
+                    </Button>
+                </DialogActions>
+            </form>
         </Dialog>
     );
 }
 
-export default UnblockDialog;
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    unblockClient,
+    getUnblockRecords
+};
+
+function mapStateToProps(state) {
+    return {
+        client: state.client,
+        auth: state.authentication
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UnblockDialog);
