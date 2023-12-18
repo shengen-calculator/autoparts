@@ -151,8 +151,15 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Невдалось завантажити дані по розблокуваннях.'
             };
 
+        case types.UNBLOCK_CLIENT_SUCCESS:
+            return {
+                ...state,
+                type: 'success',
+                text: 'Клієнта успішно розблоковано.'
+            };
+
         case types.UNBLOCK_CLIENT_FAILURE:
-            if (action.params.error && action.params.error === 'Client is already unblocked') {
+            if (action.text === 'Client is already unblocked') {
                 return {
                     ...state,
                     type: 'error',

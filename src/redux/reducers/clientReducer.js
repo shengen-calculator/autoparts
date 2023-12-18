@@ -26,6 +26,8 @@ export default function clientReducer(state = initialState.client, action) {
                 reserveLoadingTime: {},
                 payments: [],
                 isPaymentsLoaded: false,
+                unblockRecords: [],
+                isUnblockRecordsLoaded: false,
             };
 
         case types.LOAD_UNBLOCK_RECORDS_REQUEST:

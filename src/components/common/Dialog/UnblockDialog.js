@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -19,6 +19,7 @@ import {
 } from "../../../redux/actions/clientActions";
 import {connect} from "react-redux";
 import {RoleEnum} from "../../../util/Enums";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function UnblockDialog(props) {
     const {isOpened, onClose, unblockClient, getUnblockRecords, client, auth} = props;
@@ -26,7 +27,21 @@ function UnblockDialog(props) {
         table: {
             minWidth: 550,
         },
+        btn: {
+            margin: '40px'
+        },
+        centered: {
+            display: 'flex',
+            margin: '40px',
+            justifyContent: 'space-around'
+        }
     });
+
+    useEffect(() => {
+        if(isOpened) {
+            getUnblockRecords(client.vip);
+        }
+    }, [isOpened, client.vip, getUnblockRecords]);
 
     function handleUnblockClick(event) {
         event.preventDefault();
@@ -34,22 +49,11 @@ function UnblockDialog(props) {
         onClose();
     }
 
-    function createData(name, calories) {
-        return {name, calories};
+    function getFormatted(date) {
+        const jsDate = new Date(date);
+        return `${jsDate.getDate()}-${jsDate.getMonth()}-${jsDate.getFullYear()}`
     }
 
-    const rows = [
-        createData('19-03-2023', "puhach.alex@fenix.parts", 6.0, 24, 4.0),
-        createData('27-08-2023', "puhach.alex@fenix.parts", 9.0, 37, 4.3),
-        createData('11-09-2023', "ucin.sergiy@fenix.parts", 16.0, 24, 6.0),
-        createData('14-11-2023', "puhach.alex@fenix.parts", 3.7, 67, 4.3),
-        createData('16-11-2023', "ucin.sergiy@fenix.parts", 16.0, 49, 3.9),
-        createData('19-03-2023', "puhach.alex@fenix.parts", 6.0, 24, 4.0),
-        createData('27-08-2023', "puhach.alex@fenix.parts", 9.0, 37, 4.3),
-        createData('11-09-2023', "ucin.sergiy@fenix.parts", 16.0, 24, 6.0),
-        createData('14-11-2023', "puhach.alex@fenix.parts", 3.7, 67, 4.3),
-        createData('16-11-2023', "ucin.sergiy@fenix.parts", 16.0, 49, 3.9),
-    ];
     const classes = useStyles();
     return (
         <Dialog
@@ -59,41 +63,46 @@ function UnblockDialog(props) {
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title">{"Історія розблокувань"}</DialogTitle>
-            <form onSubmit={handleUnblockClick}>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        <TableContainer component={Paper}>
-                            <Table className={classes.table} aria-label="simple table" size="small">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Дата</TableCell>
-                                        <TableCell align="right">Менеджер</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {rows.map((row) => (
-                                        <TableRow key={row.name}>
-                                            <TableCell component="th" scope="row">
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
+            {client.isUnblockRecordsLoaded ?
+                <form onSubmit={handleUnblockClick}>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            <TableContainer component={Paper}>
+                                <Table className={classes.table} aria-label="simple table" size="small">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Дата</TableCell>
+                                            <TableCell align="right">Менеджер</TableCell>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onClose} color="primary">
-                        Відмінити
-                    </Button>
-                    <Button type="submit" color="primary"
-                            disabled={auth.role !== RoleEnum.Admin} autoFocus>
-                        Розблокувати
-                    </Button>
-                </DialogActions>
-            </form>
+                                    </TableHead>
+                                    <TableBody>
+                                        {client.unblockRecords.map((row) => (
+                                            <TableRow key={row.name}>
+                                                <TableCell component="th" scope="row">
+                                                    {getFormatted(row.date)}
+                                                </TableCell>
+                                                <TableCell align="right">{row.user}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions className={classes.btn}>
+                        <Button onClick={onClose} color="primary">
+                            Відмінити
+                        </Button>
+                        <Button type="submit" color="primary"
+                                disabled={auth.role !== RoleEnum.Admin} autoFocus>
+                            Розблокувати
+                        </Button>
+                    </DialogActions>
+                </form> :
+                <div className={classes.centered}>
+                    <CircularProgress color="secondary"/>
+                </div>
+            }
         </Dialog>
     );
 }
