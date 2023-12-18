@@ -18,7 +18,7 @@ const getUnblockRecords = async (data, context) => {
         return entities.map(entity => {
             return {
                 date: entity.date.getTime(),
-                vip: entity.vip
+                user: entity.email
             }
         })
     } catch (err) {
