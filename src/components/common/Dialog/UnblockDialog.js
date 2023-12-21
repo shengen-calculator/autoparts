@@ -28,7 +28,7 @@ function UnblockDialog(props) {
             minWidth: 550,
         },
         btn: {
-            margin: '40px'
+            margin: '10px'
         },
         centered: {
             display: 'flex',
@@ -51,7 +51,7 @@ function UnblockDialog(props) {
 
     function getFormatted(date) {
         const jsDate = new Date(date);
-        return `${jsDate.getDate()}-${jsDate.getMonth()}-${jsDate.getFullYear()}`
+        return `${jsDate.getDate()}-${jsDate.getMonth() + 1}-${jsDate.getFullYear()}`
     }
 
     const classes = useStyles();
