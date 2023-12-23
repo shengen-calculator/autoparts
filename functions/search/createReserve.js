@@ -48,7 +48,7 @@ const createReserve = async (data, context) => {
             vip = debtRecord.recordset[0]["vip"];
         }
 
-        if (Math.sign(userDebt) === -1) {
+        if (Math.sign(userDebt) === 1) {
             isUserBlocked = true;
             const datastore = new Datastore();
             const storeQuery = datastore
