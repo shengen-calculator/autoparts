@@ -198,6 +198,13 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Виникла помилка під час замовлення. Повторіть спробу'
             };
         case types.CREATE_RESERVE_FAILURE:
+            if (action.text === "User account is blocked. Please contact administrator.") {
+                return {
+                    ...state,
+                    type: 'error',
+                    text: 'Є протермінована заборгованість. Резервувавння та замовлення заблоковані.'
+                }
+            }
             return {
                 ...state,
                 type: 'error',
