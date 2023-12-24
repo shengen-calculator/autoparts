@@ -192,6 +192,13 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Вітаємо в системі'
             };
         case types.CREATE_ORDER_FAILURE:
+            if (action.text === "User account is blocked. Please contact administrator.") {
+                return {
+                    ...state,
+                    type: 'error',
+                    text: 'Є протермінована заборгованість. Резервувавння та замовлення заблоковані.'
+                }
+            }
             return {
                 ...state,
                 type: 'error',
