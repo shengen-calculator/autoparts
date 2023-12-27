@@ -6,7 +6,7 @@ BEGIN
     DECLARE @lastDay datetime, @isEuro bit, @debtEur decimal(12, 2),
         @debtUah decimal(12, 2), @paidEur decimal(12, 2), @paidUah decimal(12, 2)
 
-    SET @lastDay = DATEADD(day, @dayQuantity, CAST(CURRENT_TIMESTAMP AS DATE))
+    SET @lastDay = DATEADD(day, @dayQuantity, CURRENT_TIMESTAMP)
 
     SELECT @debtEur = SUM(Eur), @debtUah = SUM(Uah)
     FROM (SELECT ID_Клиента, Количество, Цена, Грн, Количество * Цена AS Eur, Количество * Грн AS Uah
@@ -27,4 +27,6 @@ BEGIN
 
     RETURN @debtUah - @paidUah
 END
+
 go
+
