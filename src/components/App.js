@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import ClientPage from "./client/App";
 import ManagerPage from "./manager/App";
 import Auth from "./auth/Auth";
-import {createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { ukUA } from '@material-ui/core/locale';
 import PrivateRoute from "./common/PrivateRoute";
 import {connect} from "react-redux";
@@ -14,7 +14,7 @@ import {
 } from "../redux/actions/applicationActions";
 
 
-let theme = createMuiTheme({
+let theme = createTheme({
     palette: {
         primary: {
             light: '#63ccff',
