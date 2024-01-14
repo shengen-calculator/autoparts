@@ -29,3 +29,24 @@ set GOOGLE_APPLICATION_CREDENTIALS=key.json
 
 firebase deploy --only functions:search.getPhotos
 firebase functions:delete search.searchByNumber
+
+https://cloud.google.com/datastore/docs/configure-indexes-rest-api => Start Cloud Shell => gcloud auth print-access-token
+
+POST => https://datastore.googleapis.com/v1/projects/autoparts-95d56/indexes
+
+SELECT * FROM `unblock-records` WHERE vip = '1533A' ORDER BY date DESC
+{
+  "kind": "unblock-records",
+  "ancestor": "none",
+  "properties": [
+    {
+        "name": "vip",
+        "direction": "ASCENDING"
+    },
+    {
+        "name": "date",
+        "direction": "DESCENDING"
+    }
+  ]
+}
+

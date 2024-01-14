@@ -17,6 +17,12 @@ const createOrder = async (data, context) => {
             'The function must be called with the next arguments "ProductId, Quantity, IsEuroClient, OnlyOrderedQuantity"');
     }
 
+    const blocked = await util.isUserBlocked(data, context);
+
+    if (blocked) {
+        throw new functions.https.HttpsError('failed-precondition',
+            'User account is blocked. Please contact administrator.');
+    }
 
     try {
         const pool = await sql.connect(config);

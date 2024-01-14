@@ -4,6 +4,14 @@ export function getClient(vip) {
     return { type: types.LOAD_CLIENT_REQUEST, vip};
 }
 
+export function unblockClient(vip) {
+    return { type: types.UNBLOCK_CLIENT_REQUEST, vip};
+}
+
+export function getUnblockRecords(vip) {
+    return { type: types.LOAD_UNBLOCK_RECORDS_REQUEST, vip};
+}
+
 export function getPayments(vip) {
     return { type: types.LOAD_PAYMENTS_REQUEST, vip};
 }

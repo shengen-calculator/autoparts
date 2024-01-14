@@ -29,9 +29,9 @@ export default function PaymentStyle(theme) {
           color: '#009688'
       },
       centered: {
-          margin: '40px auto',
-          width: '226px',
+          display: 'flex',
+          margin: '40px',
+          justifyContent: 'space-around'
       }
-
   };
 }

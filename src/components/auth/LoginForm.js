@@ -42,7 +42,7 @@ function LoginPage({
                 ...prev,
                 requestInProcess: false
             }));
-            if(auth.role === RoleEnum.Manager) {
+            if(auth.role === RoleEnum.Manager || auth.role === RoleEnum.Admin) {
                 history.push(`/manager/search/${auth.vip}`);
             } else {
                 history.push('/');

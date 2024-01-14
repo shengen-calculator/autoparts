@@ -143,6 +143,35 @@ export default function messageReducer(state = initialState.message, action) {
                 type: 'error',
                 text: 'Нажаль, не вдалось змінити кількість зарезервованих позицій. Спробуйте ще раз'
             };
+
+        case types.LOAD_UNBLOCK_RECORDS_FAILURE:
+            return {
+                ...state,
+                type: 'error',
+                text: 'Невдалось завантажити дані по розблокуваннях.'
+            };
+
+        case types.UNBLOCK_CLIENT_SUCCESS:
+            return {
+                ...state,
+                type: 'success',
+                text: 'Клієнта успішно розблоковано.'
+            };
+
+        case types.UNBLOCK_CLIENT_FAILURE:
+            if (action.text === 'Client is already unblocked') {
+                return {
+                    ...state,
+                    type: 'error',
+                    text: 'Клієнта вже розблоковао. Необхідності повторного розблокування не має.'
+                }
+            }
+            return {
+                ...state,
+                type: 'error',
+                text: 'Невдалось розблокувати клієнта.'
+            };
+
         case types.LOAD_PAYMENTS_FAILURE:
             return {
                 ...state,
@@ -163,12 +192,26 @@ export default function messageReducer(state = initialState.message, action) {
                 text: 'Вітаємо в системі'
             };
         case types.CREATE_ORDER_FAILURE:
+            if (action.text === "User account is blocked. Please contact administrator.") {
+                return {
+                    ...state,
+                    type: 'error',
+                    text: 'Є протермінована заборгованість. Резервувавння та замовлення заблоковані.'
+                }
+            }
             return {
                 ...state,
                 type: 'error',
                 text: 'Виникла помилка під час замовлення. Повторіть спробу'
             };
         case types.CREATE_RESERVE_FAILURE:
+            if (action.text === "User account is blocked. Please contact administrator.") {
+                return {
+                    ...state,
+                    type: 'error',
+                    text: 'Є протермінована заборгованість. Резервувавння та замовлення заблоковані.'
+                }
+            }
             return {
                 ...state,
                 type: 'error',

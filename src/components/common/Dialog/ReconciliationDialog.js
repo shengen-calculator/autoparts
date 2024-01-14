@@ -63,7 +63,7 @@ function ReconciliationDialog(props) {
         } else if(Math.ceil(diffTime / (1000 * 60 * 60 * 24)) > 92) {
             showToastrMessage({type: 'warning', message: 'Помилка!!! Період не може перевищувати 90 днів'})
         } else {
-            if(auth.role === RoleEnum.Manager) {
+            if(auth.role === RoleEnum.Manager || auth.role === RoleEnum.Admin) {
                 getReconciliationData({
                     startDate: formatDate(dateFilter.startDate),
                     endDate: formatDate(dateFilter.endDate),

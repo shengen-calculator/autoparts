@@ -48,7 +48,7 @@ function tableRow(row, index, isSelected, handleClick, isEur, role, isPriceShown
             selected={isItemSelected}
 
         >
-            {RoleEnum.Manager === role &&
+            {(RoleEnum.Manager === role || RoleEnum.Admin === role) &&
             <TableCell width="10%" align="left" name="reserve" style={pointer}>{row.vendor}</TableCell>}
             <TableCell width="10%" name="reserve" padding="default" component="th" id={labelId} scope="row"
                        style={pointer}>
@@ -100,7 +100,7 @@ export default function GeneralTable(props) {
                     selected: props.rows.find(x => x.id === name)
                 });
             }
-        } else if (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Manager) {
+        } else if (event.target.getAttribute("name") === "price" && (props.role === RoleEnum.Manager || props.role === RoleEnum.Admin)) {
             props.onOpenAnalogDialog(props.rows.find(x => x.id === name));
         } else if (el === "photo") {
             props.onOpenPhotoDialog(props.rows.find(x => x.id === name));

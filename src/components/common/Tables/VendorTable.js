@@ -20,7 +20,7 @@ export default function VendorTable(props) {
                 selected: props.rows.find(x => x.id === name),
                 inOrder: props.inOrder
             });
-        } else if (event.target.getAttribute("name") === "price" && props.role === RoleEnum.Manager) {
+        } else if (event.target.getAttribute("name") === "price" && (props.role === RoleEnum.Manager || props.role === RoleEnum.Admin)) {
             props.onOpenAnalogDialog(props.rows.find(x => x.id === name));
         } else if (el === "photo") {
             props.onOpenPhotoDialog(props.rows.find(x => x.id === name));

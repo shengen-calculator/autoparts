@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import ClientPage from "./client/App";
 import ManagerPage from "./manager/App";
 import Auth from "./auth/Auth";
-import {createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { ukUA } from '@material-ui/core/locale';
 import PrivateRoute from "./common/PrivateRoute";
 import {connect} from "react-redux";
@@ -14,7 +14,7 @@ import {
 } from "../redux/actions/applicationActions";
 
 
-let theme = createMuiTheme({
+let theme = createTheme({
     palette: {
         primary: {
             light: '#63ccff',
@@ -136,9 +136,9 @@ function App({auth, subscribeToApplicationStateUpdate, appStateUpdated}) {
         <ThemeProvider theme={theme}>
             <div>
                 <Switch>
-                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager]}  path="/manager" component={ManagerPage}/>
+                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager, RoleEnum.Admin]}  path="/manager" component={ManagerPage}/>
                     <Route path="/auth" component={Auth}/>
-                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager, RoleEnum.Client]} path="/" component={ClientPage}/>
+                    <PrivateRoute role={auth.role} only={[RoleEnum.Manager, RoleEnum.Client, RoleEnum.Admin]} path="/" component={ClientPage}/>
                 </Switch>
             </div>
         </ThemeProvider>

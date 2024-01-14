@@ -77,8 +77,8 @@ function CityDelivery() {
                     <Typography color="inherit" style={bolderTop}>Суб: 11.00 14.00</Typography>
                 </React.Fragment>
             }>
-            <IconButton color="inherit">
-                <AirportShuttleIcon onClick={handleClick}/>
+            <IconButton onClick={handleClick} color="inherit">
+                <AirportShuttleIcon/>
             </IconButton>
         </HtmlTooltip>
     )

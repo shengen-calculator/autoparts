@@ -11,10 +11,12 @@ import {
     getOrders,
     getReserves,
     deleteOrders,
+    unblockClient,
     deleteReserves,
+    getUnblockRecords,
     updateOrderQuantity,
     updateReserveQuantity,
-    getPayments, 
+    getPayments,
     getReconciliationData,
     getCurrencyRate
 } from "./clientSaga";
@@ -49,6 +51,8 @@ function* mySaga() {
     yield takeLatest(types.AUTHENTICATION_REQUEST, logIn);
     yield takeLatest(types.REGISTRATION_REQUEST, register);
     yield takeLatest(types.LOAD_CLIENT_REQUEST, getClient);
+    yield takeLatest(types.UNBLOCK_CLIENT_REQUEST, unblockClient);
+    yield takeLatest(types.LOAD_UNBLOCK_RECORDS_REQUEST, getUnblockRecords);
     yield takeLatest(types.LOAD_PAYMENTS_REQUEST, getPayments);
     yield takeLatest(types.LOAD_ORDERS_REQUEST, getOrders);
     yield takeLatest(types.LOAD_RESERVES_REQUEST, getReserves);

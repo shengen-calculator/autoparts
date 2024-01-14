@@ -1,8 +1,8 @@
 {
   "rules": {
     "app-settings": {
-      ".read": "auth.token.role === 1",
-      ".write": "auth.token.role === 2"
+      ".read": "auth.token.role === 3 || auth.token.role === 2 || auth.token.role === 1",
+      ".write": "auth.token.role === 3 || auth.token.role === 2"
     }
   }
 }

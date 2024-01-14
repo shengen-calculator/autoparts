@@ -65,6 +65,14 @@ class FunctionsApi {
         const func = functions.httpsCallable('history-getSales');
         return func(params);
     }
+    static unblockClient(vip){
+        const func = functions.httpsCallable('main-unblockClient');
+        return func(vip);
+    }
+    static getUnblockRecords(vip){
+        const func = functions.httpsCallable('main-getUnblockRecords');
+        return func(vip);
+    }
 }
 
 export default FunctionsApi;

@@ -55,7 +55,7 @@ export default function SearchTableRow(row, index, isSelected, handleClick, isEu
             style={row['OnlyForManagers'] ? {backgroundColor: red[50]} : (row['term'] === 0 ? {backgroundColor: teal[50]} : {})}
             selected={isItemSelected}
         >
-            {RoleEnum.Manager === role &&  <TableCell width="10%" align="left" name="order" style={pointer}>{row.vendor}</TableCell>}
+            {(RoleEnum.Manager === role || RoleEnum.Admin === role) &&  <TableCell width="10%" align="left" name="order" style={pointer}>{row.vendor}</TableCell>}
             <TableCell width="10%" padding="default" component="th" id={labelId} scope="row" style={pointer} name="order">
                 {
                     row['isGoodQuality'] ?

@@ -11,7 +11,7 @@ import PaymentPage from "../../common/PaymentPage";
 
 const styles = theme => PaymentStyle(theme);
 
-function Content({client, calls, getPayments, ...props}) {
+function Content({client, auth, calls, getPayments, ...props}) {
     const {classes, handleDrawerToggle} = props;
 
     useEffect(() => {
@@ -29,7 +29,12 @@ function Content({client, calls, getPayments, ...props}) {
             <Helmet>
                 <title>Fenix - План платежів</title>
             </Helmet>
-            <PaymentPage debtAmount={debtAmount} client={client} calls={calls} isTableShown={isTableShown}/>
+            <PaymentPage
+                debtAmount={debtAmount}
+                client={client}
+                calls={calls}
+                role={auth.role}
+                isTableShown={isTableShown}/>
             <footer className={classes.footer}>
                 <Copyright/>
             </footer>
@@ -50,6 +55,7 @@ const mapDispatchToProps = {
 function mapStateToProps(state) {
     return {
         client: state.client,
+        auth: state.authentication,
         calls: state.apiCallsInProgress
     }
 }
