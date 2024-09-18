@@ -1,14 +1,16 @@
 function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
+    for (const fieldName of orderBy) {
+        if (b[fieldName] < a[fieldName]) {
+            return -1;
+        }
+        if (b[fieldName] > a[fieldName]) {
+            return 1;
+        }
     }
     return 0;
 }
 
-export default function GetComparator(order, orderBy) {
+export default function GetComparator(order, ...orderBy) {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
