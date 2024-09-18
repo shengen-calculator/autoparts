@@ -125,13 +125,13 @@ function Content({auth, calls, client, product, appState, getByBrand, getByNumbe
                                                                          onForward={forward}
                                                                          isPriceShown={client.isPriceShown}/>}
                                 {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
-                                    (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
+                                    (GetComparator('asc', 'term')))} isEur={client.isEuroClient} role={auth.role}
                                                                        onOpenPhotoDialog={openPhotoDialog}
                                                                        onCopyToBuffer={copyToBuffer}
                                                                        onForward={forward}
                                                                        isPriceShown={client.isPriceShown}/>}
                                 {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
-                                    (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
+                                    (GetComparator('asc', 'term')))} isEur={client.isEuroClient}
                                                                        role={auth.role}
                                                                        criteria={`${htmlDecode(brand)} ${numb}`}
                                                                        isFilterOpened={filterDialog.isOpened}
