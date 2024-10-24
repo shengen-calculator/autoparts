@@ -5,12 +5,13 @@ import Typography from '@material-ui/core/Typography';
 function Copyright() {
   return (
       <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
-          FenixParts
+        {'Copyright © FenixParts '}
+          {new Date().getFullYear()}
+          {'.'}
+          <br/>
+        <Link color="inherit" href="mailto:vasya_mail@ukr.net">
+            Designed by bass.
         </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
       </Typography>
   );
 }
