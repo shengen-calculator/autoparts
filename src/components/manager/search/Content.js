@@ -146,14 +146,14 @@ function Content({auth, calls, client, product, appState, getByBrand, getAnalogs
                                                                          onForward={forward}
                                                                          onOpenAnalogDialog={openAnalogListDialog}/>}
                                 {vendorRows.length > 0 && <VendorTable rows={StableSort(vendorRows,
-                                    (GetComparator('asc', 'cost')))} isEur={client.isEuroClient} role={auth.role}
+                                    (GetComparator('asc', 'term', 'cost')))} isEur={client.isEuroClient} role={auth.role}
                                                                        isPriceShown={true} inOrder={product.inOrder}
                                                                        onOpenPhotoDialog={openPhotoDialog}
                                                                        onCopyToBuffer={copyToBuffer}
                                                                        onForward={forward}
                                                                        onOpenAnalogDialog={openAnalogListDialog}/>}
                                 {analogRows.length > 0 && <AnalogTable rows={StableSort(analogRows,
-                                    (GetComparator('asc', 'cost')))} isEur={client.isEuroClient}
+                                    (GetComparator('asc', 'term', 'cost')))} isEur={client.isEuroClient}
                                                                        role={auth.role}
                                                                        criteria={`${htmlDecode(brand)} ${numb}`}
                                                                        isPriceShown={true} inOrder={product.inOrder}
